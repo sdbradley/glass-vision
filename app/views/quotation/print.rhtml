@@ -159,11 +159,32 @@
     <% end %>
   <% end %>
   <!-- total -->
-  <tr bgcolor="#b2b2b2">
-    <td align="right" colspan="4">
+  <tr >
+    <td colspan="2" rowspan="3" style="border:1px solid #808080;" valign="top">
+      <p>
+        <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
+          <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
+      </p>
+      <!--
+      <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #808080; margin:0px; padding:0px;">
+        <tr>
+        <td align="left" valign="top"><strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong></td>
+        </tr>
+        <tr>
+        <td align="left" rowspan="2">
+          <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
+        </td>
+        </tr>
+        <tr><td />
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+      </table>
+    -->
+    </td>
+    <td align="right" bgcolor="#b2b2b2">
       <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
     </td>
-    <td align="right">
+    <td align="right" bgcolor="#b2b2b2">
       <strong><%= number_to_currency @quotation.transport %></strong>
     </td>
   </tr>
@@ -171,7 +192,7 @@
   <% taxes = total * @quotation.taxes / 100 %>
   <% total += taxes %>
   <tr bgcolor="#b2b2b2">
-    <td align="right" colspan="4">
+    <td align="right" colspan="1">
       <strong><%= trn_geth('PRINT_HEADER_TAXES') %></strong>
     </td>
     <td align="right">
@@ -179,7 +200,7 @@
     </td>
   </tr>
   <tr bgcolor="#b2b2b2">
-    <td align="right" colspan="4">
+    <td align="right" colspan="1">
       <strong><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></strong>
     </td>
     <td align="right">

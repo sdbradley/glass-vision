@@ -33,6 +33,10 @@
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_EMAIL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "customer_email", :size => 50 %></td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "quotation", "notes", :cols => "39", :rows => "5"  %></td>
+  </tr>
 </table>
 <hr/>
 <table>

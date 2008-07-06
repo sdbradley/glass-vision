@@ -51,6 +51,13 @@
     <td><%= @quotation.customer_email %></td>
   </tr>
   <% end %>
+  <% if @quotation.notes and !@quotation.notes.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.notes.gsub("\n", '<br/>') %></td>
+  </tr>
+  <% end %>
+
 </table>
 <hr/>
 <table>
