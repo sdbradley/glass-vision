@@ -1,0 +1,19 @@
+<h2><%= trn_geth('TITLE_COMPANY_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th></th>
+  </tr>
+<% for company in @companies %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= company.name %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => company %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => company %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => company}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,189 @@
+<!-- header -->
+<table cellpadding="5" width="100%">
+  <tr valign="top" width="1%">
+    <td rowspan="2">
+      <%= image_tag 'logos/' + @company.logo %>
+    </td>
+    <td rowspan="2" width="1%" nowrap="nowrap">
+      <strong><%= @company.name %></strong><br/>
+      <%= @company.address.gsub(/\n/, '<br/>') %><br/>
+      <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %><%= @company.phone %><br/>
+      <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %><%= @company.fax %>
+    </td>
+    <td width="98%" align="right">
+      <h2>
+        #<%= @quotation.id %>
+        <%= @quotation.project_name %>
+      </h2>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= @quotation.description %>
+    </td>
+  </tr>
+</table>
+
+<!-- customer information -->
+<table width="100%">
+  <tr valign="top">
+    <td width="50%">
+      <%= trn_geth('PRINT_LABEL_CUSTOMER') %>
+    </td>
+    <td width="50%">
+      <%= trn_geth('PRINT_LABEL_COMMENTS') %>
+    </td>
+  </tr>
+    <td width="50%" style="border: 1px solid #808080;" valign="top">
+
+      <table width="100%">
+        <tr>
+          <td><%= @quotation.customer_name %></td>
+          <td align="right"><%= @quotation.customer_email %></td>
+        </tr>
+        <tr>
+          <td rowspan="2"><%= @quotation.customer_address.gsub("\n", '<br/>') if @quotation.customer_address %></td>
+          <td align="right">
+            <% if @quotation.customer_phone and !@quotation.customer_phone.empty? %>
+            <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %>
+            <%= @quotation.customer_phone %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+            <% if @quotation.customer_fax and !@quotation.customer_fax.empty? %>
+            <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %>
+            <%= @quotation.customer_fax %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+    <td width="50%" style="border: 1px solid #808080;" valign="top">
+      <%= @quotation.comments.gsub("\n", '<br/>') if @quotation.comments %>
+    </td>
+  </tr>
+</table>
+<br/>
+
+<!-- content -->
+<!-- print 2 lines on the first page, 3 on all others. -->
+<% printed_line = 1 %>
+<% print_header = true %>
+<table width="100%" cellspacing="0" cellpadding="3">
+  <% total = 0 %>
+  <% for ql in @quotation.quotation_lines %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
+        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <% 
+        dims = ql.get_image_size 
+        options = {:style => "margin-top: 3px;"}
+        if dims[0] > dims[1]
+          options[:width] = 200
+        else
+          options[:height] = 200
+        end
+      %>
+      <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/images/previews/preview_#{ql.id}.png", options %></td>
+      <td style="border-bottom: 2px dotted #808080;">
+
+        <table width="100%">
+          <% if ql.label and !ql.label.empty? %>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.label %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.serie.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.shape.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= number_with_precision ql.width %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= number_with_precision ql.height %></td>
+          </tr>
+          <% if ql.options.length > 0 %>
+          <tr>
+            <td nowrap="nowrap" valign="top"><%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td>
+              <% 
+                first = true
+                ql.options.each { |opt| %>
+                  <%= ', ' if !first %>
+                  <%= opt.tr_description %>
+              <% 
+                  first = false
+                } %>
+            </td>
+          </tr>
+          <% end %>
+        </table>
+
+      </td>
+      <% ql_price = ql.price * (1 - @quotation.discount / 100) %>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency ql_price %></td>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= ql.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency ql_price * ql.quantity %></td>
+    </tr>
+    <% total += ql_price * ql.quantity %>
+    <% printed_line += 1
+      if printed_line == 3
+        printed_line = 0
+        print_header = true %>
+        </table>
+        <div style="page-break-before: always">&nbsp;</div>
+        <table width="100%" cellspacing="0" cellpadding="3">
+    <% end %>
+  <% end %>
+  <!-- total -->
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="4">
+      <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+    </td>
+    <td align="right">
+      <strong><%= number_to_currency @quotation.transport %></strong>
+    </td>
+  </tr>
+  <% total += @quotation.transport %>
+  <% taxes = total * @quotation.taxes / 100 %>
+  <% total += taxes %>
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="4">
+      <strong><%= trn_geth('PRINT_HEADER_TAXES') %></strong>
+    </td>
+    <td align="right">
+      <strong><%= number_to_currency taxes %></strong>
+    </td>
+  </tr>
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="4">
+      <strong><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></strong>
+    </td>
+    <td align="right">
+      <strong><%= number_to_currency total %></strong>
+    </td>
+  </tr>
+</table>

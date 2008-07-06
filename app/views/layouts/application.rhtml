@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title><%= trn_get('SITE_TITLE') %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="Shortcut Icon" href="/images/favicon.ico"/>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag :defaults %>
+  </head>
+  <body>
+    <h1><%= trn_get('SITE_TITLE') %></h1>
+    <%= link_to trn_get('MENU_HOME'), :controller => 'home' %>
+    <%= link_to image_tag("fr.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "fr" %>
+    <%= link_to image_tag("us.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "en" %>
+
+    <% if flash[:notice] %>
+    <div class="notice">
+      <table>
+        <tr>
+          <td>
+            <%= flash[:notice] %>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <% end %>
+    
+    <%= @content_for_layout %>
+  </body>
+</html>
