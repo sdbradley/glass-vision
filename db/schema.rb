@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 999) do
+ActiveRecord::Schema.define(:version => 1000) do
 
   create_table "companies", :force => true do |t|
     t.column "name",    :string, :limit => 100, :default => "", :null => false
@@ -91,18 +91,19 @@ ActiveRecord::Schema.define(:version => 999) do
   end
 
   create_table "quotations", :force => true do |t|
-    t.column "description",      :string, :limit => 50,  :default => "",  :null => false
+    t.column "description",      :string,  :limit => 50,  :default => "",    :null => false
     t.column "comments",         :text
-    t.column "project_name",     :string, :limit => 150
-    t.column "customer_name",    :string, :limit => 150
-    t.column "customer_address", :string, :limit => 200
-    t.column "customer_phone",   :string, :limit => 50
-    t.column "customer_fax",     :string, :limit => 50
-    t.column "customer_email",   :string, :limit => 50
-    t.column "transport",        :float,                 :default => 0.0, :null => false
-    t.column "discount",         :float,                 :default => 0.0, :null => false
-    t.column "taxes",            :float,                 :default => 0.0, :null => false
+    t.column "project_name",     :string,  :limit => 150
+    t.column "customer_name",    :string,  :limit => 150
+    t.column "customer_address", :string,  :limit => 200
+    t.column "customer_phone",   :string,  :limit => 50
+    t.column "customer_fax",     :string,  :limit => 50
+    t.column "customer_email",   :string,  :limit => 50
+    t.column "transport",        :float,                  :default => 0.0,   :null => false
+    t.column "discount",         :float,                  :default => 0.0,   :null => false
+    t.column "taxes",            :float,                  :default => 0.0,   :null => false
     t.column "notes",            :text
+    t.column "ready_to_sign",    :boolean,                :default => false
   end
 
   create_table "section_dimensions", :force => true do |t|

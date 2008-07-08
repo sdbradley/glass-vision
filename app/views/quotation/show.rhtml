@@ -73,6 +73,10 @@
     <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.taxes %>%</td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
+  </tr>
 </table>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> |

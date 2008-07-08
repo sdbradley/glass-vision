@@ -165,23 +165,8 @@
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
           <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
       </p>
-      <!--
-      <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #808080; margin:0px; padding:0px;">
-        <tr>
-        <td align="left" valign="top"><strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong></td>
-        </tr>
-        <tr>
-        <td align="left" rowspan="2">
-          <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
-        </td>
-        </tr>
-        <tr><td />
-        </tr>
-        <tr><td>&nbsp;</td></tr>
-      </table>
-    -->
     </td>
-    <td align="right" bgcolor="#b2b2b2">
+    <td align="right" bgcolor="#b2b2b2" width="15%">
       <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
     </td>
     <td align="right" bgcolor="#b2b2b2">
@@ -192,14 +177,14 @@
   <% taxes = total * @quotation.taxes / 100 %>
   <% total += taxes %>
   <tr bgcolor="#b2b2b2">
-    <td align="right" colspan="1">
+    <td align="right" colspan="1"  width="15%">
       <strong><%= trn_geth('PRINT_HEADER_TAXES') %></strong>
     </td>
     <td align="right">
       <strong><%= number_to_currency taxes %></strong>
     </td>
   </tr>
-  <tr bgcolor="#b2b2b2">
+  <tr bgcolor="#b2b2b2"  width="15%">
     <td align="right" colspan="1">
       <strong><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></strong>
     </td>
@@ -207,4 +192,40 @@
       <strong><%= number_to_currency total %></strong>
     </td>
   </tr>
+  <% if @quotation.ready_to_sign %>
+    <tr >
+      <td colspan="5" style="border-left:1px solid #808080;border-right:1px solid #808080;border-bottom:1px solid #808080;">
+      <table cellspacing="5">
+        <tr>
+          <td valign="top" colspan="5">
+            <p>
+              <%= trn_geth('PRINT_SIGNATURE_BLOCK_LINE1') %> <br /><br />
+              <%= trn_geth('PRINT_SIGNATURE_BLOCK_LINE2') %>
+            </p>
+            <p style="font-size:smaller;"><strong><%= @company.name %></strong><%= trn_geth('PRINT_SIGNATURE_BLOCK_LINE3') %></p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="height:2em;"><p>&nbsp;<br />&nbsp;</p></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td width="40%" style="border-top:1px solid #808080;font-size:1.2em;text-transform:uppercase;">
+            <p style="text-align:center;"><%= trn_geth('PRINT_SIGNATURE_SALES_REP_NAME')%></p>
+          </td>
+          <td width="40%" style="border-top:1px solid #808080;font-size:1.2em;text-transform:uppercase;">
+            <p style="text-align:center;"><%= trn_geth('PRINT_SIGNATURE_CLIENT_NAME')%></p>
+          </td>
+          <td width="15%" style="border-top:1px solid #808080;font-size:1.2em;text-transform:uppercase;">
+            <p style="text-align:center;"><%= trn_geth('PRINT_DATE')%></p>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr >
+          <td valign="top" colspan="5">&nbsp;</td>
+        </tr>
+      </table>
+      </td>
+  </tr>
+  <% end %>
 </table>

@@ -184,5 +184,3 @@ INSERT INTO `translations` VALUES   (189,'PRINT_HEADER_TAXES','Taxes','','Taxes'
 INSERT INTO `translations` VALUES   (190,'LABEL_LABEL','identifiant','','label');
 INSERT INTO `translations` VALUES   (191,'HEADER_LABEL','Identifiant','','Label');
 INSERT INTO `translations` VALUES   (192,'PRINT_HEADER_LABEL','Identifiant','','Label');
-INSERT INTO `translations` VALUES   (193,'PRINT_HEADER_NOTES', 'Note', '','Notes');
-INSERT INTO `translations` VALUES   (194,'LABEL_NOTES', 'Note', '', 'Notes');
