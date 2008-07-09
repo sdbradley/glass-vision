@@ -61,17 +61,20 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      respond_to do |format|
-        format.html do
+      respond_to do |accepts|
+        accepts.html do
           store_location
-          redirect_to new_session_path
+          redirect_to :controller => '/session', :action => 'new'
         end
-        format.any do
-          request_http_basic_authentication 'Web Password'
+        accepts.xml do
+          headers["Status"]           = "Unauthorized"
+          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+          render :text => "Could't authenticate you", :status => '401 Unauthorized'
         end
       end
-    end
-
+      false
+    end  
+    
     # Store the URI of the current request in the session.
     #
     # We can return to this location by calling #redirect_back_or_default.
@@ -99,9 +102,8 @@ module AuthenticatedSystem
 
     # Called from #current_user.  Now, attempt to login by basic authentication information.
     def login_from_basic_auth
-      authenticate_with_http_basic do |username, password|
-        self.current_user = User.authenticate(username, password)
-      end
+      username, passwd = get_auth_data
+      self.current_user = user.authenticate(username, passwd) if username && passwd
     end
 
     # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
@@ -111,5 +113,15 @@ module AuthenticatedSystem
         cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
         self.current_user = user
       end
+    end
+
+  private
+    @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)
+
+    # gets BASIC auth info
+    def get_auth_data
+      auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+      auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
+      return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
     end
 end
