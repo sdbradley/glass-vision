@@ -14,7 +14,7 @@ development:
   adapter: mysql
   database: inline_development
   username: root
-  password:
+  password: t9ohqa
   host: 127.0.0.1
   encoding: utf8
 
@@ -25,7 +25,7 @@ test:
   adapter: mysql
   database: inline_test
   username: root
-  password:
+  password: t9ohqa
   host: 127.0.0.1
   encoding: utf8
 
