@@ -60,3 +60,26 @@ class ActiveRecord::Base
   include Translatable
   cattr_accessor :lang
 end
+
+
+# Include your application configuration below
+#ActionMailer::Base.smtp_settings = {
+#  :address  => "mail.petmindr.com",
+#  :port  => 25,
+#  :domain  => 'www.petmindr.com',
+#  :user_name  => "petmindr@petmindr.com",
+#  :password  => mypass,
+#  :authentication  => :login
+#   }
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.smtp_settings = {
+  :address  => "mail.snowmoonsoftware.com",
+  :port  => 25,
+  :domain  => "snowmoonsoftware.com",
+  :authentication => :login,
+  :user_name => "jeff@snowmoonsoftware.com",
+  :password => "t9ohqa"
+}
+

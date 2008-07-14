@@ -1,14 +1,32 @@
-<% form_tag session_path do -%>
-<p><label for="login">Login</label><br/>
+<!--
+<p><%= trn_geth('LOGIN_SIGNUP_PROMPT')%>  <%= link_to trn_geth('SIGNUP_LABEL'), signup_url  %>.</p>
+<% form_tag login_path do -%>
+<p><label for="login"><%= trn_geth('LOGIN_LABEL') %></label><br/>
 <%= text_field_tag 'login' %></p>
 
-<p><label for="password">Password</label><br/>
+<p><label for="password"><Password><%= trn_geth('PASSWORD_LABEL') %></label><br/>
 <%= password_field_tag 'password' %></p>
 
-<!-- Uncomment this if you want this functionality
-<p><label for="remember_me">Remember me:</label>
+<p><label for="remember_me"><%= trn_geth('REMEMBER_ME_LABEL') %>:</label>
 <%= check_box_tag 'remember_me' %></p>
--->
 
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
+-->
+
+
+<h2>Login with User ID and Password:</h2>
+<% form_tag session_path do %>
+<p><label for="login">Login</label><br/>
+<%= text_field_tag 'login' %></p>
+ 
+<p><label for="password">Password</label><br />
+<%= password_field_tag 'password' %></p>
+ 
+ 
+<p><label for="remember_me">Remember me:</label>
+<%= check_box_tag 'remember_me' %></p>
+ 
+<p><%= submit_tag 'Log in' %><%= link_to "Sign Up", new_user_path %></p>
+<% end %>
+

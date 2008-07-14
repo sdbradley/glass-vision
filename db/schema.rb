@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1002) do
+ActiveRecord::Schema.define(:version => 1008) do
 
   create_table "companies", :force => true do |t|
     t.column "name",    :string, :limit => 100, :default => "", :null => false
@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(:version => 1002) do
     t.column "serie_id",  :integer, :default => 0, :null => false
   end
 
+  create_table "permissions", :force => true do |t|
+    t.column "role_id",    :integer,  :null => false
+    t.column "user_id",    :integer,  :null => false
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+  end
+
   create_table "pricing_methods", :force => true do |t|
     t.column "description", :string, :limit => 50, :default => "", :null => false
     t.column "comments",    :text
@@ -104,6 +111,10 @@ ActiveRecord::Schema.define(:version => 1002) do
     t.column "taxes",            :float,                  :default => 0.0,   :null => false
     t.column "notes",            :text
     t.column "ready_to_sign",    :boolean,                :default => false
+  end
+
+  create_table "roles", :force => true do |t|
+    t.column "rolename", :string
   end
 
   create_table "section_dimensions", :force => true do |t|
@@ -151,6 +162,8 @@ ActiveRecord::Schema.define(:version => 1002) do
     t.column "remember_token_expires_at", :datetime
     t.column "activation_code",           :string,   :limit => 40
     t.column "activated_at",              :datetime
+    t.column "password_reset_code",       :string,   :limit => 40
+    t.column "enabled",                   :boolean,                :default => true
   end
 
 end

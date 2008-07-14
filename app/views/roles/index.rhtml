@@ -1,0 +1,16 @@
+<h2>Roles for <%=h @user.login.capitalize %></h2>
+  
+<h3>Roles assigned:</h3>
+<% if @user.roles.empty? %>
+    <ul>None</ul>
+<% else %>  
+    <ul><%= render :partial => 'role', :collection => @user.roles %></ul>
+<% end %>
+  
+<h3>Roles available:</h3>
+<% if (@all_roles - @user.roles).length > 0 %>
+    <ul><%= render :partial => 'role', :collection => (@all_roles - @user.roles) %></ul>
+<% else %>
+    <ul>None</ul>
+<% end %>
+
