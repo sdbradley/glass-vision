@@ -31,6 +31,7 @@ class UsersController < ApplicationController
     render :action => 'new'
   end
   
+  #This edit action only allows users to edit their own profile
   def edit
     @user = current_user
   end

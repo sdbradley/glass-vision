@@ -1,5 +1,6 @@
 class PasswordsController < ApplicationController
   layout 'application'
+  skip_before_filter :login_required, :only => [:new, :create, :edit, :update]
   before_filter :not_logged_in_required, :only => [:new, :create]
   
   # Enter email address to recover password 
@@ -72,7 +73,7 @@ class PasswordsController < ApplicationController
       redirect_to login_path
   rescue
     logger.error "Invalid Reset Code entered"
-    flash[:notice] = "Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a ge return?)"
+    flash[:notice] = "Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a carriage return?)"
     redirect_to new_user_path
   end
     

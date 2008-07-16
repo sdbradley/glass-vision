@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Finds the user with the corresponding activation code, activates their account and returns the user.
+
   #
   # Raises:
   #  +User::ActivationCodeNotFound+ if there is no user with the corresponding activation code

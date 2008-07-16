@@ -33,13 +33,18 @@ tr.odd {
 tr.even {
 }
 
-.notice table {
+.notice table, .error table {
   background-color: #ffc800;
   margin-left: auto;
   margin-right: auto;
 }
 
-.notice td {
+ .error table {
+  background-color: #ff0000;
+  color: white;
+}
+
+.notice td, .error td{
   border: none;
   padding: 5px;
 }
@@ -92,4 +97,93 @@ table.dimensions td {
 
 .quotation img {
   margin-top: 3px;
+}
+
+#site_title {
+  text-align: center;
+}
+
+div#header {
+  width: 100%;
+  height: 53px;
+  margin:0px;
+  padding:0px;
+  background: url(/images/bg_glassvision.gif) repeat-x;
+  overflow: hidden;
+}
+
+
+body {
+  margin: 0px;
+  padding: 0px;
+  min-width: 600px;
+}
+
+div#content {
+  margin: 10px;
+}
+
+
+/********* nav bar **********/
+#nav {
+  float:right;
+  height:27px;
+  background: url(/images/menu.gif) repeat-x;
+  padding-top: 3px;
+  width: 100%;
+}
+
+#nav ul{
+  list-style-type: none;
+  ist-style-image: none;
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+}
+
+#nav ul li {
+  display: inline;
+}
+
+#nav a {
+  color: white;
+  padding: 3px 5px 6px 5px;
+  line-height:14pt;
+  text-align:center;
+  text-decoration:none;
+  margin-top:1px;
+}
+
+#nav  a:hover {
+  color: black;
+  background-color: white;
+}
+
+#greeting {
+  position:relative;
+  top: -27px;
+  float: right;
+  height: 27px;
+  line-height: 27pt;
+  margin: 0px 5px 0px 0px;
+}
+
+/****** Login dialog ********/
+#login_frame {
+  border: 5px solid #333;
+  padding: 30px; 
+  width: 400px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+#login_logo {
+  float: left;
+  padding-right: 30px;
+}
+
+#login_frame form {
+  width: 300px;
+  margin: 10px auto;
+  padding: 0px;
 }

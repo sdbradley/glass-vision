@@ -1,37 +1,3 @@
-# # This controller handles the login/logout function of the site.  
-# class SessionController < ApplicationController
-# 
-#   skip_before_filter :login_required
-#   # render new.rhtml
-#   def new
-#   end
-# 
-#   def create
-#     debug_log "session create"
-#     self.current_user = User.authenticate(params[:login], params[:password])
-#     debug_log "session create"
-#     if logged_in?
-#       if params[:remember_me] == "1"
-#         current_user.remember_me unless current_user.remember_token?
-#         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
-#       end
-#       redirect_back_or_default('/')
-#       flash[:notice] = "Logged in successfully"
-#     else
-#       debug_log "session create, user is not logged in"
-#       render :action => 'new'
-#     end
-#   end
-# 
-#   def destroy
-#     self.current_user.forget_me if logged_in?
-#     cookies.delete :auth_token
-#     reset_session
-#     flash[:notice] = "You have been logged out."
-#     redirect_back_or_default('/')
-#   end
-# end
- # This controller handles the login/logout function of the site.  
  class SessionController < ApplicationController
    layout 'application'
    before_filter :login_required, :only => :destroy
@@ -50,7 +16,7 @@
      cookies.delete :auth_token
      reset_session
      flash[:notice] = "You have been logged out."
-   redirect_to login_path    
+     redirect_to login_path    
    end
    
    protected
@@ -83,13 +49,14 @@
        self.current_user.remember_me
        cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
      end
-       flash[:notice] = "Logged in successfully"
-       return_to = session[:return_to]
-       if return_to.nil?
-         redirect_to user_path(self.current_user)
-       else
-         redirect_to return_to
-       end
+     flash[:notice] = "Logged in successfully"
+     return_to = session[:return_to]
+     debug_log "return to is #{return_to}"
+     if return_to.nil?
+       redirect_to user_path(self.current_user)
+     else
+       redirect_to return_to
+     end
    end
   
  end
