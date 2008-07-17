@@ -1,10 +1,10 @@
-<h2>Edit Your Account</h2>
-<p><%= link_to 'Show Profile', user_path(@user) %> | <%= link_to 'Change Password', change_password_path %></p>
+<h2><%= trn_get('EDIT_ACCOUNT_TITLE') %></h2>
+<p><%= link_to trn_geth('SHOW_PROFILE_LABEL'), user_path(@user) %> | <%= link_to trn_geth('CHANGE_PASSWORD_LABEL'), change_password_path %></p>
 <%= error_messages_for :user %>
  
 <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
   <p>Email:<br /><%= f.text_field :email, :size => 60 %></p>
   
-<%= submit_tag 'Save' %>
+<%= submit_tag trn_get('BUTTON_SAVE') %>
 <% end %>
 

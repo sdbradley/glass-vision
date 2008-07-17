@@ -1,10 +1,10 @@
-<h2>All Users</h2>
+<h2><%= trn_get('USERS_LIST_TITLE')%></h2>
 <table>
   <tr>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Enabled?</th>
-    <th>Roles</th>
+    <th><%= trn_geth('USERNAME_LABEL') %></th>
+    <th><%= trn_geth('EMAIL_LABEL') %></th>
+    <th><%= trn_geth('ENABLED_LABEL') %></th>
+    <th><%= trn_geth('ROLES_LABEL') %></th>
   </tr>
     <%= render :partial => 'user', :collection => @users %>
 </table>

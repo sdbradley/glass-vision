@@ -1,15 +1,15 @@
 <tr class="<%= cycle('odd', 'even') %>">
   <td><%=h user.login %></td>
   <td><%=h user.email %></td>
-  <td><%= user.enabled ? 'yes' : 'no' %>
+  <td><%= trn_get(user.enabled ? 'MSG_YES' : 'MSG_NO') %>
     <% unless user == current_user %>
       <% if user.enabled %>
-        <%= link_to('disable', user_path(user.id), :method => :delete) %>
+        <%= link_to trn_geth('DISABLE_LABEL'), user_path(user.id), :method => :delete %>
       <% else %>
-        <%= link_to('enable', enable_user_path(user.id), :method => :put) %>
+        <%= link_to trn_geth('ENABLE_LABEL'), enable_user_path(user.id), :method => :put %>
       <% end %>
     <% end %>
   </td>
-  <td>[<%= link_to 'edit roles', user_roles_path(user) %>]</td>
+  <td>[<%= link_to trn_geth('USER_EDIT_ROLES_LABEL'), user_roles_path(user) %>]</td>
 </tr>
 

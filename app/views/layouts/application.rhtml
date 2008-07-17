@@ -20,15 +20,15 @@
 <!--        <li><%= link_to 'Profile', edit_user_path(current_user) %></li> -->
 <!--          <li><%= link_to 'Change Password', change_password_path %></li> -->
         <% if current_user.has_role?('administrator') %>
-            <li><%= link_to 'Administer Users', users_path %></li>
+            <li><%= link_to trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
         <% end %>
       <% end %>     
     </ul>
     <% if logged_in? %>
       <div  id='greeting'>
         <ul>
-        <li>Hi, <%= link_to h(current_user.login), edit_user_path(current_user) %></li>
-        <li><%= link_to 'Log Out', logout_path %></li>
+        <li><%= trn_geth('MENU_GREETING_LABEL')%>,<%= link_to h(current_user.login), edit_user_path(current_user) %>.</li>
+        <li><%= link_to trn_geth('MENU_LOGOUT_LABEL'), logout_path %></li>
         </ul>
       </div>
     <% end %>     

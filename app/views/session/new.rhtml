@@ -1,40 +1,24 @@
-<!--
-<p><%= trn_geth('LOGIN_SIGNUP_PROMPT')%>  <%= link_to trn_geth('SIGNUP_LABEL'), signup_url  %>.</p>
-<% form_tag login_path do -%>
-<p><label for="login"><%= trn_geth('LOGIN_LABEL') %></label><br/>
-<%= text_field_tag 'login' %></p>
-
-<p><label for="password"><Password><%= trn_geth('PASSWORD_LABEL') %></label><br/>
-<%= password_field_tag 'password' %></p>
-
-<p><label for="remember_me"><%= trn_geth('REMEMBER_ME_LABEL') %>:</label>
-<%= check_box_tag 'remember_me' %></p>
-
-<p><%= submit_tag 'Log in' %></p>
-<% end -%>
--->
-
 <div style="text-align:center;">
   <div id="login_frame">
     <div id="login_logo">
       <%= image_tag 'logos/glass-vision.png' %>
     </div>
-  <h2>Welcome to Glass Vision!<br/></h2>
+  <h2><%= trn_get('LOGIN_WELCOME_LABEL') %><br/></h2>
   <p style="clear:both;" >&nbsp;</p>
   <fieldset>
-    <legend> Please sign in </legend>
+    <legend> <%= trn_geth('PLEASE_LOGIN_LABEL') %> </legend>
     <% form_tag session_path do %>
-    <p><label for="login">Login</label><br/>
+    <p><label for="login"><%= trn_geth('LOGIN_LABEL') %></label><br/>
     <%= text_field_tag 'login' %></p>
      
-    <p><label for="password">Password</label><br />
+    <p><label for="password"><%= trn_geth('PASSWORD_LABEL') %></label><br />
     <%= password_field_tag 'password' %><br />
-    <%= link_to 'Forgot Password?', forgot_password_path %></p>
+    <%= link_to trn_geth('FORGOT_PASSWORD_LABEL'), forgot_password_path %></p>
      
-    <p><label for="remember_me">Remember me:</label>
+    <p><label for="remember_me"><%= trn_geth('REMEMBER_ME_LABEL') %>:</label>
     <%= check_box_tag 'remember_me' %></p>
      
-    <p style="line-height:1.5em;"><%= submit_tag 'Log in' %><br />If you don't have an account, please <%= link_to "Sign Up", new_user_path %></p>
+    <p style="line-height:1.5em;"><%= submit_tag trn_geth('LOGIN_LABEL') %><br /><%= trn_geth('LOGIN_SIGNUP_PROMPT') %> <%= link_to trn_get('SIGNUP_LABEL'), new_user_path %></p>
   <% end %>
   </fieldset>
   </div>
