@@ -22,7 +22,17 @@ INSERT INTO `translations` VALUES (320, 'USERNAME_LABEL', 'Nom d\'utilisateur', 
 INSERT INTO `translations` VALUES (321, 'CONFIRM_PASSWORD_LABEL', 'Confirmer le mot de passe', '', 'Confirm Password');
 INSERT INTO `translations` VALUES (322, 'USER_LABEL', 'Utilisateur', '', 'User');
 INSERT INTO `translations` VALUES (323, 'JOINED_ON_LABEL', 'Inscrit sur', '', 'Joined on');
---INSERT INTO `translations` VALUES (, '', '', '', '');
---INSERT INTO `translations` VALUES (, '', '', '', '');
---INSERT INTO `translations` VALUES (, '', '', '', '');
-  
+INSERT INTO `translations` VALUES (324, 'ASSIGN_ROLE_LABEL', 'Attribuer rôle', '', 'Assign role');
+INSERT INTO `translations` VALUES (325, 'REMOVE_ROLE_LABEL', 'Supprimer rôle', '', 'Remove role');
+INSERT INTO `translations` VALUES (326, 'ROLES_FOR_LABEL', 'Rôles pour les', '', 'Roles for');
+INSERT INTO `translations` VALUES (327, 'ROLES_ASSIGNED_LABEL','Rôles assignés','','Roles assigned');
+INSERT INTO `translations` VALUES (328, 'ROLES_AVAIL_LABEL','Rôles disponibles','','Roles available');
+INSERT INTO `translations` VALUES (329, 'NONE_MSG','Aucun','','None');  
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');
+INSERT INTO `translations` VALUES (, '','','','');  

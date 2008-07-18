@@ -1,38 +1,15 @@
-<h2>Roles for <%=h @user.login.capitalize %></h2>
+<h2><%= trn_geth('ROLES_FOR_LABEL')%> <%=h @user.login.capitalize %></h2>
  
-<h3>Roles assigned:</h3>
-<ul><%= render :partial => 'role', :collection => @user.roles %></ul>
- 
-<h3>Roles available:</h3>
-<ul><%= render :partial => 'role', :collection => (@all_roles - @user.roles) %></ul>
-
-<!--
-
-<h1>Listing roles</h1>
-
-<table>
-  <tr>
-  <% for column in Role.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
-  
-<% for role in @roles %>
-  <tr>
-  <% for column in Role.content_columns %>
-    <td><%=h role.send(column.name) %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => role %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => role %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => role }, :confirm => 'Are you sure?', :method => :post %></td>
-  </tr>
+<h3><%= trn_geth('ROLES_ASSIGNED_LABEL')%> :</h3>
+<% if @user.roles.empty? %>
+    <ul><%= trn_get('NONE_MSG')%></ul>
+<% else %>  
+    <ul><%= render :partial => 'role', :collection => @user.roles %></ul>
 <% end %>
-</table>
-
-<%= link_to 'Previous page', { :page => @role_pages.current.previous } if @role_pages.current.previous %>
-<%= link_to 'Next page', { :page => @role_pages.current.next } if @role_pages.current.next %> 
-
-<br />
-
-<%= link_to 'New role', :action => 'new' %>
--->
+  
+<h3><%= trn_geth('ROLES_AVAIL_LABEL')%>:</h3>
+<% if (@all_roles - @user.roles).length > 0 %>
+    <ul><%= render :partial => 'role', :collection => (@all_roles - @user.roles) %></ul>
+<% else %>
+    <ul><%= trn_get('NONE_MSG')%></ul>
+<% end %>
