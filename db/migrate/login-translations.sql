@@ -19,5 +19,10 @@ INSERT INTO `translations` VALUES (317, 'ENABLED_LABEL', 'Activé', '', 'Enabled
 INSERT INTO `translations` VALUES (318, 'ROLES_LABEL', 'Rôles', '', 'Roles');
 INSERT INTO `translations` VALUES (319, 'USERS_LIST_TITLE', 'Tous les utilisateurs', '', 'All Users');
 INSERT INTO `translations` VALUES (320, 'USERNAME_LABEL', 'Nom d\'utilisateur', '', 'Username');
+INSERT INTO `translations` VALUES (321, 'CONFIRM_PASSWORD_LABEL', 'Confirmer le mot de passe', '', 'Confirm Password');
+INSERT INTO `translations` VALUES (322, 'USER_LABEL', 'Utilisateur', '', 'User');
+INSERT INTO `translations` VALUES (323, 'JOINED_ON_LABEL', 'Inscrit sur', '', 'Joined on');
+--INSERT INTO `translations` VALUES (, '', '', '', '');
+--INSERT INTO `translations` VALUES (, '', '', '', '');
 --INSERT INTO `translations` VALUES (, '', '', '', '');
   

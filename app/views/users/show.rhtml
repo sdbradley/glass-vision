@@ -1,4 +1,4 @@
 <% if logged_in? %>
-<h2>User: <%=h @user.login %></h2>
-<p>Joined on: <%= @user.created_at.to_s(:long) %></p>
+<h2><%= trn_geth('USER_LABEL') %>: <%=h @user.login %></h2>
+<p><%= trn_geth('JOINED_ON_LABEL') %>: <%= @user.created_at.to_s(:long) %></p>
 <% end %>
