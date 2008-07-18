@@ -1,8 +1,8 @@
 <% form_tag url_for(:action => "update", :id => params[:id]) do %>
-    Password:<br />
+    <%= trn_geth('PASSWORD_LABEL')%> :<br />
     <%= password_field_tag :password %><br />
-    Confirm Password:<br />
+    <%= trn_geth('CONFIRM_PASSWORD_LABEL')%> :<br />
     <%= password_field_tag :password_confirmation %><br />
-    <%= submit_tag "Reset Your Password" %>
+    <%= submit_tag trn_geth('PASSWD_RESET_BUTTON') %>
 <% end %>
 

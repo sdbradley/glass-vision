@@ -28,11 +28,12 @@ INSERT INTO `translations` VALUES (326, 'ROLES_FOR_LABEL', 'Rôles pour les', ''
 INSERT INTO `translations` VALUES (327, 'ROLES_ASSIGNED_LABEL','Rôles assignés','','Roles assigned');
 INSERT INTO `translations` VALUES (328, 'ROLES_AVAIL_LABEL','Rôles disponibles','','Roles available');
 INSERT INTO `translations` VALUES (329, 'NONE_MSG','Aucun','','None');  
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');
-INSERT INTO `translations` VALUES (, '','','','');  
+INSERT INTO `translations` VALUES (330, 'PASSWD_RESET_BUTTON','Réinitialiser votre mot de passe','','Reset Your Password');
+INSERT INTO `translations` VALUES (331, 'PASSWD_RESET_LABEL','Réinitialiser le mot de passe','','Reset Password');
+INSERT INTO `translations` VALUES (332, 'EMAIL_ADDRESS_LABEL','Quelle est l\'adresse e-mail utilisée pour créer votre compte?','','What is the email address used to create your account?');
+
+-- INSERT INTO `translations` VALUES (, '','','','');
+-- INSERT INTO `translations` VALUES (, '','','','');
+-- INSERT INTO `translations` VALUES (, '','','','');
+-- INSERT INTO `translations` VALUES (, '','','','');
+-- INSERT INTO `translations` VALUES (, '','','','');  

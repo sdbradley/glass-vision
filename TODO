@@ -1,0 +1,6 @@
+Notes:
+
+User trying to login without activating account gets no message, just the login form
+After activating, got 'no response to index
+
+Neeed to translate all flash messages and the mailers
