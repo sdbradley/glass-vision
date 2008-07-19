@@ -31,7 +31,10 @@ INSERT INTO `translations` VALUES (329, 'NONE_MSG','Aucun','','None');
 INSERT INTO `translations` VALUES (330, 'PASSWD_RESET_BUTTON','Réinitialiser votre mot de passe','','Reset Your Password');
 INSERT INTO `translations` VALUES (331, 'PASSWD_RESET_LABEL','Réinitialiser le mot de passe','','Reset Password');
 INSERT INTO `translations` VALUES (332, 'EMAIL_ADDRESS_LABEL','Quelle est l\'adresse e-mail utilisée pour créer votre compte?','','What is the email address used to create your account?');
-
+INSERT INTO `translations` VALUES (333, 'CONFIRM_NEW_PASSWORD_LABEL','Confirmer le nouveau mot de passe', '', 'Confirm New Password');
+INSERT INTO `translations` VALUES (334, 'OLD_PASSWORD_LABEL', 'Ancien mot de passe', '', 'Old password');
+INSERT INTO `translations` VALUES (335, 'NEW_PASSWORD_LABEL', 'Nouveau mot de passe', '', 'New password');
+INSERT INTO `translations` VALUES (336, 'PASSWORD_REQUIREMENTS_LABEL', 'Entre 4 et 40 caractères', '', 'Between 4 and 40 characters');
 -- INSERT INTO `translations` VALUES (, '','','','');
 -- INSERT INTO `translations` VALUES (, '','','','');
 -- INSERT INTO `translations` VALUES (, '','','','');
