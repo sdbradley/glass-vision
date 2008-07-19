@@ -13,10 +13,10 @@ class PasswordsController < ApplicationController
   if @user = User.find_for_forget(params[:email])
       @user.forgot_password
       @user.save      
-      flash[:notice] = "A password reset link has been sent to your email address."
+      flash[:notice] = trn_get('PASSWORD_RESET_EMAIL_SENT_FLASH')
     redirect_to login_path
     else
-      flash[:notice] = "Could not find a user with that email address."
+      flash[:notice] = trn_get('BAD_EMAIL_FLASH')
       render :action => 'new'
     end  
   end
@@ -34,7 +34,7 @@ class PasswordsController < ApplicationController
     raise if @user.nil?
   rescue
     logger.error "Invalid Reset Code entered."
-    flash[:notice] = "Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a ge return?)"
+    flash[:notice] = trn_get('BAD_PASSWORD_RESET_CODE')
     #redirect_back_or_default('/')
     redirect_to new_user_path
   end
@@ -47,7 +47,7 @@ class PasswordsController < ApplicationController
       return
     end
     if params[:password].blank?
-      flash[:notice] = "Password field cannot be blank."
+      flash[:notice] = trn_get('PASSWORD_WAS_BLANK_FLASH')
       render :action => 'edit', :id => params[:id]
       return
     end
@@ -64,16 +64,16 @@ class PasswordsController < ApplicationController
     @user.password_confirmation = params[:password_confirmation]
     @user.password = params[:password]
     @user.reset_password        
-    flash[:notice] = @user.save ? "Password reset." : "Password not reset."
+    flash[:notice] = trn_get(@user.save ? 'PASSWORD_RESET' : 'PASSWORD_NOT_RESET')
       else
-        flash[:notice] = "Password mismatch."
+        flash[:notice] = trn_get('PASSWORD_MISMATCH')
         render :action => 'edit', :id => params[:id]
       return
       end  
       redirect_to login_path
   rescue
     logger.error "Invalid Reset Code entered"
-    flash[:notice] = "Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a carriage return?)"
+    flash[:notice] = trn_get('BAD_PASSWORD_RESET_CODE')
     redirect_to new_user_path
   end
     
