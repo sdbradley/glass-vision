@@ -24,10 +24,10 @@ class UsersController < ApplicationController
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-  flash[:notice] = "Thanks for signing up! Please check your email to activate your account before logging in."
+  flash[:notice] = trn_get('SIGNUP_THANKS_FLASH')
     redirect_to login_path    
   rescue ActiveRecord::RecordInvalid
-    flash[:error] = "There was a problem creating your account."
+    flash[:error] = trn_get('SIGNUP_PROBLEM_FLASH')
     render :action => 'new'
   end
   
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(current_user)
     if @user.update_attributes(params[:user])
-      flash[:notice] = "User updated"
+      flash[:notice] = trn_get('USER_UPDATED_FLASH')
       redirect_to :action => 'show', :id => current_user
     else
       render :action => 'edit'
@@ -49,9 +49,9 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     if @user.update_attribute(:enabled, false)
-      flash[:notice] = "User disabled"
+      flash[:notice] = trn_get('USER_DISABLED_FLASH')
     else
-      flash[:error] = "There was a problem disabling this user."
+      flash[:error] = trn_get('USER_DISABLE_PROBLEM_FLASH')
     end
     redirect_to :action => 'index'
   end
@@ -59,9 +59,9 @@ class UsersController < ApplicationController
   def enable
     @user = User.find(params[:id])
     if @user.update_attribute(:enabled, true)
-      flash[:notice] = "User enabled"
+      flash[:notice] = trn_get('USER_ENABLED_FLASH')
     else
-      flash[:error] = "There was a problem enabling this user."
+      flash[:error] = trn_get('USER_ENABLE_PROBLEM_FLASH')
     end
       redirect_to :action => 'index'
   end

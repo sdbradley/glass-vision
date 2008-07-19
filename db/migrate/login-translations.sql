@@ -35,8 +35,12 @@ INSERT INTO `translations` VALUES (333, 'CONFIRM_NEW_PASSWORD_LABEL','Confirmer 
 INSERT INTO `translations` VALUES (334, 'OLD_PASSWORD_LABEL', 'Ancien mot de passe', '', 'Old password');
 INSERT INTO `translations` VALUES (335, 'NEW_PASSWORD_LABEL', 'Nouveau mot de passe', '', 'New password');
 INSERT INTO `translations` VALUES (336, 'PASSWORD_REQUIREMENTS_LABEL', 'Entre 4 et 40 caractères', '', 'Between 4 and 40 characters');
--- INSERT INTO `translations` VALUES (, '','','','');
--- INSERT INTO `translations` VALUES (, '','','','');
--- INSERT INTO `translations` VALUES (, '','','','');
--- INSERT INTO `translations` VALUES (, '','','','');
--- INSERT INTO `translations` VALUES (, '','','','');  
+INSERT INTO `translations` VALUES (337, 'SIGNUP_THANKS_FLASH', 'Merci de votre inscription! S’il vous plaît vérifiez votre email pour activer votre compte avant de vous connecter po', '', 'Thanks for signing up! Please check your email to activate your account before logging in.');
+INSERT INTO `translations` VALUES (338, 'SIGNUP_PROBLEM_FLASH', 'Il a été un problème lors de la création de votre compte.', '', 'There was a problem creating your account.');
+INSERT INTO `translations` VALUES (339, 'USER_UPDATED_FLASH', 'Utilisateur mise à jour.', '', 'User updated.');
+INSERT INTO `translations` VALUES (340, 'USER_DISABLED_FLASH', 'Utilisateur handicapés.', '', 'User disabled.');
+INSERT INTO `translations` VALUES (341, 'USER_DISABLE_PROBLEM_FLASH', 'Il y avait un problème de désactiver cet utilisateur.', '', 'There was a problem disabling this user.');
+INSERT INTO `translations` VALUES (342, 'USER_ENABLED_FLASH', 'Utilisateur activé.', '', 'User enabled');
+INSERT INTO `translations` VALUES (343, 'USER_ENABLE_PROBLEM_FLASH', 'Il y avait un problème ce qui permettra à cet utilisateur.', '', 'There was a problem enabling this user');
+  
+  
