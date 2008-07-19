@@ -1,8 +1,8 @@
-Your account has been created.
+<%= trn_get('ACCOUNT_CREATED_EMAIL')%>
 
-  Username: <%= @user.login %>
-  Password: <%= @user.password %>
+  <%= trn_geth('USERNAME_LABEL')%>: <%= @user.login %>
+  <%= trn_geth('PASSWORD_LABEL')%>: <%= @user.password %>
 
-Visit this url to activate your account:
+<%= trn_geth('ACTIVATION_URL_PROMPT')%>:
 
   <%= @url %>

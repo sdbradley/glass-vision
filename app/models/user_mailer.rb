@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
   def signup_notification(user)
     setup_email(user)
-    @subject    += 'Please activate your new account'
+    @subject    += trn_get('ACCOUNT_NEEDS_ACTIVATION_SUBJECT')
   
     @body[:url]  = "http://quotations.glass-vision.net/activate/#{user.activation_code}"
   
@@ -9,19 +9,19 @@ class UserMailer < ActionMailer::Base
   
   def activation(user)
     setup_email(user)
-    @subject    += 'Your account has been activated!'
+    @subject    += trn_get('ACCOUNT_ACTIVATED_SUBJECT')
     @body[:url]  = "http://quotations.glass-vision.net/"
   end
   
   def forgot_password(user)
     setup_email(user)
-    @subject    += 'You have requested to change your password'
+    @subject    += trn_get('ACCOUNT_CHANGE_PASSWORD_SUBJECT')
     @body[:url]  = "http://localhost:3000/reset_password/#{user.password_reset_code}"
   end
  
   def reset_password(user)
     setup_email(user)
-    @subject    += 'Your password has been reset.'
+    @subject    += trn_get('ACCOUNT_PASSWORD_RESET_SUBJECT')
   end
   
   protected

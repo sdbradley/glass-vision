@@ -44,8 +44,17 @@ INSERT INTO `translations` VALUES (342, 'USER_ENABLED_FLASH', 'Utilisateur activ
 INSERT INTO `translations` VALUES (343, 'USER_ENABLE_PROBLEM_FLASH', 'Il y avait un problème ce qui permettra à cet utilisateur.', '', 'There was a problem enabling this user');
 INSERT INTO `translations` VALUES (344, 'PASSWORD_RESET_EMAIL_SENT_FLASH', 'Un lien réinitialisation du mot de passe a été envoyé à votre adresse e-mail.', '', 'A password reset link has been sent to your email address.');
 INSERT INTO `translations` VALUES (345, 'BAD_EMAIL_FLASH', 'Impossible de trouver un utilisateur à cette adresse.', '', 'Could not find a user with that email address.');
-INSERT INTO `translations` VALUES (346, 'BAD_PASSWORD_RESET_CODE', 'Désolé - C\'est une réinitialisation du mot de passe invalide code. S’il vous plaît vérifier votre code et essayer à nouveau. (Peut-être que votre client de messagerie inséré un retour ge?)', '', 'Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a ge return?)');
-INSERT INTO `translations` VALUES (347, 'PASSWORD_WAS_BLANK_FLASH', 'Mot de passe champ ne peut pas être vide.', '', 'Password field cannot be blank.');
-INSERT INTO `translations` VALUES (348, 'PASSWORD_RESET', 'Réinitialisation du mot de passe.', '', 'Password reset.');
-INSERT INTO `translations` VALUES (349, 'PASSWORD_NOT_RESET', 'Mot de passe pas à zéro.', '', 'Password not reset.');
-INSERT INTO `translations` VALUES (350, 'PASSWORD_MISMATCH', 'Mot de passe incorrect', '', 'Password mismatch.');  
+INSERT INTO `translations` VALUES (346, 'ACCOUNT_ACTIVATED_EMAIL', 'votre compte a été activé. Mai maintenant vous connecter et commencer à utiliser le site', '', 'your account has been activated.  You may now login and begin using the site');
+INSERT INTO `translations` VALUES (347, 'ACCOUNT_PASSWORD_RESET_EMAIL', 'pour réinitialiser votre mot de passe, s’il vous plaît visite', '', ' to reset your password, please visit');
+INSERT INTO `translations` VALUES (348, 'BAD_PASSWORD_RESET_CODE', 'Désolé - C\'est une réinitialisation du mot de passe invalide code. S’il vous plaît vérifier votre code et essayer à nouveau. (Peut-être que votre client de messagerie inséré un retour ge?)', '', 'Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a ge return?)');
+INSERT INTO `translations` VALUES (349, 'PASSWORD_WAS_BLANK_FLASH', 'Mot de passe champ ne peut pas être vide.', '', 'Password field cannot be blank.');
+INSERT INTO `translations` VALUES (350, 'PASSWORD_RESET', 'Réinitialisation du mot de passe.', '', 'Password reset.');
+INSERT INTO `translations` VALUES (351, 'PASSWORD_NOT_RESET', 'Mot de passe pas à zéro.', '', 'Password not reset.');
+INSERT INTO `translations` VALUES (352, 'PASSWORD_MISMATCH', 'Mot de passe incorrect', '', 'Password mismatch.');  
+INSERT INTO `translations` VALUES (353, 'ACCOUNT_NEEDS_ACTIVATION_SUBJECT', 'S’il vous plaît activer votre nouveau compte', '', 'Please activate your new account');
+INSERT INTO `translations` VALUES (354, 'ACCOUNT_ACTIVATED_SUBJECT', 'Votre compte a été activé!', '', 'Your account has been activated!');
+INSERT INTO `translations` VALUES (355, 'ACCOUNT_CHANGE_PASSWORD_SUBJECT', 'Vous avez demandé à changer votre mot de passe', '', 'You have requested to change your password');
+INSERT INTO `translations` VALUES (356, 'ACCOUNT_PASSWORD_RESET_SUBJECT', 'Votre mot de passe a été réinitialisé.', '', 'Your password has been reset.');
+INSERT INTO `translations` VALUES (357, 'ACCOUNT_CREATED_EMAIL', 'Votre compte a été créé.', '', 'Your account has been created.');
+INSERT INTO `translations` VALUES (358, 'ACTIVATION_URL_PROMPT', 'Visiter cette URL pour activer votre compte', '', 'Visit this url to activate your account');
+  
