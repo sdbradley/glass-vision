@@ -1,22 +1,24 @@
 class UserMailer < ActionMailer::Base
+  
+  include TranslationGet
   def signup_notification(user)
     setup_email(user)
     @subject    += trn_get('ACCOUNT_NEEDS_ACTIVATION_SUBJECT')
   
-    @body[:url]  = "http://quotations.glass-vision.net/activate/#{user.activation_code}"
+    @body[:url]  = "http://clients.snowmoonsoftware/inline/activate/#{user.activation_code}"
   
   end
   
   def activation(user)
     setup_email(user)
     @subject    += trn_get('ACCOUNT_ACTIVATED_SUBJECT')
-    @body[:url]  = "http://quotations.glass-vision.net/"
+    @body[:url]  = "http://clients.snowmoonsoftware/inline/"
   end
   
   def forgot_password(user)
     setup_email(user)
     @subject    += trn_get('ACCOUNT_CHANGE_PASSWORD_SUBJECT')
-    @body[:url]  = "http://localhost:3000/reset_password/#{user.password_reset_code}"
+    @body[:url]  = "http://clients.snowmoonsoftware/inline/reset_password/#{user.password_reset_code}"
   end
  
   def reset_password(user)
