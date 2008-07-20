@@ -1,4 +1,6 @@
 class CreatePermissions < ActiveRecord::Migration
+  include TranslationGet
+
   def self.up
     create_table :permissions do |t|
       t.column :role_id,      :integer, :null => false
@@ -10,6 +12,7 @@ class CreatePermissions < ActiveRecord::Migration
     Role.create(:rolename => 'administrator')
     #Then, add default admin user
     #Be sure change the password later or in this migration file
+
     user = User.new
     user.login = "admin"
     user.email = "jeff@snowmoonsoftware.com"
