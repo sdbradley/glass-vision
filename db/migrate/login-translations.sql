@@ -62,3 +62,4 @@ INSERT INTO `translations` VALUES (360, 'LOGIN_FAILED_FLASH', 'Votre nom d\'util
 INSERT INTO `translations` VALUES (361, 'LOGIN_ACCT_NOT_ACTIVE', 'Votre compte n\'est pas actif, s’il vous plaît consulter votre messagerie pour le code d\'activation.', '', 'Your account is not active, please check your email for the activation code.');
 INSERT INTO `translations` VALUES (362, 'LOGIN_ACCT_DISABLED_FLASH', 'Votre compte a été désactivé.', '', 'Your account has been disabled.');
 INSERT INTO `translations` VALUES (363, 'LOGIN_SUCCESSFUL_FLASH', 'Connecté avec succès', '', 'Logged in successfully');
+INSERT INTO `translations` VALUES (364, 'FORGOT_PASSWORD_LABEL', 'Mot de passe oublié?', '', 'Forgot password?');
