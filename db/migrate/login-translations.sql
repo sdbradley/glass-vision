@@ -1,10 +1,10 @@
-INSERT INTO `translations` VALUES   (300, 'LOGIN_SIGNUP_PROMPT', 'Si vous n\'avez pas un compte, vous aurez besoin', '', 'If you don\'t have an account, you\'ll need to');
-INSERT INTO `translations` VALUES (301, 'LOGIN_LABEL', 'Connexion','', 'Login');
+INSERT INTO `translations` VALUES   (300, 'LOGIN_SIGNUP_PROMPT', 'Si vous n\'avez pas un compte, vous aurez besoin ', '', 'If you don\'t have an account, you\'ll need to');
+INSERT INTO `translations` VALUES (301, 'LOGIN_LABEL', 'ConNom usagernexion','', 'Login');
 INSERT INTO `translations` VALUES (302, 'PASSWORD_LABEL', 'Mot de passe','', 'Password');
 INSERT INTO `translations` VALUES (303, 'REMEMBER_ME_LABEL', 'Se souvenir de moi','', 'Remember me');
-INSERT INTO `translations` VALUES (304, 'SIGNUP_LABEL','d\'inscription','', 'signup');
-INSERT INTO `translations` VALUES (305, 'LOGIN_WELCOME_LABEL', 'Bienvenue au Glass Vision', '', 'Welcome to Glass Vision');
-INSERT INTO `translations` VALUES (306, 'PLEASE_LOGIN_LABEL','S\’il vous plaît signer dans','','Please sign in');
+INSERT INTO `translations` VALUES (304, 'SIGNUP_LABEL','de vous inscrire','', 'signup');
+INSERT INTO `translations` VALUES (305, 'LOGIN_WELCOME_LABEL', 'Bienvenue chez Glass Vision', '', 'Welcome to Glass Vision');
+INSERT INTO `translations` VALUES (306, 'PLEASE_LOGIN_LABEL','S’il vous plaît connectez vous içi','','Please sign in');
 INSERT INTO `translations` VALUES (307, 'MENU_GREETING_LABEL', 'Bonjour', '', 'Hello');
 INSERT INTO `translations` VALUES (308, 'MENU_ADMIN_USERS_LABEL', 'Modifier les utilisateurs', '', 'Administer Users');
 INSERT INTO `translations` VALUES (309, 'MENU_LOGOUT_LABEL', 'déconnectez-vous', '', 'Log out');
@@ -62,4 +62,4 @@ INSERT INTO `translations` VALUES (360, 'LOGIN_FAILED_FLASH', 'Votre nom d\'util
 INSERT INTO `translations` VALUES (361, 'LOGIN_ACCT_NOT_ACTIVE', 'Votre compte n\'est pas actif, s’il vous plaît consulter votre messagerie pour le code d\'activation.', '', 'Your account is not active, please check your email for the activation code.');
 INSERT INTO `translations` VALUES (362, 'LOGIN_ACCT_DISABLED_FLASH', 'Votre compte a été désactivé.', '', 'Your account has been disabled.');
 INSERT INTO `translations` VALUES (363, 'LOGIN_SUCCESSFUL_FLASH', 'Connecté avec succès', '', 'Logged in successfully');
-INSERT INTO `translations` VALUES (364, 'FORGOT_PASSWORD_LABEL', 'Mot de passe oublié?', '', 'Forgot password?');
+INSERT INTO `translations` VALUES (364, 'FORGOT_PASSWORD_LABEL', 'Mot de passe oublier?', '', 'Forgot password?');
