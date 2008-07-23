@@ -44,6 +44,7 @@ tr.even {
   color: white;
 }
 
+
 .notice td, .error td{
   border: none;
   padding: 5px;
@@ -186,4 +187,9 @@ div#content {
   width: 300px;
   margin: 10px auto;
   padding: 0px;
+}
+
+@page {
+  size:landscape;
+  margin: 0.25in;
 }
