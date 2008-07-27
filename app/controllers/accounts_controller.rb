@@ -8,16 +8,16 @@ class AccountsController < ApplicationController
     # Uncomment and change paths to have user logged in after activation - not recommended
     #self.current_user = User.find_and_activate!(params[:id])
   User.find_and_activate!(params[:id])
-    flash[:notice] = "Your account has been activated! You can now login."
+    flash[:notice] = trn_geth('ACCOUNT_ACTIVATED_EMAIL')
     redirect_to login_path
   rescue User::ArgumentError
-    flash[:notice] = 'Activation code not found. Please try creating a new account.'
+    flash[:notice] = trn_geth('ACTIVATION_CODE_NOT_FOUND_FLASH')
     redirect_to new_user_path 
   rescue User::ActivationCodeNotFound
-    flash[:notice] = 'Activation code not found. Please try creating a new account.'
+    flash[:notice] = trn_geth('ACTIVATION_CODE_NOT_FOUND_FLASH')
     redirect_to new_user_path
   rescue User::AlreadyActivated
-    flash[:notice] = 'Your account has already been activated. You can log in below.'
+    flash[:notice] = trn_geth('ACCOUNT_ACTIVATED_FLASH')
     redirect_to login_path
   end
  
@@ -32,19 +32,19 @@ class AccountsController < ApplicationController
         current_user.password_confirmation = params[:password_confirmation]
         current_user.password = params[:password]        
     if current_user.save
-          flash[:notice] = "Password successfully updated."
+          flash[:notice] = trn_geth('PASSWORD_RESET_FLASH')
           redirect_to root_path #profile_url(current_user.login)
         else
-          flash[:error] = "An error occured, your password was not changed."
+          flash[:error] = trn_geth('PASSWORD_NOT_RESET_FLASH')
           render :action => 'edit'
         end
       else
-        flash[:error] = "New password does not match the password confirmation."
+        flash[:error] = trn_geth('PASSWORD_MISMATCH_FLASH')
         @old_password = params[:old_password]
         render :action => 'edit'      
       end
     else
-      flash[:error] = "Your old password is incorrect."
+      flash[:error] = trn_geth('OLD_PASSWORD_INCORRECT_FLASH')
       render :action => 'edit'
     end 
   end

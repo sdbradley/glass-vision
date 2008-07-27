@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   
   #This show action only allows users to view their own profile
   def show
-    @user = current_user
+    get_user_for_edit
   end
     
   # render new.rhtml
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   
   #This edit action only allows users to edit their own profile
   def edit
-    @user = current_user
+    get_user_for_edit
   end
   
   def update
@@ -65,6 +65,14 @@ class UsersController < ApplicationController
     end
       redirect_to :action => 'index'
   end
- 
+
+protected
+  def get_user_for_edit
+    if current_user.has_role?('administrator')
+      @user = User.find(params[:id])
+    else
+      @user = current_user unless current_user.has_role?('administrator')
+    end
+  end 
 end
 

@@ -65,10 +65,12 @@
     <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.transport %>$</td>
   </tr>
+  <% if current_user.has_role?('administrator')%>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.discount %>%</td>
   </tr>
+  <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.taxes %>%</td>

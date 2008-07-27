@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   # add relationships for roles and users
   has_many :permissions, :dependent => :destroy
   has_many :roles, :through => :permissions
+  has_many :quotations
    
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.

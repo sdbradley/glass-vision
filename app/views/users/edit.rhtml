@@ -1,4 +1,4 @@
-<h2><%= trn_get('EDIT_ACCOUNT_TITLE') %></h2>
+<h2><%= trn_get(current_user == @user ? 'EDIT_ACCOUNT_TITLE' : 'EDIT_USER_ACCOUNT_TITLE') % @user.login%></h2>
 <p><%= link_to trn_geth('SHOW_PROFILE_LABEL'), user_path(@user) %> | <%= link_to trn_geth('CHANGE_PASSWORD_LABEL'), change_password_path %></p>
 <%= error_messages_for :user %>
  

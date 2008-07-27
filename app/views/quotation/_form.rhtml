@@ -44,10 +44,12 @@
     <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "transport", :size => 10, :style => "text-align: right;" %>$</td>
   </tr>
+  <% if current_user.has_role?('administrator')%>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "discount", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>
+  <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "taxes", :size => 10, :style => "text-align: right;" %>%</td>

@@ -46,7 +46,7 @@ INSERT INTO `translations` VALUES (344, 'PASSWORD_RESET_EMAIL_SENT_FLASH', 'Un l
 INSERT INTO `translations` VALUES (345, 'BAD_EMAIL_FLASH', 'Impossible de trouver un utilisateur à cette adresse.', '', 'Could not find a user with that email address.');
 INSERT INTO `translations` VALUES (346, 'ACCOUNT_ACTIVATED_EMAIL', 'votre compte a été activé. Mai maintenant vous connecter et commencer à utiliser le site', '', 'your account has been activated.  You may now login and begin using the site');
 INSERT INTO `translations` VALUES (347, 'ACCOUNT_PASSWORD_RESET_EMAIL', 'pour réinitialiser votre mot de passe, s’il vous plaît visite', '', ' to reset your password, please visit');
-INSERT INTO `translations` VALUES (348, 'BAD_PASSWORD_RESET_CODE', 'Désolé - C\'est une réinitialisation du mot de passe invalide code. S’il vous plaît vérifier votre code et essayer à nouveau. (Peut-être que votre client de messagerie inséré un retour ge?)', '', 'Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a ge return?)');
+INSERT INTO `translations` VALUES (348, 'BAD_PASSWORD_RESET_CODE', 'Désolé - C\'est une réinitialisation du mot de passe invalide code. S’il vous plaît vérifier votre code et essayer à nouveau. (Peut-être que votre client de messagerie inséré un retour ge?)', '', 'Sorry - That is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a carriage return?)');
 INSERT INTO `translations` VALUES (349, 'PASSWORD_WAS_BLANK_FLASH', 'Mot de passe champ ne peut pas être vide.', '', 'Password field cannot be blank.');
 INSERT INTO `translations` VALUES (350, 'PASSWORD_RESET', 'Réinitialisation du mot de passe.', '', 'Password reset.');
 INSERT INTO `translations` VALUES (351, 'PASSWORD_NOT_RESET', 'Mot de passe pas à zéro.', '', 'Password not reset.');
@@ -59,7 +59,7 @@ INSERT INTO `translations` VALUES (357, 'ACCOUNT_CREATED_EMAIL', 'Votre compte a
 INSERT INTO `translations` VALUES (358, 'ACTIVATION_URL_PROMPT', 'Visiter cette URL pour activer votre compte', '', 'Visit this url to activate your account');
 INSERT INTO `translations` VALUES (359, 'LOGGED_OUT_FLASH', 'Vous avez été déconnecté.', '', 'You have been logged out.');
 INSERT INTO `translations` VALUES (360, 'LOGIN_FAILED_FLASH', 'Votre nom d\'utilisateur ou mot de passe est incorrect.', '', 'Your username or password is incorrect.');
-INSERT INTO `translations` VALUES (361, 'LOGIN_ACCT_NOT_ACTIVE', 'Votre compte n\'est pas actif, s’il vous plaît consulter votre messagerie pour le code d\'activation.', '', 'Your account is not active, please check your email for the activation code.');
+INSERT INTO `translations` VALUES (361, 'LOGIN_ACCT_NOT_ACTIVE_FLASH', 'Votre compte n\'est pas actif, s’il vous plaît consulter votre messagerie pour le code d\'activation.', '', 'Your account is not active, please check your email for the activation code.');
 INSERT INTO `translations` VALUES (362, 'LOGIN_ACCT_DISABLED_FLASH', 'Votre compte a été désactivé.', '', 'Your account has been disabled.');
 INSERT INTO `translations` VALUES (363, 'LOGIN_SUCCESSFUL_FLASH', 'Connecté avec succès', '', 'Logged in successfully');
 INSERT INTO `translations` VALUES (364, 'FORGOT_PASSWORD_LABEL', 'Mot de passe oublier?', '', 'Forgot password?');
