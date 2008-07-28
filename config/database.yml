@@ -31,11 +31,8 @@ test:
 
 production:
   adapter: mysql
-#  database: glass_inlineproduction
-#  username: glass_inline
-#  password: inline
-  database: inline_development
-  username: root
-  password: t9ohqa
+  database: glass_inlineproduction
+  username: glass_inline
+  password: inline
   host: 127.0.0.1
   encoding: utf8
