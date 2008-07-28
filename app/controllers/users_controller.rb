@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @users = User.find(:all)
   end
   
-  #This show action only allows users to view their own profile
+  #This show action only allows users to view their own profile, but allows admins to see /edit anyone
   def show
     get_user_for_edit
   end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-  flash[:notice] = trn_get('SIGNUP_THANKS_FLASH')
+    flash[:notice] = trn_get('SIGNUP_THANKS_FLASH')
     redirect_to login_path    
   rescue ActiveRecord::RecordInvalid
     flash[:error] = trn_get('SIGNUP_PROBLEM_FLASH')
@@ -71,7 +71,7 @@ protected
     if current_user.has_role?('administrator')
       @user = User.find(params[:id])
     else
-      @user = current_user unless current_user.has_role?('administrator')
+      @user = current_user # unless current_user.has_role?('administrator')
     end
   end 
 end
