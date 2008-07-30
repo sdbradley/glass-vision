@@ -7,4 +7,6 @@ INSERT INTO `translations` VALUES (370, 'OLD_PASSWORD_INCORRECT_FLASH', 'Votre a
 INSERT INTO `translations` VALUES (371, 'USER_EDIT_LABEL', 'modifier', '', 'edit');
 INSERT INTO `translations` VALUES (372, 'USER_ACTIONS_LABEL', 'Actions', '', 'Actions');
 INSERT INTO `translations` VALUES (373, 'EDIT_USER_ACCOUNT_TITLE', 'Modifier le Compte de %s', '', 'Edit Account for %s');
-
+INSERT INTO `translations` VALUES (374, 'NEW_ACCOUNT_ADMIN_NOTIFY', 'L\'utilisateur %s a activé le nouveau compte.', '', 'The user %s has activated their new account.');
+INSERT INTO `translations` VALUES (375, 'NEW_ACCOUNT_ADMIN_REMINDER', 'Utilisez l\'URL suivante pour modifier les détails pour %s. Cet utilisateur a une réduction de %s', '', 'Use the following url to edit the details for %s. This user has a discount of %s');
+INSERT INTO `translations` VALUES (376, 'ACCOUNT_ACTIVATED_ADMIN_SUBJECT', 'Nouveau compte activé', '', 'New account activated');

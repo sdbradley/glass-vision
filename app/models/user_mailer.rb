@@ -3,17 +3,17 @@ class UserMailer < ActionMailer::Base
   include TranslationGet
   def signup_notification(user)
     setup_email(user)
-    @subject    += trn_get('ACCOUNT_NEEDS_ACTIVATION_SUBJECT')
-  
+    @subject    += trn_get('ACCOUNT_NEEDS_ACTIVATION_SUBJECT')  
     @body[:url]  = "http://quotations.glass-vision.net/activate/#{user.activation_code}"
-  
   end
   
   def activation_to_admin(user)
-    admin_user = User.get_administrator
-    setup_email(admin_user)
-    @subject    += trn_get('ACCOUNT_ACTIVATED_SUBJECT')
+    @admin_user = User.get_administrator
+    setup_email(@admin_user)
+    @subject    += trn_get('ACCOUNT_ACTIVATED_ADMIN_SUBJECT')
     @body[:url]  = "http://quotations.glass-vision.net/users/edit/#{user.id}"    
+    @body[:admin_user] = @admin_user
+    @body[:user] = user
   end
   
   def activation(user)

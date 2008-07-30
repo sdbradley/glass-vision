@@ -19,3 +19,13 @@ config.action_view.debug_rjs                         = true
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.smtp_settings = {
+  :address  => "mail.snowmoonsoftware.com",
+  :port  => 25,
+  :domain  => "snowmoonsoftware.com",
+  :authentication => :login,
+  :user_name => "jeff@snowmoonsoftware.com",
+  :password => "t9ohqa"
+}

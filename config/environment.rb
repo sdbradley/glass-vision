@@ -68,14 +68,4 @@ end
 
 # Include your application configuration below
 
-ActionMailer::Base.delivery_method = :smtp
-ActionMailer::Base.raise_delivery_errors = true
-ActionMailer::Base.smtp_settings = {
-  :address  => "mail.glass-vision.net",
-  :port  => 25,
-  :domain  => "glass-vision.net",
-  :authentication => :login,
-  :user_name => "info@glass-vision.net",
-  :password => "info"
-}
 
