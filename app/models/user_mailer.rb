@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
   end
   
   def activation_to_admin(user)
-    admin_user = User.find_admin
+    admin_user = User.get_administrator
     setup_email(admin_user)
     @subject    += trn_get('ACCOUNT_ACTIVATED_SUBJECT')
     @body[:url]  = "http://quotations.glass-vision.net/users/edit/#{user.id}"    

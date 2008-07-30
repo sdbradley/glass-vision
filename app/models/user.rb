@@ -166,5 +166,8 @@ protected
       @activated = true
       self.update_attribute(:activated_at, Time.now.utc)
     end    
-          
+  
+    def self.get_administrator
+      @administrators = find :first, :joins => "INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id",    :select =>"users.*", :order => "id ASC"
+    end        
 end
