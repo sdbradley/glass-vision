@@ -1,4 +1,6 @@
 class SerieController < ApplicationController
+    before_filter :check_administrator_role
+
   def list
     @series = Serie.find(:all, :order => "name")
   end

@@ -1,4 +1,6 @@
 class OptionController < ApplicationController
+    before_filter :check_administrator_role
+
   def list
     @options = Option.find(:all, :order => 'description')
   end

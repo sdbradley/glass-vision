@@ -1,4 +1,5 @@
 class DatabaseTranslationController < ApplicationController
+  before_filter :check_administrator_role
   def list
     @dbtfs = DatabaseTranslationField.find(:all, :order => "`table`, `field`")
     if params[:dbtf] ||= session[:dbtf]

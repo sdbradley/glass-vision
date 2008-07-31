@@ -1,4 +1,6 @@
 class CompanyController < ApplicationController
+  before_filter :check_administrator_role
+
   def list
     @companies = Company.find(:all, :order => 'name')
   end

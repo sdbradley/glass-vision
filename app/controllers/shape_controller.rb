@@ -1,4 +1,6 @@
 class ShapeController < ApplicationController
+  before_filter :check_administrator_role
+
   def list
     @shapes = Shape.find(:all, :order => "name")
   end
