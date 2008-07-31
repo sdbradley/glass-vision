@@ -1,6 +1,10 @@
 class QuotationController < ApplicationController
   def list
-    @quotations = Quotation.find(:all, :order => "id")
+    if @current_user.has_role?('administrator')
+      @quotations = Quotation.find(:all, :order => "id")
+    else
+      @quotations = Quotation.find(:all, :order => "id", :conditions => ["user_id = ?", @current_user.id])
+    end      
   end
 
   def show
@@ -9,10 +13,12 @@ class QuotationController < ApplicationController
 
   def add
     @quotation = Quotation.new
+    @quotation.discount = @current_user.discount
   end
 
   def create
     @quotation = Quotation.new(params[:quotation])
+    @quotation.user_id = @current_user.id
     if @quotation.save
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'show', :id => @quotation

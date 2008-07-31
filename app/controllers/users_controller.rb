@@ -37,10 +37,12 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user = User.find(current_user)
+#    @user = User.find(current_user)
+    @user = User.find(params[:id])
+    debug_log "Saving user id #{@user.id}, discount is #{params[:user]}"
     if @user.update_attributes(params[:user])
       flash[:notice] = trn_get('USER_UPDATED_FLASH')
-      redirect_to :action => 'show', :id => current_user
+      redirect_to :action => 'show', :id => @user
     else
       render :action => 'edit'
     end

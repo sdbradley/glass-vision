@@ -1,4 +1,8 @@
 <% if logged_in? %>
 <h2><%= trn_geth('USER_LABEL') %>: <%=h @user.login %></h2>
+<%= trn_geth('EMAIL_LABEL') %>: <%= @user.email %><br />
+<% if @current_user.has_role?('administrator')%>
+<%= trn_geth('LABEL_DISCOUNT')%>: <%= @user.discount %> </p>
+<% end %>
 <p><%= trn_geth('JOINED_ON_LABEL') %>: <%= @user.created_at.to_s(:long) %></p>
 <% end %>

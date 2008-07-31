@@ -4,6 +4,7 @@
  
 <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
   <p><%= trn_geth('EMAIL_LABEL')%>:<br /><%= f.text_field :email, :size => 60 %></p>
+  <p><%= trn_geth('LABEL_DISCOUNT')%><br /><%= f.text_field :discount, :size => 10 %> </p>
   
 <%= submit_tag trn_get('BUTTON_SAVE') %>
 <% end %>
