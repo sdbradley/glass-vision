@@ -127,16 +127,16 @@ div#content {
 
 /********* nav bar **********/
 #nav {
-  float:right;
   height:27px;
   background: url(/images/menu.gif) repeat-x;
   padding-top: 3px;
   width: 100%;
+  overflow:hidden;
 }
 
 #nav ul{
   list-style-type: none;
-  ist-style-image: none;
+  list-style-image: none;
   display: inline;
   margin: 0px;
   padding: 0px;
