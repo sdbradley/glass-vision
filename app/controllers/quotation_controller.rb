@@ -9,6 +9,10 @@ class QuotationController < ApplicationController
 
   def show
     @quotation = Quotation.find(params[:id])
+    if @quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
+      flash[:notice] = "Permission denied"
+      redirect_to :action => 'list'
+    end
   end
 
   def add
@@ -19,6 +23,7 @@ class QuotationController < ApplicationController
   def create
     @quotation = Quotation.new(params[:quotation])
     @quotation.user_id = @current_user.id
+    @quotation.discount = @current_user.discount
     if @quotation.save
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'show', :id => @quotation

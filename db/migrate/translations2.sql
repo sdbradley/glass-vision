@@ -10,3 +10,4 @@ INSERT INTO `translations` VALUES (373, 'EDIT_USER_ACCOUNT_TITLE', 'Modifier le 
 INSERT INTO `translations` VALUES (374, 'NEW_ACCOUNT_ADMIN_NOTIFY', 'L\'utilisateur %s a activé le nouveau compte.', '', 'The user %s has activated their new account.');
 INSERT INTO `translations` VALUES (375, 'NEW_ACCOUNT_ADMIN_REMINDER', 'Utilisez l\'URL suivante pour modifier les détails pour %s. Cet utilisateur a une réduction de %s', '', 'Use the following url to edit the details for %s. This user has a discount of %s');
 INSERT INTO `translations` VALUES (376, 'ACCOUNT_ACTIVATED_ADMIN_SUBJECT', 'Nouveau compte activé', '', 'New account activated');
+INSERT INTO `translations` VALUES (377, 'HEADER_CREATED_BY', 'Créé par', '', 'Created By');
