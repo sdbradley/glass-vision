@@ -1,5 +1,6 @@
 class SheetSizes < ActiveRecord::Base
 
+  belongs_to :SheetProduct
   validates_presence_of :minimum_width
   validates_presence_of :maximum_width
   validates_presence_of :minimum_height

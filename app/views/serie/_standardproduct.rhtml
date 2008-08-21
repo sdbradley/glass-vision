@@ -1,7 +1,9 @@
 <!-- we have description and price -->
-<p>standard product partial</p>
-<table id='standardproduct'>
-<tr>
-  <td></td>
-</tr>
-</table>
+
+<% for product in @serie.standard_sizes %>
+  <%= render :partial => 'standard_size', :locals => {:standard_size => product} %>
+<% end %>
+
+<%= link_to trn_geth('BUTTON_ADD'), :controller => 'standard_size', :action => 'add', 
+:sheet_product_id => @serie, :series_name => @serie.name %>
+

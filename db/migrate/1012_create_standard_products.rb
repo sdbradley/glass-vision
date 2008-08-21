@@ -3,26 +3,25 @@ class CreateStandardProducts < ActiveRecord::Migration
     # standard sized products are of a fixed price and defined 
     # like so: "72x80 Solid Wood Frame", "$1000"
     create_table :standard_sizes do |t|
-      t.column :description, :string, :limit => 256, :default => "",  :null => false
-      t.column :price,      :float,        :default => 0.0, :null => false
+      t.column :description,         :string, :limit => 256, :default => "",  :null => false
+      t.column :price,               :float,                 :default => 0.0, :null => false
+      t.column :standard_product_id, :integer,                                :null => false
     end
     
     # sheet size goods must be within certain constrained sizes
     # this table is the definition of a particular sheet 
     create_table :sheet_sizes do |t|
-      t.column :description, :string, :limit => 256, :default => "",  :null => false
-      t.column :minimum_width, :integer, :default => 0, :null => false
-      t.column :maximum_width, :integer, :default => 0, :null => false
-      t.column :minimum_height, :integer, :default => 0, :null => false
-      t.column :maximum_height, :integer, :default => 0, :null => false
-      t.column :price,      :float,        :default => 0.0, :null => false
-      t.column :sheet_product_id, :integer, :null => false
+      t.column :description,      :string,  :limit => 256, :default => "",  :null => false
+      t.column :minimum_width,    :integer,                :default => 0,   :null => false
+      t.column :maximum_width,    :integer,                :default => 0,   :null => false
+      t.column :minimum_height,   :integer,                :default => 0,   :null => false
+      t.column :maximum_height,   :integer,                :default => 0,   :null => false
+      t.column :price,            :float,                  :default => 0.0, :null => false
+      t.column :sheet_product_id, :integer,                                 :null => false
     end
 
     # these columns link a series to the new sized products    
-    add_column :series, :standard_size_id, :integer,  :null => true
-    add_column :series, :sheet_size_id, :integer, :null => true;
-    add_column :series, :series_type, :text, :limit => 32
+    add_column :series, :series_type,      :text, :limit => 32
     
     # these columns link a quotation_line to the new products
     add_column :quotation_lines, :standard_size_id, :integer, :null => true
@@ -45,8 +44,6 @@ class CreateStandardProducts < ActiveRecord::Migration
     drop_table :sheet_sizes
 
     #remove columns
-    remove_column :series, :standard_size_id
-    remove_column :series, :sheet_size_id
     remove_column :series, :series_type
   
     remove_column :quotation_lines, :standard_size_id

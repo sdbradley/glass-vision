@@ -160,8 +160,9 @@ ActiveRecord::Schema.define(:version => 1013) do
   end
 
   create_table "standard_sizes", :force => true do |t|
-    t.column "description", :string, :limit => 256, :default => "",  :null => false
-    t.column "price",       :float,                 :default => 0.0, :null => false
+    t.column "description",         :string,  :limit => 256, :default => "",  :null => false
+    t.column "price",               :float,                  :default => 0.0, :null => false
+    t.column "standard_product_id", :integer,                                 :null => false
   end
 
   create_table "translations", :force => true do |t|

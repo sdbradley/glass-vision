@@ -1,0 +1,10 @@
+<p> Standard sized products are sold for a fixed price. </p>
+
+<p>Enter a brief description for this product:<br />
+   <%= h standard_size.description %>
+</p>
+<p>Price : <%= standard_size.price %>
+</p>
+
+<%= link_to trn_geth('BUTTON_EDIT'), :controller => 'standard_size', :action => 'edit', 
+:sheet_product_id => @serie, :id => standard_size, :series_name => @serie.name %>
