@@ -1,4 +1,5 @@
-class StandardSizes < ActiveRecord::Base
+class StandardSize < ActiveRecord::Base
+  belongs_to :StandardProduct
 
   validates_length_of   :description, :within => 1..256, :allow_nil => true
   validates_presence_of :price
