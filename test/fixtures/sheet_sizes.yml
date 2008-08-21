@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  description: MyText
+  minimum_width: 1
+  maximum_width: 1
+  minimum_height: 1
+  maximum_width: 1
+two:
+  id: 2
+  description: MyText
+  minimum_width: 1
+  maximum_width: 1
+  minimum_height: 1
+  maximum_width: 1

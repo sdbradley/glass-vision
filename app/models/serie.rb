@@ -1,6 +1,8 @@
 class Serie < ActiveRecord::Base
   include Translatable
 
+  self.inheritance_column = "series_type"
+
   validates_presence_of :name
   validates_uniqueness_of :name
 

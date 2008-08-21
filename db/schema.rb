@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1011) do
+ActiveRecord::Schema.define(:version => 1013) do
 
   create_table "companies", :force => true do |t|
     t.column "name",    :string, :limit => 100, :default => "", :null => false
@@ -81,14 +81,15 @@ ActiveRecord::Schema.define(:version => 1011) do
   end
 
   create_table "quotation_lines", :force => true do |t|
-    t.column "quotation_id", :integer, :default => 0,   :null => false
-    t.column "serie_id",     :integer, :default => 0,   :null => false
-    t.column "shape_id",     :integer, :default => 0,   :null => false
-    t.column "width",        :float,   :default => 0.0, :null => false
-    t.column "height",       :float,   :default => 0.0, :null => false
-    t.column "quantity",     :integer, :default => 0,   :null => false
-    t.column "price",        :float,   :default => 0.0, :null => false
-    t.column "label",        :string
+    t.column "quotation_id",     :integer, :default => 0,   :null => false
+    t.column "serie_id",         :integer, :default => 0,   :null => false
+    t.column "shape_id",         :integer, :default => 0,   :null => false
+    t.column "width",            :float,   :default => 0.0, :null => false
+    t.column "height",           :float,   :default => 0.0, :null => false
+    t.column "quantity",         :integer, :default => 0,   :null => false
+    t.column "price",            :float,   :default => 0.0, :null => false
+    t.column "label",            :string
+    t.column "standard_size_id", :integer
   end
 
   create_table "quotation_lines_openings", :force => true do |t|
@@ -133,9 +134,12 @@ ActiveRecord::Schema.define(:version => 1011) do
   end
 
   create_table "series", :force => true do |t|
-    t.column "name",        :string, :limit => 50, :default => "", :null => false
-    t.column "description", :string,               :default => "", :null => false
-    t.column "comments",    :text
+    t.column "name",             :string,  :limit => 50, :default => "", :null => false
+    t.column "description",      :string,                :default => "", :null => false
+    t.column "comments",         :text
+    t.column "standard_size_id", :integer
+    t.column "sheet_size_id",    :integer
+    t.column "series_type",      :text
   end
 
   create_table "shapes", :force => true do |t|
@@ -143,6 +147,21 @@ ActiveRecord::Schema.define(:version => 1011) do
     t.column "sections_width",  :integer,               :default => 0,  :null => false
     t.column "sections_height", :integer,               :default => 0,  :null => false
     t.column "corners",         :integer,               :default => 4,  :null => false
+  end
+
+  create_table "sheet_sizes", :force => true do |t|
+    t.column "description",      :string,  :limit => 256, :default => "",  :null => false
+    t.column "minimum_width",    :integer,                :default => 0,   :null => false
+    t.column "maximum_width",    :integer,                :default => 0,   :null => false
+    t.column "minimum_height",   :integer,                :default => 0,   :null => false
+    t.column "maximum_height",   :integer,                :default => 0,   :null => false
+    t.column "price",            :float,                  :default => 0.0, :null => false
+    t.column "sheet_product_id", :integer,                                 :null => false
+  end
+
+  create_table "standard_sizes", :force => true do |t|
+    t.column "description", :string, :limit => 256, :default => "",  :null => false
+    t.column "price",       :float,                 :default => 0.0, :null => false
   end
 
   create_table "translations", :force => true do |t|

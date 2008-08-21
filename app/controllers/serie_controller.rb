@@ -1,12 +1,13 @@
 class SerieController < ApplicationController
-    before_filter :check_administrator_role
-
+  before_filter :check_administrator_role
+    
   def list
     @series = Serie.find(:all, :order => "name")
   end
 
   def show
     @serie = Serie.find(params[:id])
+    debug_log "showing series id #{@serie.id}, type #{@serie.series_type}, class is #{@serie.class}"
   end
 
   def add
@@ -14,7 +15,8 @@ class SerieController < ApplicationController
   end
 
   def create
-    @serie = Serie.new(params[:serie])
+    debug_log params[:serie]
+    @serie = params[:serie][:series_type].constantize.new(params[:serie])
     if @serie.save
       flash[:notice] = trn_geth('LABEL_SERIE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'list'
