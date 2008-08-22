@@ -1,9 +1,16 @@
 <!-- we have description and price -->
-
-<% for product in @serie.standard_sizes %>
-  <%= render :partial => 'standard_size', :locals => {:standard_size => product} %>
-<% end %>
-
+<br />
+<br />
+<table cellspacing="0">
+  <tr class="header">
+  <tr>
+    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+    <th><%= trn_geth('HEADER_UNIT_PRICE')%></th>
+    <th>Action</th>
+  </tr>
+    <%= render :partial => 'standard_size', :collection => @serie.standard_sizes %>
+</table>
+<br />
 <%= link_to trn_geth('BUTTON_ADD'), :controller => 'standard_size', :action => 'add', 
-:sheet_product_id => @serie, :series_name => @serie.name %>
+:standard_product_id => @serie, :series_name => @serie.name %>
 
