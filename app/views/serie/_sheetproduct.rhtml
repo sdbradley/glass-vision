@@ -1,5 +1,5 @@
 <p>Enter a brief description for this product:<br />
-   <%= h @serie.description %>
+   <%= h @serie.sheet_sizes.description unless @serie.sheet_sizes.nil? %>
 </p>
 <% if not @serie.sheet_sizes.nil? %>
 <p>Products priced per square foot have minimum and maximum dimensions. </p>
