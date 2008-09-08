@@ -23,6 +23,7 @@ class QuotationLineController < ApplicationController
     end
     @openings = {}
     @options = Serie.find(@quotation_line.serie_id).options.sort_by { |o| o.tr_description }
+    @serie = Serie.find(@quotation_line.serie_id)
   end
 
   def create
