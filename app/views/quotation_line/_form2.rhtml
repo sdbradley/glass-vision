@@ -22,7 +22,7 @@
   </tr>
 </table>
 
-<%= render :partial => @quotation_line.serie.series_type.nil? ? "serie" : @serie.series_type.downcase + '_openings' %>
+<%= render :partial => @quotation_line.serie.series_type.nil? ? "serie_openings" : @serie.series_type.downcase + '_openings' %>
 
 
 <h3><%= trn_geth('HEADER_OPTIONS') %></h3>

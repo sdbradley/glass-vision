@@ -22,14 +22,15 @@ class QuotationLineController < ApplicationController
       @section_width[s.to_s] = 0
     end
     @openings = {}
-    @options = Serie.find(@quotation_line.serie_id).options.sort_by { |o| o.tr_description }
     @serie = Serie.find(@quotation_line.serie_id)
+    @options = @serie.options.sort_by { |o| o.tr_description }
   end
 
   def create
     @quotation_line = QuotationLine.new(params[:quotation_line])
     @openings = params[:openings]
-    @options = Serie.find(@quotation_line.serie_id).options.sort_by { |o| o.tr_description }
+    @serie = Serie.find(@quotation_line.serie_id)
+    @options = @serie.options.sort_by { |o| o.tr_description }
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
     error = calculate_dimensions(@quotation_line.width, @quotation_line.height)
@@ -172,7 +173,9 @@ class QuotationLineController < ApplicationController
 
 private
   def calculate_price(serie_id, shape_id, openings, options_ids)
-    serie = Serie.find(serie_id)
+    debug_log "calculate price #{serie_id}, #{shape_id}"
+
+    serie = @quotation_line.serie
     shape = Shape.find(shape_id)
 
     price = 0
@@ -286,6 +289,8 @@ private
   end
 
   def calculate_dimensions(width, height)
+    
+    debug_log "calculate dimensions #{width}x#{height}"
     @total_height = height.to_f
     @total_width = width.to_f
     shape = Shape.find(@quotation_line.shape_id)
