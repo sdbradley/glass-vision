@@ -32,5 +32,13 @@ module QuotationLineHelper
     output << "<![endif]-->"
     output << "</div>"
   end
+  
+  def select_size_helper(width_or_height, r)
+    if @quotation_line.serie.is_standard_product
+      select_tag "section_{#width_or_height}[#{r}]", @section_height[r.to_s], :size => 6
+    else
+      text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6
+    end
+  end
 end
 

@@ -15,10 +15,9 @@
   </tr>
   <tr>
     <td colspan="2" class="dark-grey"></td>
-<% col_color = 1 %>
+
 <% for width in @serie.widths %>
-<%   col_color = 1 - col_color %>
-      <td class="<%= col_color == 0 ? 'white' : 'light-grey' %>" align="center"><%= width.value %></td>
+      <td class="<%= cycle('white', 'light-grey') %>" align="center"><%= width.value %></td>
 <% end %>
   </tr>
 <% first_one = true %>
@@ -30,10 +29,8 @@
     <td rowspan="<%= @serie.heights.length %>" valign="middle" class="dark-grey"><%= trn_geth('HEADER_HEIGHT') %></td>
 <%     first_one = false %>
 <%   end %>
-    <td class="<%= row_color == 0 ? 'white' : 'light-grey' %>"><%= height.value %></td>
-<%   col_color = 1 %>
+    <td class="<%= cycle('white','light-grey',:name =>"c") %>"><%= height.value %></td>
 <%   for width in @serie.widths %>
-<%     col_color = 1 - col_color %>
     <td>
 <%     price = SeriePrice.find(:first, :conditions => "width_id = #{width.id} AND height_id = #{height.id} AND opening_id = #{@opening.id}") %>
 <%     if price %>
@@ -43,7 +40,7 @@
 <%       name = "price_#{width.id}_#{height.id}" %>
 <%       value = "" %>
 <%     end %>
-      <%= text_field_tag name, value, :size => 5, :class => (row_color == 0 ? (col_color == 0 ? 'white' : 'light-grey') : (col_color == 0 ? 'light-grey' : 'dark-grey')) %>
+      <%= text_field_tag name, value, :size => 5, :class => (row_color == 0 ? cycle('white','light-grey', :name =>"a") : cycle('light-grey','dark-grey', :name =>"b")) %>
     </td>
 <%   end %>
   </tr>

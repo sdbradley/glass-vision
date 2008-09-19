@@ -24,7 +24,7 @@
     <!-- row height, only if more than one row -->
     <% if sec_height > 1 %>
     <td>
-      <%= text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 %>
+      <%= size_tag_helper "height",r %>
     </td>
     <% end %>
     <!-- total height -->
