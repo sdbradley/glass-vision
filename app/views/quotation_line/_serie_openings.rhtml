@@ -24,7 +24,12 @@
     <!-- row height, only if more than one row -->
     <% if sec_height > 1 %>
     <td>
-      <%= size_tag_helper "height",r %>
+      <%= 
+      if @quotation_line.serie.is_standard_product
+        select("serie", "heights", @serie.heights.collect { |h| [h.value, h.id]})
+      else
+        text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 
+      end %>
     </td>
     <% end %>
     <!-- total height -->
@@ -41,7 +46,13 @@
     <td><%= trn_geth('HEADER_SECTIONS_WIDTHS') %></td>
     <% 1.upto(sec_width) { |c| %>
     <td>
-      <%= text_field_tag "section_width[#{c}]", @section_width[c.to_s], :size => 6 %>
+      <%= 
+      if @quotation_line.serie.is_standard_product
+        select("serie", "widths", @serie.widths.collect { |h| [h.value, h.id]})
+      else
+        text_field_tag "section_width[#{c}]", @section_width[c.to_s], :size => 6 
+      end
+      %>
     </td>
     <% } %>
     <td></td>
