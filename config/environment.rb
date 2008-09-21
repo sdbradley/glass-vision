@@ -7,11 +7,7 @@ ENV['RAILS_ENV'] ||= 'production'
 #RAILS_ENV = ENV['RAILS_ENV']
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-if `hostname`.strip =~ 'glass-vision'
-  RAILS_GEM_VERSION = '1.2.5'
-else
-  RAILS_GEM_VERSION = '1.2.6'
-end
+RAILS_GEM_VERSION = '1.2.6'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
