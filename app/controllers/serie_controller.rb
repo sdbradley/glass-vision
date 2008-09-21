@@ -15,8 +15,9 @@ class SerieController < ApplicationController
   end
 
   def create
-    debug_log params[:serie]
-    @serie = params[:serie][:series_type].constantize.new(params[:serie])
+#    debug_log params[:serie]
+#    @serie = params[:serie][:series_type].constantize.new(params[:serie])
+    @serie = Serie.new(params[:serie])
     if @serie.save
       flash[:notice] = trn_geth('LABEL_SERIE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'list'

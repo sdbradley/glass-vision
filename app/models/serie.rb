@@ -11,4 +11,8 @@ class Serie < ActiveRecord::Base
   has_many :quotation_lines, :dependent => :destroy
   has_and_belongs_to_many :options, :order => 'description'
   has_and_belongs_to_many :openings
+
+  def standard_product?
+    is_standard_product 
+  end
 end

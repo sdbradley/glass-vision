@@ -25,8 +25,9 @@
     <% if sec_height > 1 %>
     <td>
       <%= 
-      if @quotation_line.serie.is_standard_product
-        select("serie", "heights", @serie.heights.collect { |h| [h.value, h.id]})
+      if @quotation_line.serie.standard_product?
+        select_tag("section_height[#{r}]", options_from_collection_for_select(@serie.heights, "value", "value")) 
+        #@serie.heights.collect { |h| [h.value, h.id]})
       else
         text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 
       end %>
@@ -35,7 +36,13 @@
     <!-- total height -->
     <% if r == 1 %>
     <td rowspan="<%= sec_height %>">
-      <%= text_field 'quotation_line', 'height', :size => 6 %>
+    <%= 
+      if @quotation_line.serie.standard_product?
+        select_tag("quotation_line[height]", options_from_collection_for_select(@serie.heights, "value", "value")) 
+      else
+        text_field 'quotation_line', 'height', :size => 6
+      end
+    %>
     </td>
     <% end %>
   </tr>
@@ -47,8 +54,8 @@
     <% 1.upto(sec_width) { |c| %>
     <td>
       <%= 
-      if @quotation_line.serie.is_standard_product
-        select("serie", "widths", @serie.widths.collect { |h| [h.value, h.id]})
+      if @quotation_line.serie.standard_product?
+        select_tag("section_width[#{c}]", options_from_collection_for_select(@serie.widths, "value", "value")) 
       else
         text_field_tag "section_width[#{c}]", @section_width[c.to_s], :size => 6 
       end
@@ -65,7 +72,13 @@
   <tr>
     <td><%= trn_geth('HEADER_TOTAL_WIDTH') %></td>
     <td colspan="<%= sec_width %>">
-      <%= text_field 'quotation_line', 'width', :size => 6 %>
+    <%= 
+      if @quotation_line.serie.standard_product?
+        select_tag("quotation_line[width]", options_from_collection_for_select(@serie.widths, "value", "value")) 
+      else
+        text_field 'quotation_line', 'width', :size => 6
+      end
+    %>
     </td>
     <td></td>
     <% if sec_height > 1 %>
