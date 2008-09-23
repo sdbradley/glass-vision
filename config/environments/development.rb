@@ -29,3 +29,5 @@ ActionMailer::Base.smtp_settings = {
   :user_name => "jeff@snowmoonsoftware.com",
   :password => "t9ohqa"
 }
+
+require 'ruby-debug'
