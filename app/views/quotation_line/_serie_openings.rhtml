@@ -74,7 +74,7 @@
     <td colspan="<%= sec_width %>">
     <%= 
       if @quotation_line.serie.standard_product? and sec_width == 1 and !@quotation_line.serie.widths.nil?
-        select_tag("quotation_line[width]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value"), @quotation_line.width) 
+        select_tag("quotation_line[width]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value", @quotation_line.width))
       else
         text_field 'quotation_line', 'width', :size => 6
       end
