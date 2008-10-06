@@ -1,7 +1,7 @@
 class Serie < ActiveRecord::Base
   include Translatable
 
-  self.inheritance_column = "series_type"
+  #self.inheritance_column = "series_type"
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -13,6 +13,10 @@ class Serie < ActiveRecord::Base
   has_and_belongs_to_many :openings
 
   def standard_product?
-    is_standard_product 
+    series_type == "StandardProduct" 
+  end
+  
+  def priced_by_area?
+    series_type == "PerSqFtProduct"
   end
 end

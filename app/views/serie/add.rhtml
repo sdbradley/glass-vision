@@ -3,21 +3,21 @@
 <% form_tag :action => 'create' do %>
 <table>
   <%= render :partial => 'form' %>
-  <!--
   <tr valign="top">
     <td align="right"><%= trn_geth('SERIES_TYPE_LABEL') %></td>
       <%
       series_options = [[trn_get('SERIES_STANDARD_OPT'),"StandardProduct"], 
                         [trn_get('SERIES_CUSTOM_OPT'),  "Serie"], 
-                        [trn_get('SERIES_PERSQFT_OPT'), "SheetProduct"]]
+                        [trn_get('SERIES_PERSQFT_OPT'), "PerSqFtProduct"]]
       %>
      <td><%= select("serie", "series_type", series_options) %>
   </tr>
--->
+  <!--
   <tr>
     <td></td>
      <td align="left"><%=check_box "serie", "is_standard_product" -%> <%= trn_geth('SERIES_IS_STANDARD_PRODUCT_LABEL') %></td>
   </tr>
+-->
 </table>
   <%= submit_tag trn_geth('BUTTON_ADD') %>
 <% end %>

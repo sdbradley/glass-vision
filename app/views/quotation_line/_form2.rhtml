@@ -22,7 +22,92 @@
   </tr>
 </table>
 
-<%= render :partial => @quotation_line.serie.series_type.nil? ? "serie_openings" : @serie.series_type.downcase + '_openings' %>
+<h3><%= trn_geth('HEADER_OPENINGS_AND_DIMENSIONS') %></h3>
+
+<table class="dimensions">
+  <tr>
+    <td rowspan="<%= sec_height + 1 %>"></td>
+    <td colspan="<%= sec_width %>"><%= trn_geth('HEADER_OPENINGS') %></td>
+    <% if sec_height > 1 %>
+    <td><%= trn_geth('HEADER_SECTIONS_HEIGHTS') %></td>
+    <% end %>
+    <td><%= trn_geth('HEADER_TOTAL_HEIGHT') %></td>
+  </tr>
+  <% section = 1 %>
+  <% 1.upto(sec_height) { |r| %>
+  <tr>
+    <% 1.upto(sec_width) { |c| %>
+    <!-- openings -->
+    <td>
+      <%= select_opening section, @openings[section.to_s].to_i %>
+      <% section += 1 %>
+    </td>
+    <% } %>
+    <!-- row height, only if more than one row -->
+    <% if sec_height > 1 %>
+    <td>
+      <%= 
+      if @quotation_line.serie.standard_product?
+        select_tag("section_height[#{r}]", options_from_collection_for_select(@quotation_line.serie.heights, "value", "value", @section_height[r.to_s])) 
+        #@serie.heights.collect { |h| [h.value, h.id]})
+      else
+        text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 
+      end %>
+    </td>
+    <% end %>
+    <!-- total height -->
+    <% if r == 1 %>
+    <td rowspan="<%= sec_height %>">
+    <%= 
+      if @quotation_line.serie.standard_product? and sec_height == 1 and !@quotation_line.serie.heights.nil?
+        select_tag("quotation_line[height]", options_from_collection_for_select(@quotation_line.serie.heights, "value", "value", @quotation_line.height)) 
+      else
+        text_field 'quotation_line', 'height', :size => 6
+      end
+    %>
+    </td>
+    <% end %>
+  </tr>
+  <% } %>
+  <!-- col width, only if more than one column -->
+  <% if sec_width > 1 %>
+  <tr>
+    <td><%= trn_geth('HEADER_SECTIONS_WIDTHS') %></td>
+    <% 1.upto(sec_width) { |c| %>
+    <td>
+      <%= 
+      if @quotation_line.serie.standard_product? 
+        select_tag("section_width[#{c}]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value", @section_width[c.to_s])) 
+      else
+        text_field_tag "section_width[#{c}]", @section_width[c.to_s], :size => 6 
+      end
+      %>
+    </td>
+    <% } %>
+    <td></td>
+    <% if sec_height > 1 %>
+    <td></td>
+    <% end %>
+  </tr>
+  <% end %>
+  <!-- total width -->
+  <tr>
+    <td><%= trn_geth('HEADER_TOTAL_WIDTH') %></td>
+    <td colspan="<%= sec_width %>">
+    <%= 
+      if @quotation_line.serie.standard_product? and sec_width == 1 and !@quotation_line.serie.widths.nil?
+        select_tag("quotation_line[width]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value", @quotation_line.width))
+      else
+        text_field 'quotation_line', 'width', :size => 6
+      end
+    %>
+    </td>
+    <td></td>
+    <% if sec_height > 1 %>
+    <td></td>
+    <% end %>
+  </tr>
+</table>
 
 
 <h3><%= trn_geth('HEADER_OPTIONS') %></h3>
