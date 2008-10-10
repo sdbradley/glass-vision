@@ -7,7 +7,6 @@ class SerieController < ApplicationController
 
   def show
     @serie = Serie.find(params[:id])
-    debug_log "showing series id #{@serie.id}, type #{@serie.series_type}, class is #{@serie.class}"
   end
 
   def add
@@ -38,6 +37,35 @@ class SerieController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  # given a minimum and maximum widths and heigts, and price per sq ft
+  # create all sizes and set prices -- note, to do prices we need an opening id
+  def generate_sizes
+    @serie = Serie.find(params[:id])
+
+    min_w = params[:series][:minimum_width].to_f
+    min_h = params[:series][:minimum_height].to_f
+    max_w = params[:series][:maximum_width].to_f
+    max_h = params[:series][:maximum_height].to_f
+
+    # should probably delete all existing dimensions and sizes first...
+    
+    # next, generate all the widths and heights
+    curr_width = min_w;
+    while curr_width < max_w do
+      Width.create :serie_id => params[:id], :value => curr_width
+      curr_width += 2;
+    end
+    
+    curr_height = min_h;
+    while curr_height < max_h do
+      Height.create :serie_id => params[:id], :value => curr_height
+      curr_height += 2;
+    end    
+
+    # given all the above params, generate w,h dimension every 2 inches and set price.
+    redirect_to :action => 'show', :id => params[:id]
   end
 
   def delete
