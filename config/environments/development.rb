@@ -30,4 +30,4 @@ ActionMailer::Base.smtp_settings = {
   :password => "t9ohqa"
 }
 
-#require 'ruby-debug'
+require 'ruby-debug'

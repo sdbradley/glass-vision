@@ -8,6 +8,6 @@ module SerieHelper
     when "SheetProduct"
       humanized_type = trn_get('SERIES_PERSQFT_OPT')
     end
-    humanized_type
+    humanized_type.nil? ? trn_get('SERIES_CUSTOM_OPT') : humanized_type
   end
 end

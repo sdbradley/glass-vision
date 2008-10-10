@@ -1,0 +1,34 @@
+<h3>Testing</h3>
+<p>Enter a brief description for this product:<br />
+   <%= h @serie.sheet_sizes.description unless @serie.sheet_sizes.nil? %>
+</p>
+<% if not @serie.sheet_sizes.nil? %>
+<p>Products priced per square foot have minimum and maximum dimensions. </p>
+<table>
+  <tr>
+    <td></td>
+    <td>Minimum</td>
+    <td>Maximum</td>
+  </tr>
+  <tr>
+    <td>Width</td>
+    <td><%= @serie.sheet_sizes.minimum_width %></td>
+    <td><%= @serie.sheet_sizes.maximum_width %></td>
+  </tr>
+  <tr>
+    <td>Height</td>
+    <td><%= @serie.sheet_sizes.minimum_height %></td>
+    <td><%= @serie.sheet_sizes.maximum_height %></td>
+  </tr>
+</table>
+
+<p>Price per square foot: <%= @serie.sheet_sizes.price %>
+</p>
+<%= link_to trn_geth('BUTTON_EDIT'), :controller => 'sheet_sizes', :action => 'edit', 
+:sheet_product_id => @serie, :id => @serie.sheet_sizes, :series_name => @serie.name %>
+<% else %>
+<%= link_to trn_geth('BUTTON_ADD'), :controller => 'sheet_sizes', :action => 'add', 
+:sheet_product_id => @serie, :series_name => @serie.name %>
+<% end %>
+
+<%= render :partial => 'series_openings' %>
