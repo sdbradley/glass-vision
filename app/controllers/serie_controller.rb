@@ -14,7 +14,6 @@ class SerieController < ApplicationController
   end
 
   def create
-#    debug_log params[:serie]
 #    @serie = params[:serie][:series_type].constantize.new(params[:serie])
     @serie = Serie.new(params[:serie])
     if @serie.save
@@ -50,22 +49,47 @@ class SerieController < ApplicationController
     max_h = params[:series][:maximum_height].to_f
 
     # should probably delete all existing dimensions and sizes first...
+
+    Dimension.delete_all "serie_id = #{@serie.id}"
     
+    # TODO: need to make sure starting value is even
     # next, generate all the widths and heights
     curr_width = min_w;
-    while curr_width < max_w do
+    while curr_width <= max_w do
       Width.create :serie_id => params[:id], :value => curr_width
       curr_width += 2;
     end
     
     curr_height = min_h;
-    while curr_height < max_h do
+    while curr_height <= max_h do
       Height.create :serie_id => params[:id], :value => curr_height
       curr_height += 2;
     end    
 
     # given all the above params, generate w,h dimension every 2 inches and set price.
     redirect_to :action => 'show', :id => params[:id]
+  end
+  
+  def generate_prices
+    # given a series id, opening id, and price, fill in the prices
+    @serie = Serie.find(params[:id])
+    @opening = Opening.find(params[:opening_id])
+    price_per_sq_ft = params[:series][:price].to_f
+
+    widths = Width.find_all_by_serie_id(@serie)
+    heights = Height.find_all_by_serie_id(@serie)
+
+    # delete any existing prices for this opening
+    SeriePrice.delete_all "opening_id = #{@opening.id}"
+    widths.each { |w|
+      heights.each { |h|
+         value = w.value * h.value * price_per_sq_ft
+         SeriePrice.create :width_id => w.id, :height_id => h.id, :opening_id => @opening.id, :price => value
+        } 
+    }
+    flash[:notice] = trn_get('MSG_PRICES_GENERATED')
+
+    redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
   end
 
   def delete
@@ -96,6 +120,7 @@ class SerieController < ApplicationController
         end
       end
     }
+    
     redirect_to :action => 'show', :id => params[:id]
   end
 

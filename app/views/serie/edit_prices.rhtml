@@ -6,6 +6,14 @@
 <br/>
 <%= link_to trn_geth('BUTTON_IMPORT_PRICES'), :action => 'import_prices_selection', :id => @serie, :opening_id => @opening.id %>
 
+<% form_tag :action => 'generate_prices', :id => @serie, :opening_id => @opening.id  do %>
+	<p>If you know this opening is priced by area, you can enter the price per square foot to calculate the pricing table instead of entering each price by hand.<br /> Any existing prices for this opening will be <b>deleted</b></p>
+	<p>Price per square foot:
+	  <%= text_field_tag "price", "size" => 10 %>
+	</p>
+  <%= submit_tag trn_geth('BUTTON_GENERATE') %>
+<% end %>
+
 <% form_tag :action => 'update_prices', :id => @serie, :opening_id => @opening.id do %>
 
 <table cellspacing="0" cellpadding="0">

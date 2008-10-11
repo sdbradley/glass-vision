@@ -34,35 +34,33 @@
   </tr>
 </table>
 
-<div onclick="new Effect.BlindUp('nonstdseries');new Effect.BlindDown('quickpricing');this.hide()";>
-	<p>Hint: if this product is priced by square footage, click here to quickly generate the pricing table.</p>
+<div onclick="this.hide();new Effect.BlindDown('quicksizing');">
+	<p>Hint: if this product is priced by square footage, click here to quickly generate the size table.<br />
+		Any existing dimensions will be <b>deleted</b>.</p>
 </div>
-	<div style="display:none; margin-top:10px;" id="quickpricing">
-		<% form_tag :action => 'generate_sizes', :id => @serie do %>
-		<table>
-		  <tr>
-		    <td></td>
-		    <td>Minimum</td>
-		    <td>Maximum</td>
-		  </tr>
-		  <tr>
-		    <td>Width</td>
-		    <td><%= text_field "series", "minimum_width", "size" => 10 %></td>
-		    <td><%= text_field "series", "maximum_width", "size" => 10 %></td>
-		  </tr>
-		  <tr>
-		    <td>Height</td>
-		    <td><%= text_field "series", "minimum_height", "size" => 10 %></td>
-		    <td><%= text_field "series", "maximum_height", "size" => 10 %></td>
-		  </tr>
-		</table>
+<div style="display:none; margin-top:10px;" id="quicksizing">
+	<% form_tag :action => 'generate_sizes', :id => @serie do %>
+	<table>
+	  <tr>
+	    <td></td>
+	    <td>Minimum</td>
+	    <td>Maximum</td>
+	  </tr>
+	  <tr>
+	    <td>Width</td>
+	    <td><%= text_field "series", "minimum_width", "size" => 10 %></td>
+	    <td><%= text_field "series", "maximum_width", "size" => 10 %></td>
+	  </tr>
+	  <tr>
+	    <td>Height</td>
+	    <td><%= text_field "series", "minimum_height", "size" => 10 %></td>
+	    <td><%= text_field "series", "maximum_height", "size" => 10 %></td>
+	  </tr>
+	</table>
 
-		<p>Price per square foot:
-		  <%= text_field "series", "price", "size" => 10 %>
-		</p>
-		  <%= submit_tag trn_geth('BUTTON_GENERATE') %>
-		<% end %>
-	</div>
+  <%= submit_tag trn_geth('BUTTON_GENERATE') %>
+<% end %>
+</div>
 
 
 <h3><%= trn_geth('HEADER_PRICE') %></h3>
