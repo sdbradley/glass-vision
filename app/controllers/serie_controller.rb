@@ -74,7 +74,7 @@ class SerieController < ApplicationController
     # given a series id, opening id, and price, fill in the prices
     @serie = Serie.find(params[:id])
     @opening = Opening.find(params[:opening_id])
-    price_per_sq_ft = params[:series][:price].to_f
+    price_per_sq_ft = params[:price].to_f
 
     widths = Width.find_all_by_serie_id(@serie)
     heights = Height.find_all_by_serie_id(@serie)
