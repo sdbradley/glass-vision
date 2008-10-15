@@ -1,6 +1,6 @@
 class AddViewFromOutsideTranslations < ActiveRecord::Migration
   def self.up
- 	execute(INSERT INTO `translations` VALUES (383, 'MSG_VIEW_FROM_OUTSIDE', 'Vue de l'extérieur', '', ' View from outside'));
+ 	  execute("INSERT INTO `translations` VALUES (383, 'MSG_VIEW_FROM_OUTSIDE', 'Vue de l\'extérieur', '', 'View from outside');")
  end
 
   def self.down
