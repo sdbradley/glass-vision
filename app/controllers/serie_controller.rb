@@ -84,7 +84,6 @@ class SerieController < ApplicationController
     widths.each { |w|
       heights.each { |h|
          value = w.value.to_f * h.value.to_f * price_per_sq_ft / 144.0
-         debug_log "value is #{value}, ceil is #{value.ceil}"
          value = value.ceil
          SeriePrice.create :width_id => w.id, :height_id => h.id, :opening_id => @opening.id, :price => value
         } 
