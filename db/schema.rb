@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1014) do
+ActiveRecord::Schema.define(:version => 1015) do
 
   create_table "companies", :force => true do |t|
     t.column "name",    :string, :limit => 100, :default => "", :null => false
@@ -146,22 +146,6 @@ ActiveRecord::Schema.define(:version => 1014) do
     t.column "sections_width",  :integer,               :default => 0,  :null => false
     t.column "sections_height", :integer,               :default => 0,  :null => false
     t.column "corners",         :integer,               :default => 4,  :null => false
-  end
-
-  create_table "sheet_sizes", :force => true do |t|
-    t.column "description",      :string,  :limit => 256, :default => "",  :null => false
-    t.column "minimum_width",    :integer,                :default => 0,   :null => false
-    t.column "maximum_width",    :integer,                :default => 0,   :null => false
-    t.column "minimum_height",   :integer,                :default => 0,   :null => false
-    t.column "maximum_height",   :integer,                :default => 0,   :null => false
-    t.column "price",            :float,                  :default => 0.0, :null => false
-    t.column "sheet_product_id", :integer,                                 :null => false
-  end
-
-  create_table "standard_sizes", :force => true do |t|
-    t.column "description",         :string,  :limit => 256, :default => "",  :null => false
-    t.column "price",               :float,                  :default => 0.0, :null => false
-    t.column "standard_product_id", :integer,                                 :null => false
   end
 
   create_table "translations", :force => true do |t|
