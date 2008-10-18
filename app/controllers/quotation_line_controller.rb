@@ -173,13 +173,10 @@ class QuotationLineController < ApplicationController
 
 private
   def calculate_price(serie_id, shape_id, openings, options_ids)
-    debug_log "calculate price #{serie_id}, #{shape_id}"
-
     serie = @quotation_line.serie
     shape = Shape.find(shape_id)
 
     price = 0
-
     # calculate base price for all sections
     1.upto(shape.sections_height) do |r|
       selected_height = serie.heights.find(:first, :conditions => "value >= #{@real_height[r]}", :order => 'value')
@@ -289,8 +286,6 @@ private
   end
 
   def calculate_dimensions(width, height)
-    
-    debug_log "calculate dimensions #{width}x#{height}"
     @total_height = height.to_f
     @total_width = width.to_f
     shape = Shape.find(@quotation_line.shape_id)
@@ -325,6 +320,7 @@ private
     @real_height.each_value { |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
     }
+  
 
     ## calculate all widths
     # get known widths, or 0 if missing

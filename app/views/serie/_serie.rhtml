@@ -35,8 +35,7 @@
 </table>
 
 <div onclick="this.hide();new Effect.BlindDown('quicksizing');">
-	<p>Hint: if this product is priced by square footage, click here to quickly generate the size table.<br />
-		Any existing dimensions will be <b>deleted</b>.</p>
+	<p><%= trn_get('MSG_QUICKSIZE_HINT') %></p>
 </div>
 <div style="display:none; margin-top:10px;" id="quicksizing">
 	<% form_tag :action => 'generate_sizes', :id => @serie do %>
@@ -47,12 +46,12 @@
 	    <td>Maximum</td>
 	  </tr>
 	  <tr>
-	    <td>Width</td>
+	    <td><%= trn_get('HEADER_WIDTH') %></td>
 	    <td><%= text_field "series", "minimum_width", "size" => 10 %></td>
 	    <td><%= text_field "series", "maximum_width", "size" => 10 %></td>
 	  </tr>
 	  <tr>
-	    <td>Height</td>
+	    <td><%= trn_get('HEADER_HEIGHT') %></td>
 	    <td><%= text_field "series", "minimum_height", "size" => 10 %></td>
 	    <td><%= text_field "series", "maximum_height", "size" => 10 %></td>
 	  </tr>

@@ -14,7 +14,7 @@
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @serie %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @serie}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
 
-<%= render :partial => @serie.series_type.nil? ? "serie" : @serie.series_type.downcase %>
+<%= render :partial => "serie" %>
 
 <h3><%= trn_geth('HEADER_OPTIONS') %></h3>
 

@@ -1,6 +1,0 @@
-<h2>Editing Standard Size Product for Series <%= params[:series_name]%> </h2>
-<% form_tag :action => 'update', :id => @size do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag trn_geth('BUTTON_EDIT') %>
-<% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_SERIE'), :controller => 'serie', :action => 'show', :id => @size.standard_product_id %>
