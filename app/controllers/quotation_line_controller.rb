@@ -24,6 +24,11 @@ class QuotationLineController < ApplicationController
     @openings = {}
     @serie = Serie.find(@quotation_line.serie_id)
     @options = @serie.options.sort_by { |o| o.tr_description }
+    @options.each do |option|
+      if option.pricing_method.quantifiable
+        instance_variable_set "@option_quantity_#{option.id}".to_sym, option.minimum_quantity
+      end
+    end
   end
 
   def create
@@ -55,9 +60,9 @@ class QuotationLineController < ApplicationController
         if @quotation_line.save
 
           # save openings
-          @openings.each_pair { |key, value|
+          @openings.each_pair do |key, value|
             @quotation_line.quotation_lines_openings.create(:opening_id => value.to_i, :sort_order => key.to_i)
-          }
+          end
 
           # save section dimensions
           @real_height.each do |k, v|
@@ -68,9 +73,10 @@ class QuotationLineController < ApplicationController
           end
 
           # save options
-          new_selected_options.each { |o|
-            @quotation_line.options << Option.find(o)
-          }
+          new_selected_options.each do |o|
+            @quotation_line.options_quotation_lines << OptionsQuotationLine.new(:option_id => o,
+                                                                                :quantity => ((qty = params["option_quantity_#{o}".to_sym]) ? qty.to_i : 1))
+          end
 
           # create and save image
           @quotation_line.create_image
@@ -87,18 +93,29 @@ class QuotationLineController < ApplicationController
   def edit
     @quotation_line = QuotationLine.find(params[:id])
     @openings = {}
-    @quotation_line.quotation_lines_openings.each { |o|
+    @quotation_line.quotation_lines_openings.each do |o|
       @openings[o.sort_order.to_s] = o.opening_id
-    }
+    end
     @section_height = {}
-    @quotation_line.section_heights.each { |h|
+    @quotation_line.section_heights.each do |h|
       @section_height[h.sort_order.to_s] = h.value
-    }
+    end
     @section_width = {}
-    @quotation_line.section_widths.each { |w|
+    @quotation_line.section_widths.each do |w|
       @section_width[w.sort_order.to_s] = w.value
-    }
+    end
     @options = @quotation_line.serie.options.sort_by {|o| o.tr_description }
+    @options.each do |option|
+      if option.pricing_method.quantifiable
+        qty = @quotation_line.options_quotation_lines.find(:first, :conditions => {:option_id => option.id})
+        if qty
+          qty = qty.quantity
+        else
+          qty = option.minimum_quantity
+        end
+        instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
+      end
+    end
   end
 
   def update
@@ -129,9 +146,9 @@ class QuotationLineController < ApplicationController
         if @quotation_line.update_attributes(params[:quotation_line])
 
           # update openings
-          @quotation_line.quotation_lines_openings.each { |o|
+          @quotation_line.quotation_lines_openings.each do |o|
             o.update_attribute 'opening_id', @openings[o.sort_order.to_s].to_i
-          }
+          end
 
           # clear and save section dimensions
           @quotation_line.section_heights.clear
@@ -144,13 +161,18 @@ class QuotationLineController < ApplicationController
           end
 
           # update options
-          old_selected_options = @quotation_line.options.map{ |o| o.id }
-          (new_selected_options - old_selected_options).each { |o|
-            @quotation_line.options << Option.find(o)
-          }
-          (old_selected_options - new_selected_options).each { |o|
-            @quotation_line.options.delete Option.find(o)
-          }
+          old_selected_options = @quotation_line.options_quotation_lines.find(:all).map { |o| o.option.id }
+          (new_selected_options - old_selected_options).each do |o|
+            @quotation_line.options_quotation_lines << OptionsQuotationLine.new(:option_id => o,
+                                                                                :quantity => ((qty = params["option_quantity_#{o}".to_sym]) ? qty.to_i : 1))
+          end
+          (old_selected_options - new_selected_options).each do |o|
+            @quotation_line.options_quotation_lines.delete @quotation_line.options_quotation_lines.find(:first, :conditions => {:option_id => o})
+          end
+          # update quantities for existing options
+          @quotation_line.options_quotation_lines.each do |o|
+            o.update_attribute :quantity, ((qty = params["option_quantity_#{o.option.id}".to_sym]) ? qty.to_i : 1)
+          end
 
           # create and save image
           @quotation_line.create_image
@@ -198,8 +220,9 @@ private
     end
 
     # calculate options price
-    options_ids.each { |o|
+    options_ids.each do |o|
       option = Option.find(o)
+      option_price = 0
       case option.pricing_method_id
         when 1 # price per square foot
           if option.minimum_quantity != 0
@@ -233,7 +256,7 @@ private
           else
             area = (@total_width / 12) * (@total_height / 12)
           end
-          price += option.price * area
+          option_price = option.price * area
         when 2 # price by foot of perimeter
           if option.minimum_quantity != 0
             case option.options_minimum_unit_id
@@ -265,23 +288,25 @@ private
           else
             perimeter = (@total_width * 2 + @total_height * 2) / 12
           end
-          price += option.price * perimeter
+          option_price = option.price * perimeter
         when 3 # price per section
-          price += option.price * openings.length
+          option_price = option.price * openings.length
         when 4 # price per opening section
           nb_sections = 0
           openings.each_value { |v| nb_sections += 1 if Opening.find(v.to_i).openable }
-          price += option.price * nb_sections
+          option_price = option.price * nb_sections
         when 5 # price by fixed section
           nb_sections = 0
           openings.each_value { |v| nb_sections += 1 if !Opening.find(v.to_i).openable }
-          price += option.price * nb_sections
+          option_price = option.price * nb_sections
         when 6 # unit price
-          price += option.price
+          option_price = option.price
         when 7 # price per corner
-          price += option.price * shape.corners
+          option_price = option.price * shape.corners
       end
-    }
+      qty = ((opt_qty = params["option_quantity_#{o}".to_sym]) ? opt_qty.to_i : 1)
+      price += option_price * qty
+    end
     price
   end
 
@@ -299,10 +324,10 @@ private
     # count missing heights
     cpt_missing = 0
     acc_dimension = 0
-    @real_height.each { |k, v|
+    @real_height.each do |k, v|
       cpt_missing += 1 if v == 0
       acc_dimension += v
-    }
+    end
     # complete missing heights if possible
     if cpt_missing == 0
       @total_height = acc_dimension if @total_height == 0
@@ -311,16 +336,15 @@ private
         return trn_get('MSG_NOT_ENOUGH_DATA')
       else
         deducted = (@total_height - acc_dimension) / cpt_missing
-        @real_height.each { |k, v|
+        @real_height.each do |k, v|
           @real_height[k] = deducted if v == 0
-        }
+        end
       end
     end
     # check that we have no negative dimensions
-    @real_height.each_value { |v|
+    @real_height.each_value do |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
-    }
-  
+    end
 
     ## calculate all widths
     # get known widths, or 0 if missing
@@ -331,10 +355,10 @@ private
     # count missing widths
     cpt_missing = 0
     acc_dimension = 0
-    @real_width.each { |k, v|
+    @real_width.each do |k, v|
       cpt_missing += 1 if v == 0
       acc_dimension += v
-    }
+    end
     # complete missing widths if possible
     if cpt_missing == 0
       @total_width = acc_dimension if @total_width == 0
@@ -343,15 +367,15 @@ private
         return trn_get('MSG_NOT_ENOUGH_DATA')
       else
         deducted = (@total_width - acc_dimension) / cpt_missing
-        @real_width.each { |k, v|
+        @real_width.each do |k, v|
           @real_width[k] = deducted if v == 0
-        }
+        end
       end
     end
     # check that we have no negative dimensions
-    @real_width.each_value { |v|
+    @real_width.each_value do |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
-    }
+    end
     return nil
   end
 end

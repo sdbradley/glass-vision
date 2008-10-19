@@ -1,6 +1,6 @@
 class SerieController < ApplicationController
-  before_filter :check_administrator_role
-    
+    before_filter :check_administrator_role
+
   def list
     @series = Serie.find(:all, :order => "name")
   end
@@ -35,61 +35,6 @@ class SerieController < ApplicationController
     else
       render :action => 'edit'
     end
-  end
-
-  # given a minimum and maximum widths and heigts, and price per sq ft
-  # create all sizes and set prices -- note, to do prices we need an opening id
-  def generate_sizes
-    @serie = Serie.find(params[:id])
-
-    min_w = params[:series][:minimum_width].to_f
-    min_h = params[:series][:minimum_height].to_f
-    max_w = params[:series][:maximum_width].to_f
-    max_h = params[:series][:maximum_height].to_f
-
-    # should probably delete all existing dimensions and sizes first...
-
-    Dimension.delete_all "serie_id = #{@serie.id}"
-    
-    # TODO: need to make sure starting value is even
-    # next, generate all the widths and heights
-    curr_width = min_w;
-    while curr_width <= max_w do
-      Width.create :serie_id => params[:id], :value => curr_width
-      curr_width += 2;
-    end
-    
-    curr_height = min_h;
-    while curr_height <= max_h do
-      Height.create :serie_id => params[:id], :value => curr_height
-      curr_height += 2;
-    end    
-
-    # given all the above params, generate w,h dimension every 2 inches and set price.
-    redirect_to :action => 'show', :id => params[:id]
-  end
-  
-  def generate_prices
-    # given a series id, opening id, and price, fill in the prices
-    @serie = Serie.find(params[:id])
-    @opening = Opening.find(params[:opening_id])
-    price_per_sq_ft = params[:price].to_f
-
-    widths = Width.find_all_by_serie_id(@serie)
-    heights = Height.find_all_by_serie_id(@serie)
-
-    # delete any existing prices for this opening
-    SeriePrice.delete_all "opening_id = #{@opening.id}"
-    widths.each { |w|
-      heights.each { |h|
-         value = w.value.to_f * h.value.to_f * price_per_sq_ft / 144.0
-         value = value.ceil
-         SeriePrice.create :width_id => w.id, :height_id => h.id, :opening_id => @opening.id, :price => value
-        } 
-    }
-    flash[:notice] = trn_get('MSG_PRICES_GENERATED')
-
-    redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
   end
 
   def delete
@@ -152,6 +97,11 @@ class SerieController < ApplicationController
   def import_prices
     @serie = Serie.find(params[:id])
     @opening = Opening.find(params[:opening_id])
+    unless params[:selected_serie_id] and params[:selected_opening_id]
+      flash[:notice] = trn_get('MSG_STRANGE_ERROR')
+      redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
+      return
+    end
     @org_serie = Serie.find(params[:selected_serie_id])
     @org_opening = Opening.find(params[:selected_opening_id])
 
@@ -200,5 +150,32 @@ class SerieController < ApplicationController
       @serie.openings.delete Opening.find(o)
     }
     redirect_to :action => 'show', :id => @serie
+  end
+
+  def auto_calculate
+    @serie = Serie.find(params[:id])
+    @opening = Opening.find(params[:opening_id])
+    price = params[:square_foot_price].to_f
+
+    insert_queries = []
+    update_queries = []
+    @serie.widths.each do |ow|
+      @serie.heights.each do |oh|
+        new_price = (ow.value.to_f * oh.value.to_f / 144 * price).to_i
+        # get destination price
+        dp = SeriePrice.find(:first, :conditions => ['width_id = ? and height_id = ? and opening_id = ?', ow.id, oh.id, @opening.id])
+        if dp # update existing price
+          update_queries << "UPDATE serie_prices SET price = #{new_price} WHERE id = #{dp.id}"
+        else # create new price
+          insert_queries << "(#{ow.id}, #{oh.id}, #{@opening.id}, #{new_price})"
+        end
+      end
+    end
+    ActiveRecord::Base.connection.execute "INSERT INTO serie_prices (width_id, height_id, opening_id, price) VALUES " + insert_queries.join(', ') if insert_queries.length > 0
+    update_queries.each do |q|
+      ActiveRecord::Base.connection.execute q
+    end
+
+    redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
   end
 end

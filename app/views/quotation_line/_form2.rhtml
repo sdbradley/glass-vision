@@ -46,13 +46,7 @@
     <!-- row height, only if more than one row -->
     <% if sec_height > 1 %>
     <td>
-      <%= 
-      if @quotation_line.serie.standard_product?
-        select_tag("section_height[#{r}]", options_from_collection_for_select(@quotation_line.serie.heights, "value", "value", @section_height[r.to_s])) 
-        #@serie.heights.collect { |h| [h.value, h.id]})
-      else
-        text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 
-      end %>
+      <%= text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 %>
     </td>
     <% end %>
     <!-- total height -->
@@ -109,7 +103,6 @@
   </tr>
 </table>
 
-
 <h3><%= trn_geth('HEADER_OPTIONS') %></h3>
 
 <% for option in @options %>
@@ -122,5 +115,10 @@
     <%= option.minimum_quantity %>
     <%= option.options_minimum_unit.description %>
   <% end %>
-  )<br/>
+  )
+  <% if option.pricing_method.quantifiable %>
+    <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
+    <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
+  <% end %>
+  <br/>
 <% end %>

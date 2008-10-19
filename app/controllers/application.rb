@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   include TranslationGet
   include AuthenticatedSystem
-  
+
   before_filter do |c|
     ActiveRecord::Base.lang = c.session[:lang] ||= "fr"
   end

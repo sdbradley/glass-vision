@@ -11,6 +11,5 @@ class AddTranslations2 < ActiveRecord::Migration
     else
       execute 'delete from translations where id >=365;'
     end
-
   end
 end

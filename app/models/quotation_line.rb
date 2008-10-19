@@ -7,7 +7,7 @@ class QuotationLine < ActiveRecord::Base
   belongs_to :serie
   belongs_to :shape
   has_many :quotation_lines_openings, :order => 'sort_order', :dependent => :destroy
-  has_and_belongs_to_many :options
+  has_many :options_quotation_lines, :dependent => :destroy
   has_many :section_heights, :dependent => :destroy
   has_many :section_widths, :dependent => :destroy
 
@@ -18,6 +18,11 @@ class QuotationLine < ActiveRecord::Base
   FRAME_THICKNESS = 3.0
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 2
+
+  # returns an array of the options of the quotation line
+  def options
+    opt = @options_quotation_lines ? @options_quotation_lines.map { |o| o.option } : []
+  end
 
   def create_image
     temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
