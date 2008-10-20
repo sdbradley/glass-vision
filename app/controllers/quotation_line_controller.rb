@@ -201,11 +201,20 @@ private
     price = 0
     # calculate base price for all sections
     1.upto(shape.sections_height) do |r|
+      # make sure that the height is greater than or equal to the first value in the table
+      # we do this by looking for an entry that is less than or equal to the real height. If nothing is found,
+      # that means we're below the allowed size,
+      if !serie.heights.exists?(["value <= #{@real_height[r]}"])
+        raise PriceError, trn_get('MSG_HEIGHT_TOO_SMALL')
+      end
       selected_height = serie.heights.find(:first, :conditions => "value >= #{@real_height[r]}", :order => 'value')
       if !selected_height
         raise PriceError, trn_get('MSG_CANT_FIND_HEIGHT')
       end
       1.upto(shape.sections_width) do |c|
+        if !serie.widths.exists?(["value <= #{@real_width[c]}"])
+          raise PriceError, trn_get('MSG_WIDTH_TOO_SMALL')
+        end
         selected_width = serie.widths.find(:first, :conditions => "value >= #{@real_width[c]}", :order => 'value')
         if !selected_width
           raise PriceError, trn_get('MSG_CANT_FIND_WIDTH')

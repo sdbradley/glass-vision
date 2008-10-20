@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1015) do
+ActiveRecord::Schema.define(:version => 1022) do
 
   create_table "companies", :force => true do |t|
     t.column "name",    :string, :limit => 100, :default => "", :null => false
@@ -58,9 +58,16 @@ ActiveRecord::Schema.define(:version => 1015) do
     t.column "comments",    :text
   end
 
-  create_table "options_quotation_lines", :id => false, :force => true do |t|
+  create_table "options_quotation_lines", :force => true do |t|
     t.column "option_id",         :integer, :default => 0, :null => false
     t.column "quotation_line_id", :integer, :default => 0, :null => false
+    t.column "quantity",          :integer, :default => 1, :null => false
+  end
+
+  create_table "options_quotations", :force => true do |t|
+    t.column "option_id",    :integer,                  :null => false
+    t.column "quotation_id", :integer,                  :null => false
+    t.column "quantity",     :float,   :default => 1.0, :null => false
   end
 
   create_table "options_series", :id => false, :force => true do |t|
@@ -76,8 +83,9 @@ ActiveRecord::Schema.define(:version => 1015) do
   end
 
   create_table "pricing_methods", :force => true do |t|
-    t.column "description", :string, :limit => 50, :default => "", :null => false
-    t.column "comments",    :text
+    t.column "description",  :string,  :limit => 50, :default => "",    :null => false
+    t.column "comments",     :text
+    t.column "quantifiable", :boolean,               :default => false
   end
 
   create_table "quotation_lines", :force => true do |t|
