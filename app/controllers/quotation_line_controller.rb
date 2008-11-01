@@ -91,7 +91,7 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-    @quotation_line = QuotationLine.find(params[:id])
+    @quotation_line = QuotationLine.find(params[:id], :include => [:serie, :options_quotation_lines])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
       @openings[o.sort_order.to_s] = o.opening_id
@@ -104,7 +104,8 @@ class QuotationLineController < ApplicationController
     @quotation_line.section_widths.each do |w|
       @section_width[w.sort_order.to_s] = w.value
     end
-    @options = @quotation_line.serie.options.sort_by {|o| o.tr_description }
+    @serie = Serie.find(@quotation_line.serie_id)
+    @options = @serie.options.sort_by {|o| o.tr_description }
     @options.each do |option|
       if option.pricing_method.quantifiable
         qty = @quotation_line.options_quotation_lines.find(:first, :conditions => {:option_id => option.id})
@@ -121,7 +122,8 @@ class QuotationLineController < ApplicationController
   def update
     @quotation_line = QuotationLine.find(params[:id])
     @openings = params[:openings]
-    @options = @quotation_line.serie.options.sort_by {|o| o.tr_description }
+    @serie = Serie.find(@quotation_line.serie_id)
+    @options = @serie.options.sort_by {|o| o.tr_description }
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
     error = calculate_dimensions(params[:quotation_line][:width], params[:quotation_line][:height])
