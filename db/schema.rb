@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1022) do
+ActiveRecord::Schema.define(:version => 1023) do
 
   create_table "companies", :force => true do |t|
     t.column "name",    :string, :limit => 100, :default => "", :null => false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 1022) do
     t.column "field",     :string,  :limit => 50, :default => "", :null => false
     t.column "fr",        :text
     t.column "en",        :text
+    t.column "es",        :text
   end
 
   create_table "dimensions", :force => true do |t|
@@ -58,10 +59,9 @@ ActiveRecord::Schema.define(:version => 1022) do
     t.column "comments",    :text
   end
 
-  create_table "options_quotation_lines", :force => true do |t|
+  create_table "options_quotation_lines", :id => false, :force => true do |t|
     t.column "option_id",         :integer, :default => 0, :null => false
     t.column "quotation_line_id", :integer, :default => 0, :null => false
-    t.column "quantity",          :integer, :default => 1, :null => false
   end
 
   create_table "options_quotations", :force => true do |t|
@@ -83,9 +83,8 @@ ActiveRecord::Schema.define(:version => 1022) do
   end
 
   create_table "pricing_methods", :force => true do |t|
-    t.column "description",  :string,  :limit => 50, :default => "",    :null => false
-    t.column "comments",     :text
-    t.column "quantifiable", :boolean,               :default => false
+    t.column "description", :string, :limit => 50, :default => "", :null => false
+    t.column "comments",    :text
   end
 
   create_table "quotation_lines", :force => true do |t|
@@ -156,11 +155,28 @@ ActiveRecord::Schema.define(:version => 1022) do
     t.column "corners",         :integer,               :default => 4,  :null => false
   end
 
+  create_table "sheet_sizes", :force => true do |t|
+    t.column "description",      :string,  :limit => 256, :default => "",  :null => false
+    t.column "minimum_width",    :integer,                :default => 0,   :null => false
+    t.column "maximum_width",    :integer,                :default => 0,   :null => false
+    t.column "minimum_height",   :integer,                :default => 0,   :null => false
+    t.column "maximum_height",   :integer,                :default => 0,   :null => false
+    t.column "price",            :float,                  :default => 0.0, :null => false
+    t.column "sheet_product_id", :integer,                                 :null => false
+  end
+
+  create_table "standard_sizes", :force => true do |t|
+    t.column "description",         :string,  :limit => 256, :default => "",  :null => false
+    t.column "price",               :float,                  :default => 0.0, :null => false
+    t.column "standard_product_id", :integer,                                 :null => false
+  end
+
   create_table "translations", :force => true do |t|
     t.column "translation_key", :string, :limit => 100, :default => "", :null => false
     t.column "fr",              :text
     t.column "comments",        :text
     t.column "en",              :text
+    t.column "es",              :text
   end
 
   create_table "users", :force => true do |t|

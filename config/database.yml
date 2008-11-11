@@ -15,7 +15,7 @@ development:
   database: inline_development
   username: root
   password: t9ohqa
-  host: localhost
+  host: 127.0.0.1
   encoding: utf8
 
 # Warning: The database defined as 'test' will be erased and

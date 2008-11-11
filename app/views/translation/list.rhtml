@@ -6,6 +6,7 @@
     <th><%= trn_geth('HEADER_KEY') %></th>
     <th><%= trn_geth('HEADER_FRENCH') %></th>
     <th><%= trn_geth('HEADER_ENGLISH') %></th>
+    <th><%= trn_geth('HEADER_SPANISH') %></th>
     <th></th>
   </tr>
 <% for translation in @translations %>
@@ -13,6 +14,7 @@
     <td><%= translation.translation_key %></td>
     <td><%= translation.fr %></td>
     <td><%= translation.en %></td>
+    <td><%= translation.es %></td>
     <td class="command">
       <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => translation %> |
       <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => translation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

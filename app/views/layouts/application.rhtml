@@ -14,6 +14,7 @@
     <ul>
       <li><%= link_to image_tag("fr.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "fr" %></li>
       <li><%= link_to image_tag("us.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "en" %></li>
+      <li><%= link_to image_tag("es.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "es" %></li>
       <li><%= link_to trn_get('MENU_HOME'), :controller => 'home' %></li>
       <% if logged_in? %>
 <!--        <li>Hi, <%= link_to h(current_user.login.capitalize), user_path(current_user) %></li> -->

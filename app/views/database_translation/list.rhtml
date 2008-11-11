@@ -35,6 +35,7 @@
     <th><%= trn_geth('HEADER_NATIVE') %></th>
     <th><%= trn_geth('HEADER_FRENCH') %></th>
     <th><%= trn_geth('HEADER_ENGLISH') %></th>
+    <th><%= trn_geth('HEADER_SPANISH') %></th>
     <th></th>
   </tr>
 <% for dbt in @dbts %>
@@ -48,6 +49,7 @@
     </td>
     <td><%= dbt.fr %></td>
     <td><%= dbt.en %></td>
+    <td><%= dbt.es %></td>
     <td>
       <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => dbt %>
     </td>
