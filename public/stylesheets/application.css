@@ -123,7 +123,7 @@ body {
 }
 
 div#content {
-  margin: 10px;
+  margin: 10px 10px 10px 210px;
 }
 
 
@@ -169,6 +169,18 @@ div#content {
   height: 27px;
   line-height: 27pt;
   margin: 0px 5px 0px 0px;
+}
+
+#leftnav {
+  float:left;
+  width:200px;
+  height:100%;
+  background-color: #9B9478;
+}
+
+#leftnav ul {
+  list-style-type: none;
+  list-style-image: none;
 }
 
 /****** Login dialog ********/
