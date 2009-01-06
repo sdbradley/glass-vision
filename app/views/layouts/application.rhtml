@@ -34,28 +34,31 @@
       </div>
     <% end %>     
   </div> <!-- nav -->
-
+<div id="wrap">
   <div id="leftnav">
     <!-- this is the left nav menu -->
     <ul>
-      <li><%= link_to trn_get('MENU_HOME'), :controller => 'home' %></li>
-      <% if current_user.has_role?('administrator') %>
-      <li><%= link_to trn_geth('TITLE_SERIE_LIST'), :controller => 'serie', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_SHAPE_LIST'), :controller => 'shape', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_OPENING_LIST'), :controller => 'opening', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_OPTION_LIST'), :controller => 'option', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_TRANSLATION_LIST'), :controller => 'translation', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_DBTF_LIST'), :controller => 'database_translation_field', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_DBT_LIST'), :controller => 'database_translation', :action => 'list' %></li>
-      <li><%= link_to trn_geth('TITLE_COMPANY_LIST'), :controller => 'company', :action => 'list' %></li>
-      <% end %>
-      <li><%= link_to trn_geth('TITLE_QUOTATION_LIST'), :controller => 'quotation', :action => 'list' %></li>
-      <li><%= link_to trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
+      <li><%= link_to image_tag("home.png", :size => "32x32", :border => 0) + trn_get('MENU_HOME'), :controller => 'home' %></li>
+      <% if logged_in? %>
+				<% if current_user.has_role?('administrator') %>
+		      <li><%= link_to image_tag("series.png", :size => "32x32", :border => 0) + trn_geth('TITLE_SERIE_LIST'), :controller => 'serie', :action => 'list' %></li>
+		      <li><%= link_to image_tag("window.png", :size => "32x32", :border => 0) + trn_geth('TITLE_SHAPE_LIST'), :controller => 'shape', :action => 'list' %></li>
+		      <li><%= link_to image_tag("image_32.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPENING_LIST'), :controller => 'opening', :action => 'list' %></li>
+		      <li><%= link_to image_tag("process.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPTION_LIST'), :controller => 'option', :action => 'list' %></li>
+		      <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_TRANSLATION_LIST'), :controller => 'translation', :action => 'list' %></li>
+		      <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_DBTF_LIST'), :controller => 'database_translation_field', :action => 'list' %></li>
+		      <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_DBT_LIST'), :controller => 'database_translation', :action => 'list' %></li>
+		      <li><%= link_to image_tag("companies.png", :size => "32x32", :border => 0) + trn_geth('TITLE_COMPANY_LIST'), :controller => 'company', :action => 'list' %></li>
+	      <% end %>
+	      <li><%= link_to image_tag("folder.png", :size => "32x32", :border => 0) + trn_geth('TITLE_QUOTATION_LIST'), :controller => 'quotation', :action => 'list' %></li>
+				<li><%= link_to image_tag("user.png", :size => "32x32", :border => 0) + trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
+			<% end %>
     </ul>
   </div>
   <div id='content'>
+	<!--
     <h1 id="site_title"><%= trn_get('SITE_TITLE') %></h1>
-  
+  -->
       <% if flash[:error] %>
       <div class="error">
         <table>
@@ -81,5 +84,6 @@
       
       <%= @content_for_layout %>
     </div>
+</div>
   </body>
 </html>

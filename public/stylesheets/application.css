@@ -15,7 +15,7 @@ table {
 }
 
 th {
-  background-color: #cccccc;
+  background-color: #948B6D;
 }
 
 td, th {
@@ -29,7 +29,7 @@ td.command {
 }
 
 tr.odd {
-  background-color: #deffec;
+  background-color: #BCB6A3;
 }
 
 tr.even {
@@ -123,7 +123,9 @@ body {
 }
 
 div#content {
-  margin: 10px 10px 10px 210px;
+  margin-left: 200px;
+	padding: 10px;
+	background-color: #ffffff;
 }
 
 
@@ -134,6 +136,7 @@ div#content {
   padding-top: 3px;
   width: 100%;
   overflow:hidden;
+  border-bottom: 1px solid black;
 }
 
 #nav ul{
@@ -171,16 +174,50 @@ div#content {
   margin: 0px 5px 0px 0px;
 }
 
+#wrap {
+	margin: 0px;
+	padding:0px;
+	background-color: #948B6D;
+}
+
 #leftnav {
   float:left;
   width:200px;
   height:100%;
-  background-color: #9B9478;
+  background-color: #948B6D;
 }
 
 #leftnav ul {
   list-style-type: none;
   list-style-image: none;
+	padding: 6px;
+	margin: 0px;
+	font: sans-serif;
+	font-size: 1.2em;
+}
+
+#leftnav img {
+	vertical-align: bottom;
+	padding: 0px 10px;
+}
+
+#leftnav ul li {
+	padding: 5px;
+}
+
+#leftnav ul li a {
+/*background-color: #C1BCA9;*/
+background-color: #3F3C2F;
+display:block;
+height:40px;
+padding-top:4px;
+width:175px;
+}
+
+#leftnav ul li a, #leftnav ul li a:visited {
+color: #FFFFFF;
+/*font-weight: bold;*/
+text-decoration: none;
 }
 
 /****** Login dialog ********/
@@ -201,6 +238,11 @@ div#content {
   width: 300px;
   margin: 10px auto;
   padding: 0px;
+}
+
+h2 {
+	margin:0;
+	padding: 19px 0px;
 }
 
 @page {

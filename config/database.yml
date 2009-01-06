@@ -13,6 +13,7 @@
 development:
   adapter: mysql
   database: inline_development
+#  database: glassvision_production
   username: root
   password: t9ohqa
   host: 127.0.0.1
