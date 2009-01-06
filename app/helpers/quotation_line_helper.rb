@@ -34,7 +34,7 @@ module QuotationLineHelper
   end
   
   def size_tag_helper(width_or_height, idx)
-      if @quotation_line.serie.is_standard_product
+      if @quotation_line.serie.is_standard_product?
         select_tag("section_#{width_or_height}[#{idx}]", options_from_collection_for_select(@serie.width_or_height, "value", "value")) 
       else
         text_field_tag "section_#{width_or_height}[#{idx}]", @section_width_or_height[idx.to_s], :size => 6 
