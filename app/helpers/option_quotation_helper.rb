@@ -1,2 +1,2 @@
-module OptionsQuotationsControllerHelper
+module OptionsQuotationsHelper
 end
