@@ -11,45 +11,9 @@ class OptionCategoryControllerTest < Test::Unit::TestCase
     @controller = OptionCategoryController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-
     @first_id = option_categories(:first).id
   end
 
-  def test_list,
-    get :list,
-    assert_response :success
-    assert_template 'list,'
-  end
-
-  def test_show,
-    get :show,
-    assert_response :success
-    assert_template 'show,'
-  end
-
-  def test_add,
-    get :add,
-    assert_response :success
-    assert_template 'add,'
-  end
-
-  def test_create,
-    get :create,
-    assert_response :success
-    assert_template 'create,'
-  end
-
-  def test_edit,
-    get :edit,
-    assert_response :success
-    assert_template 'edit,'
-  end
-
-  def test_update,
-    get :update,
-    assert_response :success
-    assert_template 'update,'
-  end
 
   def test_delete
     get :delete
@@ -94,7 +58,7 @@ class OptionCategoryControllerTest < Test::Unit::TestCase
   def test_create
     num_option_categories = OptionCategory.count
 
-    post :create, :option_category => {}
+    post :create, :option_category => {:name=>"a", :display_order => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
