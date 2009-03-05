@@ -30,6 +30,15 @@ test:
   host: 127.0.0.1
   encoding: utf8
 
+xproduction:
+    adapter: mysql
+    database: inline_development
+  #  database: glassvision_production
+    username: root
+    password: t9ohqa
+    host: 127.0.0.1
+    encoding: utf8
+
 production:
   adapter: mysql
   database: glass_inlineproduction
