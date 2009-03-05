@@ -1,4 +1,3 @@
-INSERT INTO `translations` VALUES (393, 'TITLE_OPTION_CATEGORY_LIST', 'Catégories','','Categories', 'Categorías');
 INSERT INTO `translations` VALUES (394, 'HEADER_ORDER', 'Ordre','','Order', 'Orden');
 INSERT INTO `translations` VALUES (395, 'HEADER_ACTION', 'Action','','Action', 'Acción');
 INSERT INTO `translations` VALUES (396, 'BUTTON_EDIT_OPTIONS', 'Options','','Options', 'Opciones');
@@ -11,3 +10,4 @@ INSERT INTO `translations` VALUES (402, 'TITLE_EDIT_CATEGORY', 'fr','Modifier un
 INSERT INTO `translations` VALUES (403, 'BUTTON_PREVIOUS', 'Précédent','', 'Previous','Anterior');
 INSERT INTO `translations` VALUES (404, 'BUTTON_NEXT', 'Suivant','', 'Next', 'Siguiente');
 INSERT INTO `translations` VALUES (405, 'LABEL_DISPLAY_ORDER', 'Ordre d\'affichage','', 'Display Order', 'Mostrar Pedido');
+INSERT INTO `translations` VALUES (406, 'TITLE_OPTION_CATEGORY_LIST', 'Catégories','','Categories', 'Categorías');
