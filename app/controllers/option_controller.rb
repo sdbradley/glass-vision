@@ -11,6 +11,7 @@ class OptionController < ApplicationController
 
   def add
     @option = Option.new
+    @all_option_categories = OptionCategory.find(:all, :order => :display_order)
   end
 
   def create
@@ -25,6 +26,7 @@ class OptionController < ApplicationController
 
   def edit
     @option = Option.find(params[:id])
+    @all_option_categories = OptionCategory.find(:all, :order => :display_order)
   end
 
   def update
