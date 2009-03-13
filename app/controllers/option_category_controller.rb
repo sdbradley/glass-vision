@@ -69,7 +69,9 @@ class OptionCategoryController < ApplicationController
   end
 
   def delete
-    OptionCategory.find(params[:id]).destroy
+    @option_category = OptionCategory.find(params[:id])
+    @option_category.options.delete_all 
+    @option_category.destroy
     redirect_to :action => 'list'
   end
 end

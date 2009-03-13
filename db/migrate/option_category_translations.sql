@@ -11,3 +11,4 @@ INSERT INTO `translations` VALUES (403, 'BUTTON_PREVIOUS', 'Précédent','', 'Pr
 INSERT INTO `translations` VALUES (404, 'BUTTON_NEXT', 'Suivant','', 'Next', 'Siguiente');
 INSERT INTO `translations` VALUES (405, 'LABEL_DISPLAY_ORDER', 'Ordre d\'affichage','', 'Display Order', 'Mostrar Pedido');
 INSERT INTO `translations` VALUES (406, 'TITLE_OPTION_CATEGORY_LIST', 'Catégories','','Categories', 'Categorías');
+INSERT INTO `translations` VALUES (407, 'LABEL_CATEGORY', 'Catégorie','','Category', 'Categoría');

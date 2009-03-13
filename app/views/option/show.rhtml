@@ -13,6 +13,10 @@
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @option.pricing_method.tr_description %></td>
   </tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= @option.option_categories[0].tr_name if @option.categorized? %></td>
+	</tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @option.price %></td>

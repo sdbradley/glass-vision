@@ -9,6 +9,10 @@
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_area 'option', 'comments', :cols => '39', :rows => '10' %></td>
   </tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= collection_select 'option', 'option_category_ids', @all_option_categories, "id", "tr_name" %></td>
+	</tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= select 'option', 'pricing_method_id', PricingMethod.find(:all, :order => 'description').map { |p| [p.tr_description, p.id] } %></td>
@@ -18,8 +22,10 @@
     <td><%= text_field 'option', 'price', :size => 5 %></td>
   </tr>
 </table>
+<p>
 <strong><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong><br/>
 <%= trn_geth('LABEL_MINIMUM_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
 <%= text_field 'option', 'minimum_quantity', :size => 5 %>
 <%= select 'option', 'options_minimum_unit_id', OptionsMinimumUnit.find(:all, :order => 'description').map { |p| [p.tr_description, p.id] } %>
 <br/>
+</p>
