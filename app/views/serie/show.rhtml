@@ -21,11 +21,15 @@
 <% if @serie.options.count == 0 %>
   <%= trn_geth('MSG_NO_OPTIONS_SELECTED') %><br/>
 <% else %>
-<ul>
-  <% for option in @serie.options %>
-  <li><%= option.tr_description %></li>
-  <% end %>
-</ul>
+	<% @categorized_options.each do |category, options| %>
+		<h4><%= h category %></h4>
+		<ul>
+	  <% for option in options %>
+	    <li><%= option.tr_description %></li>
+	  <% end %>
+	</ul>
+	<% end %>
+
 <% end %>
 
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit_options', :id => @serie %>

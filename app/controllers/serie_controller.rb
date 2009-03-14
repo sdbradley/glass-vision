@@ -7,6 +7,7 @@ class SerieController < ApplicationController
 
   def show
     @serie = Serie.find(params[:id])
+    @categorized_options = categorize_options(@serie.options)
   end
 
   def add
@@ -126,7 +127,10 @@ class SerieController < ApplicationController
 
   def edit_options
     @serie = Serie.find(params[:id])
-    @options = Option.find(:all, :order => 'description')
+    @options = Option.find(:all, :include => 'option_categories', :order => 'display_order asc, options.description asc')
+    # take the list of options, and rearrange it to be organized by category.
+    # lets do this with a hash of hashes
+    @categorized_options = categorize_options(@options)
   end
 
   def update_options
@@ -205,5 +209,19 @@ class SerieController < ApplicationController
       @serie.openings.delete Opening.find(o)
     }
     redirect_to :action => 'show', :id => @serie
+  end
+  protected
+  def categorize_options(options)
+    # take the list of options, and rearrange it to be organized by category.
+    # lets do this with a hash of hashes
+    categorized_options = {}
+    options.each { |opt| 
+       opt.option_categories.each { |cat|
+         cat_name = cat.tr_name
+         categorized_options[cat_name] ||= []
+         categorized_options[cat_name] << opt
+         }
+    }
+    categorized_options
   end
 end
