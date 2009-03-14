@@ -105,28 +105,7 @@
   <% for line in @quotation.quotation_lines %>
     <%   total += line.quantity * line.price %>
   <tr valign="top" class="quotation-line">
-    <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/images/previews/preview_#{line.id}.png" %>
-			<table valign="top" >
-        <% if line.options_quotation_lines.length > 0 %>
-        <tr>
-          <td valign="top"><%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td>
-						<% categorized_options = OptionsQuotationLine.categorize_options(line.options_quotation_lines) %>
-						<% categorized_options.each do |category, options| %>
-							<span style="font-weight:bold;"><%= h category %></span><br />
-						  <% for option in options %>
-						    <%= option.option.tr_description %>
-	              <% if option.quantity != 1 %>
-	                x <%= option.quantity %>
-	              <% end %>
-	              <br/>
-						  <% end %>
-						<% end %>
-          </td>
-        </tr>
-        <% end %>
-			</table>
-	  </td>
+    <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/images/previews/preview_#{line.id}.png" %></td>
     <td style="border-bottom: 2px dotted #808080;">
 
       <table>
@@ -148,10 +127,20 @@
           <td><%= trn_geth('HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
           <td><%= line.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
         </tr>
+        <% if line.options_quotation_lines.length > 0 %>
         <tr>
-          <td><%= trn_geth('HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= format('%.3f', line.width) %></td>
+          <td valign="top"><%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td>
+            <% for option in line.options_quotation_lines %>
+              <%= option.option.tr_description %>
+              <% if option.quantity != 1 %>
+                x <%= option.quantity %>
+              <% end %>
+              <br/>
+            <% end %>
+          </td>
         </tr>
+        <% end %>
         <tr>
           <td><%= trn_geth('HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
           <td><%= format('%.3f', line.height) %></td>

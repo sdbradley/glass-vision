@@ -129,21 +129,17 @@
           <tr>
             <td nowrap="nowrap" valign="top"><%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td>
-							<br />
-							<% categorized_options = OptionsQuotationLine.categorize_options(ql.options_quotation_lines) %>
-							<% categorized_options.each do |category, options| %>
-								<span style="font-weight:bold;"><%= h category %></span>:
-                <% first = true %>
-							  <% for option in options %>
-	                <%= ', ' if !first %>
-							    <%= option.option.tr_description %>
-		              <% if option.quantity != 1 %>
-		                x <%= option.quantity %>
-		              <% end %>
-                  <% first = false %>
-							  <% end %>
-							<% end %>
-	
+              <% 
+                first = true
+                ql.options_quotation_lines.each { |opt| %>
+                  <%= ', ' if !first %>
+                  <%= opt.option.tr_description %>
+                  <% if opt.quantity != 1 %>
+                    x <%= opt.quantity %>
+                  <% end %>
+              <% 
+                  first = false
+                } %>
             </td>
           </tr>
           <% end %>

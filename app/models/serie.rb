@@ -17,4 +17,18 @@ class Serie < ActiveRecord::Base
   def priced_by_area?
     series_type == "PerSqFtProduct"
   end
+  
+  def self.categorize_options(options)
+     # take the list of options, and rearrange it to be organized by category.
+     # lets do this with a hash of hashes
+     categorized_options = {}
+     options.each { |opt| 
+        opt.option_categories.each { |cat|
+          cat_name = cat.tr_name
+          categorized_options[cat_name] ||= []
+          categorized_options[cat_name] << opt
+          }
+     }
+     categorized_options
+   end
 end
