@@ -164,4 +164,5 @@ class QuotationLine < ActiveRecord::Base
       # no problem if file does not exist
     end
   end
+
 end
