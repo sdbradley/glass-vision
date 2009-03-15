@@ -21,13 +21,15 @@
 <% if @serie.options.count == 0 %>
   <%= trn_geth('MSG_NO_OPTIONS_SELECTED') %><br/>
 <% else %>
-	<% @categorized_options.each do |category, options| %>
-		<h4><%= h category %></h4>
-		<ul>
-	  <% for option in options %>
-	    <li><%= option.tr_description %></li>
-	  <% end %>
-	</ul>
+	<% @categorized_options.each_value do |category_and_options| %>
+		<% category_and_options.each do |category, options| %>
+			<h4><%= h category.tr_name %></h4>
+			<ul>
+		  <% for option in options %>
+		    <li><%= option.tr_description %></li>
+		  <% end %>
+		</ul>
+		<% end %>
 	<% end %>
 
 <% end %>

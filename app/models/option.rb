@@ -7,7 +7,7 @@ class Option < ActiveRecord::Base
   has_many :options_quotation_lines
   has_many :options_quotations
 
-  has_and_belongs_to_many :option_categories
+  has_and_belongs_to_many :option_categories, :order => "display_order asc"
 #  has_many :option_categories, :class_name => "OptionCategory", :foreign_key => "option_category_id", :through => "option_categories_options"
 #  belongs_to :option_categories
 
@@ -27,17 +27,4 @@ class Option < ActiveRecord::Base
     !option_categories.empty?
   end
   
-  def categorize_options(options)
-    # take the list of options, and rearrange it to be organized by category.
-    # lets do this with a hash of hashes
-    categorized_options = {}
-    options.each { |opt| 
-       opt.option_categories.each { |cat|
-         cat_name = cat.tr_name
-         categorized_options[cat_name] ||= []
-         categorized_options[cat_name] << opt
-         }
-    }
-    categorized_options
-  end  
 end

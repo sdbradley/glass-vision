@@ -2,11 +2,13 @@
 
 <% form_tag :action => 'update_options', :id => @serie do %>
 
-	<% @categorized_options.each do |category, options| %>
-		<h3><%= h category %></h3>
-	  <% for option in options %>
-	    <%= check_box_tag 'options[]', option.id, @serie.options.include?(option) ? true : false %><%= option.tr_description %><br/>
-	  <% end %>
+	<% @categorized_options.each_value do |category_and_options| %>
+		<% category_and_options.each do |category, options| %>
+			<h3><%= h category.tr_name %></h3>
+		  <% for option in options %>
+		    <%= check_box_tag 'options[]', option.id, @serie.options.include?(option) ? true : false %><%= option.tr_description %><br/>
+		  <% end %>
+		<% end %>
 	<% end %>
 	<p>
 		<%= submit_tag trn_geth('BUTTON_SAVE') %>

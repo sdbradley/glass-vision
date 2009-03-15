@@ -107,24 +107,26 @@
 <% selected_options = @quotation_line.options_quotation_lines.find(:all).map { |o| o.option.id } %>
 
 <% categorized_options = Serie.categorize_options(@options) %>
-<% categorized_options.each do |category, options| %>
-	<span style="font-weight:bold;"><%= h category %></span><br />
- 	<% for option in @options %>
-	  <%= check_box_tag 'options[]', option.id, selected_options.include?(option.id) ? true : false %>
-	  <%= option.tr_description %> 
-	  (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
-	  <%= option.price %>
-	  <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
-	    , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
-	    <%= option.minimum_quantity %>
-	    <%= option.options_minimum_unit.description %>
-	  <% end %>
-	  )
-	  <% if option.pricing_method.quantifiable %>
-	    <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
-	    <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
-	  <% end %>
-	  <br/>
+<% categorized_options.each_value do |category_and_options| %>
+	<% category_and_options.each do |category, options| %>
+		<span style="font-weight:bold;"><%= h category.tr_name %></span><br />
+	 	<% for option in options %>
+		  <%= check_box_tag 'options[]', option.id, selected_options.include?(option.id) ? true : false %>
+		  <%= option.tr_description %> 
+		  (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
+		  <%= option.price %>
+		  <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
+		    , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
+		    <%= option.minimum_quantity %>
+		    <%= option.options_minimum_unit.description %>
+		  <% end %>
+		  )
+		  <% if option.pricing_method.quantifiable %>
+		    <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
+		    <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
+		  <% end %>
+		  <br/>
+		<% end %>
 	<% end %>
 <% end %>
 
