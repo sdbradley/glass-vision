@@ -107,8 +107,8 @@
 <% selected_options = @quotation_line.options_quotation_lines.find(:all).map { |o| o.option.id } %>
 
 <% categorized_options = Serie.categorize_options(@options) %>
-<% categorized_options.each_value do |category_and_options| %>
-	<% category_and_options.each do |category, options| %>
+<% categorized_options.keys.sort.each do |i| %>
+	<% categorized_options[i].each do |category, options| %>
 		<span style="font-weight:bold;"><%= h category.tr_name %></span><br />
 	 	<% for option in options %>
 		  <%= check_box_tag 'options[]', option.id, selected_options.include?(option.id) ? true : false %>
@@ -119,15 +119,16 @@
 		    , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
 		    <%= option.minimum_quantity %>
 		    <%= option.options_minimum_unit.description %>
-		  <% end %>
+		  <% end %> <!-- if option.minimum_quantity -->
 		  )
 		  <% if option.pricing_method.quantifiable %>
 		    <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
 		    <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
-		  <% end %>
+		  <% end %><!-- if option.pricing_method.quantifiable -->
 		  <br/>
-		<% end %>
-	<% end %>
-<% end %>
+		<% end %> <!-- for option ...-->
+	<% end %> <!-- category_and_options.each -->
+  <br/>
+<% end %> <!-- categorized_options.keys.sort.each do -->
 
 
