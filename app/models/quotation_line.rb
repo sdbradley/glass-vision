@@ -26,7 +26,7 @@ class QuotationLine < ActiveRecord::Base
 
   def create_image
     temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
-    final_file_name = File.join(RAILS_ROOT, 'public', 'images', 'previews', "preview_#{id}.png")
+    final_file_name = File.join(RAILS_ROOT, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 
     # binding for erb file
     # constants
@@ -159,7 +159,7 @@ class QuotationLine < ActiveRecord::Base
   def before_destroy
     # delete the line image
     begin
-      File.delete File.join(RAILS_ROOT, 'public', 'images', 'previews', "preview_#{id}.png")
+      File.delete File.join(RAILS_ROOT, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
     rescue
       # no problem if file does not exist
     end
