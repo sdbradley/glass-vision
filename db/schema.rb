@@ -70,14 +70,15 @@ ActiveRecord::Schema.define(:version => 1029) do
     t.column "comments",    :text
   end
 
-  create_table "options_quotation_lines", :id => false, :force => true do |t|
+  create_table "options_quotation_lines", :force => true do |t|
     t.column "option_id",         :integer, :default => 0, :null => false
     t.column "quotation_line_id", :integer, :default => 0, :null => false
+    t.column "quantity",          :integer, :default => 1, :null => false
   end
 
   create_table "options_quotations", :force => true do |t|
-    t.column "option_id",    :integer,                  :null => false
-    t.column "quotation_id", :integer,                  :null => false
+    t.column "option_id",    :integer, :default => 0,   :null => false
+    t.column "quotation_id", :integer, :default => 0,   :null => false
     t.column "quantity",     :float,   :default => 1.0, :null => false
   end
 
@@ -87,27 +88,33 @@ ActiveRecord::Schema.define(:version => 1029) do
   end
 
   create_table "permissions", :force => true do |t|
-    t.column "role_id",    :integer,  :null => false
-    t.column "user_id",    :integer,  :null => false
+    t.column "role_id",    :integer,  :default => 0, :null => false
+    t.column "user_id",    :integer,  :default => 0, :null => false
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
   end
 
+  create_table "preview_images", :force => true do |t|
+    t.column "opening_id", :integer,                              :null => false
+    t.column "hinged_on",  :string,  :limit => 1, :default => "", :null => false
+    t.column "image_name", :string
+  end
+
   create_table "pricing_methods", :force => true do |t|
-    t.column "description", :string, :limit => 50, :default => "", :null => false
-    t.column "comments",    :text
+    t.column "description",  :string,  :limit => 50, :default => "",    :null => false
+    t.column "comments",     :text
+    t.column "quantifiable", :boolean,               :default => false
   end
 
   create_table "quotation_lines", :force => true do |t|
-    t.column "quotation_id",     :integer, :default => 0,   :null => false
-    t.column "serie_id",         :integer, :default => 0,   :null => false
-    t.column "shape_id",         :integer, :default => 0,   :null => false
-    t.column "width",            :float,   :default => 0.0, :null => false
-    t.column "height",           :float,   :default => 0.0, :null => false
-    t.column "quantity",         :integer, :default => 0,   :null => false
-    t.column "price",            :float,   :default => 0.0, :null => false
-    t.column "label",            :string
-    t.column "standard_size_id", :integer
+    t.column "quotation_id", :integer, :default => 0,   :null => false
+    t.column "serie_id",     :integer, :default => 0,   :null => false
+    t.column "shape_id",     :integer, :default => 0,   :null => false
+    t.column "width",        :float,   :default => 0.0, :null => false
+    t.column "height",       :float,   :default => 0.0, :null => false
+    t.column "quantity",     :integer, :default => 0,   :null => false
+    t.column "price",        :float,   :default => 0.0, :null => false
+    t.column "label",        :string
   end
 
   create_table "quotation_lines_openings", :force => true do |t|
@@ -172,22 +179,6 @@ ActiveRecord::Schema.define(:version => 1029) do
     t.column "sections_width",  :integer,               :default => 0,  :null => false
     t.column "sections_height", :integer,               :default => 0,  :null => false
     t.column "corners",         :integer,               :default => 4,  :null => false
-  end
-
-  create_table "sheet_sizes", :force => true do |t|
-    t.column "description",      :string,  :limit => 256, :default => "",  :null => false
-    t.column "minimum_width",    :integer,                :default => 0,   :null => false
-    t.column "maximum_width",    :integer,                :default => 0,   :null => false
-    t.column "minimum_height",   :integer,                :default => 0,   :null => false
-    t.column "maximum_height",   :integer,                :default => 0,   :null => false
-    t.column "price",            :float,                  :default => 0.0, :null => false
-    t.column "sheet_product_id", :integer,                                 :null => false
-  end
-
-  create_table "standard_sizes", :force => true do |t|
-    t.column "description",         :string,  :limit => 256, :default => "",  :null => false
-    t.column "price",               :float,                  :default => 0.0, :null => false
-    t.column "standard_product_id", :integer,                                 :null => false
   end
 
   create_table "translations", :force => true do |t|
