@@ -38,7 +38,7 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 # observers break a migrate from VERSION 0 - disable them for rake db:migrate
 unless ( File.basename($0) == "rake" && ARGV.include?("db:migrate") ) 
-  config.active_record.observers = :user_observer
+  config.active_record.observers = :user_observer, :quotation_line_observer , :options_quotation_observer
 end
 
   # Make Active Record use UTC-base instead of local time
