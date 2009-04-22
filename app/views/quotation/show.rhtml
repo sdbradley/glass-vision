@@ -51,6 +51,14 @@
     <td><%= @quotation.customer_email %></td>
   </tr>
   <% end %>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_DATE_CREATED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= gv_humanize_time @quotation.created_at %>
+	</tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_DATE_MODIFIED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= gv_humanize_time @quotation.updated_at %>
+	</tr>
   <% if @quotation.notes and !@quotation.notes.empty? %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>

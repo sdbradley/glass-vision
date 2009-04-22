@@ -15,6 +15,7 @@
         #<%= @quotation.id %>
         <%= @quotation.project_name %>
       </h2>
+			<%= gv_humanize_time @quotation.updated_at %>
     </td>
   </tr>
   <tr>
@@ -150,6 +151,8 @@
                 <%
                     first = false
                   } %>
+						<% else %>
+						  &nbsp;
             <% end %>
 
         </td>

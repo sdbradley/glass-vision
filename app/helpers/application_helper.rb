@@ -2,4 +2,8 @@
 include TranslationGet
 module ApplicationHelper
   
+  def gv_humanize_time(t)
+    
+    t.strftime("%a %b %d, %Y") if !t.nil?
+  end
 end
