@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy
   has_many :roles, :through => :permissions
   has_many :quotations
+  has_and_belongs_to_many :companies
    
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -144,7 +145,16 @@ class User < ActiveRecord::Base
   def has_role?(rolename)
     self.roles.find_by_rolename(rolename) ? true : false
   end
-  
+
+  def active_companies
+    if has_role?("administrator")
+      active_companies = Company.find(:all, :order => "name asc")
+    else
+      active_companies = self.companies
+    end
+    
+    active_companies
+  end
 protected
     # before filter 
     def encrypt_password

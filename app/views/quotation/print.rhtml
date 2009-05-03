@@ -2,7 +2,7 @@
 <table cellpadding="5" width="100%">
   <tr valign="top" width="1%">
     <td rowspan="2">
-      <%= image_tag 'logos/' + @company.logo %>
+      <%= image_tag @company.logo.url %>
     </td>
     <td rowspan="2" width="1%" nowrap="nowrap">
       <strong><%= @company.name %></strong><br/>

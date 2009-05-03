@@ -1,0 +1,1 @@
+INSERT INTO translations VALUES (413, 'MENU_CUSTOMERS', 'Clients','','Customers', 'Clientes');

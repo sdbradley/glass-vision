@@ -93,7 +93,7 @@
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
 <% form_tag :action => 'print', :id => @quotation do %>
   <%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %>
-  <%= select_tag 'company_id', options_for_select(Company.find(:all, :order => 'name').map { |c| [c.name, c.id] }) %>
+  <%= select_tag 'company_id', options_for_select(@current_user.active_companies.map { |c| [c.name, c.id] }) %>
   <%= submit_tag trn_geth('BUTTON_PRINT') %>
 <% end %>
 

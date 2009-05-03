@@ -2,14 +2,31 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1031) do
+ActiveRecord::Schema.define(:version => 1036) do
 
   create_table "companies", :force => true do |t|
-    t.column "name",    :string, :limit => 100, :default => "", :null => false
-    t.column "address", :string, :limit => 200
-    t.column "phone",   :string, :limit => 50
-    t.column "fax",     :string, :limit => 50
-    t.column "logo",    :string, :limit => 100
+    t.column "name",              :string,  :limit => 100, :default => "", :null => false
+    t.column "address",           :string,  :limit => 200
+    t.column "phone",             :string,  :limit => 50
+    t.column "fax",               :string,  :limit => 50
+    t.column "logo_file_name",    :string,  :limit => 100
+    t.column "logo_content_type", :string
+    t.column "logo_file_size",    :integer
+  end
+
+  create_table "companies_users", :force => true do |t|
+    t.column "company_id", :integer
+    t.column "user_id",    :integer
+  end
+
+  create_table "customers", :force => true do |t|
+    t.column "name",       :string,   :limit => 150, :null => false
+    t.column "address",    :string,   :limit => 200
+    t.column "phone",      :string,   :limit => 50
+    t.column "fax",        :string,   :limit => 50
+    t.column "email",      :string,   :limit => 50
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
   end
 
   create_table "database_translation_fields", :force => true do |t|

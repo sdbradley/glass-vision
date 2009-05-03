@@ -37,6 +37,20 @@ class CompanyController < ApplicationController
     end
   end
 
+  def add_users
+    @company = Company.find(params[:id])
+    @all_users = User.find(:all)
+  end
+
+  def update_users
+    @company = Company.find(params[:id])
+    @company.users.delete_all
+    @company.user_ids = params[:user_ids]
+    @company.save
+    flash[:notice] = trn_geth('LABEL_COMPANY') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+    redirect_to :action => 'show', :id => @company
+  end
+
   def delete
     Company.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_COMPANY') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')

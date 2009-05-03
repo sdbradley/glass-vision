@@ -19,10 +19,20 @@
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_LOGO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= image_tag 'logos/' + @company.logo %></td>
+    <td><%= image_tag @company.logo.url %></td>
   </tr>
 </table>
+<br />
+
+<h3><%= trn_geth('TITLE_COMPANY_ACTIVE_USERS') +":" unless @company.users.empty? %></h3>
+  <ul>
+      <% @company.users.each do |user| %>
+         <li><%= user.login %> </li>
+      <% end %>
+  </ul>
+<br />
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @company %> |
+<%= link_to trn_geth('BUTTON_COMPANY_EDIT_USERS'), :action => 'add_users', :id => @company %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @company}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
 

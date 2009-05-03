@@ -249,3 +249,7 @@ h2 {
   size:landscape;
   margin: 0.25in;
 }
+
+.fullwidth {
+    width:100%;
+}
