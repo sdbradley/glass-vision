@@ -123,7 +123,7 @@ body {
 }
 
 div#content {
-  margin-left: 200px;
+  margin-left: 225px;
 	padding: 10px;
 	background-color: #ffffff;
 }
@@ -182,7 +182,7 @@ div#content {
 
 #leftnav {
   float:left;
-  width:200px;
+  width:225px;
   height:100%;
   background-color: #948B6D;
 }
@@ -211,7 +211,7 @@ background-color: #3F3C2F;
 display:block;
 height:40px;
 padding-top:4px;
-width:175px;
+width:200px;
 }
 
 #leftnav ul li a, #leftnav ul li a:visited {
@@ -253,3 +253,18 @@ h2 {
 .fullwidth {
     width:100%;
 }
+
+div#quotation_customer_name_auto_complete {
+    border: 1px solid #888;
+    width: 100%;
+    background-color: white;
+}
+
+div#quotation_customer_name_auto_complete ul {
+    list-style-type: none;
+    list-style-image: none;
+    padding: 0px;
+    margin-left: 5px;
+}
+
+div#quotation_customer_name_auto_complete li.selected { background-color: #ffb; }

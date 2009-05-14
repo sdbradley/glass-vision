@@ -9,11 +9,19 @@ class CustomerController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @customer_pages, @customers = paginate :customers, :per_page => 10
+    if (@current_user.has_role?('administrator'))
+      @customer_pages, @customers = paginate :customers, :per_page => 10
+    else
+      @customer_pages, @customers = paginate :customers, :per_page => 10, :conditions => ["user_id = ?", @current_user.id]
+    end
   end
 
   def show
     @customer = Customer.find(params[:id])
+    if @customer.user_id != @current_user.id && !@current_user.has_role?('administrator')
+      flash[:notice] = "Permission denied"
+      redirect_to :action => 'list'
+    end
   end
 
   def new

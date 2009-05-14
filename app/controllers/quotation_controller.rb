@@ -1,4 +1,6 @@
 class QuotationController < ApplicationController
+  auto_complete_for :quotation, :customer_name
+
   def list
     if @current_user.has_role?('administrator')
       @quotations = Quotation.find(:all, :order => 'updated_at DESC, id DESC')
