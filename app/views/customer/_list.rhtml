@@ -1,0 +1,7 @@
+<ul>
+<%- for customer in @customers do -%>
+<li><%=h customer.name %><div class="informal"><%=h customer.address %></div>
+</li>
+<%- end -%>
+</ul>
+

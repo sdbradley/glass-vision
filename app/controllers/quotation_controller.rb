@@ -1,12 +1,12 @@
 class QuotationController < ApplicationController
-  auto_complete_for :quotation, :customer_name
+#  auto_complete_for :quotation, :customer_name
 
   def list
     if @current_user.has_role?('administrator')
       @quotations = Quotation.find(:all, :order => 'updated_at DESC, id DESC')
     else
       @quotations = Quotation.find(:all, :order => "updated_at DESC, id DESC", :conditions => ["user_id = ?", @current_user.id])
-    end      
+    end
   end
 
   def show
@@ -26,8 +26,12 @@ class QuotationController < ApplicationController
     @quotation = Quotation.new(params[:quotation])
     @quotation.user_id = @current_user.id
     @quotation.discount = @current_user.discount
+    if Customer.create_from_quotation_if_new(@quotation)
+      flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+    end
     if @quotation.save
-      flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] ||= ""
+      flash[:notice] += trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'show', :id => @quotation
     else
       render :action => 'add'

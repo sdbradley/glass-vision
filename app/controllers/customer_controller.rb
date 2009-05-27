@@ -12,7 +12,21 @@ class CustomerController < ApplicationController
     if (@current_user.has_role?('administrator'))
       @customer_pages, @customers = paginate :customers, :per_page => 10
     else
-      @customer_pages, @customers = paginate :customers, :per_page => 10, :conditions => ["user_id = ?", @current_user.id]
+      @customer_pages, @customers = paginate :customers, :per_page => 10,
+                                             :conditions => ["user_id = ?", @current_user.id]
+    end
+  end
+
+  def autoomplete_for_name
+    if request.xml_http_request?
+      if (@current_user.has_role?('administrator'))
+          @customers = Customer.find(:all, :conditions => ['name like ?', "%#{params[:quotation][:customer_name]}%"])
+        else
+          @customers = Customer.find(:all, :conditions => ['name like ? and user_id = ?', "%#{params[:quotation][:customer_name]}%", @current_user.id])
+      end
+      render :partial => "list", :layout => false
+    else
+      render :nothing and return
     end
   end
 
@@ -21,6 +35,15 @@ class CustomerController < ApplicationController
     if @customer.user_id != @current_user.id && !@current_user.has_role?('administrator')
       flash[:notice] = "Permission denied"
       redirect_to :action => 'list'
+    end
+  end
+
+  def show_by_name
+    if request.xml_http_request?
+      @customer = Customer.find(:first, :conditions => ['name = ?', "#{params[:customer_name]}"])
+      render :partial => "show_by_name", :layout => false unless @customer.nil?
+    else
+      render :nothing and return
     end
   end
 
