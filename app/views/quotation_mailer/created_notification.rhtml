@@ -1,9 +1,9 @@
-<div >
+<div>
 	<h2>New Quotation Created</h2>
 	<p>
 		<%= @admin_user.login %>, <br />
-		<%= @quotation.user.login -%> has created a new quotation for <%= @quotation.customer_name -%>
+		<%= @quotation.user.login -%> has created a new <a href='"'<%= @url -%>'"'>quotation</a> for <%= @quotation.customer_name -%>
 	</p>
 	
-	<%= render :template => "quotation/show.rhtml" %>
+	<%= render_to_string :template => "quotation/show.rhtml" %>
 </div>
