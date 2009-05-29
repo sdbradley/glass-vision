@@ -9,7 +9,7 @@ class QuotationMailer < ActionMailer::Base
     body          :user => quotation.user, :admin_user => @admin_user, :quotation => quotation,
                   :url => url_for(:host => "quotations.glass-vision.net", :controller => "quotation", :action => "show", :id => quotation.id)
     
-    content_type = "text/html"
+    content_type  "text/html"
   end
   
 end
