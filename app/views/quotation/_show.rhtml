@@ -1,13 +1,3 @@
-<div>
-	<h2>New Quotation Created</h2>
-	<p>
-		<%= @admin_user.login %>, <br /> <br />
-		<%= @quotation.user.login -%> has created a new <a href="<%=@url-%>">quotation</a> for <%= @quotation.customer_name -%>
-	</p>
-	
-	<% render :template => "quotation/_show.rhtml", :locals => {:quotation => @quotation },:layout => false %>
-	
-</div>
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NUMBER') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -61,11 +51,11 @@
   <% end %>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_DATE_CREATED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= @quotation.created_at.strftime("%a %b %d, %Y") %>
+		<td><%= gv_humanize_time @quotation.created_at %>
 	</tr>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_DATE_MODIFIED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= @quotation.updated_at.strftime("%a %b %d, %Y") %>
+		<td><%= gv_humanize_time @quotation.updated_at %>
 	</tr>
   <% if @quotation.notes and !@quotation.notes.empty? %>
   <tr valign="top">
@@ -81,10 +71,12 @@
     <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.transport %>$</td>
   </tr>
+  <% if current_user.has_role?('administrator')%>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.discount %>%</td>
   </tr>
+  <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.taxes %>%</td>
@@ -94,10 +86,20 @@
     <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
   </tr>
 </table>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+<% form_tag :action => 'print', :id => @quotation do %>
+  <%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %>
+  <%= select_tag 'company_id', options_for_select(@current_user.active_companies.map { |c| [c.name, c.id] }) %>
+  <%= submit_tag trn_geth('BUTTON_PRINT') %>
+<% end %>
 
 <br/>
 
 <h3><%= trn_geth('HEADER_LINES')%></h3>
+<%= link_to trn_geth('BUTTON_ADD'), :controller => 'quotation_line', :action => 'add', :id => @quotation %>
+| <%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %>
 <table class="quotation">
   <tr>
     <th><%= trn_geth('HEADER_PREVIEW') %></th>
@@ -166,6 +168,8 @@
     </td>
     <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', line.quantity * line.price) %>$</td>
     <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
+      <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'quotation_line', :action => 'edit', :id => line %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'quotation_line', :action => 'delete', :id => line}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
     </td>
   </tr>
   <% end %>
@@ -190,6 +194,8 @@
 		</td>
     <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', option.quantity * option.option.price) %>$</td>
     <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
+      <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'option_quotation', :action => 'edit', :id => option.id %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'option_quotation', :action => 'delete', :id => option.id}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
     </td>
   </tr>
   <% end %>
