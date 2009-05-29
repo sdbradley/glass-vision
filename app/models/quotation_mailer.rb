@@ -1,7 +1,7 @@
 class QuotationMailer < ActionMailer::Base
   include TranslationGet
 
-  def created(quotation, sent_at = Time.now)
+  def created_notification(quotation, sent_at = Time.now)
     @admin_user = User.get_administrator
     recipients    @admin_user.email
     from          "info@glass-vision.net"
