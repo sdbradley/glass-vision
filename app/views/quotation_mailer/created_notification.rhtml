@@ -2,7 +2,7 @@
 	<h2>New Quotation Created</h2>
 	<p>
 		<%= @admin_user.login %>, <br />
-		<%= @user.login -%> has created a new quotation for <%= @quotation.customer_name -%>
+		<%= @quotation.user.login -%> has created a new quotation for <%= @quotation.customer_name -%>
 	</p>
 	
 	<%= render :template => "quotation/show.rhtml" %>
