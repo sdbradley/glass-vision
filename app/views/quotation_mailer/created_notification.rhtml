@@ -5,5 +5,5 @@
 		<%= @quotation.user.login -%> has created a new <a href='"'<%= @url -%>'"'>quotation</a> for <%= @quotation.customer_name -%>
 	</p>
 	
-	<%= render_to_string :template => "quotation/show.rhtml" %>
+	<%= render :template => "quotation/show.rhtml" %>
 </div>
