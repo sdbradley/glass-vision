@@ -5,8 +5,6 @@
 		<%= @quotation.user.login -%> has created a new <a href="<%=@url-%>">quotation</a> for <%= @quotation.customer_name -%>
 	</p>
 	
-	<% render :template => "quotation/_show.rhtml", :locals => {:quotation => @quotation },:layout => false %>
-	
 </div>
 <table>
   <tr valign="top">

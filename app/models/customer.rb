@@ -13,8 +13,9 @@ class Customer < ActiveRecord::Base
       customer.email = quotation.customer_email
       customer.save
       true
+    else
+      false
     end
-    false
   end
 
 end

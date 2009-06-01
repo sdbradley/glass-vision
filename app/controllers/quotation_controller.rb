@@ -26,12 +26,14 @@ class QuotationController < ApplicationController
     @quotation = Quotation.new(params[:quotation])
     @quotation.user_id = @current_user.id
     @quotation.discount = @current_user.discount
+    customer_msg = ""
     if Customer.create_from_quotation_if_new(@quotation)
-      flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      customer_msg = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     end
     if @quotation.save
-      flash[:notice] ||= ""
-      flash[:notice] += trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      customer_msg += "<br />" unless customer_msg.blank?
+      customer_msg +=  trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = customer_msg
       redirect_to :action => 'show', :id => @quotation
     else
       render :action => 'add'
