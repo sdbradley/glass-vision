@@ -15,7 +15,7 @@ class Customer < ActiveRecord::Base
       true
     else
       false
-    end
+      end
   end
 
 end
