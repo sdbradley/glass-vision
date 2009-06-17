@@ -54,7 +54,7 @@ class CustomerController < ApplicationController
   def create
     @customer = Customer.new(params[:customer])
     if @customer.save
-      flash[:notice] = 'Customer was successfully created.'
+      flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -68,7 +68,7 @@ class CustomerController < ApplicationController
   def update
     @customer = Customer.find(params[:id])
     if @customer.update_attributes(params[:customer])
-      flash[:notice] = 'Customer was successfully updated.'
+      flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'show', :id => @customer
     else
       render :action => 'edit'
@@ -77,6 +77,7 @@ class CustomerController < ApplicationController
 
   def destroy
     Customer.find(params[:id]).destroy
+    flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'list'
   end
 end
