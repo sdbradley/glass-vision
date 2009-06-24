@@ -1,5 +1,7 @@
 class Customer < ActiveRecord::Base
 
+  belongs_to :user
+  
   def self.create_from_quotation_if_new(quotation)
     # look for an existing customer record by name.
     # if no record found, create one.

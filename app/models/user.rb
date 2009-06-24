@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy
   has_many :roles, :through => :permissions
   has_many :quotations
+  has_many :customers
   has_and_belongs_to_many :companies
    
   # prevents a user from submitting a crafted form that bypasses activation
