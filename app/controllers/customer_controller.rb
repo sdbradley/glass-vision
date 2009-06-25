@@ -17,7 +17,7 @@ class CustomerController < ApplicationController
     end
   end
 
-  def autoomplete_for_name
+  def autocomplete_for_name
     if request.xml_http_request?
       if (@current_user.has_role?('administrator'))
           @customers = Customer.find(:all, :conditions => ['name like ?', "%#{params[:quotation][:customer_name]}%"])

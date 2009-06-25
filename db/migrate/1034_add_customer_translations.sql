@@ -7,6 +7,8 @@ INSERT INTO translations VALUES (418, 'LABEL_PAGE_NEXT', 'prochaine page','','Ne
 INSERT INTO translations VALUES (419, 'TITLE_CUSTOMER_CREATE', 'Nouveau Client','','New Customer', 'Nuevo Cliente');
 INSERT INTO translations VALUES (421, 'TITLE_CUSTOMER_DETAILS', 'informations client','','Customer Details', 'detalles de clientes');
 INSERT INTO translations VALUES (422, 'TITLE_CUSTOMER_EDIT', 'Modifier le client','','Edit Customer', 'Editar cliente');
+INSERT INTO translations VALUES (423, 'LABEL_CUSTOMER_NAME_PICK', 'Ou choisissez le client existant','','Or choose existing customer', 'O elija al cliente existente');
+
 
 
 

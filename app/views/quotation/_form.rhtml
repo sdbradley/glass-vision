@@ -20,11 +20,21 @@
     </td>
     <div class="auto_complete" id="quotation_customer_name_auto_complete"></div>
     <%= auto_complete_field :quotation_customer_name,
-                            :url => { :controller => 'customer', :action => 'autoomplete_for_name'},
+                            :url => { :controller => 'customer', :action => 'autocomplete_for_name'},
                             :indicator => 'quotation_customer_name_spinner',
                             :after_update_element => "function(element,value){" + remote_function(:url => {
                                     :controller => :customer, :action => :show_by_name },
                                     :with =>"'customer_name='+element.value") + "}"
+    %>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME_PICK') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select("customer", "name", Customer.find(:all).collect {|c| [ c.name ] }) %>
+    </td>
+    <%= observe_field :customer_name,
+											:on => 'onchanged',
+    									:url => { :controller => 'customer', :action => 'show_by_name'},
+											:with =>"'customer_name='+element.value"
     %>
   </tr>
   <tr valign="top">
