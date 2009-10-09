@@ -61,6 +61,9 @@ class QuotationLine < ActiveRecord::Base
         File.open(temp_file_name, 'w') do |f|
           f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
         end
+        File.open(File.join(RAILS_ROOT, 'tmp', "jdp_image_#{id}.svg"), 'w') do |f|
+          f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
+        end
 
         # load svg file
         section_image = Image.read(temp_file_name)[0]
