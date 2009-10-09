@@ -27,6 +27,10 @@
     <td><%= @option.minimum_quantity %> <%= @option.options_minimum_unit.description %></td>
   </tr>
   <% end %>
+ <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= image_tag @option.photo.url %></td>
+  </tr>
 </table>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @option %> |

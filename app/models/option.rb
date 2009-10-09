@@ -8,8 +8,18 @@ class Option < ActiveRecord::Base
   has_many :options_quotations
 
   has_and_belongs_to_many :option_categories, :order => "display_order asc"
-#  has_many :option_categories, :class_name => "OptionCategory", :foreign_key => "option_category_id", :through => "option_categories_options"
-#  belongs_to :option_categories
+
+  has_attached_file :photo,  
+          :url => "/system/:class/:attachment/:id/:style_:basename.:extension",
+          :path => ":rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension",
+          :default_url => "/system/:class/:attachment/missing_:style.png",
+          :default_style => :original,     :whiny_thumbnails => true,
+          :styles => {
+             :thumb => "32x32#",
+             :normal  => "200x200>" }
+
+  validates_attachment_size :photo, :less_than => 1.megabyte
+
 
   validates_presence_of :description, :pricing_method_id, :price
   validates_numericality_of :price

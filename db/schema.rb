@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 1038) do
+ActiveRecord::Schema.define(:version => 1039) do
 
   create_table "companies", :force => true do |t|
     t.column "name",              :string,  :limit => 100, :default => "", :null => false
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(:version => 1038) do
     t.column "price",                   :float,                 :default => 0.0, :null => false
     t.column "minimum_quantity",        :float,                 :default => 0.0, :null => false
     t.column "options_minimum_unit_id", :integer,               :default => 1,   :null => false
+    t.column "photo_file_name",         :string
+    t.column "photo_content_type",      :string
+    t.column "photo_file_size",         :integer
   end
 
   create_table "options_minimum_units", :force => true do |t|

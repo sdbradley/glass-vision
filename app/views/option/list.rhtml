@@ -11,7 +11,7 @@
   </tr>
 <% for option in @options %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= option.tr_description %></td>
+    <td><%= image_tag option.photo.url(:thumb), :style => "vertical-align:middle;"   %> <%= option.tr_description %></td>
     <td><%= option.pricing_method.tr_description %></td>
     <td><%= option.price %></td>
     <td>
