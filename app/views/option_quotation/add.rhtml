@@ -13,7 +13,7 @@
 	      [o.tr_description, "padding: 2px; padding-left: 32px;background: no-repeat url(#{image_path o.photo.url(:thumb)})", o.id]}), 
 				:style => 'padding:2px 2px 2px 32px;', 
 				:onchange => 'change_photo(option_id.selectedIndex);',
-				:onkeydown => 'change_photo(option_id.selectedIndex)')
+				:onkeyup => 'change_photo(option_id.selectedIndex)')
 	%>
 		</td>
 		<td rowspan="3" width="300" height="300" style="vertical-align:top;">
