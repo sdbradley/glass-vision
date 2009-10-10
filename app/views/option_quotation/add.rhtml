@@ -25,10 +25,13 @@
 		<td><%= text_field_tag 'quantity', @quantity, :size => 6 %></td>
 		<td></td>
 		</tr>
-	<tr><td></td><td></td><td></td></tr>
+	<tr><td>
+		<%= submit_tag trn_geth('BUTTON_ADD') %>
+		<br />
+		<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation.id %>
+	  
+	</td><td></td><td></td></tr>
 </table>
-  <%= submit_tag trn_geth('BUTTON_ADD') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation.id %>
 
 
