@@ -27,11 +27,9 @@
 		</tr>
 	<tr><td>
 		<%= submit_tag trn_geth('BUTTON_ADD') %>
-		<br />
-		<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation.id %>
-	  
-	</td><td></td><td></td></tr>
+		</td><td>		</td><td></td></tr>
 </table>
 <% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation.id %>
 
 
