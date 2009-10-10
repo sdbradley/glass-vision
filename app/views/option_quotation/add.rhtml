@@ -10,7 +10,7 @@
 	<tr height="50">
 		<td> <%= trn_gett('LABEL_OPTION') %><%= trn_get('LABEL_SEMICOLON') %></td>
 		<td><%= select_tag('option_id', options_for_select_with_style(@options.map { |o| 
-	      [o.tr_description, "padding: 2px; padding-left: 32px;background: no-repeat url(#{o.photo.url(:thumb)})", o.id]}), 
+	      [o.tr_description, "padding: 2px; padding-left: 32px;background: no-repeat url(#{image_path o.photo.url(:thumb)})", o.id]}), 
 				:style => 'padding:2px 2px 2px 32px;', 
 				:onchange => 'change_photo(option_id.selectedIndex);',
 				:onkeydown => 'change_photo(option_id.selectedIndex)')
