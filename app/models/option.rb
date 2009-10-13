@@ -16,7 +16,8 @@ class Option < ActiveRecord::Base
           :default_style => :original,     :whiny_thumbnails => true,
           :styles => {
              :thumb => "32x32#",
-             :normal  => "200x200>" }
+             :normal  => "200x200>",
+	     :original => "300x300"}
 
   validates_attachment_size :photo, :less_than => 1.megabyte
 

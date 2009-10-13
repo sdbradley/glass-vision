@@ -1,6 +1,7 @@
 <script type="text/javascript" charset="utf-8">
 	function change_photo(id) {
-		$(photo).src = $(option_id.options[id]).getStyle("background-image").replace(/url\((.*)\)/, "$1").replace("thumb", "original");
+		 var option_id = $('option_id');
+		$('photo').src = $(option_id.options[id]).getStyle("background-image").replace(/url\((.*)\)/, "$1").replace("thumb", "original");
 	}
 </script>
 <h2><%= trn_get('TITLE_ADD_OPTION_IN_QUOTATION') %></h2>
