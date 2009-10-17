@@ -67,5 +67,5 @@ end
 
 # Include your application configuration below
 
-require 'Paperclip'
+require 'paperclip'
 Paperclip.options[:image_magick_path] = "/usr/local/bin"
