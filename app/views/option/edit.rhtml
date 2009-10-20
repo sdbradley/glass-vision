@@ -1,6 +1,6 @@
 <h2><%= trn_get('TITLE_OPTION_EDIT') %></h2>
 
-<% form_for :option, @option, :url => {:action => 'create', :id => @option}, :html => {:multipart => true} do |f| %>
+<% form_for :option, @option, :url => {:action => 'update', :id => @option}, :html => {:multipart => true} do |f| %>
   <%= render :partial => 'form', :locals => { :f => f } %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
