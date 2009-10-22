@@ -63,7 +63,11 @@
 
     </td>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
-      <%= @quotation.delivery_address.gsub("\n", '<br/>') if @quotation.delivery_address %>
+			<% if @quotation.delivery_address %>
+      <%= @quotation.delivery_address.gsub("\n", '<br/>')%>
+			<% else %>
+			<%= @quotation.customer_address.gsub("\n", '<br/>') if @quotation.customer_address %>
+			<% end%>
     </td>
   </tr>
 </table>
