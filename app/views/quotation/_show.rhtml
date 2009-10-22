@@ -31,6 +31,12 @@
     <td><%= @quotation.customer_address.gsub("\n", '<br/>') %></td>
   </tr>
   <% end %>
+  <% if @quotation.delivery_address and !@quotation.delivery_address.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DELIVERY_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.delivery_address.gsub("\n", '<br/>') %></td>
+  </tr>
+  <% end %>
   <% if @quotation.customer_phone and !@quotation.customer_phone.empty? %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>

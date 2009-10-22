@@ -11,7 +11,7 @@ class OptionCategoryController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @option_category_pages, @option_categories = paginate :option_categories, :per_page => 10, :order => 'display_order, name'
+    @option_categories = OptionCategory.paginate :page => params[:page], :per_page => 25, :order => 'display_order, name'
   end
 
   def show

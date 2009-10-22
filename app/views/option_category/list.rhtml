@@ -24,8 +24,7 @@
 <% end %>
 </table>
 
-<%= link_to trn_get('BUTTON_PREVIOUS'), { :page => @option_category_pages.current.previous } if @option_category_pages.current.previous %>
-<%= link_to trn_get('BUTTON_NEXT'), { :page => @option_category_pages.current.next } if @option_category_pages.current.next %> 
+<%= will_paginate @option_categories %>
 
 <br />
 

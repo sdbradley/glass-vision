@@ -32,7 +32,7 @@
       <%= trn_geth('PRINT_LABEL_CUSTOMER') %>
     </td>
     <td width="50%">
-      <%= trn_geth('PRINT_LABEL_COMMENTS') %>
+      <%= trn_geth('PRINT_LABEL_DELIVERY_ADDRESS') %>
     </td>
   </tr>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
@@ -63,7 +63,7 @@
 
     </td>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
-      <%= @quotation.comments.gsub("\n", '<br/>') if @quotation.comments %>
+      <%= @quotation.delivery_address.gsub("\n", '<br/>') if @quotation.delivery_address %>
     </td>
   </tr>
 </table>
@@ -233,6 +233,14 @@
       <strong><%= number_to_currency total %></strong>
     </td>
   </tr>
+  <tr>
+   <td colspan="5" rowspan="3" style="border:1px solid #808080;" valign="top">
+      <p>
+        <strong><%= trn_geth('PRINT_HEADER_COMMENTS') %></strong><br />
+          <%= @quotation.comments.gsub("\n", '<br/>') if @quotation.comments and !@quotation.notes.comments?%>
+      </p>
+    </td>
+   </tr>
   <% if @quotation.ready_to_sign %>
     <tr >
       <td colspan="5" style="border-left:1px solid #808080;border-right:1px solid #808080;border-bottom:1px solid #808080;">

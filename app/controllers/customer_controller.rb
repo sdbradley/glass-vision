@@ -10,9 +10,9 @@ class CustomerController < ApplicationController
 
   def list
     if (@current_user.has_role?('administrator'))
-      @customer_pages, @customers = paginate :customers, :per_page => 10
+      @customers = Customer.paginate :page => params[:page], :per_page => 25
     else
-      @customer_pages, @customers = paginate :customers, :per_page => 10,
+      @customers = Customer.paginate :page => params[:page], :per_page => 25,
                                              :conditions => ["user_id = ?", @current_user.id]
     end
   end

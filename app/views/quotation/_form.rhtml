@@ -1,4 +1,18 @@
+
 <%= error_messages_for "quotation" %>
+<script type="text/javascript" charset="utf-8">
+function updateShippingAddress()  {
+	var checked = $('use_billing_address').checked;
+	var deliveryAddress = $('delivery_address');
+	if (checked == true) 
+	{
+		deliveryAddress.value = $('customer_address').value; 
+		deliveryAddress.disable();
+	}
+	else
+		deliveryAddress.enable();
+}	
+</script>
 
 <table>
   <tr valign="top">
@@ -32,14 +46,29 @@
     <td><%= select("customer", "name", Customer.find(:all).collect {|c| [ c.name ] }) %>
     </td>
     <%= observe_field :customer_name,
-											:on => 'onchanged',
-    									:url => { :controller => 'customer', :action => 'show_by_name'},
-											:with =>"'customer_name='+element.value"
+				:on => 'onchanged',
+        :url => { :controller => 'customer', :action => 'show_by_name'},
+        :with =>"'customer_name='+element.value"
     %>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_area "quotation", "customer_address", :cols => "39", :rows => "5", :id => 'customer_address'  %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DELIVERY_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "quotation", "delivery_address", :cols => "39", :rows => "5", :id => 'delivery_address'  %>
+      <br />
+      <%= check_box_tag 'use_billing_address' -%><%= trn_get('LABEL_USE_BILLING_ADDRESS') -%>
+
+			<%= observe_field 'use_billing_address', 
+			   {
+			   :function => 'updateShippingAddress(this.checked)',
+				 :frequency => 0.3, 
+			   :on => 'onclicked'
+			   }
+			%>
+    </td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>

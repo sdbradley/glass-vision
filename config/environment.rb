@@ -7,54 +7,56 @@ ENV['RAILS_ENV'] ||= 'production'
 #RAILS_ENV = ENV['RAILS_ENV']
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.2.6'
+RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  # Settings in config/environments/* take precedence those specified here
-  
-  # Skip frameworks you're not going to use (only works if using vendor/rails)
-  # config.frameworks -= [ :action_web_service, :action_mailer ]
+  # Settings in config/environments/* take precedence over those specified here.
+  # Application configuration should go into files in config/initializers
+  # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
-  # Force all environments to use the same logger level 
-  # (by default production uses :info, the others :debug)
-  # config.log_level = :debug
+  # Specify gems that this application depends on and have them installed with rake gems:install
+  # config.gem "bj"
+  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
+  # config.gem "sqlite3-ruby", :lib => "sqlite3"
+  # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem 'mislav-will_paginate', :version => '~> 2.3.11', :lib => 'will_paginate', 
+    :source => 'http://gems.github.com'
 
-  # Use the database for sessions instead of the file system
-  # (create the session table with 'rake db:sessions:create')
-  config.action_controller.session_store = :active_record_store
+  config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gems.github.com'
+  
+  # Only load the plugins named here, in the order given (default is alphabetical).
+  # :all can be used as a placeholder for all plugins not explicitly named
+  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper, 
-  # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
+  # Skip frameworks you're not going to use. To use Rails without a database,
+  # you must remove the Active Record framework.
+  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
   # Activate observers that should always be running
-  # config.active_record.observers = :cacher, :garbage_collector
-# observers break a migrate from VERSION 0 - disable them for rake db:migrate
+  # config.active_record.observers = :cacher, :garbage_collector, :forum_observer# observers break a migrate from VERSION 0 - disable them for rake db:migrate
 unless ( File.basename($0) == "rake" && ARGV.include?("db:migrate") ) 
   config.active_record.observers = :user_observer, :quotation_line_observer , :options_quotation_observer, :quotation_observer
 end
 
-  # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
-  
-  # See Rails::Configuration for more options
+  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
+  # Run "rake -D time" for a list of tasks for finding time zone names.
+  config.time_zone = 'UTC'
+
+  config.action_controller.session_store = :active_record_store
+  config.action_controller.session = { :key => "_glassvision_session", :secret => "fiberglass fenestrations" } 
+
+  # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+  # config.i18n.default_locale = :de
 end
 
-# Add new inflection rules using the following format 
-# (all these examples are active by default):
-# Inflector.inflections do |inflect|
-#   inflect.plural /^(ox)$/i, '\1en'
-#   inflect.singular /^(ox)en/i, '\1'
-#   inflect.irregular 'person', 'people'
-#   inflect.uncountable %w( fish sheep )
-# end
+
 
 # Include your application configuration below
 
@@ -67,5 +69,5 @@ end
 
 # Include your application configuration below
 
-require 'paperclip'
-Paperclip.options[:image_magick_path] = "/usr/local/bin"
+#require 'paperclip'
+#require 'will_paginate'

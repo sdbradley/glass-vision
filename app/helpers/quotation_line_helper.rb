@@ -12,7 +12,7 @@ module QuotationLineHelper
     output << "<!--[if !IE]> <!-->"
     output << "<div id=\"opening_list_#{section}\" class=\"opening_list\" style=\"display: none;\">"
     @quotation_line.serie.openings.each do |o|
-      output << "<div class=\"image\" onmouseover=\"this.addClassName('hover')\" onmouseout=\"this.removeClassName('hover')\" onclick=\"$('openings[#{section}]').value = #{o.id}; $('opening_pic_#{section}').src = '/images/openings/#{o.preview_image_name}'; $('opening_list_#{section}').toggle();\">"
+      output << "<div class=\"image\" onmouseover=\"this.addClassName('hover')\" onmouseout=\"this.removeClassName('hover')\" onclick=\"$('openings_#{section}').value = #{o.id}; $('opening_pic_#{section}').src = '/images/openings/#{o.preview_image_name}'; $('opening_list_#{section}').toggle();\">"
       output << image_tag('openings/' + o.preview_image_name)
       output << "<br/>" + o.tr_abbreviation
       output << "</div>"
@@ -28,7 +28,7 @@ module QuotationLineHelper
       js << "pics_#{section}.img_#{o.id} = '/images/openings/#{o.preview_image_name}';"
     end
     output << javascript_tag(js)
-    output << select_tag("openings_combo_#{section}", options_for_select([['----', 0]] + @quotation_line.serie.openings.map { |o| ["#{o.name} (#{o.abbreviation})", o.id] }, selected), :onchange => "$('openings[#{section}]').value = this.value; $('opening_pic_#{section}').src = pics_#{section}['img_' + this.value];")
+    output << select_tag("openings_combo_#{section}", options_for_select([['----', 0]] + @quotation_line.serie.openings.map { |o| ["#{o.name} (#{o.abbreviation})", o.id] }, selected), :onchange => "$('openings_#{section}').value = this.value; $('opening_pic_#{section}').src = pics_#{section}['img_' + this.value];")
     output << "<![endif]-->"
     output << "</div>"
   end

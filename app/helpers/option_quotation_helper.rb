@@ -1,2 +1,2 @@
-module OptionsQuotationsHelper
+module OptionQuotationHelper
 end
