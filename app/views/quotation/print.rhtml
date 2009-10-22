@@ -237,7 +237,7 @@
    <td colspan="5" rowspan="3" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_COMMENTS') %></strong><br />
-          <%= @quotation.comments.gsub("\n", '<br/>') if @quotation.comments and !@quotation.notes.comments?%>
+          <%= @quotation.comments.gsub("\n", '<br/>') if @quotation.comments and !@quotation.comments?%>
       </p>
     </td>
    </tr>
