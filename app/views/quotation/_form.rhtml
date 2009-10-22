@@ -59,7 +59,7 @@ function updateShippingAddress()  {
     <td align="right"><%= trn_geth('LABEL_DELIVERY_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_area "quotation", "delivery_address", :cols => "39", :rows => "5", :id => 'delivery_address'  %>
       <br />
-      <%= check_box_tag 'use_billing_address' -%><%= trn_get('LABEL_USE_BILLING_ADDRESS') -%>
+      <%= check_box_tag 'use_billing_address' -%><%= trn_get('LABEL_SAME_DELIVERY_ADDRESS') -%>
 
 			<%= observe_field 'use_billing_address', 
 			   {
