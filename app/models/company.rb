@@ -7,7 +7,7 @@ class Company < ActiveRecord::Base
   has_attached_file :logo,  
           :url => "/system/:class/:attachment/:id/:style_:basename.:extension",
           :path => ":rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension",
-          :default_url => "/system/:class/:attachment/missing_:style.png",
+          :default_url => "/images/:class/missing_:style.png",
           :default_style => :original,     :whiny_thumbnails => true,
           :styles => {
              :thumb => "32x32#",
