@@ -128,7 +128,7 @@ class SerieController < ApplicationController
 
   def edit_options
     @serie = Serie.find(params[:id])
-    @options = Option.find(:all, :include => 'option_categories', :order => 'display_order asc, options.description asc')
+    @options = Option.find(:all, :include => 'option_categories', :order => 'option_categories.display_order asc, options.description asc')
     # take the list of options, and rearrange it to be organized by category.
     # lets do this with a hash of hashes
     @categorized_options = Serie.categorize_options(@options)

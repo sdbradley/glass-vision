@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091022025650) do
+ActiveRecord::Schema.define(:version => 20091106031835) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.string  "logo_content_type"
     t.integer "logo_file_size"
   end
+
+  add_index "companies", ["id"], :name => "index_companies_on_id"
 
   create_table "companies_users", :id => false, :force => true do |t|
     t.integer "company_id"
@@ -37,10 +39,14 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.integer  "user_id"
   end
 
+  add_index "customers", ["id"], :name => "index_customers_on_id"
+
   create_table "database_translation_fields", :force => true do |t|
     t.string "table", :limit => 50, :default => "", :null => false
     t.string "field", :limit => 50, :default => "", :null => false
   end
+
+  add_index "database_translation_fields", ["id"], :name => "index_database_translation_fields_on_id"
 
   create_table "database_translations", :force => true do |t|
     t.integer "record_id",               :default => 0,  :null => false
@@ -51,11 +57,15 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.text    "es"
   end
 
+  add_index "database_translations", ["id"], :name => "index_database_translations_on_id"
+
   create_table "dimensions", :force => true do |t|
     t.integer "serie_id",              :default => 0,   :null => false
     t.float   "value",                 :default => 0.0, :null => false
     t.string  "type",     :limit => 6, :default => "",  :null => false
   end
+
+  add_index "dimensions", ["id"], :name => "index_dimensions_on_id"
 
   create_table "openings", :force => true do |t|
     t.string  "name",               :limit => 50,  :default => "",    :null => false
@@ -64,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.string  "preview_image_name", :limit => 100
     t.integer "glasses_quantity",                  :default => 1,     :null => false
   end
+
+  add_index "openings", ["id"], :name => "index_openings_on_id"
 
   create_table "openings_series", :id => false, :force => true do |t|
     t.integer "opening_id", :default => 0, :null => false
@@ -75,6 +87,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.string  "description"
     t.integer "display_order"
   end
+
+  add_index "option_categories", ["id"], :name => "index_option_categories_on_id"
 
   create_table "option_categories_options", :id => false, :force => true do |t|
     t.integer "option_category_id"
@@ -93,6 +107,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.integer "photo_file_size"
   end
 
+  add_index "options", ["id"], :name => "index_options_on_id"
+
   create_table "options_minimum_units", :force => true do |t|
     t.string "description", :limit => 50, :default => "", :null => false
     t.text   "comments"
@@ -109,6 +125,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.integer "quotation_id", :default => 0,   :null => false
     t.float   "quantity",     :default => 1.0, :null => false
   end
+
+  add_index "options_quotations", ["id"], :name => "index_options_quotations_on_id"
 
   create_table "options_series", :id => false, :force => true do |t|
     t.integer "option_id", :default => 0, :null => false
@@ -128,22 +146,37 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.string  "image_name"
   end
 
+  add_index "preview_images", ["id"], :name => "index_preview_images_on_id"
+
   create_table "pricing_methods", :force => true do |t|
     t.string  "description",  :limit => 50, :default => "",    :null => false
     t.text    "comments"
     t.boolean "quantifiable",               :default => false
   end
 
-  create_table "quotation_lines", :force => true do |t|
-    t.integer "quotation_id", :default => 0,   :null => false
-    t.integer "serie_id",     :default => 0,   :null => false
-    t.integer "shape_id",     :default => 0,   :null => false
-    t.float   "width",        :default => 0.0, :null => false
-    t.float   "height",       :default => 0.0, :null => false
-    t.integer "quantity",     :default => 0,   :null => false
-    t.float   "price",        :default => 0.0, :null => false
-    t.string  "label"
+  create_table "product_colors", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "product_colors", ["id"], :name => "index_product_colors_on_id"
+
+  create_table "quotation_lines", :force => true do |t|
+    t.integer "quotation_id",   :default => 0,   :null => false
+    t.integer "serie_id",       :default => 0,   :null => false
+    t.integer "shape_id",       :default => 0,   :null => false
+    t.float   "width",          :default => 0.0, :null => false
+    t.float   "height",         :default => 0.0, :null => false
+    t.integer "quantity",       :default => 0,   :null => false
+    t.float   "price",          :default => 0.0, :null => false
+    t.string  "label"
+    t.string  "exterior_color"
+    t.string  "interior_color"
+  end
+
+  add_index "quotation_lines", ["id"], :name => "index_quotation_lines_on_id"
 
   create_table "quotation_lines_openings", :force => true do |t|
     t.integer "quotation_line_id", :default => 0, :null => false
@@ -171,9 +204,13 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.string   "delivery_address"
   end
 
+  add_index "quotations", ["id"], :name => "index_quotations_on_id"
+
   create_table "roles", :force => true do |t|
     t.string "rolename"
   end
+
+  add_index "roles", ["id"], :name => "index_roles_on_id"
 
   create_table "section_dimensions", :force => true do |t|
     t.integer "quotation_line_id",               :default => 0,   :null => false
@@ -196,6 +233,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.text   "series_type", :limit => 255
   end
 
+  add_index "series", ["id"], :name => "index_series_on_id"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id"
     t.text     "data"
@@ -212,6 +251,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.integer "corners",                       :default => 4,  :null => false
   end
 
+  add_index "shapes", ["id"], :name => "index_shapes_on_id"
+
   create_table "translations", :force => true do |t|
     t.string "translation_key", :limit => 100, :default => "", :null => false
     t.text   "fr"
@@ -219,6 +260,9 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.text   "en"
     t.text   "es"
   end
+
+  add_index "translations", ["id"], :name => "index_translations_on_id"
+  add_index "translations", ["translation_key"], :name => "index_translations_on_translation_key"
 
   create_table "users", :force => true do |t|
     t.string   "login"
@@ -235,5 +279,8 @@ ActiveRecord::Schema.define(:version => 20091022025650) do
     t.boolean  "enabled",                                 :default => true
     t.float    "discount",                                :default => 0.0,  :null => false
   end
+
+  add_index "users", ["id"], :name => "index_users_on_id"
+  add_index "users", ["password_reset_code"], :name => "index_users_on_password_reset_code"
 
 end

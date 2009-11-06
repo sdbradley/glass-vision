@@ -28,7 +28,12 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '~> 2.3.11', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
 
-  config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gems.github.com'
+  config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gemcutter.org'
+  config.gem 'formtastic', :source => 'http://gemcutter.org'
+  config.gem "ruby-growl", :lib => "ruby-growl", :source => "http://gemcutter.org"
+  config.gem 'bullet', :source => 'http://gemcutter.org'
+  config.gem 'validation_reflection', :source => 'http://gemcutter.org'
+  
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -54,8 +59,18 @@ end
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+  
+  config.after_initialize do
+    Bullet.enable = true 
+    Bullet.alert = true
+    Bullet.bullet_logger = true  
+    Bullet.console = true
+    Bullet.growl = true
+    Bullet.rails_logger = true
+    Bullet.disable_browser_cache = true
+  end
+  
 end
-
 
 
 # Include your application configuration below

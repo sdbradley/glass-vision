@@ -22,7 +22,7 @@ class QuotationLineController < ApplicationController
       @section_width[s.to_s] = 0
     end
     @openings = {}
-    @serie = Serie.find(@quotation_line.serie_id)
+    @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
     @options = @serie.options.sort_by { |o| o.tr_description }
     @options.each do |option|
       if option.pricing_method.quantifiable

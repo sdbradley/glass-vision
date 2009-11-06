@@ -11,7 +11,7 @@ class OptionCategory < ActiveRecord::Base
 #  belongs_to :options, :class_name => "Option"
 
   # returns true 
-  def has_options
+  def has_options?
     options.exists?
   end
 end

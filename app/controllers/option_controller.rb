@@ -2,7 +2,7 @@ class OptionController < ApplicationController
     before_filter :check_administrator_role
 
   def list
-    @options = Option.find(:all, :order => 'description')
+    @options = Option.find(:all, :order => 'description', :include => [:pricing_method, :options_minimum_unit])
   end
 
   def show
@@ -11,7 +11,7 @@ class OptionController < ApplicationController
 
   def add
     @option = Option.new
-    @all_option_categories = OptionCategory.find(:all, :order => :display_order)
+    @all_option_categories = OptionCategory.find(:all, :order => 'option_categories.display_order')
   end
 
   def create

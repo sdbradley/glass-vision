@@ -166,12 +166,13 @@ div#content {
 }
 
 #greeting {
-  position:relative;
-  top: -27px;
   float: right;
   height: 27px;
-  line-height: 27pt;
-  margin: 0px 5px 0px 0px;
+/*  top: -27px;
+	position:relative;
+*/  line-height: 27pt;
+	display:inline;
+  margin: -6px 5px 0px 0px;
 }
 
 #wrap {

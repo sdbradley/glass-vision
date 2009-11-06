@@ -38,4 +38,29 @@ module ApplicationHelper
     end
     options_for_select.join("\n")
   end
+  
+  def color_picker(name)
+    #build the hexes
+   hexes = []
+    (0..15).step(3) do |one|
+      (0..15).step(3) do |two|
+        (0..15).step(3) do |three|
+         hexes << "#" + one.to_s(16) + two.to_s(16) + three.to_s(16)
+        end
+      end
+    end
+    arr = []
+    on_change_function = "onChange=\"document.getElementById('color_div').style.backgroundColor = this[this.selectedIndex].value\""
+    10.times { arr << "&nbsp;" }
+      returning html = '' do
+     html << "<div id=\"color_div\" style=\"border:0px solid black;z-index:100;position:absolute;width:30px\"> &nbsp; </div> "
+     html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
+     html << hexes.collect {|c|
+       "<option value='#{c}' style='background-color: #{c}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>" }.join("\n")
+     html << "</select>"
+   end
+  end
+
+
+  
 end

@@ -3,14 +3,14 @@ class QuotationController < ApplicationController
 
   def list
     if @current_user.has_role?('administrator')
-      @quotations = Quotation.find(:all, :order => 'updated_at DESC, id DESC')
+      @quotations = Quotation.find(:all, :order => 'updated_at DESC, id DESC', :include => :user)
     else
-      @quotations = Quotation.find(:all, :order => "updated_at DESC, id DESC", :conditions => ["user_id = ?", @current_user.id])
+      @quotations = Quotation.find(:all, :order => "updated_at DESC, id DESC", :include => :user, :conditions => ["user_id = ?", @current_user.id])
     end
   end
 
   def show
-    @quotation = Quotation.find(params[:id])
+    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     if @quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
       flash[:notice] = "Permission denied"
       redirect_to :action => 'list'
