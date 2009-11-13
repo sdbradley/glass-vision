@@ -7,5 +7,5 @@ INSERT INTO `translations` VALUES (453, 'TITLE_PRODUCT_COLOR_EDIT', 'Éditez la 
 INSERT INTO `translations` VALUES (454, 'TITLE_PRODUCT_COLOR_CREATE', 'Créez une nouvelle couleur', '', 'Create a new color', 'Cree un nuevo color');
 INSERT INTO `translations` VALUES (455, 'TITLE_PRODUCT_COLOR_LIST', 'Couleurs de produit de liste', '', 'Listing Product Colors', 'Colores del producto del listado');
 INSERT INTO `translations` VALUES (456, 'HEADER_COLORS', 'Couleurs', '', 'Colors', 'Colores');
-INSERT INTO `translations` VALUES (457, 'LABEL_INTERIOR_COLOR', 'Couleur intérieure', '', 'Interior Color', 'Color interior');
-INSERT INTO `translations` VALUES (458, 'LABEL_EXTERIOR_COLOR', 'Couleur extérieure', '', 'Exterior Color', 'Color exterior');
+INSERT INTO `translations` VALUES (457, 'LABEL_INTERIOR_COLOR', 'Coul. Int', '', 'Int. Col.', 'Col. int.');
+INSERT INTO `translations` VALUES (458, 'LABEL_EXTERIOR_COLOR', 'Coul. Ext', '', 'Ext. Col.', 'Col. ext.');
