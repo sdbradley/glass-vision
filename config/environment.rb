@@ -31,7 +31,7 @@ Rails::Initializer.run do |config|
   config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gemcutter.org'
   config.gem 'formtastic', :source => 'http://gemcutter.org'
   config.gem "ruby-growl", :lib => "ruby-growl", :source => "http://gemcutter.org"
-  config.gem 'bullet', :source => 'http://gemcutter.org'
+ # config.gem 'bullet', :source => 'http://gemcutter.org'
   config.gem 'validation_reflection', :source => 'http://gemcutter.org'
   
   
@@ -60,15 +60,15 @@ end
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
   
-  config.after_initialize do
-    Bullet.enable = true 
+#  config.after_initialize do
+#    Bullet.enable = true 
 #    Bullet.alert = true
-    Bullet.bullet_logger = true  
-    Bullet.console = true
-    Bullet.growl = true
-    Bullet.rails_logger = true
-    Bullet.disable_browser_cache = true
-  end
+#    Bullet.bullet_logger = true  
+#    Bullet.console = true
+#    Bullet.growl = true
+#    Bullet.rails_logger = true
+#    Bullet.disable_browser_cache = true
+#  end
   
 end
 

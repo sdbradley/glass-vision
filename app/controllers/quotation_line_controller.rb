@@ -91,8 +91,12 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}}, 
-                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
+    
+    #    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}}, 
+    #                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
+    
+    @quotation_line = QuotationLine.find(params[:id], :include => [ {:serie =>  {:options => [:pricing_method, :options_minimum_unit]}}, 
+                                                                  {:options_quotation_lines => :option}])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
       @openings[o.sort_order.to_s] = o.opening_id
@@ -105,7 +109,7 @@ class QuotationLineController < ApplicationController
     @quotation_line.section_widths.each do |w|
       @section_width[w.sort_order.to_s] = w.value
     end
-    @serie = @quotation_line.serie #Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    @serie = @quotation_line.serie
     @options = @serie.options #.sort_by {|o| o.tr_description }
     @options.each do |option|
       if option.pricing_method.quantifiable
