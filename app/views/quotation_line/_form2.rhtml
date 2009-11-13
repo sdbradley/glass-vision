@@ -103,8 +103,15 @@
   </tr>
 </table>
 
+<% colors = ProductColor.find(:all)%>
+<h3><%= trn_geth('HEADER_COLORS') %></h3>
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr><td><%= trn_get('LABEL_INTERIOR_COLOR')%></td><td><%= text_field :quotation_line, :interior_color %> <%= color_picker('icolor', colors, "quotation_line_interior_color") %></td></tr>
+	<tr><td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td><td><%= text_field :quotation_line, :exterior_color %> <%= color_picker('ecolor', colors, "quotation_line_exterior_color") %></td></tr>
+</table>
+
 <h3><%= trn_geth('HEADER_OPTIONS') %></h3>
-<% selected_options = @quotation_line.options_quotation_lines.find(:all).map { |o| o.option.id } %>
+<% selected_options = @quotation_line.options_quotation_lines.map { |o| o.option.id } %>
 
 <% categorized_options = Serie.categorize_options(@options) %>
 <% categorized_options.keys.sort.each do |i| %>

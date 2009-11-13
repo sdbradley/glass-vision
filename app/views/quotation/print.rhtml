@@ -129,7 +129,18 @@
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= number_with_precision ql.height %></td>
           </tr>
-        </table>
+					<% if !ql.interior_color.blank? %>
+						<tr>
+							<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
+							<td><%= h ql.interior_color %></td>
+						</tr>
+				  <% end %>
+					<% if !ql.exterior_color.blank? %>
+						<tr>
+							<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
+							<td><%= h ql.exterior_color %> </td>
+							</tr>
+					<% end %>        </table>
 
       </td>
       <% ql_price = ql.price * (1 - @quotation.discount / 100) %>
@@ -142,6 +153,7 @@
             <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
         </td>
         <td colspan="3"  style="border-bottom: 2px dotted #808080;">
+	
             <% if ql.options_quotation_lines.length > 0 %>
                 <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
                 <%

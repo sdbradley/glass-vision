@@ -61,7 +61,7 @@ class QuotationController < ApplicationController
   end
 
   def print
-    @quotation = Quotation.find(params[:id])
+    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     @company = Company.find(params[:company_id])
     render :layout => 'printer'
   end

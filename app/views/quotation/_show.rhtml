@@ -139,6 +139,20 @@
           <td><%= trn_geth('HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
           <td><%= line.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
         </tr>
+
+				<% if !line.interior_color.blank? %>
+					<tr>
+						<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
+						<td><%= h line.interior_color %></td>
+					</tr>
+			  <% end %>
+				<% if !line.exterior_color.blank? %>
+					<tr>
+						<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
+						<td><%= h line.exterior_color %> </td>
+						</tr>
+				<% end %>
+				
         <% if line.options_quotation_lines.length > 0 %>
         <tr>
           <td valign="top"><%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>

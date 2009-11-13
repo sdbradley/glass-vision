@@ -39,7 +39,7 @@ module ApplicationHelper
     options_for_select.join("\n")
   end
   
-  def color_picker(name)
+  def color_picker_orig(name)
     #build the hexes
    hexes = []
     (0..15).step(3) do |one|
@@ -57,6 +57,18 @@ module ApplicationHelper
      html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
      html << hexes.collect {|c|
        "<option value='#{c}' style='background-color: #{c}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>" }.join("\n")
+     html << "</select>"
+   end
+  end
+
+  def color_picker(name, colors, id)
+    arr = []
+    on_change_function = "onChange=\";document.getElementById('#{id}').value = this[this.selectedIndex].getAttribute('colorname');\""
+    10.times { arr << "&nbsp;" }
+      returning html = '' do
+     html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
+     html << colors.collect {|c|
+       "<option value='#{c.value}' colorname='#{c.name}' style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.name}</option>" }.join("\n")
      html << "</select>"
    end
   end

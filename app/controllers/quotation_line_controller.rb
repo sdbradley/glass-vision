@@ -91,7 +91,8 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-    @quotation_line = QuotationLine.find(params[:id], :include => [:serie, :options_quotation_lines])
+    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}}, 
+                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
       @openings[o.sort_order.to_s] = o.opening_id
@@ -104,15 +105,15 @@ class QuotationLineController < ApplicationController
     @quotation_line.section_widths.each do |w|
       @section_width[w.sort_order.to_s] = w.value
     end
-    @serie = Serie.find(@quotation_line.serie_id)
-    @options = @serie.options.sort_by {|o| o.tr_description }
+    @serie = @quotation_line.serie #Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    @options = @serie.options #.sort_by {|o| o.tr_description }
     @options.each do |option|
       if option.pricing_method.quantifiable
-        qty = @quotation_line.options_quotation_lines.find(:first, :conditions => {:option_id => option.id})
-        if qty
-          qty = qty.quantity
-        else
+        oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}
+        if (oli_index.nil?)
           qty = option.minimum_quantity
+        else
+          qty = @quotation_line.options_quotation_lines[oli].quantity
         end
         instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
       end
