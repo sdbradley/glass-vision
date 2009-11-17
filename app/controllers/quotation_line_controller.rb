@@ -117,7 +117,7 @@ class QuotationLineController < ApplicationController
         if (oli_index.nil?)
           qty = option.minimum_quantity
         else
-          qty = @quotation_line.options_quotation_lines[oli].quantity
+          qty = @quotation_line.options_quotation_lines[oli_index].quantity
         end
         instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
       end
