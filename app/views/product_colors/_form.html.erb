@@ -2,6 +2,36 @@
 	function change_swatch() {
 		$('colorswatch').setStyle({backgroundColor:$('product_color_value').value });
 	}
+	
+jQuery(function($) {
+	  myColor = $('input#product_color_value').val();
+	  myColor = myColor.substring ( 1, myColor.length - 1 );
+    $('input#product_color_value').ColorPicker({
+        color: myColor,
+        onShow: function(colpkr) {
+            $(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function(colpkr) {
+            $(colpkr).fadeOut(500);
+            return false;
+        },
+//        onChange: function(hsb, hex, rgb) {
+//            $('div#colorswatch').css('backgroundColor', '#' + hex);
+//        },
+				onSubmit: function(hsb, hex, rgb, el)
+				{
+					$(el).val('#'+hex);
+					$('div#colorswatch').css('backgroundColor', '#' + hex);
+					$(el).ColorPickerHide();
+				}
+    }).bind('keyup',
+    function() {
+        $(this).ColorPickerSetColor(this.value);
+    });
+});
+
+
 </script>
 
 
