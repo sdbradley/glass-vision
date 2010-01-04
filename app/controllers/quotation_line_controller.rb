@@ -107,7 +107,7 @@ class QuotationLineController < ApplicationController
           end
 
           # create and save image
-          @quotation_line.create_image
+          @quotation_line.create_image(shape)
 
           flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
           redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id
@@ -301,12 +301,12 @@ private
                 end
               end
               if (shape.has_upper_transom)
-                section_area = @section_height[upper_transom_index(shape)] * @total_width / 144
+                section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
                 section_area = option.minimum_quantity if section_area < option.minimum_quantity
                 area += section_area
               end
               if (shape.has_lower_transom)
-                section_area = @section_height[lower_transom_index(shape)] * @total_width / 144
+                section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
                 section_area = option.minimum_quantity if section_area < option.minimum_quantity
                 area += section_area
               end
@@ -324,7 +324,7 @@ private
                 end
               end
               if (shape.has_upper_transom)
-                section_area = @section_height[upper_transom_index(shape)] * @total_width / 144
+                section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
                 opening = Opening.find(openings[upper_transom_index(shape)].to_i)
                 glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
                 glass_area = section_area / glasses_quantity
@@ -332,7 +332,7 @@ private
                 area += glass_area * glasses_quantity
               end
               if (shape.has_lower_transom)
-                section_area = @section_height[lower_transom_index(shape)] * @total_width / 144
+                section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
                 opening = Opening.find(openings[lower_transom_index(shape)].to_i)
                 glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
                 glass_area = section_area / glasses_quantity
@@ -360,12 +360,12 @@ private
                 end
               end
               if shape.has_upper_transom
-                section_perimeter = (@section_height[upper_transom_index(shape)] * 2 + @total_width * 2) / 12
+                section_perimeter = (@section_height[upper_transom_index(shape)].to_i * 2 + @total_width * 2) / 12
                 section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
                 perimeter += section_perimeter
               end
               if shape.has_lower_transom
-                section_perimeter = (@section_height[lower_transom_index(shape)] * 2 + @total_width * 2) / 12
+                section_perimeter = (@section_height[lower_transom_index(shape)].to_i * 2 + @total_width * 2) / 12
                 section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
                 perimeter += section_perimeter
               end
@@ -385,14 +385,14 @@ private
                 opening = Opening.find(openings[upper_transom_index(shape)].to_i)
                 glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
                 # for now, consider all glasses of the section to be of equal perimeter
-                glass_perimeter = (@section_height[upper_transom_index(shape)] * 2 + @total_width * 2 / glasses_quantity) / 12
+                glass_perimeter = (@section_height[upper_transom_index(shape)].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
                 glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
                 perimeter += glass_perimeter * glasses_quantity
               end
               if shape.has_lower_transom
                 opening = Opening.find(openings[lower_transom_index(shape)].to_i)
                 glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
-                glass_perimeter = (@section_height[lower_transom_index(shape)] * 2 + @total_width * 2 / glasses_quantity) / 12
+                glass_perimeter = (@section_height[lower_transom_index(shape)].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
                 glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
                 perimeter += glass_perimeter * glasses_quantity
               end
