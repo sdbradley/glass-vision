@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091104172658) do
+ActiveRecord::Schema.define(:version => 20091217205512) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -215,10 +215,12 @@ ActiveRecord::Schema.define(:version => 20091104172658) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "shapes", :force => true do |t|
-    t.string  "name",            :limit => 50, :default => "", :null => false
-    t.integer "sections_width",                :default => 0,  :null => false
-    t.integer "sections_height",               :default => 0,  :null => false
-    t.integer "corners",                       :default => 4,  :null => false
+    t.string  "name",              :limit => 50, :default => "",    :null => false
+    t.integer "sections_width",                  :default => 0,     :null => false
+    t.integer "sections_height",                 :default => 0,     :null => false
+    t.integer "corners",                         :default => 4,     :null => false
+    t.boolean "has_upper_transom",               :default => false
+    t.boolean "has_lower_transom",               :default => false
   end
 
   create_table "translations", :force => true do |t|

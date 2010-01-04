@@ -26,16 +26,41 @@
 
 <table class="dimensions">
   <tr>
-    <td rowspan="<%= sec_height + 1 %>"></td>
+	  <%
+			left_box_height = 1 #sec_height + 1		
+			right_box_height = sec_height
+	  %>
+    <td rowspan="<%= left_box_height %>"></td>
     <td colspan="<%= sec_width %>"><%= trn_geth('HEADER_OPENINGS') %></td>
     <% if sec_height > 1 %>
     <td><%= trn_geth('HEADER_SECTIONS_HEIGHTS') %></td>
     <% end %>
     <td><%= trn_geth('HEADER_TOTAL_HEIGHT') %></td>
   </tr>
+
+	<% if @quotation_line.shape.has_upper_transom %>
+		<tr>
+			<td><%= trn_geth('LABEL_UPPER_TRANSOM')%></td>
+	    <td colspan="2" style="vertical-align:middle;">
+					<table>
+						<tr>
+							<td width="25%">&nbsp;</td>
+							<td width="50%">
+							<%= select_opening @upper_transom_index, @openings[@upper_transom_index].to_i %>
+							</td>
+							<td width="25%">
+		      			<%= text_field_tag "section_height[#{@upper_transom_index}]", @section_height[@upper_transom_index], :size => 6 %>
+							</td>
+					</tr>
+				</table>      </td>
+			<td style="border-left:1px solid #AAA;"></td>
+		</tr>
+	<% end %>
+
   <% section = 1 %>
   <% 1.upto(sec_height) { |r| %>
   <tr>
+	<td></td>
     <% 1.upto(sec_width) { |c| %>
     <!-- openings -->
     <td>
@@ -51,7 +76,7 @@
     <% end %>
     <!-- total height -->
     <% if r == 1 %>
-    <td rowspan="<%= sec_height %>">
+    <td rowspan="<%= right_box_height %>" style="border-left:1px solid #AAA;">
     <%= 
       if @quotation_line.serie.standard_product? and sec_height == 1 and !@quotation_line.serie.heights.nil?
         select_tag("quotation_line[height]", options_from_collection_for_select(@quotation_line.serie.heights, "value", "value", @quotation_line.height)) 
@@ -78,16 +103,36 @@
       %>
     </td>
     <% } %>
-    <td></td>
+    <td style="border-left:1px solid #AAA;"></td>
     <% if sec_height > 1 %>
     <td></td>
     <% end %>
   </tr>
   <% end %>
+
+	<% if @quotation_line.shape.has_lower_transom %>
+		<tr>
+			<td><%= trn_geth('LABEL_LOWER_TRANSOM')%></td>
+	    <td colspan="2">
+				<table>
+					<tr>
+						<td width="25%">&nbsp;</td>
+						<td width="50%">
+						<%= select_opening @lower_transom_index, @openings[@lower_transom_index].to_i %>
+						</td>
+						<td width="25%">
+	      			<%= text_field_tag "section_height[#{@lower_transom_index}]", @section_height[@lower_transom_index], :size => 6 %>
+						</td>
+				</tr>
+			</table>
+      </td>
+			<td style="border-left:1px solid #AAA;"></td>
+		</tr>
+	<% end %>
   <!-- total width -->
   <tr>
     <td><%= trn_geth('HEADER_TOTAL_WIDTH') %></td>
-    <td colspan="<%= sec_width %>">
+    <td colspan="<%= sec_width %>" style="border-top:1px solid #AAA;">
     <%= 
       if @quotation_line.serie.standard_product? and sec_width == 1 and !@quotation_line.serie.widths.nil?
         select_tag("quotation_line[width]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value", @quotation_line.width))
@@ -138,5 +183,3 @@
 	<% end %> <!-- category_and_options.each -->
   <br/>
 <% end %> <!-- categorized_options.keys.sort.each do -->
-
-

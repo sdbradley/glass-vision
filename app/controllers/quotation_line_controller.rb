@@ -21,6 +21,17 @@ class QuotationLineController < ApplicationController
     1.upto(shape.sections_width) do |s|
       @section_width[s.to_s] = 0
     end
+
+    if shape.has_upper_transom
+      @section_height[upper_transom_index(shape)] = 0
+      @upper_transom_index = upper_transom_index(shape)
+    end
+
+    if shape.has_lower_transom
+      @section_height[lower_transom_index(shape)] = 0
+      @lower_transom_index = lower_transom_index(shape)
+    end
+
     @openings = {}
     @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
     @options = @serie.options.sort_by { |o| o.tr_description }
@@ -38,6 +49,11 @@ class QuotationLineController < ApplicationController
     @options = @serie.options.sort_by { |o| o.tr_description }
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
+
+    shape = Shape.find(@quotation_line.shape_id)
+    @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
+    @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
+
     error = calculate_dimensions(@quotation_line.width, @quotation_line.height)
     if error
       @quotation_line.price = 0
@@ -60,6 +76,7 @@ class QuotationLineController < ApplicationController
         if @quotation_line.save
 
           # save openings
+          # TODO sort_order won't work with transoms
           @openings.each_pair do |key, value|
             @quotation_line.quotation_lines_openings.create(:opening_id => value.to_i, :sort_order => key.to_i)
           end
@@ -70,6 +87,17 @@ class QuotationLineController < ApplicationController
           end
           @real_width.each do |k, v|
             @quotation_line.section_widths.create(:sort_order => k, :value => v)
+          end
+
+          # save the transom heights
+          if (shape.has_upper_transom)
+            @quotation_line.section_heights.create(:sort_order => @upper_transom_index, :value => @section_height[@upper_transom_index])
+            @quotation_line.section_widths.create(:sort_order => @upper_transom_index, :value => @total_width)
+          end
+
+          if (shape.has_lower_transom)
+            @quotation_line.section_heights.create(:sort_order => @lower_transom_index, :value => @section_height[@lower_transom_index])
+            @quotation_line.section_widths.create(:sort_order => @lower_transom_index, :value => @total_width)
           end
 
           # save options
@@ -110,6 +138,13 @@ class QuotationLineController < ApplicationController
       @section_width[w.sort_order.to_s] = w.value
     end
     @serie = @quotation_line.serie
+
+    shape = Shape.find(@quotation_line.shape_id)
+    
+    @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
+    @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
+
+
     @options = @serie.options #.sort_by {|o| o.tr_description }
     @options.each do |option|
       if option.pricing_method.quantifiable
@@ -131,6 +166,10 @@ class QuotationLineController < ApplicationController
     @options = @serie.options.sort_by {|o| o.tr_description }
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
+    shape = Shape.find(@quotation_line.shape_id)
+    @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
+    @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
+
     error = calculate_dimensions(params[:quotation_line][:width], params[:quotation_line][:height])
     if error
       @quotation_line.price = 0
@@ -167,6 +206,17 @@ class QuotationLineController < ApplicationController
             @quotation_line.section_widths.create(:sort_order => k, :value => v)
           end
 
+          # save the transom heights
+          if (shape.has_upper_transom)
+            @quotation_line.section_heights.create(:sort_order => @upper_transom_index, :value => @section_height[@upper_transom_index])
+            @quotation_line.section_widths.create(:sort_order => @upper_transom_index, :value => @total_width)
+          end
+
+          if (shape.has_lower_transom)
+            @quotation_line.section_heights.create(:sort_order => @lower_transom_index, :value => @section_height[@lower_transom_index])
+            @quotation_line.section_widths.create(:sort_order => @lower_transom_index, :value => @total_width)
+          end
+
           # update options
           old_selected_options = @quotation_line.options_quotation_lines.find(:all).map { |o| o.option.id }
           (new_selected_options - old_selected_options).each do |o|
@@ -182,7 +232,7 @@ class QuotationLineController < ApplicationController
           end
 
           # create and save image
-          @quotation_line.create_image
+          @quotation_line.create_image(shape)
 
           flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
           redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id
@@ -201,41 +251,36 @@ class QuotationLineController < ApplicationController
   end
 
 private
-  def calculate_price(serie_id, shape_id, openings, options_ids)
-    serie = @quotation_line.serie
-    shape = Shape.find(shape_id)
 
-    price = 0
-    # calculate base price for all sections
-    1.upto(shape.sections_height) do |r|
-      # make sure that the height is greater than or equal to the first value in the table
-      # we do this by looking for an entry that is less than or equal to the real height. If nothing is found,
-      # that means we're below the allowed size,
-      if !serie.heights.exists?(["value <= #{@real_height[r]}"])
-        raise PriceError, trn_get('MSG_HEIGHT_TOO_SMALL')
-      end
-      selected_height = serie.heights.find(:first, :conditions => "value >= #{@real_height[r]}", :order => 'value')
-      if !selected_height
-        raise PriceError, trn_get('MSG_CANT_FIND_HEIGHT')
-      end
-      1.upto(shape.sections_width) do |c|
-        if !serie.widths.exists?(["value <= #{@real_width[c]}"])
-          raise PriceError, trn_get('MSG_WIDTH_TOO_SMALL')
-        end
-        selected_width = serie.widths.find(:first, :conditions => "value >= #{@real_width[c]}", :order => 'value')
-        if !selected_width
-          raise PriceError, trn_get('MSG_CANT_FIND_WIDTH')
-        end
-        found_price = SeriePrice.find(:first, 
-                                      :conditions => ['width_id = ? and height_id = ? and opening_id = ?', selected_width.id, selected_height.id, openings[((r - 1) * shape.sections_width + c).to_s].to_i])
-        if !found_price
-          raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
-        end
-        price += found_price.price
-      end
+  def validate_height(serie, h)
+    # make sure that the height is greater than or equal to the first value in the table
+    # we do this by looking for an entry that is less than or equal to the real height. If nothing is found,
+    # that means we're below the allowed size,
+    if !serie.heights.exists?(["value <= #{h}"])
+      raise PriceError, trn_get('MSG_HEIGHT_TOO_SMALL')
+    end
+    selected_height = serie.heights.find(:first, :conditions => "value >= #{h}", :order => 'value')
+    if !selected_height
+      raise PriceError, trn_get('MSG_CANT_FIND_HEIGHT')
+    end
+    
+    selected_height
+  end
+
+  def validate_width(serie, w)
+    if !serie.widths.exists?(["value <= #{w}"])
+      raise PriceError, trn_get('MSG_WIDTH_TOO_SMALL')
+    end
+    selected_width = serie.widths.find(:first, :conditions => "value >= #{w}", :order => 'value')
+    if !selected_width
+      raise PriceError, trn_get('MSG_CANT_FIND_WIDTH')
     end
 
-    # calculate options price
+    selected_width
+  end
+
+  def calculate_option_prices(options_ids, openings, shape)
+    price = 0
     options_ids.each do |o|
       option = Option.find(o)
       option_price = 0
@@ -255,6 +300,16 @@ private
                   area += section_area
                 end
               end
+              if (shape.has_upper_transom)
+                section_area = @section_height[upper_transom_index(shape)] * @total_width / 144
+                section_area = option.minimum_quantity if section_area < option.minimum_quantity
+                area += section_area
+              end
+              if (shape.has_lower_transom)
+                section_area = @section_height[lower_transom_index(shape)] * @total_width / 144
+                section_area = option.minimum_quantity if section_area < option.minimum_quantity
+                area += section_area
+              end
             when 3 # per glass
               area = 0
               1.upto(shape.sections_height) do |r|
@@ -267,6 +322,22 @@ private
                   glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
                   area += glass_area * glasses_quantity
                 end
+              end
+              if (shape.has_upper_transom)
+                section_area = @section_height[upper_transom_index(shape)] * @total_width / 144
+                opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+                glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
+                glass_area = section_area / glasses_quantity
+                glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
+                area += glass_area * glasses_quantity
+              end
+              if (shape.has_lower_transom)
+                section_area = @section_height[lower_transom_index(shape)] * @total_width / 144
+                opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+                glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
+                glass_area = section_area / glasses_quantity
+                glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
+                area += glass_area * glasses_quantity
               end
             end
           else
@@ -288,6 +359,16 @@ private
                   perimeter += section_perimeter
                 end
               end
+              if shape.has_upper_transom
+                section_perimeter = (@section_height[upper_transom_index(shape)] * 2 + @total_width * 2) / 12
+                section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
+                perimeter += section_perimeter
+              end
+              if shape.has_lower_transom
+                section_perimeter = (@section_height[lower_transom_index(shape)] * 2 + @total_width * 2) / 12
+                section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
+                perimeter += section_perimeter
+              end
             when 3 # per glass
               perimeter = 0
               1.upto(shape.sections_height) do |r|
@@ -299,6 +380,21 @@ private
                   glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
                   perimeter += glass_perimeter * glasses_quantity
                 end
+              end
+              if shape.has_upper_transom
+                opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+                glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
+                # for now, consider all glasses of the section to be of equal perimeter
+                glass_perimeter = (@section_height[upper_transom_index(shape)] * 2 + @total_width * 2 / glasses_quantity) / 12
+                glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
+                perimeter += glass_perimeter * glasses_quantity
+              end
+              if shape.has_lower_transom
+                opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+                glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
+                glass_perimeter = (@section_height[lower_transom_index(shape)] * 2 + @total_width * 2 / glasses_quantity) / 12
+                glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
+                perimeter += glass_perimeter * glasses_quantity
               end
             end
           else
@@ -323,14 +419,75 @@ private
       qty = ((opt_qty = params["option_quantity_#{o}".to_sym]) ? opt_qty.to_i : 1)
       price += option_price * qty
     end
-    price
+  
+    price  
+  end
+  
+  def calculate_price(serie_id, shape_id, openings, options_ids)
+    serie = @quotation_line.serie
+    shape = Shape.find(shape_id)
+
+    price = 0
+
+    # calculate base price for all sections
+    1.upto(shape.sections_height) do |r|
+      selected_height = validate_height(serie, @real_height[r])
+      1.upto(shape.sections_width) do |c|
+        selected_width = validate_width(serie, @real_width[c])
+        found_price = SeriePrice.find(:first, 
+                                      :conditions => ['width_id = ? and height_id = ? and opening_id = ?', 
+                                                       selected_width.id, selected_height.id, openings[((r - 1) * shape.sections_width + c).to_s].to_i])
+        if !found_price
+          debug_log "can't find prince for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[((r - 1) * shape.sections_width + c).to_s]}"
+          raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
+        end
+        price += found_price.price
+      end
+    end
+    
+    # for shapes that have transoms, price them here
+    
+    if shape.has_upper_transom
+      selected_height = validate_height(serie, @section_height[upper_transom_index(shape)])
+      selected_width = validate_width(serie, @total_width)
+      found_price = SeriePrice.find(:first, 
+                                    :conditions => ['width_id = ? and height_id = ? and opening_id = ?', 
+                                                     selected_width.id, selected_height.id, openings[upper_transom_index(shape)].to_i])
+      if !found_price
+        debug_log "can't find price upper transom for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[upper_transom_index(shape)].to_i}"
+        raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
+      end
+      price += found_price.price
+    end
+    
+    if shape.has_lower_transom
+      selected_height = validate_height(serie, @section_height[lower_transom_index(shape)])
+      selected_width = validate_width(serie, @total_width)
+      found_price = SeriePrice.find(:first, 
+                                    :conditions => ['width_id = ? and height_id = ? and opening_id = ?', 
+                                                     selected_width.id, selected_height.id, openings[lower_transom_index(shape)].to_i])
+      if !found_price
+        debug_log "can't find price upper transom for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[lower_transom_index(shape)].to_i}"
+        raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
+      end
+      price += found_price.price
+    end
+
+    # calculate options price
+    price += calculate_option_prices(options_ids, openings, shape)
   end
 
+# TODO this routine does not take transoms into account
   def calculate_dimensions(width, height)
     @total_height = height.to_f
     @total_width = width.to_f
+    adjust_total_height_for_transoms = @total_width == 0
     shape = Shape.find(@quotation_line.shape_id)
 
+    total_transom_height = 0
+    total_transom_height += @section_height[@upper_transom_index].to_f if shape.has_upper_transom
+    total_transom_height += @section_height[@lower_transom_index].to_f if shape.has_lower_transom
+    
     ## calculate all heights
     # get known heights, or 0 if missing
     @real_height = {}
@@ -346,12 +503,12 @@ private
     end
     # complete missing heights if possible
     if cpt_missing == 0
-      @total_height = acc_dimension if @total_height == 0
+      @total_height = acc_dimension + total_transom_height if @total_height == 0
     else
       if @total_height == 0
         return trn_get('MSG_NOT_ENOUGH_DATA')
       else
-        deducted = (@total_height - acc_dimension) / cpt_missing
+        deducted = (@total_height - (acc_dimension + total_transom_height)) / cpt_missing
         @real_height.each do |k, v|
           @real_height[k] = deducted if v == 0
         end
@@ -360,6 +517,12 @@ private
     # check that we have no negative dimensions
     @real_height.each_value do |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
+    end
+
+    #increase total_height for each transom
+    if (adjust_total_height_for_transoms)
+      @total_height += @section_height[@upper_transom_index].to_f if shape.has_upper_transom
+      @total_height += @section_height[@lower_transom_index].to_f if shape.has_lower_transom
     end
 
     ## calculate all widths
@@ -393,5 +556,13 @@ private
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
     end
     return nil
+  end
+  
+  def upper_transom_index(shape)
+    @quotation_line.upper_transom_index(shape).to_s
+  end
+
+  def lower_transom_index(shape)
+    @quotation_line.lower_transom_index(shape).to_s
   end
 end

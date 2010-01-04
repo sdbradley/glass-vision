@@ -24,7 +24,7 @@ class QuotationLine < ActiveRecord::Base
     opt = @options_quotation_lines ? @options_quotation_lines.map { |o| o.option } : []
   end
 
-  def create_image
+  def create_image(shape)
     temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
     final_file_name = File.join(RAILS_ROOT, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 
@@ -37,36 +37,46 @@ class QuotationLine < ActiveRecord::Base
     image_width = (width + 30) * PIXELS_PER_INCH
     image_height = (height + 20) * PIXELS_PER_INCH
     canvas = Image.new(image_width, image_height)
-    # section counter
-    cpt_opening = 0
 
     # coordinates
     currenty = 0
 
+    if (shape.has_upper_transom)
+      # intialize coordinates
+      currentx = 0
+
+      # define section dimensions for binding in erb
+      section_width = section_widths[shape.sections_width].value
+      section_height = section_heights[shape.sections_height].value
+
+      # load svg file
+      section_image = get_section_image(upper_transom_index(shape), section_height, section_width)
+
+      # define offset to paint section
+      offsetx_px = currentx * PIXELS_PER_INCH
+      offsety_px = currenty * PIXELS_PER_INCH
+
+      # paint the image on canvas
+      canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
+      # update coordinates
+      currenty += section_height        
+    end
+    
     # loop on rows
-    section_heights.each { |h|
+    0.upto(shape.sections_height - 1) do |h|
 
       # intialize coordinates
       currentx = 0
 
       # loop on columns
-      section_widths.each { |w|
+      0.upto(shape.sections_width - 1) do |w|
 
         # define section dimensions for binding in erb
-        section_width = w.value
-        section_height = h.value
-
-        # load erb file for section and generate scaled svg file
-        image_file_name = File.basename(quotation_lines_openings[cpt_opening].opening.preview_image_name, '.png') + '.svg'
-        File.open(temp_file_name, 'w') do |f|
-          f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
-        end
-        File.open(File.join(RAILS_ROOT, 'tmp', "jdp_image_#{id}.svg"), 'w') do |f|
-          f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
-        end
+        section_width = section_widths[w].value
+        section_height = section_heights[h].value
 
         # load svg file
-        section_image = Image.read(temp_file_name)[0]
+        section_image = get_section_image((h - 1) * shape.sections_width + w, section_height, section_width)
 
         # define offset to paint section
         offsetx_px = currentx * PIXELS_PER_INCH
@@ -75,72 +85,71 @@ class QuotationLine < ActiveRecord::Base
         # paint the image on canvas
         canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
         
-        # next opening
-        cpt_opening += 1
-
         # update coordinates
-        currentx += w.value
-      }
-
-      # update coordinates
-      currenty += h.value
-    }
-
-    # initialize offset
-    currenty = 0
-
-    # print vertical sizes
-    section_heights.each { |h|
-
-      # define values for binding
-      section_height = h.value
-
-      # load erb file and generate svg
-      File.open(temp_file_name, 'w') do |f|
-        f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'misc', 'vertical_size.svg'))).result(binding)
+        currentx += section_width
       end
 
-      #load svg file
-      size_image = Image.read(temp_file_name)[0]
+      # update coordinates
+      currenty += section_height
+    end
+
+    if (shape.has_lower_transom)
+      # intialize coordinates
+      currentx = 0
+
+      # define section dimensions for binding in erb
+      section_width = section_widths[shape.sections_width + 1].value
+      section_height = section_heights[shape.sections_height + 1].value
+
+      # load svg file
+      section_image = get_section_image(lower_transom_index(shape), section_height, section_width)
 
       # define offset to paint section
-      offsetx_px = (width + 1) * PIXELS_PER_INCH
+      offsetx_px = currentx * PIXELS_PER_INCH
       offsety_px = currenty * PIXELS_PER_INCH
 
       # paint the image on canvas
-      canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
-
+      canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
       # update coordinates
-      currenty += h.value
-    }
+      currenty += section_height        
+    end
 
+    # initialize offset
+    currenty = 0
+    if (shape.has_upper_transom)
+      # define values for binding
+      section_height = section_heights[shape.sections_height].value
+      draw_vertical_measurement(canvas, section_height, currenty)
+      # update coordinates
+      currenty += section_height
+    end
+    # print vertical sizes
+    0.upto(shape.sections_height - 1) do |h|
+      # define values for binding
+      section_height = section_heights[h].value
+      draw_vertical_measurement(canvas, section_height, currenty)
+      # update coordinates
+      currenty += section_height
+    end
+    if (shape.has_lower_transom)
+      # define values for binding
+      section_height = section_heights[shape.sections_height + 1].value
+      draw_vertical_measurement(canvas, section_height, currenty)
+      # update coordinates
+      currenty += section_height
+    end
+    
     # initialize offset
     currentx = 0
 
     # print horizontal sizes
-    section_widths.each { |w|
-
+    0.upto(shape.sections_width - 1) do |w|
       # define values for binding
-      section_width = w.value
-
-      # load erb file and generate svg
-      File.open(temp_file_name, 'w') do |f|
-        f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
-      end
-
-      #load svg file
-      size_image = Image.read(temp_file_name)[0]
-
-      # define offset to paint section
-      offsetx_px = currentx * PIXELS_PER_INCH
-      offsety_px = (height + 1) * PIXELS_PER_INCH
-
-      # paint the image on canvas
-      canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
-
+      section_width = section_widths[w].value
+      draw_horizontal_measurement(canvas, section_width, currentx)
       # update coordinates
-      currentx += w.value
-    }
+      currentx += section_width
+    end
 
     # write final image
     canvas.write final_file_name
@@ -157,7 +166,72 @@ class QuotationLine < ActiveRecord::Base
     return (width + 30) * PIXELS_PER_INCH, (height + 20) * PIXELS_PER_INCH
   end
 
+  def upper_transom_index(shape)
+    (shape.sections_width * shape.sections_height + 1)
+  end
+
+  def lower_transom_index(shape)
+    (shape.sections_width * shape.sections_height + 2)
+  end
+
   protected
+  
+  def get_section_image(cpt_opening, section_height, section_width)
+    # binding for erb file
+    # constants
+    frame_thickness = FRAME_THICKNESS
+    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
+    # load erb file for section and generate scaled svg file
+    image_file_name = File.basename(quotation_lines_openings[cpt_opening - 1].opening.preview_image_name, '.png') + '.svg'
+    File.open(temp_file_name, 'w') do |f|
+      f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
+    end
+
+    # load svg file
+    section_image = Image.read(temp_file_name)[0]
+  end
+
+  def draw_vertical_measurement(canvas, section_height, currenty)
+    # binding for erb file
+    # constants
+    arrow_size = ARROW_SIZE
+    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
+    # load erb file and generate svg
+    File.open(temp_file_name, 'w') do |f|
+      f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'misc', 'vertical_size.svg'))).result(binding)
+    end
+
+    #load svg file
+    size_image = Image.read(temp_file_name)[0]
+
+    # define offset to paint section
+    offsetx_px = (width + 1) * PIXELS_PER_INCH
+    offsety_px = currenty * PIXELS_PER_INCH
+
+    # paint the image on canvas
+    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
+  end
+  
+  def draw_horizontal_measurement(canvas, section_width, currentx)
+    # binding for erb file
+    # constants
+    arrow_size = ARROW_SIZE
+    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
+    # load erb file and generate svg
+    File.open(temp_file_name, 'w') do |f|
+      f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
+    end
+
+    #load svg file
+    size_image = Image.read(temp_file_name)[0]
+
+    # define offset to paint section
+    offsetx_px = currentx * PIXELS_PER_INCH
+    offsety_px = (height + 1) * PIXELS_PER_INCH
+
+    # paint the image on canvas
+    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp    
+  end
 
   def before_destroy
     # delete the line image

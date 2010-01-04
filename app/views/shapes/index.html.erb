@@ -1,6 +1,6 @@
 <h2><%= trn_geth('TITLE_SHAPE_LIST') %></h2>
 
-<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<%= link_to trn_geth('BUTTON_ADD'), new_shape_path %>
 <table cellspacing="0">
   <tr class="header">
     <th><%= trn_geth('HEADER_NAME') %></th>
@@ -16,9 +16,9 @@
     <td><%= shape.sections_height %></td>
     <td><%= shape.corners %></td>
     <td>
-      <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => shape %> |
-      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => shape %> |
-      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => shape}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+      <%= link_to trn_geth('BUTTON_SHOW'), shape %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_shape_path(shape) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), shape, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
     </td>
   </tr>
 <% end %>
