@@ -46,8 +46,8 @@ class QuotationLine < ActiveRecord::Base
       currentx = 0
 
       # define section dimensions for binding in erb
-      section_width = section_widths[shape.sections_width].value
-      section_height = section_heights[shape.sections_height].value
+      section_width = get_transom_width(upper_transom_index(shape)) #section_widths[shape.sections_width].value
+      section_height = get_transom_height(upper_transom_index(shape)) #section_heights[shape.sections_height].value
 
       # load svg file
       section_image = get_section_image(upper_transom_index(shape), section_height, section_width)
@@ -76,7 +76,7 @@ class QuotationLine < ActiveRecord::Base
         section_height = section_heights[h].value
 
         # load svg file
-        section_image = get_section_image((h - 1) * shape.sections_width + w, section_height, section_width)
+        section_image = get_section_image(h * shape.sections_width + w + 1, section_height, section_width)
 
         # define offset to paint section
         offsetx_px = currentx * PIXELS_PER_INCH
@@ -91,6 +91,7 @@ class QuotationLine < ActiveRecord::Base
 
       # update coordinates
       currenty += section_height
+      
     end
 
     if (shape.has_lower_transom)
@@ -98,8 +99,8 @@ class QuotationLine < ActiveRecord::Base
       currentx = 0
 
       # define section dimensions for binding in erb
-      section_width = section_widths[shape.sections_width + 1].value
-      section_height = section_heights[shape.sections_height + 1].value
+      section_width = get_transom_width(lower_transom_index(shape))
+      section_height = get_transom_height(lower_transom_index(shape))
 
       # load svg file
       section_image = get_section_image(lower_transom_index(shape), section_height, section_width)
@@ -118,7 +119,7 @@ class QuotationLine < ActiveRecord::Base
     currenty = 0
     if (shape.has_upper_transom)
       # define values for binding
-      section_height = section_heights[shape.sections_height].value
+      section_height = get_transom_height(upper_transom_index(shape))
       draw_vertical_measurement(canvas, section_height, currenty)
       # update coordinates
       currenty += section_height
@@ -133,7 +134,7 @@ class QuotationLine < ActiveRecord::Base
     end
     if (shape.has_lower_transom)
       # define values for binding
-      section_height = section_heights[shape.sections_height + 1].value
+      section_height = get_transom_height(lower_transom_index(shape))
       draw_vertical_measurement(canvas, section_height, currenty)
       # update coordinates
       currenty += section_height
@@ -175,14 +176,26 @@ class QuotationLine < ActiveRecord::Base
   end
 
   protected
+
+  def get_transom_width(idx)
+    section_widths.select {|t| t.sort_order == idx}.first.value
+  end  
   
+  def get_transom_height(idx)
+    section_heights.select {|t| t.sort_order == idx}.first.value
+  end  
+
+  def get_opening(idx)
+    quotation_lines_openings.select {|o| o.sort_order == idx}.first.opening
+  end
+
   def get_section_image(cpt_opening, section_height, section_width)
     # binding for erb file
     # constants
     frame_thickness = FRAME_THICKNESS
     temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
     # load erb file for section and generate scaled svg file
-    image_file_name = File.basename(quotation_lines_openings[cpt_opening - 1].opening.preview_image_name, '.png') + '.svg'
+    image_file_name = File.basename(get_opening(cpt_opening).preview_image_name, '.png') + '.svg'
     File.open(temp_file_name, 'w') do |f|
       f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
     end
