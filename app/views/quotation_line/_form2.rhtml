@@ -41,8 +41,8 @@
 	<% if @quotation_line.shape.has_upper_transom %>
 		<tr>
 			<td><%= trn_geth('LABEL_UPPER_TRANSOM')%></td>
-	    <td colspan="2" style="vertical-align:middle;">
-					<table>
+	    <td colspan="<%=sec_width%>" style="vertical-align:middle;">
+					<table width="100%">
 						<tr>
 							<td width="25%">&nbsp;</td>
 							<td width="50%">
@@ -113,8 +113,8 @@
 	<% if @quotation_line.shape.has_lower_transom %>
 		<tr>
 			<td><%= trn_geth('LABEL_LOWER_TRANSOM')%></td>
-	    <td colspan="2">
-				<table>
+	    <td colspan="<%=sec_width%>">
+				<table width="100%">
 					<tr>
 						<td width="25%">&nbsp;</td>
 						<td width="50%">
