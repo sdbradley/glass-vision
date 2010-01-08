@@ -36,4 +36,4 @@ ActionMailer::Base.smtp_settings = {
   :user_name => "info@glass-vision.net",
   :password => "info"
 }
-Paperclip.options[:image_magick_path] = "/usr/bin"
+

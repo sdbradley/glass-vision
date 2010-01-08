@@ -28,9 +28,9 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '~> 2.3.11', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
 
-  config.gem 'paperclip', :lib => 'paperclip', :source => 'http://gemcutter.org'
+  config.gem 'paperclip',  :source => 'http://gemcutter.org'
   config.gem 'formtastic', :source => 'http://gemcutter.org'
-#  config.gem "ruby-growl", :lib => "ruby-growl", :source => "http://gemcutter.org"
+#  config.gem "ruby-growl", :source => "http://gemcutter.org"
 #  config.gem 'bullet', :source => 'http://gemcutter.org'
   config.gem 'validation_reflection', :source => 'http://gemcutter.org'
   
@@ -84,5 +84,3 @@ end
 
 # Include your application configuration below
 
-#require 'paperclip'
-#require 'will_paginate'
