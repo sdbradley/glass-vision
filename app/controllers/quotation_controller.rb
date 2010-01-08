@@ -25,7 +25,6 @@ class QuotationController < ApplicationController
   def create
     @quotation = Quotation.new(params[:quotation])
     @quotation.user_id = @current_user.id
-    @quotation.discount = @current_user.discount
     customer_msg = ""
     if Customer.create_from_quotation_if_new(@quotation)
       customer_msg = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
