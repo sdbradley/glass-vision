@@ -30,9 +30,17 @@ RewriteEngine On
 #RewriteRule ^([^.]+)$ $1.html [QSA]
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]
+
 PassengerEnabled On
-RailsBaseURI /glass-vision
-PassengerAppRoot /home/snowmoon/clients/glass-vision/current
+
+# for staging
+#RailsBaseURI /glass-vision
+#PassengerAppRoot /home/snowmoon/clients/glass-vision/current
+
+# for production
+PassengerAppRoot /home/glass/apps/inline/current
+
+
 
 # In case Rails experiences terminal errors
 # Instead of displaying this message you can supply a file here which will be rendered instead
