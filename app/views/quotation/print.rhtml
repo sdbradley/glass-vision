@@ -249,14 +249,16 @@
       <strong><%= number_to_currency total %></strong>
     </td>
   </tr>
+<% if !@quotation.comments.blank? %>
   <tr>
-   <td colspan="5" rowspan="3" style="border:1px solid #808080;" valign="top">
+   <td colspan="5" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_LABEL_COMMENTS') %></strong><br />
-          <%= @quotation.comments.gsub("\n", '<br/>') if @quotation.comments and !@quotation.comments?%>
+          <%= @quotation.comments.gsub("\n", '<br/>') %>
       </p>
     </td>
    </tr>
+<% end %>
   <% if @quotation.ready_to_sign %>
     <tr >
       <td colspan="5" style="border-left:1px solid #808080;border-right:1px solid #808080;border-bottom:1px solid #808080;">
