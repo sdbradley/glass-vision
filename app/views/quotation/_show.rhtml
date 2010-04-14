@@ -57,11 +57,11 @@
   <% end %>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_DATE_CREATED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= gv_humanize_time @quotation.created_at %>
+		<td><%= gv_humanize_time @quotation.created_at %></td>
 	</tr>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_DATE_MODIFIED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= gv_humanize_time @quotation.updated_at %>
+		<td><%= gv_humanize_time @quotation.updated_at %></td>
 	</tr>
   <% if @quotation.notes and !@quotation.notes.empty? %>
   <tr valign="top">
@@ -75,31 +75,35 @@
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @quotation.transport %>$</td>
+    <td><%= number_to_currency(@quotation.transport, :format => "%n%u") %></td>
   </tr>
   <% if current_user.has_role?('administrator')%>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @quotation.discount %>%</td>
+    <td><%= number_to_percentage(@quotation.discount, :precision => 2) %></td>
   </tr>
   <% end %>
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_MARKUP') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= number_to_percentage(@quotation.markup, :precision => 2) %></td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @quotation.taxes %>%</td>
+    <td><%= number_to_percentage(@quotation.taxes, :precision => 3)%></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.company.name %></td>
+  </tr>
 </table>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> |
-<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
-<% form_tag :action => 'print', :id => @quotation do %>
-  <%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %>
-  <%= select_tag 'company_id', options_for_select(@current_user.active_companies.map { |c| [c.name, c.id] }) %>
-  <%= submit_tag trn_geth('BUTTON_PRINT') %>
-<% end %>
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> |
+<%= link_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %>
 
 <br/>
 
@@ -115,6 +119,7 @@
   </tr>
   <% total = 0 %>
   <% for line in @quotation.quotation_lines %>
+    <% line_price = line.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100)%>
     <%   total += line.quantity * line.price %>
   <tr valign="top" class="quotation-line">
     <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/system/images/previews/preview_#{line.id}.png" %></td>
@@ -199,7 +204,6 @@
     <td colspan="1" style="border-bottom: 2px dotted #808080;">
       <%= image_tag(option.option.photo.url(:normal)) %> 
     </td>
-    <% option_price = option.option.price * (1 - @quotation.discount / 100) %>
 		<td>
 			<table>
 				<tr>
@@ -208,7 +212,7 @@
 			  </tr>
 				<tr>
 			    <td><%= trn_geth('HEADER_UNIT_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-			    <td><%= format('%.2f', option_price) %>$</td>
+			    <td><%= format('%.2f',  option.option.price) %>$</td>
 			  </tr>
 			  <tr>
 			    <td><%= trn_geth('HEADER_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>

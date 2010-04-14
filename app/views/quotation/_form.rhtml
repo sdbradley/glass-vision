@@ -98,6 +98,10 @@ function updateShippingAddress()  {
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "discount", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_MARKUP') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "markup", :size => 10, :style => "text-align: right;" %>%</td>
+  </tr>
   <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -106,5 +110,9 @@ function updateShippingAddress()  {
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= check_box "quotation", "ready_to_sign" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation', 'company_id', @current_user.active_companies.map { |c| [c.name, c.id] } %></td>
   </tr>
 </table>
