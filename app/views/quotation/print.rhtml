@@ -40,22 +40,26 @@
       <table width="100%">
         <tr>
           <td><%= @quotation.customer_name %></td>
-          <td align="right"><%= @quotation.customer_email %></td>
         </tr>
         <tr>
-          <td rowspan="2"><%= @quotation.customer_address.gsub("\n", '<br/>') if @quotation.customer_address %></td>
-          <td align="right">
-            <% if @quotation.customer_phone and !@quotation.customer_phone.empty? %>
-            <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %>
-            <%= @quotation.customer_phone %>
+          <td><%= @quotation.customer_address.gsub("\n", '<br/>') if @quotation.customer_address %></td>
+        </tr>
+        <tr>
+          <td>
+            <% if !@quotation.customer_email.blank? %>
+              <%= @quotation.customer_email %>
+              <br />
             <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">
-            <% if @quotation.customer_fax and !@quotation.customer_fax.empty? %>
-            <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %>
-            <%= @quotation.customer_fax %>
+            <% if !@quotation.customer_phone.blank? %>
+              <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= @quotation.customer_phone %>
+              <br />
+            <% end %>
+            
+            <% if !@quotation.customer_fax.blank? %>
+              <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= @quotation.customer_fax %>
+              <br />
             <% end %>
           </td>
         </tr>
@@ -63,10 +67,14 @@
 
     </td>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
-			<% if @quotation.delivery_address %>
-      <%= @quotation.delivery_address.gsub("\n", '<br/>')%>
+
+    <% if !@quotation.delivery_address.blank? %>
+        <%= @quotation.delivery_address.gsub("\n", '<br/>')%>
+			<% elsif !@quotation.customer_address.blank? %>
+			  <%= @quotation.customer_address.gsub("\n", '<br/>') %>
 			<% else %>
-			<%= @quotation.customer_address.gsub("\n", '<br/>') if @quotation.customer_address %>
+			  &nbsp;<br />
+      
 			<% end%>
     </td>
   </tr>
