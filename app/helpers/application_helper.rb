@@ -68,7 +68,7 @@ module ApplicationHelper
       returning html = '' do
      html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
      html << colors.collect {|c|
-       "<option value='#{c.value}' colorname='#{c.name}' style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.name}</option>" }.join("\n")
+       "<option value='#{c.value}' colorname='#{c.tr_name}' style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
      html << "</select>"
    end
   end
