@@ -176,7 +176,10 @@ class QuotationLineController < ApplicationController
       flash[:notice] = error
       render :action => 'edit'
     else
-      new_selected_options = params[:options] ? params[:options].map{ |o| o.to_i } : []
+      
+      new_selected_options = get_options_from_params(params)
+      
+      
       begin
         @quotation_line.price = calculate_price(@quotation_line.serie_id, @quotation_line.shape_id, @openings, new_selected_options)
       rescue PriceError => err
@@ -564,5 +567,14 @@ private
 
   def lower_transom_index(shape)
     @quotation_line.lower_transom_index(shape).to_s
+  end
+  
+  def get_options_from_params(params)
+    new_selected_options = params[:options] ? params[:options].map{ |o| o.to_i } : []
+    # we have params[:option_category_<id>] that hold a single option id for single-select categories
+    # we can take those id's and merge them into new_selected_options
+    
+    more_options = params.keys.grep(/options_category_[0-9]+/).map { |k| params[k]}.flatten
+    new_selected_options += more_options
   end
 end

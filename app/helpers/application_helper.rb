@@ -2,6 +2,10 @@
 include TranslationGet
 module ApplicationHelper
 
+  def yes_or_no(b)
+    trn_get(b ? 'MSG_YES' : 'MSG_NO')
+  end
+
   def ajax_spinner_for(id, spinner="spinner.gif")
      "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
    end
@@ -39,37 +43,17 @@ module ApplicationHelper
     options_for_select.join("\n")
   end
   
-  def color_picker_orig(name)
-    #build the hexes
-   hexes = []
-    (0..15).step(3) do |one|
-      (0..15).step(3) do |two|
-        (0..15).step(3) do |three|
-         hexes << "#" + one.to_s(16) + two.to_s(16) + three.to_s(16)
-        end
-      end
-    end
-    arr = []
-    on_change_function = "onChange=\"document.getElementById('color_div').style.backgroundColor = this[this.selectedIndex].value\""
-    10.times { arr << "&nbsp;" }
-      returning html = '' do
-     html << "<div id=\"color_div\" style=\"border:0px solid black;z-index:100;position:absolute;width:30px\"> &nbsp; </div> "
-     html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
-     html << hexes.collect {|c|
-       "<option value='#{c}' style='background-color: #{c}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>" }.join("\n")
-     html << "</select>"
-   end
-  end
-
-  def color_picker(name, colors, id)
+  def color_picker(name, colors, id, sel)
     arr = []
     on_change_function = "onChange=\";document.getElementById('#{id}').value = this[this.selectedIndex].getAttribute('colorname');\""
     10.times { arr << "&nbsp;" }
-      returning html = '' do
-     html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
-     html << colors.collect {|c|
-       "<option value='#{c.value}' colorname='#{c.tr_name}' style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
-     html << "</select>"
+    
+    returning html = '' do
+       html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
+       html << "<option value='' colorname='' #{'selected' if sel.nil?}>#{trn_get('MSG_SELECT_ONE')}</option>"
+       html << colors.collect {|c|
+         "<option value='#{c.value}' colorname='#{c.tr_name}' #{'selected' if c.name == sel} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
+       html << "</select>"
    end
   end
 
