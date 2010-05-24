@@ -39,7 +39,11 @@ class QuotationLineController < ApplicationController
     # from the last line entered
     if params[:ql_copy_options]
       last_line = @quotation_line.quotation.quotation_lines.last()
-      @quotation_line.options_quotation_lines = last_line.options_quotation_lines if !last_line.nil? #&& last_line.series == @serie
+      if !last_line.nil?
+        @quotation_line.options_quotation_lines = last_line.options_quotation_lines  #&& last_line.series == @serie
+        @quotation_line.interior_color = last_line.interior_color
+        @quotation_line.exterior_color = last_line.exterior_color
+      end
     end
 
     @options = @serie.options.sort_by { |o| o.tr_description }
