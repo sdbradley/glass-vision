@@ -34,12 +34,27 @@ class QuotationLineController < ApplicationController
 
     @openings = {}
     @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+
+    # are we creating a similar window? if so, bring forward selected options
+    # from the last line entered
+    if params[:ql_copy_options]
+      last_line = @quotation_line.quotation.quotation_lines.last()
+      @quotation_line.options_quotation_lines = last_line.options_quotation_lines if !last_line.nil? #&& last_line.series == @serie
+    end
+
     @options = @serie.options.sort_by { |o| o.tr_description }
     @options.each do |option|
       if option.pricing_method.quantifiable
+        oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}
+        if (oli_index.nil?)
+          qty = option.minimum_quantity
+        else
+          qty = @quotation_line.options_quotation_lines[oli_index].quantity
+        end
         instance_variable_set "@option_quantity_#{option.id}".to_sym, option.minimum_quantity
       end
     end
+    
   end
 
   def create
@@ -480,7 +495,6 @@ private
     price += calculate_option_prices(options_ids, openings, shape)
   end
 
-# TODO this routine does not take transoms into account
   def calculate_dimensions(width, height)
     @total_height = height.to_f
     @total_width = width.to_f
