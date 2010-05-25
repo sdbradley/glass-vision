@@ -40,9 +40,10 @@ class QuotationLineController < ApplicationController
     if params[:ql_copy_options]
       last_line = @quotation_line.quotation.quotation_lines.last()
       if !last_line.nil?
-#        @quotation_line.options_quotation_lines = last_line.options_quotation_lines  #&& last_line.series == @serie
         last_line.options_quotation_lines.each {|o| 
-          @quotation_line.options_quotation_line.build(o.attributes)
+	  new_attribs = o.attributes
+	  new_attribs.delete("id")
+          @quotation_line.options_quotation_lines.build(new_attribs)
           }
         @quotation_line.interior_color = last_line.interior_color
         @quotation_line.exterior_color = last_line.exterior_color
