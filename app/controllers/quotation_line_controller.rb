@@ -83,7 +83,7 @@ class QuotationLineController < ApplicationController
       flash[:notice] = error
       render :action => 'add2'
     else
-      new_selected_options = params[:options] ? params[:options].map{ |o| o.to_i } : []
+      new_selected_options = get_options_from_params(params)
       begin
         @quotation_line.price = calculate_price(@quotation_line.serie_id, @quotation_line.shape_id, @openings, new_selected_options)
       rescue PriceError => err
