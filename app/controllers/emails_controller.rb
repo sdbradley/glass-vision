@@ -43,7 +43,7 @@ class EmailsController < ApplicationController
     @email = Email.new(params[:email])
     UserMailer.deliver_email(@current_user, @email)
     flash[:notice] = 'Email was successfully sent.'
-
+    redirect_to :controller => "home", :action => "index"
 #    respond_to do |format|
 #      if @email.save
 #        format.html { redirect_to('/') }
