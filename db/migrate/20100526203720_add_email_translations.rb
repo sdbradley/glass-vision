@@ -1,7 +1,7 @@
-class MultiselectOptionTranslations < ActiveRecord::Migration
+class AddEmailTranslations < ActiveRecord::Migration
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 
-  LAST_TRANSLATION_ID = 469
+  LAST_TRANSLATION_ID = 463
   def self.up
     IO.readlines(DATAFILE).join.gsub("\r\n", "\n").split(";\n").each do |s|
       execute(s) unless s == "\n"
@@ -12,7 +12,7 @@ class MultiselectOptionTranslations < ActiveRecord::Migration
     if RAILS_ENV == 'production'
       raise ActiveRecord::IrreversibleMigration, "Can't remove existing translations because they may have been modified by the user"
     else
-      execute 'delete from translations where id >' + LAST_TRANSLATION_ID + ';'
+      execute 'delete from translations where id > 463;'
     end
   end
 end

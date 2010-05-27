@@ -32,7 +32,21 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
     @subject    += trn_get('ACCOUNT_PASSWORD_RESET_SUBJECT')
   end
-  
+
+  def email(from, email)
+    @from        = from.email
+    @subject     = "[Glass Vision] " + email.subject
+    @sent_on     = Time.now
+    @body[:text] = email.body
+
+    if (from.has_role?("administrator"))
+      @recipients = User.all.select {|u| !u.has_role?("administrator") }.map {|u| u.email}
+    else
+      @recipients = User.all.select {|u| u.has_role?("administrator") }.map {|u| u.email}
+    end
+  end
+
+
   protected
     def setup_email(user)
       @recipients  = "#{user.email}"
