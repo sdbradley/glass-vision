@@ -26,7 +26,7 @@
 			<h4><%= h category.tr_name %></h4>
 			<ul>
 		  <% for option in options %>
-		    <li><%= option.tr_description %></li>
+		    <li><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %><%= option.tr_description %></li>
 		  <% end %>
 		</ul>
 		<% end %>

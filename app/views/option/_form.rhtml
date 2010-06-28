@@ -34,7 +34,7 @@
   </tr>
   <tr valign="top">
     <td align="right"></td>
-    <td><%= image_tag @option.photo.url %></td>
+    <td><%= image_tag @option.photo.url, :class => "#{ 'popup' unless option.photo.original_filename.blank? }" %></td>
   </tr>
 </table>
 <p>

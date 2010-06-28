@@ -186,7 +186,7 @@
 	  <% else %>
 	    <%= radio_button_tag "options_category_#{category.id}[]", option.id, selected_options.include?(option.id) ? true : false %>
 	  <% end %>
-		  <%= image_tag option.photo.url(:thumb), :style => "vertical-align:middle;"   %>
+		  <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
 		  <%= option.tr_description %> 
 		  (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
 		  <%= option.price %>
