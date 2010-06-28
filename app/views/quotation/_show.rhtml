@@ -145,16 +145,16 @@
           <td><%= line.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
         </tr>
 
-				<% if !line.interior_color.blank? %>
+				<% if !line.interior_color.blank? || !line.standard_interior_color.blank? %>
 					<tr>
 						<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-						<td><%= h line.tr_interior_color %></td>
+						<td><%= h line.interior_color.blank? ? line.standard_interior_color.tr_name : line.tr_interior_color %></td>
 					</tr>
 			  <% end %>
-				<% if !line.exterior_color.blank? %>
+				<% if !line.exterior_color.blank?  || !line.standard_exterior_color.blank?%>
 					<tr>
 						<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-						<td><%= h line.tr_exterior_color %> </td>
+						<td><%= h line.exterior_color.blank? ? line.standard_exterior_color.tr_name : line.tr_exterior_color %> </td>
 						</tr>
 				<% end %>
 				

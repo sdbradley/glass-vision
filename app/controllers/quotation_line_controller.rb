@@ -41,12 +41,14 @@ class QuotationLineController < ApplicationController
       last_line = @quotation_line.quotation.quotation_lines.last()
       if !last_line.nil?
         last_line.options_quotation_lines.each {|o| 
-	  new_attribs = o.attributes
-	  new_attribs.delete("id")
-          @quotation_line.options_quotation_lines.build(new_attribs)
+        	  new_attribs = o.attributes
+        	  new_attribs.delete("id")
+            @quotation_line.options_quotation_lines.build(new_attribs)
           }
         @quotation_line.interior_color = last_line.interior_color
         @quotation_line.exterior_color = last_line.exterior_color
+        @quotation_line.standard_interior_color = last_line.standard_interior_color
+        @quotation_line.standard_exterior_color = last_line.standard_exterior_color
       end
     end
 
@@ -192,6 +194,9 @@ class QuotationLineController < ApplicationController
     shape = Shape.find(@quotation_line.shape_id)
     @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
     @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
+    
+#    @quotation_line.standard_interior_color = params[:quotation_line][:standard_interior_color]
+#    @quotation_line.standard_exterior_color = params[:quotation_line][:standard_exterior_color]
 
     error = calculate_dimensions(params[:quotation_line][:width], params[:quotation_line][:height])
     if error
@@ -201,7 +206,6 @@ class QuotationLineController < ApplicationController
     else
       
       new_selected_options = get_options_from_params(params)
-      
       
       begin
         @quotation_line.price = calculate_price(@quotation_line.serie_id, @quotation_line.shape_id, @openings, new_selected_options)

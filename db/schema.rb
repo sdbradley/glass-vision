@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100526203720) do
+ActiveRecord::Schema.define(:version => 20100625120936) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -151,16 +151,18 @@ ActiveRecord::Schema.define(:version => 20100526203720) do
   end
 
   create_table "quotation_lines", :force => true do |t|
-    t.integer "quotation_id",   :default => 0,   :null => false
-    t.integer "serie_id",       :default => 0,   :null => false
-    t.integer "shape_id",       :default => 0,   :null => false
-    t.float   "width",          :default => 0.0, :null => false
-    t.float   "height",         :default => 0.0, :null => false
-    t.integer "quantity",       :default => 0,   :null => false
-    t.float   "price",          :default => 0.0, :null => false
+    t.integer "quotation_id",               :default => 0,   :null => false
+    t.integer "serie_id",                   :default => 0,   :null => false
+    t.integer "shape_id",                   :default => 0,   :null => false
+    t.float   "width",                      :default => 0.0, :null => false
+    t.float   "height",                     :default => 0.0, :null => false
+    t.integer "quantity",                   :default => 0,   :null => false
+    t.float   "price",                      :default => 0.0, :null => false
     t.string  "label"
     t.string  "exterior_color"
     t.string  "interior_color"
+    t.integer "standard_interior_color_id"
+    t.integer "standard_exterior_color_id"
   end
 
   create_table "quotation_lines_openings", :force => true do |t|

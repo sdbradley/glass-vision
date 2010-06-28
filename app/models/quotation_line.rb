@@ -10,6 +10,9 @@ class QuotationLine < ActiveRecord::Base
   has_many :options_quotation_lines, :dependent => :destroy
   has_many :section_heights, :dependent => :destroy
   has_many :section_widths, :dependent => :destroy
+  
+  belongs_to :standard_interior_color, :class_name => "ProductColor" 
+  belongs_to :standard_exterior_color, :class_name => "ProductColor" 
 
   validates_presence_of :width, :height, :serie_id, :quantity
   validates_numericality_of :width, :height, :quantity

@@ -45,14 +45,16 @@ module ApplicationHelper
   
   def color_picker(name, colors, id, sel)
     arr = []
-    on_change_function = "onChange=\";document.getElementById('#{id}').value = this[this.selectedIndex].getAttribute('colorname');\""
+    on_change_function = "onChange=\";document.getElementById('#{id}').value = '';\""
     10.times { arr << "&nbsp;" }
-    
+
+    id_of_selected_color = sel.id unless sel.nil?
+
     returning html = '' do
-       html << "<select name=#{name}[color] id=#{name}_color #{on_change_function}>"
+       html << "<select name=#{name} id=#{name} #{on_change_function}>"
        html << "<option value='' colorname='' #{'selected' if sel.nil?}>#{trn_get('MSG_SELECT_ONE')}</option>"
        html << colors.collect {|c|
-         "<option value='#{c.value}' colorname='#{c.tr_name}' #{'selected' if c.name == sel} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
+         "<option value='#{c.id}' colorname='#{c.tr_name}' #{'selected' if c.id == id_of_selected_color} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
        html << "</select>"
    end
   end

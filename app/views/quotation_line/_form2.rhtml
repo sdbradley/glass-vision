@@ -151,10 +151,20 @@
 <% colors = ProductColor.find(:all)%>
 <h3><%= trn_geth('HEADER_COLORS') %></h3>
 <table border="0" cellspacing="0" cellpadding="0">
-	<tr><td><%= trn_get('LABEL_INTERIOR_COLOR')%></td><td><%= text_field :quotation_line, :interior_color %> 
-	                                                      <%= color_picker('icolor', colors, "quotation_line_interior_color", @quotation_line.interior_color) %></td></tr>
-	<tr><td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td><td><%= text_field :quotation_line, :exterior_color %> 
-	                                                      <%= color_picker('ecolor', colors, "quotation_line_exterior_color", @quotation_line.exterior_color) %></td></tr>
+	<tr>
+    <td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
+    <td>
+        <%= text_field :quotation_line, :interior_color %>
+        <%= color_picker('quotation_line[standard_interior_color_id]', colors, "quotation_line_interior_color", @quotation_line.standard_interior_color) %>
+    </td>
+  </tr>
+	<tr>
+    <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
+    <td>
+      <%= text_field :quotation_line, :exterior_color %>
+	    <%= color_picker('quotation_line[standard_exterior_color_id]', colors, "quotation_line_exterior_color", @quotation_line.standard_exterior_color) %>
+    </td>
+  </tr>
 </table>
 
 <h3><%= trn_geth('HEADER_OPTIONS') %></h3>

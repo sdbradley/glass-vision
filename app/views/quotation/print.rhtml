@@ -136,19 +136,19 @@
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= number_with_precision ql.height %></td>
           </tr>
-					<% if !ql.interior_color.blank? %>
+					<% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
 						<tr>
 							<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-							<td><%= h ql.tr_interior_color %></td>
+							<td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color %></td>
 						</tr>
 				  <% end %>
-					<% if !ql.exterior_color.blank? %>
+					<% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank?%>
 						<tr>
 							<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-							<td><%= h ql.tr_exterior_color %> </td>
+							<td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color %> </td>
 							</tr>
-					<% end %>        </table>
-
+					<% end %>
+        </table>
       </td>
       <% ql_price = ql.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
       <td width="10%" align="right"><%= number_to_currency(ql_price) %></td>
