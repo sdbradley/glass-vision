@@ -139,13 +139,13 @@
 					<% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
 						<tr>
 							<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-							<td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color %></td>
+							<td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
 						</tr>
 				  <% end %>
 					<% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank?%>
 						<tr>
 							<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-							<td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color %> </td>
+							<td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
 							</tr>
 					<% end %>
         </table>
