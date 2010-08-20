@@ -445,6 +445,8 @@ private
           option_price = option.price
         when 7 # price per corner
           option_price = option.price * shape.corners
+        when 8 # price per total width
+          option_price = option.price * (@total_width / 12.0).round
       end
       qty = ((opt_qty = params["option_quantity_#{o}".to_sym]) ? opt_qty.to_i : 1)
       price += option_price * qty
