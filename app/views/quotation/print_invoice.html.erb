@@ -224,7 +224,7 @@
   <% end %>
   <!-- total -->
   <tr >
-    <td colspan="3" rowspan="3" style="border:1px solid #808080;" valign="top">
+    <td colspan="3" rowspan="4" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
           <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
@@ -240,12 +240,21 @@
   <% total += @quotation.transport %>
   <% taxes = total * @quotation.taxes / 100 %>
   <% total += taxes %>
+  <% total -= @quotation.deposit unless @quotation.deposit.nil? %>
   <tr bgcolor="#b2b2b2">
     <td align="right" colspan="1"  width="20%">
       <strong><%= trn_geth('PRINT_HEADER_TAXES') %></strong>
     </td>
     <td align="right" style="border-right:1px solid #808080;">
       <strong><%= number_to_currency taxes %></strong>
+    </td>
+  </tr>
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="1"  width="20%">
+      <strong><%= trn_geth('PRINT_HEADER_LESS_DEPOSIT') %></strong>
+    </td>
+    <td align="right" style="border-right:1px solid #808080;">
+      <strong><%= number_to_currency(@quotation.deposit * -1.0) unless @quotation.deposit.nil?%></strong>
     </td>
   </tr>
   <tr bgcolor="#b2b2b2" >

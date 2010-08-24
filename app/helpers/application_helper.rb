@@ -59,6 +59,11 @@ module ApplicationHelper
    end
   end
 
-
+  def css_button_to(object_name, options, html_options = {})
+    html_options.merge!({:class => "css_button"})
+    "<div class=\"css_button\"> 
+      #{link_to object_name,  options, html_options}
+    </div>"
+  end
   
 end

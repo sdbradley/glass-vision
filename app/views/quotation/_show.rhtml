@@ -93,7 +93,7 @@
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= number_to_currency(@quotation.deposit, :format => "%n%u")%></td>
+    <td><%= number_to_currency(@quotation.deposit || 0, :format => "%n%u")%></td>
   </tr>  
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -108,13 +108,17 @@
     <td><%= @quotation.consultant.login %></td>
   </tr>
 </table>
-<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
-<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> |
-<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> |
-<%= link_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %> |
-<%= link_to trn_geth('BUTTON_PRINT_INVOICE'), :action => 'print_invoice', :id => @quotation %> |
-<%= link_to trn_geth('BUTTON_PRINT_MANIFEST'), :action => 'print_manifest', :id => @quotation %>
 
+<br/>
+
+<div class="form_button_bar" >
+  <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> 
+  <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> 
+  <%= css_button_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> 
+  <%= css_button_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %> 
+  <%= css_button_to trn_geth('BUTTON_PRINT_INVOICE'), :action => 'print_invoice', :id => @quotation %> 
+  <%= css_button_to trn_geth('BUTTON_PRINT_MANIFEST'), :action => 'print_manifest', :id => @quotation %>
+</div>
 <br/>
 
 <h3><%= trn_geth('HEADER_LINES')%></h3>
