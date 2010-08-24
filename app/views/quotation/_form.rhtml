@@ -2,16 +2,16 @@
 <%= error_messages_for "quotation" %>
 <script type="text/javascript" charset="utf-8">
 function updateShippingAddress()  {
-	var checked = $('use_billing_address').checked;
-	var deliveryAddress = $('delivery_address');
-	if (checked == true) 
-	{
-		deliveryAddress.value = $('customer_address').value; 
-//		deliveryAddress.disable();
-	}
-//	else
-//		deliveryAddress.enable();
-}	
+  var checked = $('use_billing_address').checked;
+  var deliveryAddress = $('delivery_address');
+  if (checked == true) 
+  {
+    deliveryAddress.value = $('customer_address').value; 
+//    deliveryAddress.disable();
+  }
+//  else
+//    deliveryAddress.enable();
+} 
 </script>
 
 <table>
@@ -46,7 +46,7 @@ function updateShippingAddress()  {
     <td><%= select("customer", "name", Customer.find(:all).collect {|c| [ c.name ] }) %>
     </td>
     <%= observe_field :customer_name,
-				:on => 'onchanged',
+        :on => 'onchanged',
         :url => { :controller => 'customer', :action => 'show_by_name'},
         :with =>"'customer_name='+element.value"
     %>
@@ -61,13 +61,13 @@ function updateShippingAddress()  {
       <br />
       <%= check_box_tag 'use_billing_address', @quotation.use_billing_address?-%><%= trn_get('LABEL_SAME_DELIVERY_ADDRESS') -%>
 
-			<%= observe_field 'use_billing_address', 
-			   {
-			   :function => 'updateShippingAddress(this.checked)',
-				 :frequency => 0.3, 
-			   :on => 'onclicked'
-			   }
-			%>
+      <%= observe_field 'use_billing_address', 
+         {
+         :function => 'updateShippingAddress(this.checked)',
+         :frequency => 0.3, 
+         :on => 'onclicked'
+         }
+      %>
     </td>
   </tr>
   <tr valign="top">
@@ -108,11 +108,19 @@ function updateShippingAddress()  {
     <td><%= text_field "quotation", "taxes", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>  
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "deposit", :size => 10, :style => "text-align: right;" %>%</td>
+  </tr>  
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= check_box "quotation", "ready_to_sign" %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= select 'quotation', 'company_id', @current_user.active_companies.map { |c| [c.name, c.id] } %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CONSULTANT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation', 'consultant_id', @users.map { |c| [c.login, c.id] } %></td>
   </tr>
 </table>

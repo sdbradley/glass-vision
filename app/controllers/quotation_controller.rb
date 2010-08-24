@@ -20,6 +20,7 @@ class QuotationController < ApplicationController
   def add
     @quotation = Quotation.new
     @quotation.discount = @current_user.discount
+    @users = User.find_all_by_enabled(true)
   end
 
   def create
@@ -42,10 +43,11 @@ class QuotationController < ApplicationController
 
   def edit
     @quotation = Quotation.find(params[:id])
+    @users = User.find_all_by_enabled(true)  
   end
 
   def update
-    @quotation = Quotation.find(params[:id])
+    @quotation = Quotation.find(params[:id])  
     if @quotation.update_attributes(params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'show', :id => @quotation
@@ -61,6 +63,16 @@ class QuotationController < ApplicationController
   end
 
   def print
+    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
+    render :layout => 'printer'
+  end
+
+  def print_invoice
+    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
+    render :layout => 'printer'
+  end
+
+  def print_manifest
     @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     render :layout => 'printer'
   end

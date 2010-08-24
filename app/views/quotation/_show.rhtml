@@ -92,6 +92,10 @@
     <td><%= number_to_percentage(@quotation.taxes, :precision => 3)%></td>
   </tr>
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= number_to_currency(@quotation.deposit, :format => "%n%u")%></td>
+  </tr>  
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
   </tr>
@@ -99,11 +103,17 @@
     <td align="right"><%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.company.name %></td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CONSULTANT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.consultant.login %></td>
+  </tr>
 </table>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> |
-<%= link_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %>
+<%= link_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %> |
+<%= link_to trn_geth('BUTTON_PRINT_INVOICE'), :action => 'print_invoice', :id => @quotation %> |
+<%= link_to trn_geth('BUTTON_PRINT_MANIFEST'), :action => 'print_manifest', :id => @quotation %>
 
 <br/>
 
