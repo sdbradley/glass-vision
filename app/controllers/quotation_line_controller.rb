@@ -604,5 +604,8 @@ private
     
     more_options = params.keys.grep(/options_category_[0-9]+/).map { |k| params[k]}.flatten
     new_selected_options += more_options
+    # remove any options with index of -1, those are the special "None" options
+    new_selected_options.reject! { |i| i.to_i == -1 }
+    new_selected_options
   end
 end

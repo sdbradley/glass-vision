@@ -30,6 +30,14 @@ class Serie < ActiveRecord::Base
          categorized_options[cat.display_order][cat] << opt
          }
     }
+#    categorized_options.keys.each { |i|
+#      categorized_options[i].each { |cat, options|
+#      if (!cat.multiselect)
+#        none_option = Option.new(:id => -1, :description => "None", :pricing_method => nil, :price => 0, :minimum_quantity => 0)
+#        cat << none_option
+#      end
+#      }
+#    }
     categorized_options
   end  
 
