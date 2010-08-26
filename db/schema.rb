@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(:version => 20100823150801) do
     t.string   "delivery_address"
     t.integer  "company_id"
     t.float    "markup",                          :default => 0.0,   :null => false
-    t.integer  "consultant_id",                   :default => 10,    :null => false
+    t.string   "consultant"
     t.float    "deposit"
   end
 

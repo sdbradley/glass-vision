@@ -2,6 +2,7 @@
   <head>
     <title><%= trn_get('SITE_TITLE') %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%= stylesheet_link_tag "print" %>
   </head>
   <body onload="window.print();">
     <%= @content_for_layout %>

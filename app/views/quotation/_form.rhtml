@@ -121,6 +121,6 @@ function updateShippingAddress()  {
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CONSULTANT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select 'quotation', 'consultant_id', @users.map { |c| [c.login, c.id] } %></td>
+    <td><%= text_field 'quotation', 'consultant',  :size => 50  %></td>
   </tr>
 </table>
