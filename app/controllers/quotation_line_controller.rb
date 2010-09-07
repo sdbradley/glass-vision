@@ -321,7 +321,7 @@ private
     price = 0
     options_ids.each do |o|
       option = Option.find(o)
-      option_price = calculate_one_option_price(o, openings, shape)
+      option_price = calculate_one_option_price(option, openings, shape)
       qty = ((opt_qty = params["option_quantity_#{o}".to_sym]) ? opt_qty.to_i : 1)
       price += option_price * qty
     end

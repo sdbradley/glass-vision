@@ -75,9 +75,11 @@ class QuotationController < ApplicationController
   end
 
   def print_calculations
-#    redirect_to :action => 'index' unless current_user.has_role?('administrator') and return
-
-    render :layout => 'printer' 
+    if current_user.has_role?('administrator')
+      render :layout => 'printer' 
+    else
+      redirect_to :action => 'index' 
+    end
   end
 
 protected
