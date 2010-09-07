@@ -1,3 +1,4 @@
+#ENV['GEM_PATH'] = '/home/snowmoon/.gem/ruby/1.8:/usr/lib/ruby/gems/1.8'
 ENV['GEM_PATH'] = '/home/glass/gems:/usr/lib/ruby/gems/1.8'
 # Be sure to restart your web server when you modify this file.
 
