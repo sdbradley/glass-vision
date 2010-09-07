@@ -1,6 +1,7 @@
 class QuotationController < ApplicationController
-#  auto_complete_for :quotation, :customer_name
 
+  before_filter :find_quotation, :only => [:print, :print_invoice, :print_manifest, :print_calculations]
+  
   def list
     if @current_user.has_role?('administrator')
       @quotations = Quotation.find(:all, :order => 'updated_at DESC, id DESC', :include => :user)
@@ -26,7 +27,6 @@ class QuotationController < ApplicationController
   def create
     @quotation = Quotation.new(params[:quotation])
     @quotation.user_id = @current_user.id
-#    @quotation.discount = @current_user.discount
     customer_msg = ""
     if Customer.create_from_quotation_if_new(@quotation)
       customer_msg = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
@@ -63,17 +63,25 @@ class QuotationController < ApplicationController
   end
 
   def print
-    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     render :layout => 'printer'
   end
 
   def print_invoice
-    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     render :layout => 'printer'
   end
 
   def print_manifest
-    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     render :layout => 'printer'
+  end
+
+  def print_calculations
+#    redirect_to :action => 'index' unless current_user.has_role?('administrator') and return
+
+    render :layout => 'printer' 
+  end
+
+protected
+  def find_quotation
+    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])  
   end
 end
