@@ -176,7 +176,7 @@
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
-                    <% option_price = calculate_one_option_price(opt.option, ql.shape, @openings) * discount_percent %>                    
+                    <% option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent %>                    
                     <%= "(#{number_to_currency(option_price)})" %>
                 <%
                     first = false
