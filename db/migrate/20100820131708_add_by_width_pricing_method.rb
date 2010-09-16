@@ -1,6 +1,6 @@
 class AddByWidthPricingMethod < ActiveRecord::Migration
   def self.up
-    execute "INSERT INTO pricing_methods VALUES (8, 'prix par largeur totale', '', true);"
+    execute "INSERT INTO pricing_methods VALUES (8, 'prix par largeur totale', '', false);"
   end
 
   def self.down
