@@ -210,9 +210,9 @@
       <td colspan="2" style="border-bottom: 2px dotted #808080;">
         <%= option.option.tr_description %>
       </td>
-      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"></td>
-      <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %></td>
-      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"></td>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+      <td width="10%" align="center" style="border-bottom: 2px dotted #808080;" ><%= option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;">&nbsp;</td>
     </tr>
     <% printed_line += 0.2
       if printed_line == 3
@@ -223,6 +223,11 @@
         <table width="100%" cellspacing="0" cellpadding="3">
     <% end %>
   <% end %>
+  <tr>
+    <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
+    <td><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
+    <td colspan="3"></td>
+  </tr>
   <tr >
     <td colspan="3" rowspan="3" style="border:1px solid #808080;" valign="top">
       <p>
