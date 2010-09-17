@@ -19,6 +19,14 @@
     <td><%= f.text_field :fax, :size => 50, :class => "fullwidth" %></td>
   </tr>
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_GST') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field :gst_number, :size => 50, :class => "fullwidth" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PST') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field :pst_number, :size => 50, :class => "fullwidth" %></td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_LOGO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.file_field :logo, :size => 40,:class => "fullwidth" %></td>
   </tr>

@@ -18,6 +18,14 @@
     <td><%= @company.fax %></td>
   </tr>
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_GST') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.gst_number %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PST') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.pst_number %></td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_LOGO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= image_tag @company.logo.url %></td>
   </tr>
