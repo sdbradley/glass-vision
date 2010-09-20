@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917182854) do
+ActiveRecord::Schema.define(:version => 20100919012401) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20100917182854) do
     t.float    "markup",                          :default => 0.0,   :null => false
     t.string   "consultant"
     t.float    "deposit"
+    t.float    "taxes_pst"
   end
 
   create_table "roles", :force => true do |t|

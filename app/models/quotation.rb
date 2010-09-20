@@ -15,5 +15,12 @@ class Quotation < ActiveRecord::Base
 
    return customer_address == delivery_address
   end
+  
+  def calculate_taxes(total)
+   total * self.taxes / 100
+  end
 
+  def calculate_pst(total)
+    total * self.taxes_pst / 100
+  end
 end

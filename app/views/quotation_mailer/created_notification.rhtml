@@ -88,6 +88,10 @@
     <td><%= @quotation.taxes %>%</td>
   </tr>
   <tr valign="top">
+    <td align="right"><%= trn_get('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= number_to_percentage(@quotation.taxes_pst, :precision => 3)%></td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
   </tr>
