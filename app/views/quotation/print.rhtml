@@ -230,7 +230,7 @@
     <td><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
   <tr >
-    <td colspan="3" rowspan="5" style="border:1px solid #808080;" valign="top">
+    <td colspan="3" rowspan="4" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
           <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
@@ -253,14 +253,6 @@
     </td>
     <td align="right" style="border-right:1px solid #808080;">
       <strong><%= number_to_currency taxes %></strong>
-    </td>
-  </tr>
-  <tr bgcolor="#b2b2b2" >
-    <td align="right" colspan="1" style="border-bottom:1px solid #808080;">
-      <strong><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></strong>
-    </td>
-    <td align="right" style="border-right:1px solid #808080;border-bottom:1px solid #808080;">
-      <strong><%= number_to_currency total %></strong>
     </td>
   </tr>
   <tr bgcolor="#b2b2b2" >
