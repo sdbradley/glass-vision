@@ -21,6 +21,10 @@ class Quotation < ActiveRecord::Base
   end
 
   def calculate_pst(total)
-    total * self.taxes_pst / 100
+    if !self.taxes_pst.blank?
+      total * self.taxes_pst / 100 
+    else
+     0.0
+    end
   end
 end
