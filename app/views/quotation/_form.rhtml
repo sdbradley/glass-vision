@@ -104,11 +104,11 @@ function updateShippingAddress()  {
     <td><%= text_field "quotation", "markup", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>
   <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td align="right"><%= trn_get('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "taxes", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>  
   <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td align="right"><%= trn_get('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "taxes_pst", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>  
   <tr valign="top">

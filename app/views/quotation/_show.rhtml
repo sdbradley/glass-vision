@@ -88,7 +88,7 @@
     <td><%= number_to_percentage(@quotation.markup, :precision => 2) %></td>
   </tr>
   <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td align="right"><%= trn_get('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= number_to_percentage(@quotation.taxes, :precision => 3)%></td>
   </tr>
   <tr valign="top">
