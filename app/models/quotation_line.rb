@@ -75,8 +75,8 @@ class QuotationLine < ActiveRecord::Base
       0.upto(shape.sections_width - 1) do |w|
 
         # define section dimensions for binding in erb
-        section_width = section_widths[w].value
-        section_height = section_heights[h].value
+        section_width = get_section_width(w+1)
+        section_height = get_section_height(h+1)
 
         # load svg file
         section_image = get_section_image(h * shape.sections_width + w + 1, section_height, section_width)
@@ -128,9 +128,9 @@ class QuotationLine < ActiveRecord::Base
       currenty += section_height
     end
     # print vertical sizes
-    0.upto(shape.sections_height - 1) do |h|
+    1.upto(shape.sections_height) do |h|
       # define values for binding
-      section_height = section_heights[h].value
+      section_height = get_section_height(h)
       draw_vertical_measurement(canvas, section_height, currenty)
       # update coordinates
       currenty += section_height
@@ -147,9 +147,9 @@ class QuotationLine < ActiveRecord::Base
     currentx = 0
 
     # print horizontal sizes
-    0.upto(shape.sections_width - 1) do |w|
+    1.upto(shape.sections_width) do |w|
       # define values for binding
-      section_width = section_widths[w].value
+      section_width = get_section_width(w)
       draw_horizontal_measurement(canvas, section_width, currentx)
       # update coordinates
       currentx += section_width
@@ -180,6 +180,14 @@ class QuotationLine < ActiveRecord::Base
 
   protected
 
+  def get_section_width(idx)
+    section_widths.select {|t| t.sort_order == idx}.first.value
+  end
+
+  def get_section_height(idx)
+    section_heights.select {|t| t.sort_order == idx}.first.value
+  end
+  
   def get_transom_width(idx)
     section_widths.select {|t| t.sort_order == idx}.first.value
   end  
