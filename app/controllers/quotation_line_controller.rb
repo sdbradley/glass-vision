@@ -15,59 +15,41 @@ class QuotationLineController < ApplicationController
     @quotation_line.width = 0
     @quotation_line.height = 0
     @quotation_line.quantity = 1
-    @section_height = {}
-    @section_width = {}
-    shape = Shape.find(@quotation_line.shape_id)
-    1.upto(shape.sections_height) do |s|
-      @section_height[s.to_s] = 0
-    end
-    1.upto(shape.sections_width) do |s|
-      @section_width[s.to_s] = 0
-    end
 
-    if shape.has_upper_transom
-      @section_height[upper_transom_index(shape)] = 0
-      @upper_transom_index = upper_transom_index(shape)
-    end
-
-    if shape.has_lower_transom
-      @section_height[lower_transom_index(shape)] = 0
-      @lower_transom_index = lower_transom_index(shape)
-    end
+    initialize_by_shape()
 
     @openings = {}
     @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
 
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered
-    if params[:ql_copy_options]
-      last_line = @quotation_line.quotation.quotation_lines.last()
-      if !last_line.nil?
-        last_line.options_quotation_lines.each {|o| 
-        	  new_attribs = o.attributes
-        	  new_attribs.delete("id")
-            @quotation_line.options_quotation_lines.build(new_attribs)
-          }
-        @quotation_line.interior_color = last_line.interior_color
-        @quotation_line.exterior_color = last_line.exterior_color
-        @quotation_line.standard_interior_color = last_line.standard_interior_color
-        @quotation_line.standard_exterior_color = last_line.standard_exterior_color
-      end
-    end
-
-    @options = @serie.options.sort_by { |o| o.tr_description }
-    @options.each do |option|
-      if option.pricing_method.quantifiable
-        oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}
-        if (oli_index.nil?)
-          qty = option.minimum_quantity
-        else
-          qty = @quotation_line.options_quotation_lines[oli_index].quantity
-        end
-        instance_variable_set "@option_quantity_#{option.id}".to_sym, option.minimum_quantity
-      end
-    end
+    copy_options_from_last_line() if params[:ql_copy_options]
     
+    initialize_options_for_series()
+    
+  end
+
+  # ajax call to change the series for this line
+  def change_series
+    return unless request.xhr?
+    serie_id = params[:serie_id]
+    @quotation_line = QuotationLine.new(params[:quotation_line])
+    @openings = params[:openings]
+    @section_height = params[:section_height] || {}
+    @section_width = params[:section_width] || {}
+    @serie = Serie.find(serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    initialize_options_for_series()    
+  end
+  
+  # ajax call to change the shape for this line
+  def change_shape
+    return unless request.xhr?
+    @quotation_line = QuotationLine.new(params[:quotation_line])
+    @openings = params[:openings]
+    @section_height = params[:section_height] || {}
+    @section_width = params[:section_width] || {}
+    @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    initialize_options_for_series()        
   end
 
   def create
@@ -622,4 +604,55 @@ protected
     option_price
   end
 
+  def initialize_by_shape()
+    @section_height = {}
+    @section_width = {}
+    shape = Shape.find(@quotation_line.shape_id)
+    1.upto(shape.sections_height) do |s|
+      @section_height[s.to_s] = 0
+    end
+    1.upto(shape.sections_width) do |s|
+      @section_width[s.to_s] = 0
+    end
+
+    if shape.has_upper_transom
+      @section_height[upper_transom_index(shape)] = 0
+      @upper_transom_index = upper_transom_index(shape)
+    end
+
+    if shape.has_lower_transom
+      @section_height[lower_transom_index(shape)] = 0
+      @lower_transom_index = lower_transom_index(shape)
+    end
+  end
+
+  def copy_options_from_last_line()
+    last_line = @quotation_line.quotation.quotation_lines.last()
+    if !last_line.nil?
+      last_line.options_quotation_lines.each {|o|
+          new_attribs = o.attributes
+          new_attribs.delete("id")
+          @quotation_line.options_quotation_lines.build(new_attribs)
+        }
+      @quotation_line.interior_color = last_line.interior_color
+      @quotation_line.exterior_color = last_line.exterior_color
+      @quotation_line.standard_interior_color = last_line.standard_interior_color
+      @quotation_line.standard_exterior_color = last_line.standard_exterior_color
+    end
+  end
+  
+  def initialize_options_for_series()
+    @options = @serie.options.sort_by { |o| o.tr_description }
+    @options.each do |option|
+      if option.pricing_method.quantifiable
+        oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}
+        if (oli_index.nil?)
+          qty = option.minimum_quantity
+        else
+          qty = @quotation_line.options_quotation_lines[oli_index].quantity
+        end
+        instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
+      end
+    end
+  end
 end

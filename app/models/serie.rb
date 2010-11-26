@@ -41,4 +41,14 @@ class Serie < ActiveRecord::Base
     categorized_options
   end  
 
+  # return max width available
+  def maximum_width
+    max_height = self.widths.max_by {|x| x.value}
+  end
+
+  # return max height available
+  def maximum_height
+    max_height = self.heights.max_by {|x| x.value}
+  end
+
 end

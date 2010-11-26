@@ -1,6 +1,6 @@
 <h2><%= trn_get('TITLE_QUOTATION_LINE_ADD') %></h2>
 
-<% form_tag :action => 'create' do %>
+<% form_tag({:action => 'create'}, :id =>"ql")  do %>
   <%= hidden_field 'quotation_line', 'quotation_id' %>
   <%= hidden_field 'quotation_line', 'serie_id' %>
   <%= hidden_field 'quotation_line', 'shape_id' %>

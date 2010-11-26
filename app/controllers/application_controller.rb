@@ -8,7 +8,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
-    filter_parameter_logging :password  
+  filter_parameter_logging :password  
+
+  layout proc{ |c| c.request.xhr? ? false : "application" }
 
   before_filter do |c|
     ActiveRecord::Base.lang = c.session[:lang] ||= "fr"

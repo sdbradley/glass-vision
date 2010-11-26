@@ -1,6 +1,6 @@
 <h2><%= trn_get('TITLE_QUOTATION_LINE_EDIT') %></h2>
 
-<% form_tag :action => 'update', :id => @quotation_line do %>
+<% form_tag({:action => 'update', :id => @quotation_line}, :id =>"ql") do %>
   <%= render :partial => 'form2' %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
