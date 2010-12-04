@@ -5,4 +5,8 @@ class SeriePrice < ActiveRecord::Base
 
   validates_presence_of :width_id, :height_id, :price, :opening_id
   validates_numericality_of :price
+  
+  def display_string
+    "#{width.value} x #{height.value}"
+  end
 end
