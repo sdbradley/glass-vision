@@ -120,11 +120,11 @@
   <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> 
   <%= css_button_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> 
   <%= css_button_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %> 
-<% if current_user.has_role?('administrator') %>
-  <%= css_button_to trn_geth('BUTTON_PRINT_INVOICE'), :action => 'print_invoice', :id => @quotation %> 
-  <%= css_button_to trn_geth('BUTTON_PRINT_MANIFEST'), :action => 'print_manifest', :id => @quotation %>
-  <%= css_button_to trn_geth('BUTTON_PRINT_CALCULATIONS'), :action => 'print_calculations', :id => @quotation %>
-<% end %>
+  <% if current_user.has_role?('administrator') %>
+    <%= css_button_to trn_geth('BUTTON_PRINT_INVOICE'), :action => 'print_invoice', :id => @quotation %>
+    <%= css_button_to trn_geth('BUTTON_PRINT_MANIFEST'), :action => 'print_manifest', :id => @quotation %>
+    <%= css_button_to trn_geth('BUTTON_PRINT_CALCULATIONS'), :action => 'print_calculations', :id => @quotation %>
+  <% end %>
 </div>
 <br/>
 
