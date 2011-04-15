@@ -95,7 +95,7 @@
           <tr bgcolor="#b2b2b2">
             <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
             <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
-            <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+            <th><%= trn_get('PRINT_HEADER_UNIT_PRICE') %></th>
             <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
             <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
           </tr>
@@ -154,8 +154,37 @@
             <% end %>
           </table>
         </td>
-        <% ql_price = ql.price * (1 - @quotation.discount / 100.0) %>
-        <td width="10%" align="right"><%= number_to_currency(ql_price) %></td>
+        <%
+           calculate_dimensions(ql)
+           discount_percent = (1 - @quotation.discount / 100.0)
+           ql_price = ql.price * (1 - @quotation.discount / 100.0)
+
+           # compute the option prices
+           total_option_prices = 0
+           option_string = ""
+
+           first_time = true
+           ql.options_quotation_lines.each { |opt|
+               option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent
+               total_option_prices += option_price
+
+               option_string += ', ' unless first_time
+               option_string += opt.option.tr_description
+               option_string += "x #{opt.quantity}" if opt.quantity != 1
+               option_string += "(#{number_to_currency(option_price)})"
+
+               first_time = false
+           }
+
+        %>
+
+        <td width="10%" align="right">
+          <%= trn_geth('LABEL_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(ql_price - total_option_prices) %>
+          <br/>
+          <% if total_option_prices > 0 %>
+            <%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(total_option_prices) %>
+          <% end %>
+        </td>
         <td width="10%" align="center"><%= ql.quantity %></td>
         <td width="10%" align="right"><%= number_to_currency(ql_price * ql.quantity) %></td>
       </tr>
@@ -164,29 +193,12 @@
           <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
         </td>
         <td colspan="3" style="border-bottom: 2px dotted #808080;">
-          <% discount_percent = (1 - @quotation.discount / 100.0)
-             calculate_dimensions(ql)
-
-          %>
           <% if ql.options_quotation_lines.length > 0 %>
               <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
-              <%
-                 first = true
-                 ql.options_quotation_lines.each { |opt| %>
-                  <%= ', ' if !first %>
-                  <%= opt.option.tr_description %>
-                  <% if opt.quantity != 1 %>
-                      x <%= opt.quantity %>
-                  <% end %>
-                  <% option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent %>
-                  <%= "(#{number_to_currency(option_price)})" %>
-              <%
-                 first = false
-                 } %>
-          <% else %>
+              <%= option_string %>
+          <%else %>
               &nbsp;
           <% end %>
-
         </td>
         <td style="border-bottom: 2px dotted #808080;">&nbsp;</td>
       </tr>
@@ -213,13 +225,11 @@
           <% print_header = false %>
       <% end %>
       <tr valign="top">
-        <td colspan="2" style="border-bottom: 2px dotted #808080;">
-          <%= option.option.tr_description %>
-        </td>
+        <td colspan="2" style="border-bottom: 2px dotted #808080;"><%= option.option.tr_description %></td>
         <% option_price = option.option.price * (1 - @quotation.discount / 100) %>
-        <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price %></td>
-        <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %></td>
-        <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price * option.quantity %></td>
+        <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency(option_price) %> &nbsp;</td>
+        <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %> &nbsp;</td>
+        <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency(option_price * option.quantity) %> &nbsp;</td>
       </tr>
       <% total += option_price * option.quantity %>
       <% printed_line += 0.2
