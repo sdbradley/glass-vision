@@ -4,9 +4,9 @@ class QuotationController < ApplicationController
   
   def list
     if @current_user.has_role?('administrator')
-      @quotations = Quotation.find(:all, :order => 'updated_at DESC, id DESC', :include => :user)
+      @quotations = Quotation.all(:order => 'updated_at DESC, id DESC', :include => :user)
     else
-      @quotations = Quotation.find(:all, :order => "updated_at DESC, id DESC", :include => :user, :conditions => ["user_id = ?", @current_user.id])
+      @quotations = Quotation.all(:order => "updated_at DESC, id DESC", :include => :user, :conditions => ["user_id = ?", @current_user.id])
     end
   end
 

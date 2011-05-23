@@ -176,7 +176,8 @@ class QuotationLineController < ApplicationController
     @options = @serie.options.sort_by {|o| o.tr_description }
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
-    shape = Shape.find(@quotation_line.shape_id)
+    shape = Shape.find(params[:shape_id])
+    @quotation_line.shape = shape
     @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
     @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
     
@@ -204,9 +205,14 @@ class QuotationLineController < ApplicationController
         if @quotation_line.update_attributes(params[:quotation_line])
 
           # update openings
-          @quotation_line.quotation_lines_openings.each do |o|
-            o.update_attribute 'opening_id', @openings[o.sort_order.to_s].to_i
+          @openings.each do |order, opening_id|
+            opening = @quotation_line.quotation_lines_openings.select {|o| o.sort_order == order.to_i}.first
+            opening ||= @quotation_line.quotation_lines_openings.build(:opening_id => opening_id.to_i, :sort_order => order.to_i)
+            opening.update_attributes(:opening_id => opening_id.to_i, :sort_order => order.to_i)
           end
+
+          #destroy any excess openings. This happens when user goes from 3 openings to 2 or 1, for example
+          @quotation_line.quotation_lines_openings[@openings.length..@quotation_line.quotation_lines_openings.length].each {|opening| opening.destroy }
 
           # clear and save section dimensions
           @quotation_line.section_heights.clear
@@ -230,13 +236,13 @@ class QuotationLineController < ApplicationController
           end
 
           # update options
-          old_selected_options = @quotation_line.options_quotation_lines.find(:all).map { |o| o.option.id }
+          old_selected_options = @quotation_line.options_quotation_lines.all.map { |o| o.option.id }
           (new_selected_options - old_selected_options).each do |o|
             @quotation_line.options_quotation_lines << OptionsQuotationLine.new(:option_id => o,
                                                                                 :quantity => ((qty = params["option_quantity_#{o}".to_sym]) ? qty.to_i : 1))
           end
           (old_selected_options - new_selected_options).each do |o|
-            @quotation_line.options_quotation_lines.delete @quotation_line.options_quotation_lines.find(:first, :conditions => {:option_id => o})
+            @quotation_line.options_quotation_lines.delete @quotation_line.options_quotation_lines.first(:conditions => {:option_id => o})
           end
           # update quantities for existing options
           @quotation_line.options_quotation_lines.each do |o|
@@ -322,11 +328,10 @@ private
       selected_height = validate_height(serie, @real_height[r])
       1.upto(shape.sections_width) do |c|
         selected_width = validate_width(serie, @real_width[c])
-        found_price = SeriePrice.find(:first, 
-                                      :conditions => ['width_id = ? and height_id = ? and opening_id = ?', 
+        found_price = SeriePrice.first(:conditions => ['width_id = ? and height_id = ? and opening_id = ?',
                                                        selected_width.id, selected_height.id, openings[((r - 1) * shape.sections_width + c).to_s].to_i])
         if !found_price
-          debug_log "can't find prince for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[((r - 1) * shape.sections_width + c).to_s]}"
+          debug_log "can't find price for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[((r - 1) * shape.sections_width + c).to_s]}"
           raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
         end
         price += found_price.price
@@ -338,8 +343,7 @@ private
     if shape.has_upper_transom
       selected_height = validate_height(serie, @section_height[upper_transom_index(shape)])
       selected_width = validate_width(serie, @total_width)
-      found_price = SeriePrice.find(:first, 
-                                    :conditions => ['width_id = ? and height_id = ? and opening_id = ?', 
+      found_price = SeriePrice.first(:conditions => ['width_id = ? and height_id = ? and opening_id = ?',
                                                      selected_width.id, selected_height.id, openings[upper_transom_index(shape)].to_i])
       if !found_price
         debug_log "can't find price upper transom for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[upper_transom_index(shape)].to_i}"
@@ -351,8 +355,7 @@ private
     if shape.has_lower_transom
       selected_height = validate_height(serie, @section_height[lower_transom_index(shape)])
       selected_width = validate_width(serie, @total_width)
-      found_price = SeriePrice.find(:first, 
-                                    :conditions => ['width_id = ? and height_id = ? and opening_id = ?', 
+      found_price = SeriePrice.first(:conditions => ['width_id = ? and height_id = ? and opening_id = ?',
                                                      selected_width.id, selected_height.id, openings[lower_transom_index(shape)].to_i])
       if !found_price
         debug_log "can't find price upper transom for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[lower_transom_index(shape)].to_i}"

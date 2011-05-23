@@ -1,4 +1,5 @@
 <div id='openings'>
+  <%= hidden_field_tag :shape_id, @quotation_line.shape_id %>
   <h3><%= trn_geth('HEADER_OPENINGS_AND_DIMENSIONS') %></h3>
   <% sec_height = @quotation_line.shape.sections_height %>
   <% sec_width = @quotation_line.shape.sections_width %>
@@ -127,7 +128,7 @@
     </tr>
   </table>
 
-  <% colors = ProductColor.find(:all)%>
+  <% colors = ProductColor.all%>
   <h3><%= trn_geth('HEADER_COLORS') %></h3>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
