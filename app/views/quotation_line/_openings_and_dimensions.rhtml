@@ -1,5 +1,6 @@
 <div id='openings'>
   <%= hidden_field_tag :shape_id, @quotation_line.shape_id %>
+  <%= hidden_field_tag :serie_id, @quotation_line.serie_id %>
   <h3><%= trn_geth('HEADER_OPENINGS_AND_DIMENSIONS') %></h3>
   <% sec_height = @quotation_line.shape.sections_height %>
   <% sec_width = @quotation_line.shape.sections_width %>

@@ -34,7 +34,7 @@ class QuotationLineController < ApplicationController
     return unless request.xhr?
     serie_id = params[:serie_id]
     @quotation_line = QuotationLine.new(params[:quotation_line])
-    @openings = params[:openings]
+    @openings = {} #params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
     @serie = Serie.find(serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
@@ -172,6 +172,7 @@ class QuotationLineController < ApplicationController
   def update
     @quotation_line = QuotationLine.find(params[:id])
     @openings = params[:openings]
+    @quotation_line.serie_id = params[:serie_id]
     @serie = Serie.find(@quotation_line.serie_id)
     @options = @serie.options.sort_by {|o| o.tr_description }
     @section_height = params[:section_height] || {}
