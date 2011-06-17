@@ -136,7 +136,7 @@ class SerieController < ApplicationController
 
   def update_options
     @serie = Serie.find(params[:id])
-    new_selected_options = params[:options] ? params[:options].collect(&:id) : []
+    new_selected_options = params[:options] ? params[:options].map(&:to_i) : []
     old_selected_options = @serie.options.collect(&:id)
     @serie.options.concat(Option.find((new_selected_options - old_selected_options)))
 #    (new_selected_options - old_selected_options).each { |o|
