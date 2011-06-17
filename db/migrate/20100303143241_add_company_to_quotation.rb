@@ -6,7 +6,7 @@ class AddCompanyToQuotation < ActiveRecord::Migration
     if default_company.nil?
       default_company = Company.first
     end
-    Quotation.find(:all).each do |q|
+    Quotation.all().each do |q|
       q.company = default_company
       q.save!
     end

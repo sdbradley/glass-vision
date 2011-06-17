@@ -1,48 +1,39 @@
-# MySQL (default setup).  Versions 4.1 and 5.0 are recommended.
+# MySQL.  Versions 4.1 and 5.0 are recommended.
 #
 # Install the MySQL driver:
-#   gem install mysql
-# On MacOS X:
-#   gem install mysql -- --include=/usr/local/lib
-# On Windows:
-#   There is no gem for Windows.  Install mysql.so from RubyForApache.
-#   http://rubyforge.org/projects/rubyforapache
+#   gem install mysql2
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
-  adapter: mysql
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: inline_development
-#  database: glassvision_production
+  pool: 5
   username: root
   password: t9ohqa
   host: 127.0.0.1
-  encoding: utf8
 
-# Warning: The database defined as 'test' will be erased and
-# re-generated from your development database when you run 'rake'.
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: mysql
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: inline_test
+  pool: 5
   username: root
   password: t9ohqa
   host: 127.0.0.1
-  encoding: utf8
-
-xproduction:
-    adapter: mysql
-    database: inline_development
-  #  database: glassvision_production
-    username: root
-    password: t9ohqa
-    host: 127.0.0.1
-    encoding: utf8
 
 production:
-  adapter: mysql
-  database: glass_inlineproduction
-  username: glass_inline
-  password: inline
-  host: 127.0.0.1
+  adapter: mysql2
   encoding: utf8
+  reconnect: false
+  database: glass_inlineproduction
+  pool: 5
+  username: root
+  password: t9ohqa
+  host: 127.0.0.1

@@ -11,7 +11,7 @@ class OptionCategoryController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @option_categories = OptionCategory.paginate :page => params[:page], :per_page => 25, :order => 'option_categories.display_order, option_categories.name'
+    @option_categories = OptionCategory.order('option_categories.display_order, option_categories.name').paginate(:page => params[:page], :per_page => 25)
   end
 
   def show
@@ -28,7 +28,7 @@ class OptionCategoryController < ApplicationController
       flash[:notice] = trn_get('MSG_CATEGORY_CREATED')
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+      render :action => 'add'
     end
   end
 
@@ -38,15 +38,15 @@ class OptionCategoryController < ApplicationController
   
   def edit_options
     @option_category = OptionCategory.find(params[:id])
-    @options = Option.find(:all, :include => :option_categories, :conditions =>['ISNULL(option_categories_options.option_category_id)'])
+    @options = Option.includes(:option_categories).where('ISNULL(option_categories_options.option_category_id)')
   end
   
   def update_options
     @option_category = OptionCategory.find(params[:id])
     # need a transaction here
     # delete existing options
-    @option_category.options.delete_all 
-    
+    @option_category.options.delete_all
+
     # now save all options passed in
     @option_category.option_ids =  params[:options] 
     

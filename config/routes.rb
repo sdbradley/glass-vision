@@ -1,78 +1,33 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :emails
+GlassVision::Application.routes.draw do
 
+  resources :emails
+  match '/signup', :to => 'users#new', :as => :signup
+  match '/login', :to => 'session#new', :as => :login
+  match '/logout', :to => 'session#destroy', :as => :logout
+  match '/activate/:id', :to => 'accounts#show', :as => :activate
+  match '/forgot_password', :to => 'passwords#new', :as => :forgot_password
+  match '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
+  match '/change_password', :to => 'accounts#edit', :as => :change_password
 
-  
-  map.signup '/signup', :controller => 'users',   :action => 'new'
-  map.login  '/login',  :controller => 'session', :action => 'new'
-  map.logout '/logout', :controller => 'session', :action => 'destroy'
-  map.activate '/activate/:id', :controller => 'accounts', :action => 'show'
-  map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
-  map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
-  map.change_password '/change_password', :controller => 'accounts', :action => 'edit'
-
-#  map.resources :users
-#  map.resource :session
-
-  map.resources :users, :member => { :enable => :put } do |users|
-    users.resource :account
-    users.resources :roles
+  resources :users do
+    post :enable
+    post :disable
+    resource :account
+    resources :roles
   end
-  
-  map.resources :product_colors
-  map.resources :shapes
 
-  map.resource :session, :controller => :session
-  map.resource :password  
+  resources :product_colors
+  resources :shapes
+  resource :session, :controller => :session
+  resource :passwords
+  resources :quotations, :controller => :quotation do
+    get :print
+    get :print_invoice
+    get :print_calculations
+    get :print_manifest
+  end
+  root :to => 'home#index'
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  
-  # Sample of regular route:
-  # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # You can have the root of your site routed by hooking up '' 
-  # -- just remember to delete public/index.html.
-  map.connect '', :controller => "home"
-
-  # Allow downloading Web Service WSDL as a file with an extension
-  # instead of a file named 'wsdl'
-  map.connect ':controller/service.wsdl', :action => 'wsdl'
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  match '/:controller(/:action(/:id))'
 end
 

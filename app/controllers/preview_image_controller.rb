@@ -2,7 +2,7 @@ class PreviewImageController < ApplicationController
   before_filter :check_administrator_role
 
   def list
-    @images = PreviewImage.find(:all, :order => "image_name")
+    @images = PreviewImage.all(:order => "image_name")
   end
 
   def show

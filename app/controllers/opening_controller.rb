@@ -2,7 +2,7 @@ class OpeningController < ApplicationController
   before_filter :check_administrator_role
 
   def list
-    @openings = Opening.find(:all, :order => "name")
+    @openings = Opening.all(:order => "name")
   end
 
   def show

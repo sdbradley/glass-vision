@@ -1,7 +1,7 @@
 class QuotationObserver < ActiveRecord::Observer
   
   def after_create(quotation)
-    QuotationMailer.deliver_created_notification(quotation)
+    QuotationMailer.created_notification(quotation).deliver
   end
   
 end

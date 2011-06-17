@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
   def set_lang
     session[:lang] = params[:lang]
-    debug_log("language is #{session[:lang]}")
+    cookies.permanent[:lang] = session[:lang]
     redirect_to :back
   end
 end

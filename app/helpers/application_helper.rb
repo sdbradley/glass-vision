@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def ajax_spinner_for(id, spinner="spinner.gif")
-     "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
+     "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> ".html_safe
    end
 
   def gv_humanize_time(t)
@@ -40,9 +40,9 @@ module ApplicationHelper
       style = " style=\"#{element[1]}\"" if element[1] && element[1]!=value
       options << %(<option value="#{html_escape(value.to_s)}"#{selected_attribute}#{style}>#{html_escape(text.to_s)}</option>)
     end
-    options_for_select.join("\n")
+    options_for_select.join("\n").html_safe
   end
-  
+
   def color_picker(name, colors, id, sel)
     arr = []
     on_change_function = "onChange=\";document.getElementById('#{id}').value = '';\""
@@ -50,20 +50,20 @@ module ApplicationHelper
 
     id_of_selected_color = sel.id unless sel.nil?
 
-    returning html = '' do
-       html << "<select name=#{name} id=#{name} #{on_change_function}>"
-       html << "<option value='' colorname='' #{'selected' if sel.nil?}>#{trn_get('MSG_SELECT_ONE')}</option>"
-       html << colors.collect {|c|
-         "<option value='#{c.id}' colorname='#{c.tr_name}' #{'selected' if c.id == id_of_selected_color} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
-       html << "</select>"
-   end
+    html = ''
+    html << "<select name=#{name} id=#{name} #{on_change_function}>"
+    html << "<option value='' colorname='' #{'selected' if sel.nil?}>#{trn_get('MSG_SELECT_ONE')}</option>"
+    html << colors.collect { |c|
+      "<option value='#{c.id}' colorname='#{c.tr_name}' #{'selected' if c.id == id_of_selected_color} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
+    html << "</select>"
+    html.html_safe
   end
 
   def css_button_to(object_name, options, html_options = {})
     html_options.merge!({:class => "css_button"})
     "<div class=\"css_button\"> 
       #{link_to object_name,  options, html_options}
-    </div>"
+    </div>".html_safe
   end
   
 end

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :check_administrator_role, :only => [:index, :destroy, :enable]
   
   def index
-    @users = User.find(:all)
+    @users = User.all()
   end
   
   #This show action only allows users to view their own profile, but allows admins to see /edit anyone
@@ -37,7 +37,6 @@ class UsersController < ApplicationController
   end
   
   def update
-#    @user = User.find(current_user)
     @user = User.find(params[:id])
     debug_log "Saving user id #{@user.id}, discount is #{params[:user]}"
     if @user.update_attributes(params[:user])
@@ -48,8 +47,8 @@ class UsersController < ApplicationController
     end
   end
   
-  def destroy
-    @user = User.find(params[:id])
+  def disable
+    @user = User.find(params[:user_id])
     if @user.update_attribute(:enabled, false)
       flash[:notice] = trn_get('USER_DISABLED_FLASH')
     else
@@ -59,7 +58,7 @@ class UsersController < ApplicationController
   end
  
   def enable
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     if @user.update_attribute(:enabled, true)
       flash[:notice] = trn_get('USER_ENABLED_FLASH')
     else

@@ -1,14 +1,14 @@
 desc "Loads mysql command prompt"
 require 'erb'
 task :mysql do
-  puts "\n\nLoading mysql in RAILS_ENV=#{RAILS_ENV}...\n"
+  puts "\n\nLoading mysql in #{Rails.env} mode...\n"
 
-  database_yml_path = "#{RAILS_ROOT}/config/database.yml"
+  database_yml_path = "#{Rails.root.to_s}/config/database.yml"
   database_yml = YAML.load(ERB.new(File.read(database_yml_path)).result)
 
-  raise "Could not find environment #{RAILS_ENV} in database.yml" unless database_yml[RAILS_ENV]
+  raise "Could not find environment #{Rails.env} in database.yml" unless database_yml[Rails.env]
 
-  config = database_yml[RAILS_ENV]
+  config = database_yml[Rails.env]
   username = config['username']
   password = config['password']
   database_name = config['database']

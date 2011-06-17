@@ -7,7 +7,7 @@
     </td>
     <td rowspan="2" width="1%" nowrap="nowrap">
       <strong><%= @quotation.company.name %></strong><br/>
-      <%= @quotation.company.address.gsub(/\n/, '<br/>') %><br/>
+      <%= @quotation.company.address.html_safe.gsub(/\n/, '<br/>') %><br/>
       <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.phone %><br/>
       <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.fax %>
     </td>
@@ -43,7 +43,7 @@
           <td><%= @quotation.customer_name %></td>
         </tr>
         <tr>
-          <td><%= @quotation.customer_address.gsub("\n", '<br/>') if @quotation.customer_address %></td>
+          <td><%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') if @quotation.customer_address %></td>
         </tr>
         <tr>
           <td>
@@ -69,9 +69,9 @@
     </td>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
     <% if !@quotation.delivery_address.blank? %>
-        <%= @quotation.delivery_address.gsub("\n", '<br/>')%>
+        <%= @quotation.delivery_address.html_safe.gsub("\n", '<br/>')%>
 			<% elsif !@quotation.customer_address.blank? %>
-			  <%= @quotation.customer_address.gsub("\n", '<br/>') %>
+			  <%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') %>
 			<% else %>
 			  &nbsp;<br />
       
@@ -232,7 +232,7 @@
     <td colspan="3" rowspan="3" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
-          <%= @quotation.notes.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
+          <%= @quotation.notes.html_safe.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
       </p>
     </td>
     <td align="right" bgcolor="#b2b2b2" width="20%" style="border-top:1px solid #808080;">
@@ -257,7 +257,7 @@
    <td colspan="5" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_LABEL_COMMENTS') %></strong><br />
-          <%= @quotation.comments.gsub("\n", '<br/>') %>
+          <%= @quotation.comments.html_safe.gsub("\n", '<br/>') %>
       </p>
     </td>
    </tr>

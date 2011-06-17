@@ -9,8 +9,8 @@
 
 <% @emails.each do |email| %>
   <tr>
-    <td><%=h email.subject %></td>
-    <td><%=h email.sent %></td>
+    <td><%= email.subject %></td>
+    <td><%= email.sent %></td>
     <td><%= link_to trn_get('BUTTON_SHOW'), email %></td>
 <!--    <td><%= link_to 'Edit', edit_email_path(email) %></td>-->
     <td><%= link_to trn_get('BUTTON_DELETE'), email, :confirm => trn_geth('LABEL_DELETE_QUESTION') , :method => :delete %></td>

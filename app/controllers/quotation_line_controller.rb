@@ -19,7 +19,7 @@ class QuotationLineController < ApplicationController
     initialize_by_shape()
 
     @openings = {}
-    @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(@quotation_line.serie_id)
 
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered
@@ -37,7 +37,7 @@ class QuotationLineController < ApplicationController
     @openings = {} #params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
-    @serie = Serie.find(serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(serie_id)
     initialize_options_for_series()    
   end
   
@@ -48,7 +48,7 @@ class QuotationLineController < ApplicationController
     @openings = params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
-    @serie = Serie.find(@quotation_line.serie_id, :include => {:options => [:pricing_method, :options_minimum_unit]})
+    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(@quotation_line.serie_id)
     initialize_options_for_series()        
   end
 
@@ -133,8 +133,7 @@ class QuotationLineController < ApplicationController
     #    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}}, 
     #                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
     
-    @quotation_line = QuotationLine.find(params[:id], :include => [ {:serie =>  {:options => [:pricing_method, :options_minimum_unit]}}, 
-                                                                  {:options_quotation_lines => :option}])
+    @quotation_line = QuotationLine.includes(:serie => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
       @openings[o.sort_order.to_s] = o.opening_id
@@ -286,7 +285,7 @@ private
     if !serie.heights.exists?(["value <= #{h}"])
       raise PriceError, trn_get('MSG_HEIGHT_TOO_SMALL')
     end
-    selected_height = serie.heights.find(:first, :conditions => "value >= #{h}", :order => 'value')
+    selected_height = serie.heights.where("value >= ?", h).order('value').first
     if !selected_height
       raise PriceError, trn_get('MSG_CANT_FIND_HEIGHT')
     end
@@ -298,7 +297,7 @@ private
     if !serie.widths.exists?(["value <= #{w}"])
       raise PriceError, trn_get('MSG_WIDTH_TOO_SMALL')
     end
-    selected_width = serie.widths.find(:first, :conditions => "value >= #{w}", :order => 'value')
+    selected_width = serie.widths.where("value >= ?", w).order('value').first
     if !selected_width
       raise PriceError, trn_get('MSG_CANT_FIND_WIDTH')
     end
@@ -329,8 +328,8 @@ private
       selected_height = validate_height(serie, @real_height[r])
       1.upto(shape.sections_width) do |c|
         selected_width = validate_width(serie, @real_width[c])
-        found_price = SeriePrice.first(:conditions => ['width_id = ? and height_id = ? and opening_id = ?',
-                                                       selected_width.id, selected_height.id, openings[((r - 1) * shape.sections_width + c).to_s].to_i])
+        found_price = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?',
+                                        selected_width.id, selected_height.id, openings[((r - 1) * shape.sections_width + c).to_s].to_i).first
         if !found_price
           debug_log "can't find price for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[((r - 1) * shape.sections_width + c).to_s]}"
           raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
@@ -344,8 +343,8 @@ private
     if shape.has_upper_transom
       selected_height = validate_height(serie, @section_height[upper_transom_index(shape)])
       selected_width = validate_width(serie, @total_width)
-      found_price = SeriePrice.first(:conditions => ['width_id = ? and height_id = ? and opening_id = ?',
-                                                     selected_width.id, selected_height.id, openings[upper_transom_index(shape)].to_i])
+      found_price = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?',
+                                      selected_width.id, selected_height.id, openings[upper_transom_index(shape)].to_i).first
       if !found_price
         debug_log "can't find price upper transom for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[upper_transom_index(shape)].to_i}"
         raise PriceError, trn_get('MSG_CANT_FIND_PRICE')
@@ -356,8 +355,8 @@ private
     if shape.has_lower_transom
       selected_height = validate_height(serie, @section_height[lower_transom_index(shape)])
       selected_width = validate_width(serie, @total_width)
-      found_price = SeriePrice.first(:conditions => ['width_id = ? and height_id = ? and opening_id = ?',
-                                                     selected_width.id, selected_height.id, openings[lower_transom_index(shape)].to_i])
+      found_price = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?',
+                                      selected_width.id, selected_height.id, openings[lower_transom_index(shape)].to_i).first
       if !found_price
         debug_log "can't find price upper transom for width #{selected_width.id}, height #{selected_height.id}, opening #{openings[lower_transom_index(shape)].to_i}"
         raise PriceError, trn_get('MSG_CANT_FIND_PRICE')

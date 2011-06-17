@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
-    u = find :first, :conditions => ['login = ?', login] # need to get the salt
+    u = User.where('login = ?', login).first# need to get the salt
 #    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login] # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
   end  
   
   def self.find_for_forget(email)
-    find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email]
+    User.where('email = ? and activated_at IS NOT NULL', email)
   end
 
   def has_role?(rolename)
@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
 
   def active_companies
     if has_role?("administrator")
-      active_companies = Company.find(:all, :order => "name asc")
+      active_companies = Company.order("name asc")
     else
       active_companies = self.companies
     end
@@ -184,6 +184,6 @@ protected
     end    
   
     def self.get_administrator
-      @administrators = find :first, :joins => "INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id",    :select =>"users.*", :order => "id ASC"
+      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id",    :select =>"users.*", :order => "id ASC")
     end        
 end

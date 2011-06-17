@@ -1,7 +1,7 @@
 class DatabaseTranslationFieldController < ApplicationController
     before_filter :check_administrator_role
   def list
-    @dbtfs = DatabaseTranslationField.find(:all, :order => "`table`, `field`")
+    @dbtfs = DatabaseTranslationField.all(:order => "`table`, `translation_field_name`")
   end
 
   def add
@@ -35,7 +35,7 @@ class DatabaseTranslationFieldController < ApplicationController
   def delete
     dbtf = DatabaseTranslationField.find(params[:id])
     dbtf.destroy
-    DatabaseTranslation.destroy_all "`table` = '#{dbtf.table}' AND `field` = '#{dbtf.field}'"
+    DatabaseTranslation.destroy_all.where(:table => dbtf.table, :translation_field_name => dbtf.translation_field_name)
     flash[:notice] = trn_geth('LABEL_DBTF') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_M')
     redirect_to :action => 'list'
   end

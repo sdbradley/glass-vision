@@ -2,7 +2,7 @@ class CompanyController < ApplicationController
   before_filter :check_administrator_role
 
   def list
-    @companies = Company.find(:all, :order => 'name')
+    @companies = Company.all(:order => 'name')
   end
 
   def show
@@ -39,7 +39,7 @@ class CompanyController < ApplicationController
 
   def add_users
     @company = Company.find(params[:id])
-    @all_users = User.find(:all)
+    @all_users = User.all
   end
 
   def update_users

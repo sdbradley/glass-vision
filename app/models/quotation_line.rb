@@ -17,6 +17,9 @@ class QuotationLine < ActiveRecord::Base
   validates_presence_of :width, :height, :serie_id, :quantity
   validates_numericality_of :width, :height, :quantity
 
+
+  before_destroy :delete_previeww_image
+
   # constants for drawing
   FRAME_THICKNESS = 3.0
   ARROW_SIZE = 5.0
@@ -28,8 +31,8 @@ class QuotationLine < ActiveRecord::Base
   end
 
   def create_image(shape)
-    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
-    final_file_name = File.join(RAILS_ROOT, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
+    final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 
     # binding for erb file
     # constants
@@ -205,11 +208,11 @@ class QuotationLine < ActiveRecord::Base
     # constants
     frame_thickness = FRAME_THICKNESS
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
+    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     # load erb file for section and generate scaled svg file
     image_file_name = File.basename(get_opening(cpt_opening).preview_image_name, '.png') + '.svg'
     File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'openings', image_file_name))).result(binding)
+      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'openings', image_file_name))).result(binding)
     end
 
     # load svg file
@@ -220,10 +223,10 @@ class QuotationLine < ActiveRecord::Base
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
+    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     # load erb file and generate svg
     File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'misc', 'vertical_size.svg'))).result(binding)
+      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'vertical_size.svg'))).result(binding)
     end
 
     #load svg file
@@ -241,10 +244,10 @@ class QuotationLine < ActiveRecord::Base
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(RAILS_ROOT, 'tmp', "image_#{id}.svg")
+    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     # load erb file and generate svg
     File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(RAILS_ROOT, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
+      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
     end
 
     #load svg file
@@ -258,10 +261,10 @@ class QuotationLine < ActiveRecord::Base
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp    
   end
 
-  def before_destroy
+  def delete_previeww_image
     # delete the line image
     begin
-      File.delete File.join(RAILS_ROOT, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+      File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
     rescue
       # no problem if file does not exist
     end

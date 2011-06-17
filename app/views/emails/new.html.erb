@@ -2,7 +2,7 @@
 <%= trn_get(current_user.has_role?('administrator') ? 'TITLE_SEND_EMAIL_TO_USERS' : 'TITLE_SEND_EMAIL_TO_ADMIN')%>
 </h2>
 
-<% form_for(@email) do |f| %>
+<%= form_for(@email) do |f| %>
   <%= f.error_messages %>
 
   <p>

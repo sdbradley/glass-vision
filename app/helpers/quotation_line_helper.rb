@@ -31,6 +31,7 @@ module QuotationLineHelper
     output << select_tag("openings_combo_#{section}", options_for_select([['----', 0]] + @quotation_line.serie.openings.map { |o| ["#{o.name} (#{o.abbreviation})", o.id] }, selected), :onchange => "$('openings_#{section}').value = this.value; $('opening_pic_#{section}').src = pics_#{section}['img_' + this.value];")
     output << "<![endif]-->"
     output << "</div>"
+    output.html_safe
   end
   
   def size_tag_helper(width_or_height, idx)

@@ -2,7 +2,7 @@ class QuotationController < ApplicationController
 
   before_filter :find_quotation, :only => [:print, :print_invoice, :print_manifest, :print_calculations]
   
-  def list
+  def index
     if @current_user.has_role?('administrator')
       @quotations = Quotation.all(:order => 'updated_at DESC, id DESC', :include => :user)
     else
@@ -14,11 +14,11 @@ class QuotationController < ApplicationController
     @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     if @quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
       flash[:notice] = "Permission denied"
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
-  def add
+  def new
     @quotation = Quotation.new
     @quotation.discount = @current_user.discount
     @users = User.find_all_by_enabled(true)
@@ -56,10 +56,10 @@ class QuotationController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     Quotation.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
   def print

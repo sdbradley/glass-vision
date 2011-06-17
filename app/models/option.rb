@@ -28,9 +28,9 @@ class Option < ActiveRecord::Base
   
   
   # find all options that are assigned to a category
-#   o = Option.find(:all, :include => :option_categories, :conditions =>['not ISNULL(option_categories_options.option_category_id)'])
+#   o = Option.all(:include => :option_categories, :conditions =>['not ISNULL(option_categories_options.option_category_id)'])
   # find all options that are NOT assigned to a category
-#   o = Option.find(:all, :include => :option_categories, :conditions =>['ISNULL(option_categories_options.option_category_id)'])
+#   o = Option.all(:include => :option_categories, :conditions =>['ISNULL(option_categories_options.option_category_id)'])
 
 
   

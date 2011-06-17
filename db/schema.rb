@@ -1,15 +1,16 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100919012401) do
+ActiveRecord::Schema.define(:version => 20110603121438) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -40,14 +41,14 @@ ActiveRecord::Schema.define(:version => 20100919012401) do
   end
 
   create_table "database_translation_fields", :force => true do |t|
-    t.string "table", :limit => 50, :default => "", :null => false
-    t.string "field", :limit => 50, :default => "", :null => false
+    t.string "table",                  :limit => 50, :default => "", :null => false
+    t.string "translation_field_name", :limit => 50, :default => "", :null => false
   end
 
   create_table "database_translations", :force => true do |t|
-    t.integer "record_id",               :default => 0,  :null => false
-    t.string  "table",     :limit => 50, :default => "", :null => false
-    t.string  "field",     :limit => 50, :default => "", :null => false
+    t.integer "record_id",                            :default => 0,  :null => false
+    t.string  "table",                  :limit => 50, :default => "", :null => false
+    t.string  "translation_field_name", :limit => 50, :default => "", :null => false
     t.text    "fr"
     t.text    "en"
     t.text    "es"
@@ -217,10 +218,11 @@ ActiveRecord::Schema.define(:version => 20100919012401) do
   end
 
   create_table "series", :force => true do |t|
-    t.string "name",        :limit => 50,  :default => "", :null => false
-    t.string "description",                :default => "", :null => false
-    t.text   "comments"
-    t.text   "series_type", :limit => 255
+    t.string  "name",             :limit => 50,  :default => "",    :null => false
+    t.string  "description",                     :default => "",    :null => false
+    t.text    "comments"
+    t.text    "series_type",      :limit => 255
+    t.boolean "fixed_sizes_only",                :default => false
   end
 
   create_table "sessions", :force => true do |t|

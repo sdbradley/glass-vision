@@ -110,7 +110,7 @@ jQuery.fn = jQuery.prototype = {
 		return num === undefined ?
 
 			// Return a 'clean' array
-			Array.prototype.slice.call( this ) :
+			Array.prototype.slice.call(this ) :
 
 			// Return just the object
 			this[ num ];
@@ -350,7 +350,7 @@ jQuery.fn = jQuery.prototype = {
 		return this.pushStack(
 			jQuery.isFunction( selector ) &&
 			jQuery.grep(this, function(elem, i){
-				return selector.call( elem, i );
+				return selector.call(elem, i );
 			}) ||
 
 			jQuery.multiFilter( selector, jQuery.grep(this, function(elem){
@@ -503,7 +503,7 @@ jQuery.fn = jQuery.prototype = {
 
 	map: function( callback ) {
 		return this.pushStack( jQuery.map(this, function(elem, i){
-			return callback.call( elem, i, elem );
+			return callback.call(elem, i, elem );
 		}));
 	},
 
@@ -519,7 +519,7 @@ jQuery.fn = jQuery.prototype = {
 
 			if ( first )
 				for ( var i = 0, l = this.length; i < l; i++ )
-					callback.call( root(this[i], first), this.length > 1 || i > 0 ?
+					callback.call(root(this[i], first), this.length > 1 || i > 0 ?
 							fragment.cloneNode(true) : fragment );
 		
 			if ( scripts )
@@ -685,11 +685,11 @@ jQuery.extend({
 		} else {
 			if ( length === undefined ) {
 				for ( name in object )
-					if ( callback.call( object[ name ], name, object[ name ] ) === false )
+					if ( callback.call(object[ name ], name, object[ name ] ) === false )
 						break;
 			} else
 				for ( var value = object[0];
-					i < length && callback.call( value, i, value ) !== false; value = object[++i] ){}
+					i < length && callback.call(value, i, value ) !== false; value = object[++i] ){}
 		}
 
 		return object;
@@ -698,7 +698,7 @@ jQuery.extend({
 	prop: function( elem, value, type, i, name ) {
 		// Handle executable functions
 		if ( jQuery.isFunction( value ) )
-			value = value.call( elem, i );
+			value = value.call(elem, i );
 
 		// Handle passing in a number to a CSS property
 		return typeof value === "number" && type == "curCSS" && !exclude.test( name ) ?
@@ -740,7 +740,7 @@ jQuery.extend({
 			elem.style[ name ] = options[ name ];
 		}
 
-		callback.call( elem );
+		callback.call(elem );
 
 		// Revert the old values
 		for ( var name in options )
@@ -2056,7 +2056,7 @@ for ( var type in Expr.match ) {
 }
 
 var makeArray = function(array, results) {
-	array = Array.prototype.slice.call( array );
+	array = Array.prototype.slice.call(array );
 
 	if ( results ) {
 		results.push.apply( results, array );
@@ -2069,7 +2069,7 @@ var makeArray = function(array, results) {
 // Perform a simple check to determine if the browser is capable of
 // converting a NodeList to an array using builtin methods.
 try {
-	Array.prototype.slice.call( document.documentElement.childNodes );
+	Array.prototype.slice.call(document.documentElement.childNodes );
 
 // Provide a fallback method if it does not work
 } catch(e){
@@ -2961,7 +2961,7 @@ jQuery.fn.extend({
 		// If the DOM is already ready
 		if ( jQuery.isReady )
 			// Execute the function immediately
-			fn.call( document, jQuery );
+			fn.call(document, jQuery );
 
 		// Otherwise, remember the function for later
 		else
@@ -3029,7 +3029,7 @@ jQuery.extend({
 			if ( jQuery.readyList ) {
 				// Execute all of them
 				jQuery.each( jQuery.readyList, function(){
-					this.call( document, jQuery );
+					this.call(document, jQuery );
 				});
 
 				// Reset the list of functions
@@ -3982,7 +3982,7 @@ jQuery.extend({
 			if ( opt.queue !== false )
 				jQuery(this).dequeue();
 			if ( jQuery.isFunction( opt.old ) )
-				opt.old.call( this );
+				opt.old.call(this );
 		};
 
 		return opt;
@@ -4015,7 +4015,7 @@ jQuery.fx.prototype = {
 	// Simple function for setting a style value
 	update: function(){
 		if ( this.options.step )
-			this.options.step.call( this.elem, this.now, this );
+			this.options.step.call(this.elem, this.now, this );
 
 		(jQuery.fx.step[this.prop] || jQuery.fx.step._default)( this );
 
@@ -4127,7 +4127,7 @@ jQuery.fx.prototype = {
 						jQuery.attr(this.elem.style, p, this.options.orig[p]);
 					
 				// Execute the complete function
-				this.options.complete.call( this.elem );
+				this.options.complete.call(this.elem );
 			}
 
 			return false;

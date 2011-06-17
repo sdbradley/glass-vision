@@ -12,21 +12,17 @@ class CustomerController < ApplicationController
     if (@current_user.has_role?('administrator'))
       @customers = Customer.paginate :page => params[:page], :per_page => 25
     else
-      @customers = Customer.paginate :page => params[:page], :per_page => 25,
-                                             :conditions => ["user_id = ?", @current_user.id]
+      @customers = Customer.where("user_id = ?", @current_user.id).paginate(:page => params[:page], :per_page => 25)
     end
   end
 
   def autocomplete_for_name
     if request.xml_http_request?
-      if (@current_user.has_role?('administrator'))
-          @customers = Customer.find(:all, :conditions => ['name like ?', "%#{params[:quotation][:customer_name]}%"])
-        else
-          @customers = Customer.find(:all, :conditions => ['name like ? and user_id = ?', "%#{params[:quotation][:customer_name]}%", @current_user.id])
-      end
+      @customers = Customer.where('name like ?', "%#{params[:quotation][:customer_name]}%")
+      @customers.where(:user_id => @current_user.id) unless @current_user.has_role?('administrator')
       render :partial => "list", :layout => false
     else
-      render :nothing and return
+      render :nothing => true
     end
   end
 
@@ -40,10 +36,10 @@ class CustomerController < ApplicationController
 
   def show_by_name
     if request.xml_http_request?
-      @customer = Customer.find(:first, :conditions => ['name = ?', "#{params[:customer_name]}"])
+      @customer = Customer.where('name = ?', "#{params[:customer_name]}").first
       render :partial => "show_by_name", :layout => false unless @customer.nil?
     else
-      render :nothing and return
+      render :nothing => true
     end
   end
 

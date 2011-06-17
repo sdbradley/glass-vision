@@ -5,7 +5,7 @@ class OptionCategoryTest < Test::Unit::TestCase
 
   # Replace this with your real tests.
   def test_should_find_all_option_categories
-    @ocats = OptionCategory.find(:all)
+    @ocats = OptionCategory.all()
     assert_not_nil(@ocats)
     assert(@ocats.length == 3)
   end
