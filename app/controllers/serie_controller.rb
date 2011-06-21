@@ -79,11 +79,9 @@ class SerieController < ApplicationController
     widths = Width.find_all_by_serie_id(@serie)
     heights = Height.find_all_by_serie_id(@serie)
 
-    # delete any existing prices for this opening -- whoops! this deleted all prices across all series
-#    SeriePrice.delete_all "opening_id = #{@opening.id}"
     widths.each { |w|
       heights.each { |h|
-         SeriePrice.delete.where(:opening_id => @opening.id, :width_id => w.id, :height_id => h.id)
+         SeriePrice.where(:opening_id => @opening.id, :width_id => w.id, :height_id => h.id).delete_all
          value = w.value.to_f * h.value.to_f * price_per_sq_ft / 144.0
          value = value.ceil
          SeriePrice.create :width_id => w.id, :height_id => h.id, :opening_id => @opening.id, :price => value
