@@ -6,7 +6,7 @@
 <br/>
 <%= link_to trn_geth('BUTTON_IMPORT_PRICES'), :action => 'import_prices_selection', :id => @serie, :opening_id => @opening.id %>
 
-<%= form_tag :action => 'generate_prices', :id => @serie, :opening_id => @opening.id  do %>
+<%= form_for(@serie, :url => {:action => 'generate_prices', :id => @serie, :opening_id => @opening.id}, :html =>{ :method => :put }) do %>
 	<p><%= trn_get('MSG_CALC_BY_AREA_WARNING')%></p>
 	<p><%= trn_get('PRICE_PER_SQFT_LABEL')%>:
 	  <%= text_field_tag "price", nil, :size => 10 %>
