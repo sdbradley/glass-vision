@@ -8,10 +8,11 @@ class Quotation < ActiveRecord::Base
   validates_numericality_of :markup, :allow_nil => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 30
   validates_numericality_of :deposit, :allow_nil => true, :greater_than_or_equal_to => 0
 
-  def initialize
-    super
-    self.taxes = 5.0
-    self.taxes_pst = 9.5
+  def after_initialize
+    if new_record?
+      self.taxes = 5.0
+      self.taxes_pst = 9.5
+    end
   end
 
   def use_billing_address?
