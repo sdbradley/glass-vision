@@ -9,9 +9,9 @@ class Quotation < ActiveRecord::Base
   validates_numericality_of :deposit, :allow_nil => true, :greater_than_or_equal_to => 0
 
   def after_initialize
-    if new_record?
-      self.taxes = 5.0
-      self.taxes_pst = 9.5
+    if new_record? && !changed?
+      self.taxes ||= 5.0
+      self.taxes_pst ||= 9.5
     end
   end
 
