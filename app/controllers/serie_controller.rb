@@ -20,10 +20,10 @@ class SerieController < ApplicationController
     orig_series = nil
     @serie = Serie.new(params[:serie])
     unless params[:source_series].blank?
-      @serie.series_type = orig_series.series_type
       must_import_prices = true
       # cloning a series....
       orig_series = Serie.find(params[:source_series])
+      @serie.series_type = orig_series.series_type
       # clone widths
       @serie.widths << orig_series.widths.map { |w| w.clone }
       # clone heights
