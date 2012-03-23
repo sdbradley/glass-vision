@@ -18,7 +18,7 @@ class QuotationLine < ActiveRecord::Base
   validates_numericality_of :width, :height, :quantity
 
 
-  before_destroy :delete_previeww_image
+  before_destroy :delete_preview_image
 
   # constants for drawing
   FRAME_THICKNESS = 3.0
@@ -262,7 +262,7 @@ class QuotationLine < ActiveRecord::Base
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
   end
 
-  def delete_previeww_image
+  def delete_preview_image
     # delete the line image
     begin
       File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
