@@ -598,16 +598,14 @@ protected
       case option.apply_to
         when 0 # applies to all
           area = (@total_width / 12) * (@total_height / 12)
-        when 1 # applies to fixed openings only
-          area = compute_area_for_openings(shape, openings, false)
-        when 2 # applies to openable openings only
-          area = compute_area_for_openings(shape, openings, true)
+        when 1,2 # applies to fixed / openable openings only
+          area = compute_area_for_openings(shape, openings, option.apply_to)
       end
     end
     option_price = option.price * area
   end
 
-  def compute_area_for_openable_openings(shape, openings, openable)
+  def compute_area_for_openings(shape, openings, openable)
     area = 0
     1.upto(shape.sections_height) do |r|
       1.upto(shape.sections_width) do |c|
@@ -617,12 +615,12 @@ protected
         area += section_area if opening.openable == openable
       end
     end
-    if (shape.has_upper_transom)
+    if shape.h.has_upper_transom
       section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
       opening = Opening.find(openings[upper_transom_index(shape)].to_i)
       area += section_area if opening.openable == openable
     end
-    if (shape.has_lower_transom)
+    if shape.has_lower_transom
       section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
       opening = Opening.find(openings[lower_transom_index(shape)].to_i)
       area += section_area if opening.openable == openable
