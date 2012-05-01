@@ -630,14 +630,14 @@ protected
 
   def compute_minimum_section_area(section_area, option, opening)
     # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-    return 0 if option.apply_to != 2 && opening.openable == option.apply_to
+    return 0 if option.apply_to != 2 && opening.openable != option.apply_to
     section_area = option.minimum_quantity if section_area < option.minimum_quantity
     section_area
   end
 
   def compute_minimum_glass_area(section_area, option, opening)
     # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-    return 0 if option.apply_to != 2 && opening.openable == option.apply_to
+    return 0 if option.apply_to != 2 && opening.openable != option.apply_to
 
     glasses_quantity = (opening.glasses_quantity || 1)
     glass_area = section_area / glasses_quantity
