@@ -172,7 +172,7 @@
                option_string += opt.option.tr_description
                option_string += "x #{opt.quantity}" if opt.quantity != 1
                option_string += "(#{number_to_currency(option_price)})"
-
+	option_string += " " + opt.option.id.to_s
                first_time = false
            }
 
