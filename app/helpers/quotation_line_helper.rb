@@ -43,70 +43,33 @@ module QuotationLineHelper
   end
   
   def calculate_one_option_price(option, openings, shape)
-    option_price = 0
-    case option.pricing_method_id
-      when 1 # price per square foot
-        if option.minimum_quantity != 0
-          case option.options_minimum_unit_id
-          when 1 # per window
-            area = (@total_width / 12) * (@total_height / 12)
-            area = option.minimum_quantity if area < option.minimum_quantity
-          when 2 # per section
-            area = 0
-            1.upto(shape.sections_height) do |r|
-              1.upto(shape.sections_width) do |c|
-                section_area = @real_height[r] * @real_width[c] / 144
-                section_area = option.minimum_quantity if section_area < option.minimum_quantity
-                area += section_area
-              end
-            end
-            if (shape.has_upper_transom)
-              section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
-              section_area = option.minimum_quantity if section_area < option.minimum_quantity
-              area += section_area
-            end
-            if (shape.has_lower_transom)
-              section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
-              section_area = option.minimum_quantity if section_area < option.minimum_quantity
-              area += section_area
-            end
-          when 3 # per glass
-            area = 0
-            1.upto(shape.sections_height) do |r|
-              1.upto(shape.sections_width) do |c|
-                section_area = @real_height[r] * @real_width[c] / 144
-                opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
-                glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
-                # for now, consider all glasses of the section to be of equal area
-                glass_area = section_area / glasses_quantity
-                glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
-                area += glass_area * glasses_quantity
-              end
-            end
-            if (shape.has_upper_transom)
-              section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
-              opening = Opening.find(openings[upper_transom_index(shape)].to_i)
-              glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
-              glass_area = section_area / glasses_quantity
-              glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
-              area += glass_area * glasses_quantity
-            end
-            if (shape.has_lower_transom)
-              section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
-              opening = Opening.find(openings[lower_transom_index(shape)].to_i)
-              glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
-              glass_area = section_area / glasses_quantity
-              glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
-              area += glass_area * glasses_quantity
-            end
-          end
-        else
-          area = (@total_width / 12) * (@total_height / 12)
-        end
-        option_price = option.price * area
-      when 2 # price by foot of perimeter
-        if option.minimum_quantity != 0
-          case option.options_minimum_unit_id
+    option_price = 0.0
+      case option.pricing_method_id
+        when 1 # price per square foot
+          option_price = calc_one_option_price_per_sq_ft(openings, option, shape)
+        when 2 # price by foot of perimeter
+          option_price = calc_one_option_price_per_ft_of_perimeter(openings, option, shape)
+        when 3 # price per section
+          option_price = option.price * openings.length
+        when 4 # price per opening section
+          nb_sections = openings.values.count{|v| Opening.find(v.to_i).openable}
+          option_price = option.price * nb_sections
+        when 5 # price by fixed section
+          nb_sections = openings.values.count{|v| !Opening.find(v.to_i).openable}
+          option_price = option.price * nb_sections
+        when 6 # unit price
+          option_price = option.price
+        when 7 # price per corner
+          option_price = option.price * shape.corners
+        when 8 # price per total width
+          option_price = option.price * (@total_width / 12.0).round
+      end
+      option_price
+    end
+
+    def calc_one_option_price_per_ft_of_perimeter(openings, option, shape)
+      if option.minimum_quantity != 0
+        case option.options_minimum_unit_id
           when 1 # per window
             perimeter = (@total_width * 2 + @total_height * 2) / 12
             perimeter = option.minimum_quantity if perimeter < option.minimum_quantity
@@ -156,30 +119,118 @@ module QuotationLineHelper
               glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
               perimeter += glass_perimeter * glasses_quantity
             end
-          end
-        else
-          perimeter = (@total_width * 2 + @total_height * 2) / 12
         end
-        option_price = option.price * perimeter
-      when 3 # price per section
-        option_price = option.price * openings.length
-      when 4 # price per opening section
-        nb_sections = 0
-        openings.each_value { |v| nb_sections += 1 if Opening.find(v.to_i).openable }
-        option_price = option.price * nb_sections
-      when 5 # price by fixed section
-        nb_sections = 0
-        openings.each_value { |v| nb_sections += 1 if !Opening.find(v.to_i).openable }
-        option_price = option.price * nb_sections
-      when 6 # unit price
-        option_price = option.price
-      when 7 # price per corner
-        option_price = option.price * shape.corners
-      when 8 # price per total width
-        option_price = option.price * (@total_width / 12.0).round
+      else
+        perimeter = (@total_width * 2 + @total_height * 2) / 12
+      end
+      option_price = option.price * perimeter
     end
-    option_price
+
+    def calc_one_option_price_per_sq_ft(openings, option, shape)
+      area = 0
+      if option.minimum_quantity != 0
+        case option.options_minimum_unit_id
+          when 1 # per window
+            area = (@total_width / 12) * (@total_height / 12)
+            area = option.minimum_quantity if area < option.minimum_quantity
+          when 2 # per section
+            1.upto(shape.sections_height) do |r|
+              1.upto(shape.sections_width) do |c|
+                opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
+                area += compute_minimum_section_area( @real_height[r] * @real_width[c] / 144, option, opening,r,c)
+              end
+            end
+            if (shape.has_upper_transom)
+              opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+              area += compute_minimum_section_area(@section_height[upper_transom_index(shape)].to_i * @total_width / 144, option, opening)
+            end
+            if (shape.has_lower_transom)
+              opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+              area += compute_minimum_section_area(@section_height[lower_transom_index(shape)].to_i * @total_width / 144, option, opening)
+            end
+          when 3 # per glass
+            1.upto(shape.sections_height) do |r|
+              1.upto(shape.sections_width) do |c|
+                section_area = @real_height[r] * @real_width[c] / 144
+                opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
+                # for now, consider all glasses of the section to be of equal area
+                area += compute_minimum_glass_area(section_area, option, opening)
+              end
+            end
+            if (shape.has_upper_transom)
+              section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
+              opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+              area += compute_minimum_glass_area(section_area, option, opening)
+            end
+            if (shape.has_lower_transom)
+              section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
+              opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+              area += compute_minimum_glass_area(section_area, option, opening)
+            end
+        end
+      else
+        case option.apply_to
+          when 0 # applies to all
+            area = (@total_width / 12) * (@total_height / 12)
+          when 1,2 # applies to fixed / openable openings only
+            area = compute_area_for_openings(shape, openings, option.apply_to)
+        end
+      end
+      option_price = option.price * area
+    end
+
+    def compute_area_for_openings(shape, openings, openable)
+      area = 0
+      1.upto(shape.sections_height) do |r|
+        1.upto(shape.sections_width) do |c|
+          section_area = @real_height[r] * @real_width[c] / 144
+          opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
+          # for now, consider all glasses of the section to be of equal area
+          area += section_area if opening.openable == openable
+        end
+      end
+      if shape.h.has_upper_transom
+        section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
+        opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+        area += section_area if opening.openable == openable
+      end
+      if shape.has_lower_transom
+        section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
+        opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+        area += section_area if opening.openable == openable
+      end
+      area
+    end
+
+  def applies_to(opening, apply_to)
+    case apply_to
+      when 0
+        return opening.openable == false
+      when 1
+        return opening.openable == true
+      when 2
+        true
+    end
   end
+
+    def compute_minimum_section_area(section_area, option, opening, r, c)
+      # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
+      logger.info("***** #{r} #{c} apply to: #{option.apply_to}, opening id #{opening.id} openable #{opening.openable}")
+      return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
+      section_area = option.minimum_quantity if section_area < option.minimum_quantity
+      logger.info "      section area is #{section_area}"
+      section_area
+    end
+
+    def compute_minimum_glass_area(section_area, option, opening)
+      # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
+      return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
+
+      glasses_quantity = (opening.glasses_quantity || 1)
+      glass_area = section_area / glasses_quantity
+      glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
+      glass_area * glasses_quantity
+    end
 
 
   def setup_quotation_line(ql)
