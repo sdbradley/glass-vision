@@ -366,6 +366,7 @@ private
 
     # calculate options price
     price += calculate_option_prices(options_ids, openings, shape)
+    price
   end
 
   def calculate_dimensions(width, height)
@@ -550,6 +551,7 @@ protected
       perimeter = (@total_width * 2 + @total_height * 2) / 12
     end
     option_price = option.price * perimeter
+    option_price
   end
 
   def calc_one_option_price_per_sq_ft(openings, option, shape)
@@ -603,6 +605,7 @@ protected
       end
     end
     option_price = option.price * area
+    option_price
   end
 
   def compute_area_for_openings(shape, openings, openable)
@@ -612,18 +615,18 @@ protected
         section_area = @real_height[r] * @real_width[c] / 144
         opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
         # for now, consider all glasses of the section to be of equal area
-        area += section_area if opening.openable == openable
+        area += section_area if applies_to(opening, openable)
       end
     end
     if shape.has_upper_transom
       section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
       opening = Opening.find(openings[upper_transom_index(shape)].to_i)
-      area += section_area if opening.openable == openable
+      area += section_area if applies_to(opening, openable)
     end
     if shape.has_lower_transom
       section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
       opening = Opening.find(openings[lower_transom_index(shape)].to_i)
-      area += section_area if opening.openable == openable
+      area += section_area if applies_to(opening, openable)
     end
     area
   end

@@ -157,7 +157,7 @@
         <%
            calculate_dimensions(ql)
            discount_percent = (1 - @quotation.discount / 100.0)
-           ql_price = ql.price * (1 - @quotation.discount / 100.0)
+           ql_price = ql.price * discount_percent
 
            # compute the option prices
            total_option_prices = 0
