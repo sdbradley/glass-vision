@@ -5,8 +5,6 @@ class QuotationLineController < ApplicationController
   
   before_filter :prepare_vars, :only => {"edit", "print_calculations"}
 
-  helper :applies_to
-
   def add
     @quotation_line = QuotationLine.new
     @quotation_line.quotation_id = params[:id]

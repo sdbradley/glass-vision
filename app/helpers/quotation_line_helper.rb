@@ -215,10 +215,8 @@ module QuotationLineHelper
 
     def compute_minimum_section_area(section_area, option, opening, r, c)
       # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-      logger.info("***** #{r} #{c} apply to: #{option.apply_to}, opening id #{opening.id} openable #{opening.openable}")
       return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
       section_area = option.minimum_quantity if section_area < option.minimum_quantity
-      logger.info "      section area is #{section_area}"
       section_area
     end
 
