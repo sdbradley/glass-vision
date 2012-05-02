@@ -163,17 +163,14 @@
            total_option_prices = 0
            option_string = ""
 
-           first_time = true
            ql.options_quotation_lines.each { |opt|
                option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent
                total_option_prices += option_price
 
-               option_string += ', ' unless first_time
+               option_string += ', ' unless option_string.blank?
                option_string += opt.option.tr_description
                option_string += "x #{opt.quantity}" if opt.quantity != 1
                option_string += "(#{number_to_currency(option_price)})"
-	option_string += " " + opt.option.id.to_s
-               first_time = false
            }
 
         %>

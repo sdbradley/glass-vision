@@ -168,7 +168,6 @@ module QuotationLineHelper
             end
         end
       else
-logger.info("\n\n\ ************************** apply to is #{option.apply_to}\n\n")
         case option.apply_to
           when 2 # applies to all
             area = (@total_width / 12) * (@total_height / 12)
@@ -185,11 +184,10 @@ logger.info("\n\n\ ************************** apply to is #{option.apply_to}\n\n
         1.upto(shape.sections_width) do |c|
           section_area = @real_height[r] * @real_width[c] / 144
           opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
-      logger.info("***** #{r} #{c} apply to: #{openable}, opening id #{opening.id} openable #{opening.openable}")
           area += section_area if applies_to(opening, openable)
         end
       end
-      if shape.h.has_upper_transom
+      if shape.has_upper_transom
         section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
         opening = Opening.find(openings[upper_transom_index(shape)].to_i)
         area += section_area if applies_to(opening, openable)
@@ -216,7 +214,6 @@ logger.info("\n\n\ ************************** apply to is #{option.apply_to}\n\n
     def compute_minimum_section_area(section_area, option, opening)
       return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
       section_area = option.minimum_quantity if section_area < option.minimum_quantity
-      logger.info "      section area is #{section_area}"
       section_area
     end
 
@@ -227,7 +224,6 @@ logger.info("\n\n\ ************************** apply to is #{option.apply_to}\n\n
       glasses_quantity = (opening.glasses_quantity || 1)
       glass_area = section_area / glasses_quantity
       glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
-      logger.info "      glass area is #{glass_area * glasses_quantity}"
       glass_area * glasses_quantity
     end
 

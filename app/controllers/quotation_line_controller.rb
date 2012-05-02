@@ -602,7 +602,6 @@ protected
           area = compute_area_for_openings(shape, openings, option.apply_to)
       end
     end
-logger.info "returning #{option.price * area} for #{area} sq ft "
     option_price = option.price * area
   end
 
@@ -616,7 +615,7 @@ logger.info "returning #{option.price * area} for #{area} sq ft "
         area += section_area if opening.openable == openable
       end
     end
-    if shape.h.has_upper_transom
+    if shape.has_upper_transom
       section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
       opening = Opening.find(openings[upper_transom_index(shape)].to_i)
       area += section_area if opening.openable == openable
@@ -641,11 +640,9 @@ logger.info "returning #{option.price * area} for #{area} sq ft "
   end
 
   def compute_minimum_section_area(section_area, option, opening)
-   logger.info "********CMSA: skipping #{section_area}" if option.apply_to != 2 && opening.openable != option.apply_to
     # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
     return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
     section_area = option.minimum_quantity if section_area < option.minimum_quantity
-   logger.info "********CMSA: applying #{section_area}" if option.apply_to != 2 && opening.openable != option.apply_to
     section_area
   end
 
