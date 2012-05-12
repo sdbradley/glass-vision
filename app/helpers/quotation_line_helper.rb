@@ -82,13 +82,25 @@ module QuotationLineHelper
                 perimeter += section_perimeter
               end
             end
-            if shape.has_upper_transom
+            if shape.has_upper_transom?
               section_perimeter = (@section_height[upper_transom_index(shape)].to_i * 2 + @total_width * 2) / 12
               section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
               perimeter += section_perimeter
             end
-            if shape.has_lower_transom
+            if shape.has_lower_transom?
               section_perimeter = (@section_height[lower_transom_index(shape)].to_i * 2 + @total_width * 2) / 12
+              section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
+              perimeter += section_perimeter
+            end
+            if shape.has_left_sidelight?
+              index = left_sidelight_index(shape)
+              section_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2) / 12
+              section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
+              perimeter += section_perimeter
+            end
+            if shape.has_right_sidelight?
+              index = right_sidelight_index(shape)
+              section_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2) / 12
               section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
               perimeter += section_perimeter
             end
@@ -104,18 +116,37 @@ module QuotationLineHelper
                 perimeter += glass_perimeter * glasses_quantity
               end
             end
-            if shape.has_upper_transom
-              opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+            if shape.has_upper_transom?
+              index = upper_transom_index(shape)
+              opening = Opening.find(openings[index].to_i)
               glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
               # for now, consider all glasses of the section to be of equal perimeter
-              glass_perimeter = (@section_height[upper_transom_index(shape)].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
+              glass_perimeter = (@section_height[index].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
               glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
               perimeter += glass_perimeter * glasses_quantity
             end
-            if shape.has_lower_transom
-              opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+            if shape.has_lower_transom?
+              index = lower_transom_index(shape)
+              opening = Opening.find(openings[index].to_i)
               glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
-              glass_perimeter = (@section_height[lower_transom_index(shape)].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
+              glass_perimeter = (@section_height[index].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
+              glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
+              perimeter += glass_perimeter * glasses_quantity
+            end
+            if shape.has_left_sidelight?
+              index = left_sidelight_index(shape)
+              opening = Opening.find(openings[index].to_i)
+              glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
+              # for now, consider all glasses of the section to be of equal perimeter
+              glass_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2 / glasses_quantity) / 12
+              glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
+              perimeter += glass_perimeter * glasses_quantity
+            end
+            if shape.has_right_sidelight?
+              index = right_sidelight_index(shape)
+              opening = Opening.find(openings[index].to_i)
+              glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
+              glass_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2 / glasses_quantity) / 12
               glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
               perimeter += glass_perimeter * glasses_quantity
             end
@@ -245,8 +276,10 @@ module QuotationLineHelper
 
     shape = Shape.find(ql.shape_id)
 
-    @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
-    @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
+    @upper_transom_index = ql.upper_transom_index(shape).to_s if shape.has_upper_transom?
+    @lower_transom_index = ql.lower_transom_index(shape).to_s if shape.has_lower_transom?
+    @left_sidelight_index = ql.left_sidelight_index(shape).to_s if shape.has_left_sidelight?
+    @right_sidelight_index = ql.right_sidelight_index(shape).to_s if shape.has_right_sidelight?
 
   end
   
@@ -255,13 +288,18 @@ module QuotationLineHelper
     width = ql.width
     height = ql.height
     shape = Shape.find(ql.shape_id)
+    #total width & height INCLUDES transoms &sidelights
     @total_height = height.to_f
     @total_width = width.to_f
-    adjust_total_height_for_transoms = @total_width == 0
+    adjust_total_height_for_transoms = @total_height == 0
+    adjust_total_width_for_sidelights = @total_width == 0
 
     total_transom_height = 0
-    total_transom_height += @section_height[@upper_transom_index].to_f if shape.has_upper_transom
-    total_transom_height += @section_height[@lower_transom_index].to_f if shape.has_lower_transom
+    total_transom_height += @section_height[@upper_transom_index].to_f if shape.has_upper_transom?
+    total_transom_height += @section_height[@lower_transom_index].to_f if shape.has_lower_transom?
+    total_sidelight_width = 0
+    total_sidelight_width += @section_width[@left_sidelight_index].to_f if shape.has_left_sidelight?
+    total_sidelight_width += @section_width[@right_sidelight_index].to_f if shape.has_right_sidelight?
 
     ## calculate all heights
     # get known heights, or 0 if missing
@@ -272,32 +310,31 @@ module QuotationLineHelper
     # count missing heights
     cpt_missing = 0
     acc_dimension = 0
-    @real_height.each do |k, v|
+    @real_height.each_value do |v|
       cpt_missing += 1 if v == 0
       acc_dimension += v
     end
+
+    # if we have missing heights and total_height is not specified we can't continue
+    if cpt_missing > 0 && @total_height == 0
+      return trn_get('MSG_NOT_ENOUGH_DATA')
+    end
+
     # complete missing heights if possible
     if cpt_missing == 0
+      # no missing heights so just compute the total height if not supplied
       @total_height = acc_dimension + total_transom_height if @total_height == 0
+      return trn_get('MSG_HEIGHTS_DONT_MATCH') if @total_height != acc_dimension + total_transom_height
     else
-      if @total_height == 0
-        return trn_get('MSG_NOT_ENOUGH_DATA')
-      else
-        deducted = (@total_height - (acc_dimension + total_transom_height)) / cpt_missing
+        # any height not accounted for to be spread across any openings with 0 height
+        deducted = (@total_height - acc_dimension - total_transom_height) / cpt_missing
         @real_height.each do |k, v|
           @real_height[k] = deducted if v == 0
         end
-      end
     end
     # check that we have no negative dimensions
     @real_height.each_value do |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
-    end
-
-    #increase total_height for each transom
-    if (adjust_total_height_for_transoms)
-      @total_height += @section_height[@upper_transom_index].to_f if shape.has_upper_transom
-      @total_height += @section_height[@lower_transom_index].to_f if shape.has_lower_transom
     end
 
     ## calculate all widths
@@ -309,27 +346,31 @@ module QuotationLineHelper
     # count missing widths
     cpt_missing = 0
     acc_dimension = 0
-    @real_width.each do |k, v|
+    @real_width.each_value do |v|
       cpt_missing += 1 if v == 0
       acc_dimension += v
     end
+
+    # if we have missing heights and total_height is not specified we can't continue
+    if cpt_missing > 0 && @total_width == 0
+      return trn_get('MSG_NOT_ENOUGH_DATA')
+    end
+
     # complete missing widths if possible
     if cpt_missing == 0
-      @total_width = acc_dimension if @total_width == 0
+      @total_width = acc_dimension + total_sidelight_width if @total_width == 0
+      return trn_get('MSG_WIDTHS_DONT_MATCH') if @total_width != acc_dimension + total_sidelight_width
     else
-      if @total_width == 0
-        return trn_get('MSG_NOT_ENOUGH_DATA')
-      else
-        deducted = (@total_width - acc_dimension) / cpt_missing
+        deducted = (@total_width - acc_dimension - total_sidelight_width) / cpt_missing
         @real_width.each do |k, v|
           @real_width[k] = deducted if v == 0
         end
-      end
     end
     # check that we have no negative dimensions
     @real_width.each_value do |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
     end
+
     return nil
   end
 
