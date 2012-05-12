@@ -247,13 +247,13 @@ class QuotationLineController < ApplicationController
 
           total_transom_height = 0.0
           # save the transom heights
-          if (shape.has_upper_transom)
+          if (shape.has_upper_transom?)
             @quotation_line.section_heights.create(:sort_order => @upper_transom_index, :value => @section_height[@upper_transom_index])
             @quotation_line.section_widths.create(:sort_order => @upper_transom_index, :value => @total_width)
             total_transom_height += @section_height[@upper_transom_index].to_f
           end
 
-          if (shape.has_lower_transom)
+          if (shape.has_lower_transom?)
             @quotation_line.section_heights.create(:sort_order => @lower_transom_index, :value => @section_height[@lower_transom_index])
             @quotation_line.section_widths.create(:sort_order => @lower_transom_index, :value => @total_width)
             total_transom_height += @section_height[@lower_transom_index].to_f
@@ -481,6 +481,9 @@ private
     @real_width.each_value do |v|
       return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
     end
+
+    @section_height[@left_sidelight_index] ||= @total_height - total_transom_height
+    @section_height[@right_sidelight_index] ||= @total_height - total_transom_height
 
     return nil
   end
