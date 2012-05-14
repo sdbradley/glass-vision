@@ -590,7 +590,7 @@ protected
               perimeter += glass_perimeter * glasses_quantity
             end
           end
-          if shape.has_upper_transom
+          if shape.has_upper_transom?
             opening = Opening.find(openings[upper_transom_index(shape)].to_i)
             glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
             # for now, consider all glasses of the section to be of equal perimeter
@@ -598,7 +598,7 @@ protected
             glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
             perimeter += glass_perimeter * glasses_quantity
           end
-          if shape.has_lower_transom
+          if shape.has_lower_transom?
             opening = Opening.find(openings[lower_transom_index(shape)].to_i)
             glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
             glass_perimeter = (@section_height[lower_transom_index(shape)].to_i * 2 + @total_width * 2 / glasses_quantity) / 12

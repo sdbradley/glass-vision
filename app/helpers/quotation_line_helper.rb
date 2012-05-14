@@ -171,13 +171,23 @@ module QuotationLineHelper
                 area += compute_minimum_section_area( @real_height[r] * @real_width[c] / 144, option, opening)
               end
             end
-            if (shape.has_upper_transom)
+            if (shape.has_upper_transom?)
               opening = Opening.find(openings[upper_transom_index(shape)].to_i)
               area += compute_minimum_section_area(@section_height[upper_transom_index(shape)].to_i * @total_width / 144, option, opening)
             end
-            if (shape.has_lower_transom)
+            if (shape.has_lower_transom?)
               opening = Opening.find(openings[lower_transom_index(shape)].to_i)
               area += compute_minimum_section_area(@section_height[lower_transom_index(shape)].to_i * @total_width / 144, option, opening)
+            end
+            if (shape.has_left_sidelight?)
+              index = left_sidelight_index(shape)
+              opening = Opening.find(openings[index].to_i)
+              area += @quotation_line.compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
+            end
+            if (shape.has_right_sidelight?)
+              index = right_sidelight_index(shape)
+              opening = Opening.find(openings[index].to_i)
+              area += @quotation_line.compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
             end
           when 3 # per glass
             1.upto(shape.sections_height) do |r|
@@ -187,15 +197,27 @@ module QuotationLineHelper
                 area += compute_minimum_glass_area(@real_height[r] * @real_width[c] / 144, option, opening)
               end
             end
-            if (shape.has_upper_transom)
+            if (shape.has_upper_transom?)
               section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
               opening = Opening.find(openings[upper_transom_index(shape)].to_i)
               area += compute_minimum_glass_area(section_area, option, opening)
             end
-            if (shape.has_lower_transom)
+            if (shape.has_lower_transom?)
               section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
               opening = Opening.find(openings[lower_transom_index(shape)].to_i)
               area += compute_minimum_glass_area(section_area, option, opening)
+            end
+            if (shape.has_left_sidelight?)
+              index = left_sidelight_index(shape)
+              section_area = @section_height[index].to_f * @section_width[index].to_f / 144.0
+              opening = Opening.find(openings[index].to_i)
+              area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
+            end
+            if (shape.has_right_sidelight?)
+              index = right_sidelight_index(shape)
+              section_area = @section_height[index].to_f * @section_width[index].to_f / 144.0
+              opening = Opening.find(openings[index].to_i)
+              area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
             end
         end
       else
@@ -209,27 +231,34 @@ module QuotationLineHelper
       option_price = option.price * area
     end
 
-    def compute_area_for_openings(shape, openings, openable)
-      area = 0
-      1.upto(shape.sections_height) do |r|
-        1.upto(shape.sections_width) do |c|
-          section_area = @real_height[r] * @real_width[c] / 144
-          opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
-          area += section_area if applies_to(opening, openable)
-        end
+  def compute_area_for_openings(shape, openings, openable)
+    area = 0
+    1.upto(shape.sections_height) do |r|
+      1.upto(shape.sections_width) do |c|
+        section_area = @real_height[r] * @real_width[c] / 144.0
+        opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
+        # for now, consider all glasses of the section to be of equal area
+        area += section_area if @quotation_line.applies_to(opening, openable)
       end
-      if shape.has_upper_transom
-        section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
-        opening = Opening.find(openings[upper_transom_index(shape)].to_i)
-        area += section_area if applies_to(opening, openable)
-      end
-      if shape.has_lower_transom
-        section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
-        opening = Opening.find(openings[lower_transom_index(shape)].to_i)
-        area += section_area if applies_to(opening, openable)
-      end
-      area
     end
+
+    area += compute_section_area(upper_transom_index(shape), openable, openings, @total_width) if shape.has_upper_transom?
+    area += compute_section_area(lower_transom_index(shape), openable, openings, @total_width) if shape.has_upper_transom?
+
+    area += compute_section_area(left_sidelight_index(shape), openable, openings) if shape.has_left_sidelight?
+    area += compute_section_area(right_sidelight_index(shape), openable, openings) if shape.has_right_sidelight?
+
+    area
+  end
+
+  def compute_section_area(index, openable, openings, width = nil)
+    width ||= @section_width[index].to_f
+    section_area = @section_height[index].to_f * width / 144.0
+    opening = Opening.find(openings[index].to_i)
+    @quotation_line.applies_to(opening, openable) ? section_area : 0
+  end
+
+
 
   def applies_to(opening, apply_to)
     case apply_to
