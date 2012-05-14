@@ -83,23 +83,23 @@ module QuotationLineHelper
               end
             end
             if shape.has_upper_transom?
-              section_perimeter = (@section_height[upper_transom_index(shape)].to_i * 2 + @total_width * 2) / 12
+              section_perimeter = (@section_height[@upper_transom_index].to_i * 2 + @total_width * 2) / 12
               section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
               perimeter += section_perimeter
             end
             if shape.has_lower_transom?
-              section_perimeter = (@section_height[lower_transom_index(shape)].to_i * 2 + @total_width * 2) / 12
+              section_perimeter = (@section_height[@lower_transom_index].to_i * 2 + @total_width * 2) / 12
               section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
               perimeter += section_perimeter
             end
             if shape.has_left_sidelight?
-              index = left_sidelight_index(shape)
+              index = @left_sidelight_index
               section_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2) / 12
               section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
               perimeter += section_perimeter
             end
             if shape.has_right_sidelight?
-              index = right_sidelight_index(shape)
+              index = @right_sidelight_index
               section_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2) / 12
               section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
               perimeter += section_perimeter
@@ -117,7 +117,7 @@ module QuotationLineHelper
               end
             end
             if shape.has_upper_transom?
-              index = upper_transom_index(shape)
+              index = @upper_transom_index
               opening = Opening.find(openings[index].to_i)
               glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
               # for now, consider all glasses of the section to be of equal perimeter
@@ -126,7 +126,7 @@ module QuotationLineHelper
               perimeter += glass_perimeter * glasses_quantity
             end
             if shape.has_lower_transom?
-              index = lower_transom_index(shape)
+              index = @lower_transom_index
               opening = Opening.find(openings[index].to_i)
               glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
               glass_perimeter = (@section_height[index].to_i * 2 + @total_width * 2 / glasses_quantity) / 12
@@ -134,7 +134,7 @@ module QuotationLineHelper
               perimeter += glass_perimeter * glasses_quantity
             end
             if shape.has_left_sidelight?
-              index = left_sidelight_index(shape)
+              index = @left_sidelight_index
               opening = Opening.find(openings[index].to_i)
               glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
               # for now, consider all glasses of the section to be of equal perimeter
@@ -143,7 +143,7 @@ module QuotationLineHelper
               perimeter += glass_perimeter * glasses_quantity
             end
             if shape.has_right_sidelight?
-              index = right_sidelight_index(shape)
+              index = @right_sidelight_index
               opening = Opening.find(openings[index].to_i)
               glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
               glass_perimeter = (@section_height[index].to_i * 2 + @section_width[index] * 2 / glasses_quantity) / 12
@@ -172,20 +172,20 @@ module QuotationLineHelper
               end
             end
             if (shape.has_upper_transom?)
-              opening = Opening.find(openings[upper_transom_index(shape)].to_i)
-              area += compute_minimum_section_area(@section_height[upper_transom_index(shape)].to_i * @total_width / 144, option, opening)
+              opening = Opening.find(openings[@upper_transom_index].to_i)
+              area += compute_minimum_section_area(@section_height[@upper_transom_index].to_i * @total_width / 144, option, opening)
             end
             if (shape.has_lower_transom?)
-              opening = Opening.find(openings[lower_transom_index(shape)].to_i)
-              area += compute_minimum_section_area(@section_height[lower_transom_index(shape)].to_i * @total_width / 144, option, opening)
+              opening = Opening.find(openings[@lower_transom_index].to_i)
+              area += compute_minimum_section_area(@section_height[@lower_transom_index].to_i * @total_width / 144, option, opening)
             end
             if (shape.has_left_sidelight?)
-              index = left_sidelight_index(shape)
+              index = @left_sidelight_index
               opening = Opening.find(openings[index].to_i)
               area += @quotation_line.compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
             end
             if (shape.has_right_sidelight?)
-              index = right_sidelight_index(shape)
+              index = @right_sidelight_index
               opening = Opening.find(openings[index].to_i)
               area += @quotation_line.compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
             end
@@ -198,23 +198,23 @@ module QuotationLineHelper
               end
             end
             if (shape.has_upper_transom?)
-              section_area = @section_height[upper_transom_index(shape)].to_i * @total_width / 144
-              opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+              section_area = @section_height[@upper_transom_index].to_i * @total_width / 144
+              opening = Opening.find(openings[@upper_transom_index].to_i)
               area += compute_minimum_glass_area(section_area, option, opening)
             end
             if (shape.has_lower_transom?)
-              section_area = @section_height[lower_transom_index(shape)].to_i * @total_width / 144
-              opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+              section_area = @section_height[@lower_transom_index].to_i * @total_width / 144
+              opening = Opening.find(openings[@lower_transom_index].to_i)
               area += compute_minimum_glass_area(section_area, option, opening)
             end
             if (shape.has_left_sidelight?)
-              index = left_sidelight_index(shape)
+              index = @left_sidelight_index
               section_area = @section_height[index].to_f * @section_width[index].to_f / 144.0
               opening = Opening.find(openings[index].to_i)
               area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
             end
             if (shape.has_right_sidelight?)
-              index = right_sidelight_index(shape)
+              index = @right_sidelight_index
               section_area = @section_height[index].to_f * @section_width[index].to_f / 144.0
               opening = Opening.find(openings[index].to_i)
               area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
@@ -242,8 +242,8 @@ module QuotationLineHelper
       end
     end
 
-    area += compute_section_area(upper_transom_index(shape), openable, openings, @total_width) if shape.has_upper_transom?
-    area += compute_section_area(lower_transom_index(shape), openable, openings, @total_width) if shape.has_upper_transom?
+    area += compute_section_area(@upper_transom_index, openable, openings, @total_width) if shape.has_upper_transom?
+    area += compute_section_area(@lower_transom_index, openable, openings, @total_width) if shape.has_upper_transom?
 
     area += compute_section_area(left_sidelight_index(shape), openable, openings) if shape.has_left_sidelight?
     area += compute_section_area(right_sidelight_index(shape), openable, openings) if shape.has_right_sidelight?
