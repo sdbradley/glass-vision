@@ -182,12 +182,12 @@ module QuotationLineHelper
             if (shape.has_left_sidelight?)
               index = @left_sidelight_index
               opening = Opening.find(openings[index].to_i)
-              area += @quotation_line.compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
+              area += compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
             end
             if (shape.has_right_sidelight?)
               index = @right_sidelight_index
               opening = Opening.find(openings[index].to_i)
-              area += @quotation_line.compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
+              area += compute_minimum_section_area(@section_height[index].to_f * @section_width[index].to_f / 144.0, option, opening)
             end
           when 3 # per glass
             1.upto(shape.sections_height) do |r|
@@ -211,13 +211,13 @@ module QuotationLineHelper
               index = @left_sidelight_index
               section_area = @section_height[index].to_f * @section_width[index].to_f / 144.0
               opening = Opening.find(openings[index].to_i)
-              area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
+              area += compute_minimum_glass_area(section_area, option, opening)
             end
             if (shape.has_right_sidelight?)
               index = @right_sidelight_index
               section_area = @section_height[index].to_f * @section_width[index].to_f / 144.0
               opening = Opening.find(openings[index].to_i)
-              area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
+              area += compute_minimum_glass_area(section_area, option, opening)
             end
         end
       else
@@ -238,7 +238,7 @@ module QuotationLineHelper
         section_area = @real_height[r] * @real_width[c] / 144.0
         opening = Opening.find(openings[((r - 1) * shape.sections_width + c).to_s].to_i)
         # for now, consider all glasses of the section to be of equal area
-        area += section_area if @quotation_line.applies_to(opening, openable)
+        area += section_area if applies_to(opening, openable)
       end
     end
 
@@ -255,7 +255,7 @@ module QuotationLineHelper
     width ||= @section_width[index].to_f
     section_area = @section_height[index].to_f * width / 144.0
     opening = Opening.find(openings[index].to_i)
-    @quotation_line.applies_to(opening, openable) ? section_area : 0
+    applies_to(opening, openable) ? section_area : 0
   end
 
 
