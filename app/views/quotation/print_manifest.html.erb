@@ -226,8 +226,7 @@
   <tr>
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%=  @quotation.quotation_lines.collect(&:quantity).sum %> </td>
     <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
-    <td><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
-    <td colspan="3"></td>
+    <td colspan="3"><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
   <tr >
     <td colspan="3" rowspan="3" style="border:1px solid #808080;" valign="top">
