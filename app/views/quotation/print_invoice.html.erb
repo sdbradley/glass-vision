@@ -230,23 +230,31 @@
     <td><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
   <tr >
-    <td colspan="3" rowspan="5" style="border:1px solid #808080;" valign="top">
+    <td colspan="3" rowspan="6" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
           <%= @quotation.notes.html_safe.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
       </p>
     </td>
     <td align="right" bgcolor="#b2b2b2" width="20%" style="border-top:1px solid #808080;">
-      <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+      <strong><%= trn_geth('PRINT_HEADER_SUBTOTAL') %></strong>
     </td>
     <td align="right" bgcolor="#b2b2b2" style="border-top:1px solid #808080;border-right:1px solid #808080;">
-      <strong><%= number_to_currency @quotation.transport %></strong>
+      <strong><%= number_to_currency total %></strong>
     </td>
   </tr>
   <% total += @quotation.transport %>
   <% taxes = @quotation.calculate_taxes(total) %>
   <% total += taxes %>
   <% pst_taxes = @quotation.calculate_pst(total)%>
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="1"  width="20%">
+      <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+    </td>
+    <td align="right" style="border-right:1px solid #808080;">
+      <strong><%= number_to_currency @quotation.transport %></strong>
+    </td>
+  </tr>
   <tr bgcolor="#b2b2b2">
     <td align="right" colspan="1"  width="20%">
       <strong><%= trn_get('PRINT_HEADER_TAXES') % number_to_percentage(@quotation.taxes) %></strong>
