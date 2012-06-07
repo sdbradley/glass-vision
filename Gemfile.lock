@@ -32,10 +32,8 @@ GEM
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    formtastic (1.2.4)
-      actionpack (>= 2.3.7)
-      activesupport (>= 2.3.7)
-      i18n (~> 0.4)
+    formtastic (2.2.1)
+      actionpack (>= 3.0)
     i18n (0.5.0)
     json (1.7.3)
     mail (2.2.19)
@@ -78,7 +76,7 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
     validation_reflection (1.0.0)
-    will_paginate (3.0.pre2)
+    will_paginate (3.0.3)
 
 PLATFORMS
   ruby
@@ -86,7 +84,7 @@ PLATFORMS
 DEPENDENCIES
   formtastic
   mysql2 (= 0.2.7)
-  paperclip
+  paperclip (= 2.3.11)
   rails (= 3.0.13)
   rmagick
   validation_reflection
