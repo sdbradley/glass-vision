@@ -6,7 +6,7 @@
     </td>
     <td rowspan="2" width="1%" nowrap="nowrap">
       <strong><%= @quotation.company.name %></strong><br/>
-      <%= @quotation.company.address.html_safe.gsub(/\n/, '<br/>') %><br/>
+      <%= @quotation.company.address.gsub(/\n/, '<br/>').html_safe %><br/>
       <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.phone %><br/>
       <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.fax %>
     </td>
