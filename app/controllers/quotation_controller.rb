@@ -1,19 +1,18 @@
 class QuotationController < ApplicationController
 
-  before_filter :find_quotation, :only => [:print, :print_invoice, :print_manifest, :print_calculations]
-  
+  before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
+
   def index
     if @current_user.has_role?('administrator')
-      @quotations = Quotation.all(:order => 'updated_at DESC, id DESC', :include => :user)
+      @quotations = Quotation.includes(:user).paginate(:page => params[:page], :per_page => 25).order('updated_at DESC, id DESC')
     else
-      @quotations = Quotation.all(:order => "updated_at DESC, id DESC", :include => :user, :conditions => ["user_id = ?", @current_user.id])
+      @quotations = Quotation.includes(:user).where("user_id = ?", @current_user.id).paginate(:page => params[:page], :per_page => 25).order("updated_at DESC, id DESC")
     end
   end
 
   def show
-    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
     if @quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
-      flash[:notice] = "Permission denied"
+      flash[:notice] = trn_geth("PERMISSION_DENIED")
       redirect_to :action => 'index'
     end
   end
@@ -28,8 +27,6 @@ class QuotationController < ApplicationController
     set_taxes_if_not_present()
 
     @quotation = Quotation.new(params[:quotation])
-    #@quotation.taxes ||= 0.0
-    #@quotation.taxes_pst || 0.0
     @quotation.user_id = @current_user.id
     customer_msg = ""
     if Customer.create_from_quotation_if_new(@quotation)
@@ -38,7 +35,7 @@ class QuotationController < ApplicationController
     if @quotation.save
       customer_msg += "<br />" unless customer_msg.blank?
       customer_msg +=  trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-      flash[:notice] = customer_msg
+      flash[notice] = customer_msg.html_safe
       redirect_to :action => 'show', :id => @quotation
     else
       render :action => 'add'
@@ -46,14 +43,14 @@ class QuotationController < ApplicationController
   end
 
   def edit
-    @quotation = Quotation.find(params[:id])
+    @quotation = Quotation.find_by_slug(params[:id])
     @users = User.find_all_by_enabled(true)  
   end
 
   def update
     set_taxes_if_not_present()
 
-    @quotation = Quotation.find(params[:id])
+    @quotation = Quotation.find_by_slug(params[:id])
 
     if @quotation.update_attributes(params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
@@ -64,7 +61,7 @@ class QuotationController < ApplicationController
   end
 
   def destroy
-    Quotation.find(params[:id]).destroy
+    Quotation.find_by_slug(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'index'
   end
@@ -89,9 +86,22 @@ class QuotationController < ApplicationController
     end
   end
 
+  def copy
+#    return unless request.xhr?
+    @orig_quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:quotation_id])
+    if @orig_quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
+      flash[notice] = trn_get("PERMISSION_DENIED")
+      redirect_to :action => 'index'
+    end
+    @quotation = Quotation.copy(@orig_quotation)
+    @quotation.save!
+    flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+    redirect_to edit_quotation_path(@quotation.slug)
+  end
+
 protected
   def find_quotation
-    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])  
+    @quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:id])
   end
 
   def set_taxes_if_not_present

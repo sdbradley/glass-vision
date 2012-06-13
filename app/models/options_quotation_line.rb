@@ -2,7 +2,6 @@ class OptionsQuotationLine < ActiveRecord::Base
   belongs_to :option
   belongs_to :quotation_line
 
-
   def self.categorize_options(options)
     # take the list of options, and rearrange it to be organized by category.
     # lets do this with a array of hashes

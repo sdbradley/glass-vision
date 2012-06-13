@@ -133,7 +133,7 @@ class QuotationLineController < ApplicationController
           end
 
           # create and save image
-          @quotation_line.create_image(shape)
+          @quotation_line.create_image()
 
           flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
           redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id
@@ -285,7 +285,7 @@ class QuotationLineController < ApplicationController
           end
 
           # create and save image
-          @quotation_line.create_image(shape)
+          @quotation_line.create_image()
 
           flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
           redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id

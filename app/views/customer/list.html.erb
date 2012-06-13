@@ -1,5 +1,6 @@
 <h1><%= trn_geth('TITLE_CUSTOMER_LIST') %></h1>
 
+<%= will_paginate @customers, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 <table>
   <tr>
   <% for column in Customer.content_columns %>
@@ -20,7 +21,7 @@
 <% end %>
 </table>
 
-<%= will_paginate @customers %>
+<%= will_paginate @customers, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 
 
 <br />

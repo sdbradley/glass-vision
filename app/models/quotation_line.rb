@@ -20,12 +20,13 @@ class QuotationLine < ActiveRecord::Base
 
   before_destroy :delete_preview_image
 
+
   # constants for drawing
   FRAME_THICKNESS = 3.0
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 2
 
-  def create_image(shape)
+  def create_image()
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 
