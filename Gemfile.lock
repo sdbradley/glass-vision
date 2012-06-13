@@ -30,6 +30,7 @@ GEM
     activesupport (3.0.13)
     arel (2.0.10)
     builder (2.1.2)
+    deep_cloneable (1.2.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     formtastic (2.2.1)
@@ -82,6 +83,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  deep_cloneable (~> 1.2.4)
   formtastic
   mysql2 (= 0.2.7)
   paperclip (= 2.3.11)
