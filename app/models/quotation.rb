@@ -47,6 +47,12 @@ class Quotation < ActiveRecord::Base
     quotation
   end
 
+  def regenerate_previews
+    quotation_lines.each do |line|
+      line.create_image
+    end
+  end
+
   def generate_new_slug(slug)
     last = 1
     base_slug = slug.slice(/.*-/) || slug + "-"

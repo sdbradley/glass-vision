@@ -95,6 +95,7 @@ class QuotationController < ApplicationController
     end
     @quotation = Quotation.copy(@orig_quotation)
     @quotation.save!
+    @quotation.regenerate_previews
     flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     redirect_to edit_quotation_path(@quotation.slug)
   end
