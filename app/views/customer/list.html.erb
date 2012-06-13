@@ -6,17 +6,17 @@
   <% for column in Customer.content_columns %>
     <th><%= trn_get(column.human_name)  unless %w{created_at updated_at}.include?(column.name) %></th>
   <% end %>
-		<th colspan="3"><%= trn_geth('HEADER_ACTION')%></th>
+	<th colspan="3"><%= trn_geth('HEADER_ACTION')%></th>
   </tr>
   
 <% for customer in @customers %>
   <tr class="<%= cycle('odd', 'even') %>">
-  <% for column in Customer.content_columns %>
-    <td><%= trn_get(customer.send(column.name)) unless %w{created_at updated_at}.include?(column.name) %></td>
-  <% end %>
-    <td><%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :action => 'show', :id => customer %></td>
-    <td><%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => customer %></td>
-    <td><%= link_to trn_geth('BUTTON_DELETE'), { :action => 'destroy', :id => customer }, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :post %></td>
+    <td><%= link_to(customer.name, :action => 'edit', :id => customer) %></td>
+    <td><%= customer.address %></td>
+    <td><a href="tel:<%= customer.phone %>"><%= customer.phone %></a></td>
+    <td><%= customer.fax %></td>
+    <td><a href="mailto:<%= customer.email %>"><%= customer.email %></a></td>
+    <td colspan="5"><%= link_to trn_geth('BUTTON_DELETE'), { :action => 'destroy', :id => customer }, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :post %></td>
   </tr>
 <% end %>
 </table>

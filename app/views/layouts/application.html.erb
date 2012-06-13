@@ -59,6 +59,9 @@
     <ul>
       <li><%= link_to image_tag("home.png", :size => "32x32", :border => 0) + trn_get('MENU_HOME'), :controller => 'home' %></li>
       <% if logged_in? %>
+          <li><%= link_to image_tag("folder.png", :size => "32x32", :border => 0) + trn_geth('TITLE_QUOTATION_LIST'), quotations_path %></li>
+          <li><%= link_to image_tag("users_two.png", :size => "32x32", :border => 0) + trn_geth('MENU_CUSTOMERS'), :controller => 'customer', :action => 'list' %></li>
+          <li><%= link_to image_tag("mail.png", :size => "32x32", :border => 0) + trn_geth('MENU_SEND_MAIL'), :controller => 'emails', :action => 'new' %></li>
           <% if current_user.has_role?('administrator') %>
               <li><%= link_to image_tag("series.png", :size => "32x32", :border => 0) + trn_geth('TITLE_SERIE_LIST'), :controller => 'serie', :action => 'list' %></li>
               <li><%= link_to image_tag("window.png", :size => "32x32", :border => 0) + trn_geth('TITLE_SHAPE_LIST'), shapes_path %></li>
@@ -66,15 +69,12 @@
               <li><%= link_to image_tag("process.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPTION_LIST'), :controller => 'option', :action => 'list' %></li>
               <li><%= link_to image_tag("process.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPTION_CATEGORY_LIST'), :controller => 'option_category', :action => 'list' %></li>
               <li><%= link_to image_tag("colors.png", :size => "32x32", :border => 0) + trn_geth('TITLE_PRODUCT_COLORS_LIST'), product_colors_path %></li>
+              <li><%= link_to image_tag("companies.png", :size => "32x32", :border => 0) + trn_geth('TITLE_COMPANY_LIST'), :controller => 'company', :action => 'list' %></li>
+              <li><%= link_to image_tag("user.png", :size => "32x32", :border => 0) + trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
               <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_TRANSLATION_LIST'), :controller => 'translation', :action => 'list' %></li>
               <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_DBTF_LIST'), :controller => 'database_translation_field', :action => 'list' %></li>
               <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_DBT_LIST'), :controller => 'database_translation', :action => 'list' %></li>
-              <li><%= link_to image_tag("companies.png", :size => "32x32", :border => 0) + trn_geth('TITLE_COMPANY_LIST'), :controller => 'company', :action => 'list' %></li>
-              <li><%= link_to image_tag("user.png", :size => "32x32", :border => 0) + trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
           <% end %>
-          <li><%= link_to image_tag("users_two.png", :size => "32x32", :border => 0) + trn_geth('MENU_CUSTOMERS'), :controller => 'customer', :action => 'list' %></li>
-          <li><%= link_to image_tag("folder.png", :size => "32x32", :border => 0) + trn_geth('TITLE_QUOTATION_LIST'), quotations_path %></li>
-          <li><%= link_to image_tag("mail.png", :size => "32x32", :border => 0) + trn_geth('MENU_SEND_MAIL'), :controller => 'emails', :action => 'new' %></li>
       <% end %>
     </ul>
   </div>
