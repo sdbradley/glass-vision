@@ -36,7 +36,7 @@ class QuotationController < ApplicationController
       customer_msg += "<br />" unless customer_msg.blank?
       customer_msg +=  trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       flash[notice] = customer_msg.html_safe
-      redirect_to :action => 'show', :id => @quotation
+      redirect_to :action => 'show', :id => @quotation.slug
     else
       render :action => 'add'
     end
@@ -50,11 +50,11 @@ class QuotationController < ApplicationController
   def update
     set_taxes_if_not_present()
 
-    @quotation = Quotation.find_by_slug(params[:id])
+    @quotation = Quotation.find(params[:id])
 
     if @quotation.update_attributes(params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'show', :id => @quotation
+      redirect_to :action => 'show', :id => @quotation.slug
     else
       render :action => 'edit'
     end
