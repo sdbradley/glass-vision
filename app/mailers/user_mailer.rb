@@ -1,9 +1,11 @@
 class UserMailer < ActionMailer::Base
   include TranslationGet
   default :from => 'info@glass-vision.net'
-  
+
+
   def signup_notification(user)
-    @url = activate_url(:id => user.activation_code)
+    @user = user
+    @url = activate_url(:id => user.activation_code, :host => "quotations.glass-vision.net")
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_NEEDS_ACTIVATION_SUBJECT'))
   end
   
@@ -16,15 +18,18 @@ class UserMailer < ActionMailer::Base
   
   def activation(user)
     @url = root_url
+    @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_ACTIVATED_SUBJECT'))
   end
   
   def forgot_password(user)
     @url  = reset_password_url(id => user.password_reset_code)
+    @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_CHANGE_PASSWORD_SUBJECT'))
   end
  
   def reset_password(user)
+    @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_PASSWORD_RESET_SUBJECT'))
   end
 
