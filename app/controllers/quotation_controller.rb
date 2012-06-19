@@ -32,7 +32,12 @@ class QuotationController < ApplicationController
     if Customer.create_from_quotation_if_new(@quotation)
       customer_msg = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     end
+
     if @quotation.save
+	if @quotation.slug.blank?
+	  @quotation.slug = @quotation.id.to_s
+	  @quotation.save
+	end
       customer_msg += "<br />" unless customer_msg.blank?
       customer_msg +=  trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       flash[notice] = customer_msg.html_safe

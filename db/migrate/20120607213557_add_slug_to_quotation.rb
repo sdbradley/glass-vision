@@ -1,6 +1,6 @@
 class AddSlugToQuotation < ActiveRecord::Migration
   def self.up
-    add_column :quotations, :slug, :string, :null => false
+    add_column :quotations, :slug, :string
     execute("UPDATE quotations set slug=id;")
     add_index :quotations, [:slug], :name => "quotations_slug_index", :unique => true
   end

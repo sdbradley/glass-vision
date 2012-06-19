@@ -222,11 +222,10 @@ ActiveRecord::Schema.define(:version => 20120612171421) do
   end
 
   create_table "series", :force => true do |t|
-    t.string  "name",             :limit => 50,  :default => "",    :null => false
-    t.string  "description",                     :default => "",    :null => false
-    t.text    "comments"
-    t.text    "series_type",      :limit => 255
-    t.boolean "fixed_sizes_only",                :default => false
+    t.string "name",        :limit => 50,  :default => "", :null => false
+    t.string "description",                :default => "", :null => false
+    t.text   "comments"
+    t.text   "series_type", :limit => 255
   end
 
   create_table "sessions", :force => true do |t|
