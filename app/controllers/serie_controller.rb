@@ -81,13 +81,13 @@ class SerieController < ApplicationController
     curr_width = min_w
     while curr_width <= max_w do
       Width.create :serie_id => params[:id], :value => curr_width
-      curr_width += 2;
+      curr_width += 2
     end
     
     curr_height = min_h;
     while curr_height <= max_h do
       Height.create :serie_id => params[:id], :value => curr_height
-      curr_height += 2;
+      curr_height += 2
     end    
 
     # given all the above params, generate w,h dimension every 2 inches and set price.
