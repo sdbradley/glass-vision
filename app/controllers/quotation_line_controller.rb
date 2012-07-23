@@ -136,7 +136,7 @@ class QuotationLineController < ApplicationController
           @quotation_line.create_image()
 
           flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-          redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id
+          redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation.slug
         else
           render :action => 'add'
         end
@@ -288,7 +288,7 @@ class QuotationLineController < ApplicationController
           @quotation_line.create_image()
 
           flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-          redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id
+          redirect_to :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation.slug
         else
           render :action => 'edit'
         end
@@ -300,7 +300,7 @@ class QuotationLineController < ApplicationController
     quotation_line = QuotationLine.find(params[:id])
     quotation_line.destroy
     flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :controller => 'quotation', :action => 'show', :id => quotation_line.quotation_id
+    redirect_to :controller => 'quotation', :action => 'show', :id => quotation_line.quotation.slug
   end
 
 private
