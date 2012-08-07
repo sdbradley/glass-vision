@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :quotations
   has_many :customers
   has_and_belongs_to_many :companies
+  has_and_belongs_to_many :module_types
    
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -69,7 +70,7 @@ class User < ActiveRecord::Base
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
-    u = User.where('login = ?', login).first # need to get the salt
+    u = User.where('login = ?', login).first# need to get the salt
 #    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login] # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
@@ -184,6 +185,6 @@ protected
     end    
   
     def self.get_administrator
-      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id").select("users.*").order("id ASC")
+      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id",    :select =>"users.*", :order => "id ASC")
     end        
 end

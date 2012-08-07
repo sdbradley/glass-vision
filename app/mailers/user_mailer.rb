@@ -1,8 +1,7 @@
 class UserMailer < ActionMailer::Base
   include TranslationGet
   default :from => 'info@glass-vision.net'
-
-
+  
   def signup_notification(user)
     @user = user
     @url = activate_url(:id => user.activation_code, :host => "quotations.glass-vision.net")

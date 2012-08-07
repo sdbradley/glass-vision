@@ -1,8 +1,9 @@
 class Quotation < ActiveRecord::Base
   has_many :quotation_lines, :dependent => :destroy
+  has_many :door_lines, :dependent => :destroy
   has_many :options_quotations, :dependent => :destroy
   belongs_to :user
-  belongs_to :company  
+  belongs_to :company
 
   validates_presence_of :project_name
   validates_numericality_of :markup, :allow_nil => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 30
@@ -24,14 +25,14 @@ class Quotation < ActiveRecord::Base
 
    return customer_address == delivery_address
   end
-  
+
   def calculate_taxes(total)
    total * self.taxes / 100.0
   end
 
   def calculate_pst(total)
     if !self.taxes_pst.blank?
-      total * self.taxes_pst / 100.0 
+      total * self.taxes_pst / 100.0
     else
      0.0
     end
@@ -39,10 +40,7 @@ class Quotation < ActiveRecord::Base
 
   # given a source quotation, copy to new with derivative slug
   def self.copy(orig_quotation)
-    quotation = orig_quotation.clone(:include => [:options_quotations, {:quotation_lines => [:quotation_lines_openings, :options_quotation_lines, :section_heights, :section_widths] }])
-    # copy associations
-#    quotation.options = orig_quotation.options.collect{|option| option.clone}
-#    quotation.quotation_lines = orig_quotation.quotation_lines.collect {|line| line.clone }
+    quotation = orig_quotation.clone(:include => [:options_quotations, {:quotation_lines => [:quotation_lines_openings, :options_quotation_lines, :section_heights, :section_widths] }, {:door_lines => [:door_line_sections, :door_line_options]}])
     quotation.slug = quotation.generate_new_slug(orig_quotation.slug)
     quotation
   end

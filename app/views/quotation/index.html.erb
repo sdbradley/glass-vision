@@ -15,7 +15,7 @@
 <% for quotation in @quotations %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%= quotation.slug %></td>
-	<td><%= gv_humanize_time quotation.updated_at %></td>
+		<td><%= gv_humanize_time quotation.updated_at %></td>
     <td><%= link_to quotation.project_name, quotation_path(quotation.slug) %><%= ' (' + quotation.description + ')' unless quotation.description.blank? %></td>
     <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
     <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
@@ -26,6 +26,5 @@
     </td>
   </tr>
 <% end %>
-
 </table>
 <%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>

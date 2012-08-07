@@ -6,7 +6,7 @@
   <% for column in Customer.content_columns %>
     <th><%= trn_get(column.human_name)  unless %w{created_at updated_at}.include?(column.name) %></th>
   <% end %>
-	<th colspan="3"><%= trn_geth('HEADER_ACTION')%></th>
+		<th colspan="3"><%= trn_geth('HEADER_ACTION')%></th>
   </tr>
   
 <% for customer in @customers %>

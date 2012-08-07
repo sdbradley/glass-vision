@@ -18,6 +18,32 @@ GlassVision::Application.routes.draw do
 
   resources :product_colors
   resources :shapes
+
+  resources :doors do
+    collection do
+      get 'configure_panels'
+      get 'configure_panel_dimensions'
+      get 'configure_glass_families'
+      get 'configure_glasses'
+      get 'configure_openings'
+    end
+  end
+  resources :door_frames
+  resources :door_combinations
+  resources :frame_profiles
+  resources :slab_materials
+  resources :door_openings
+  resources :door_glass_families do
+    resources :door_glasses
+  end
+  resources :door_panel_families do
+    resources :door_panels do
+      resources :door_panel_dimensions
+    end
+  end
+  resources :door_borings
+  resources :door_sections
+
   resource :session, :controller => :session
   resource :passwords
   resources :quotations, :controller => :quotation do

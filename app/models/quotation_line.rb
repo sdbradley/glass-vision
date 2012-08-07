@@ -1,5 +1,5 @@
-require 'RMagick'
 require 'erb'
+require 'RMagick'
 include Magick
 
 class QuotationLine < ActiveRecord::Base
@@ -10,9 +10,9 @@ class QuotationLine < ActiveRecord::Base
   has_many :options_quotation_lines, :dependent => :destroy
   has_many :section_heights, :dependent => :destroy
   has_many :section_widths, :dependent => :destroy
-  
-  belongs_to :standard_interior_color, :class_name => "ProductColor" 
-  belongs_to :standard_exterior_color, :class_name => "ProductColor" 
+
+  belongs_to :standard_interior_color, :class_name => "ProductColor"
+  belongs_to :standard_exterior_color, :class_name => "ProductColor"
 
   validates_presence_of :width, :height, :serie_id, :quantity
   validates_numericality_of :width, :height, :quantity
@@ -20,11 +20,10 @@ class QuotationLine < ActiveRecord::Base
 
   before_destroy :delete_preview_image
 
-
   # constants for drawing
   FRAME_THICKNESS = 3.0
   ARROW_SIZE = 5.0
-  PIXELS_PER_INCH = 2
+  PIXELS_PER_INCH = 3
 
   def create_image()
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
@@ -178,6 +177,7 @@ end
 
     # write final image
     canvas.write final_file_name
+    canvas.destroy!
 
     # delete temp file
     begin
@@ -262,7 +262,6 @@ end
   def get_section_height(idx)
     section_heights.select {|t| t.sort_order == idx}.first.value
   end
-  
 
   def get_opening(idx)
     quotation_lines_openings.select {|o| o.sort_order == idx}.first.opening
@@ -304,7 +303,7 @@ end
     # paint the image on canvas
     canvas.composite! size_image, offset_x_px, offset_y_px, OverCompositeOp
   end
-  
+
   def draw_horizontal_measurement(canvas, section_width, current_x)
     # binding for erb file
     # constants

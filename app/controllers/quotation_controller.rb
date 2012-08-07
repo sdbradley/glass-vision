@@ -32,24 +32,23 @@ class QuotationController < ApplicationController
     if Customer.create_from_quotation_if_new(@quotation)
       customer_msg = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     end
-
     if @quotation.save
-	if @quotation.slug.blank?
-	  @quotation.slug = @quotation.id.to_s
-	  @quotation.save
-	end
+    	if @quotation.slug.blank?
+    	  @quotation.slug = @quotation.id.to_s
+    	  @quotation.save
+    	end
       customer_msg += "<br />" unless customer_msg.blank?
       customer_msg +=  trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       flash[notice] = customer_msg.html_safe
       redirect_to :action => 'show', :id => @quotation.slug
     else
-      render :action => 'add'
+      render :action => 'new'
     end
   end
 
   def edit
     @quotation = Quotation.find_by_slug(params[:id])
-    @users = User.find_all_by_enabled(true)  
+    @users = User.find_all_by_enabled(true)
   end
 
   def update
@@ -85,9 +84,9 @@ class QuotationController < ApplicationController
 
   def print_calculations
     if current_user.has_role?('administrator')
-      render :layout => 'printer' 
+      render :layout => 'printer'
     else
-      redirect_to :action => 'index' 
+      redirect_to :action => 'index'
     end
   end
 
