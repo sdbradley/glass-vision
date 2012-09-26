@@ -56,7 +56,7 @@ class DoorLine < ActiveRecord::Base
     width = 0
     door_line_sections.each do |door_line_section|
       width += door_line_section.door_panel_dimension.width
-      width += frame_profile.gap if door_line_section.door_section.openable?
+      width += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") if door_line_section.door_panel
     end
     width += 2 * frame_profile.width
     width += (door_line_sections.count - 1) * frame_profile.separator_width
@@ -65,7 +65,7 @@ class DoorLine < ActiveRecord::Base
 
   def total_height
     height = 0
-    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap
+    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap_slab + frame_profile.sill
     height
   end
 
@@ -80,17 +80,17 @@ class DoorLine < ActiveRecord::Base
 
     # intialize coordinates
     currentx = frame_profile.width
-    currenty = frame_profile.width + frame_profile.gap / 2
+    currenty = frame_profile.width + frame_profile.gap_slab / 2
 
     # loop on sections
     door_line_sections.each do |door_line_section|
-      currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
+      currentx += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") / 2 if door_line_section.door_panel
 
       # get the file to be painted
       if door_line_section.door_panel
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg')
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
       else
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.svg')
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.png')
       end
 
       # load section image
@@ -112,7 +112,7 @@ class DoorLine < ActiveRecord::Base
 
       # update coordinates
       currentx += door_line_section.door_panel_dimension.width
-      currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
+      currentx += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") / 2 if door_line_section.door_panel
       currentx += (door_line_section.id == door_line_sections.last.id ? frame_profile.width : frame_profile.separator_width)
     end
 
@@ -149,47 +149,59 @@ class DoorLine < ActiveRecord::Base
   private ####################################################################
 
   def draw_vertical_measurement(canvas, section_height, currenty)
-    # binding for erb file
-    # constants
-    arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
-    # load erb file and generate svg
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'vertical_size.svg'))).result(binding)
-    end
+    arrow_offset = 15
+    arrow_width = 20
+    text_offset = 5
+    gc = Draw.new
+    gc.stroke 'black'
+    # top line
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, currenty * PIXELS_PER_INCH
+    # bottom line
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, (currenty + section_height) * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, (currenty + section_height) * PIXELS_PER_INCH
+    # vertical line
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
+    # top arrow
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, currenty * PIXELS_PER_INCH + arrow_width / 2, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, currenty * PIXELS_PER_INCH + arrow_width / 2
+    # bottom arrow
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, (currenty + section_height) * PIXELS_PER_INCH - arrow_width / 2, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, (currenty + section_height) * PIXELS_PER_INCH - arrow_width / 2
+    # text
+    gc.stroke 'transparent'
+    gc.fill 'black'
+    gc.pointsize 16
+    gc.text total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2 + text_offset, (currenty + section_height / 2) * PIXELS_PER_INCH, section_height.to_s
 
-    #load svg file
-    size_image = Image.read(temp_file_name)[0]
-
-    # define offset to paint section
-    offsetx_px = total_width * PIXELS_PER_INCH
-    offsety_px = currenty * PIXELS_PER_INCH
-
-    # paint the image on canvas
-    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
-    size_image.destroy!
+    gc.draw canvas
   end
 
   def draw_horizontal_measurement(canvas, section_width, currentx, extra_offset = 0)
-    # binding for erb file
-    # constants
-    arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
-    # load erb file and generate svg
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
-    end
+    arrow_offset = 15
+    arrow_height = 20
+    text_offset_x = -20
+    text_offset_y = -5
+    gc = Draw.new
+    gc.stroke 'black'
+    # left line
+    gc.line currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height
+    # right line
+    gc.line((currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, (currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height)
+    # horizontal line
+    gc.line currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2, (currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2
+    # top arrow
+    gc.line currentx * PIXELS_PER_INCH + arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2
+    gc.line currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2, currentx * PIXELS_PER_INCH + arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height
+    # bottom arrow
+    gc.line((currentx + section_width) * PIXELS_PER_INCH - arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, (currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2)
+    gc.line((currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2, (currentx + section_width) * PIXELS_PER_INCH - arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height)
+    # text
+    gc.stroke 'transparent'
+    gc.fill 'black'
+    gc.pointsize 16
+    gc.text((currentx + section_width / 2) * PIXELS_PER_INCH + text_offset_x, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2 + text_offset_y, section_width.to_s)
 
-    #load svg file
-    size_image = Image.read(temp_file_name)[0]
-
-    # define offset to paint section
-    offsetx_px = currentx * PIXELS_PER_INCH
-    offsety_px = total_height * PIXELS_PER_INCH + extra_offset
-
-    # paint the image on canvas
-    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
-    size_image.destroy!
+    gc.draw canvas
   end
 
 end
+
