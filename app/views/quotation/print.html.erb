@@ -171,7 +171,7 @@
                   first = true
                   ql.options_quotation_lines.each { |opt| %>
                     <%= ', ' if !first %>
-                    <%= opt.option.tr_description %>
+                    <%= show_option opt.option %>
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
@@ -289,7 +289,7 @@
                   first = true
                   dl.door_line_options.each { |opt| %>
                     <%= ', ' if !first %>
-                    <%= opt.option.tr_description %>
+                    <%= show_option opt.option %>
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
@@ -328,7 +328,7 @@
     <% end %>
     <tr valign="top">
       <td colspan="2" style="border-bottom: 2px dotted #808080;">
-        <%= option.option.tr_description %>
+        <%= show_option option.option %>
       </td>
       <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
       <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price %></td>

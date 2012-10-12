@@ -173,7 +173,7 @@
                   first = true
                   ql.options_quotation_lines.each { |opt| %>
                     <%= ', ' if !first %>
-                    <%= opt.option.tr_description %>
+                    <%= show_option opt.option %>
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
@@ -288,7 +288,7 @@
                   first = true
                   dl.door_line_options.each { |opt| %>
                     <%= ', ' if !first %>
-                    <%= opt.option.tr_description %>
+                    <%= show_option opt.option %>
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
@@ -325,7 +325,7 @@
     <% end %>
     <tr valign="top">
       <td colspan="2" style="border-bottom: 2px dotted #808080;">
-        <%= option.option.tr_description %>
+        <%= show_option option.option %>
       </td>
       <td width="10%" align="right" style="border-bottom: 2px dotted #808080;">&nbsp;</td>
       <td width="10%" align="center" style="border-bottom: 2px dotted #808080;" ><%= option.quantity %></td>
