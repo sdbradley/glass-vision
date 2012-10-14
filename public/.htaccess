@@ -35,11 +35,11 @@ PassengerEnabled On
 
 # for staging
 RailsBaseURI /glass-vision
-PassengerAppRoot /home/snowmoon/clients/glass-vision/current
-RailsEnv development
+#PassengerAppRoot /home/snowmoon/clients/glass-vision/current
+#RailsEnv development
 
 # for production
-#PassengerAppRoot /home/glass/apps/inline/current
+PassengerAppRoot /home/glass/apps/inline/current
 
 
 
