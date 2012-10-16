@@ -7,9 +7,8 @@ class QuotationController < ApplicationController
 
   def index
     search_params_from_session
-    conditions = search_conditions
-    conditions.merge!(:user_id => @current_user.id) unless @current_user.has_role?('administrator')
-    @quotations = Quotation.includes(:user).where(conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || "updated_at DESC")
+    conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
+    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || "updated_at DESC")
   end
 
   def show
