@@ -185,6 +185,6 @@ protected
     end    
   
     def self.get_administrator
-      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id",    :select =>"users.*", :order => "id ASC")
+      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id").select("users.*").order("id ASC")
     end        
 end
