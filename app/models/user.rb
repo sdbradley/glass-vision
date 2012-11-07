@@ -41,6 +41,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  before_create :set_company
+  
+  def set_company
+    if self.companies.empty?
+      self.companies << Company.where(:name => "Glass-Vision").first
+    end
+  end
 
   #
   # Raises:
