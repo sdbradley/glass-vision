@@ -470,7 +470,7 @@ private
     # complete missing widths if possible
     if cpt_missing == 0
       @total_width = acc_dimension + total_sidelight_width if @total_width == 0
-      return trn_get('MSG_WIDTHS_DONT_MATCH') if (@total_width - (acc_dimension + total_sidelight_width)).abs.round(3) > .001
+      return trn_get('MSG_WIDTHS_DONT_MATCH') if (@total_width - (acc_dimension + total_sidelight_width)).abs.round(3) > 0.001
     else
         deducted = (@total_width - acc_dimension - total_sidelight_width) / cpt_missing
         @real_width.each do |k, v|
