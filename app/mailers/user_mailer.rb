@@ -22,7 +22,7 @@ class UserMailer < ActionMailer::Base
   end
   
   def forgot_password(user)
-    @url  = reset_password_url(id => user.password_reset_code)
+    @url  = reset_password_url(:id => user.password_reset_code,:host => "quotations.glass-vision.net")
     @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_CHANGE_PASSWORD_SUBJECT'))
   end
