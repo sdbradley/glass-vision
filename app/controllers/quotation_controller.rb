@@ -2,7 +2,7 @@ class QuotationController < ApplicationController
 
   before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
   sortable_attributes  :updated_at, :slug, :description, :created_by, :consultant
-
+  
   SEARCH_FIELDS = %w(search_description search_slug)
 
   def index
@@ -166,6 +166,7 @@ protected
   end
 
   def set_taxes_if_not_present
+    return unless params[:quotation]
     params[:quotation]['taxes']     = 0.0 if params[:quotation]['taxes'].blank?
     params[:quotation]['taxes_pst'] = 0.0 if params[:quotation]['taxes_pst'].blank?
   end
