@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725092249) do
+ActiveRecord::Schema.define(:version => 20130129202636) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20120725092249) do
     t.datetime "updated_at"
     t.float    "price",                :default => 0.0
     t.integer  "door_panel_family_id"
+    t.string   "gap"
   end
 
   create_table "door_panels_door_sections", :id => false, :force => true do |t|
@@ -217,7 +218,20 @@ ActiveRecord::Schema.define(:version => 20120725092249) do
     t.float    "price",              :default => 0.0
     t.float    "width",              :default => 0.0
     t.float    "separator_width",    :default => 0.0
-    t.float    "gap",                :default => 0.0
+    t.float    "gap_slab",           :default => 0.0
+    t.float    "sill",               :default => 0.0
+    t.float    "gap_l",              :default => 0.0
+    t.float    "gap_lp",             :default => 0.0
+    t.float    "gap_slf",            :default => 0.0
+  end
+
+  create_table "manual_lines", :force => true do |t|
+    t.text     "description"
+    t.integer  "quantity"
+    t.float    "unit_price"
+    t.integer  "quotation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "module_types", :force => true do |t|
@@ -258,17 +272,18 @@ ActiveRecord::Schema.define(:version => 20120725092249) do
   end
 
   create_table "options", :force => true do |t|
-    t.string  "description",             :limit => 50, :default => "",  :null => false
+    t.string  "description",             :limit => 50, :default => "",    :null => false
     t.text    "comments"
-    t.integer "pricing_method_id",                     :default => 0,   :null => false
-    t.float   "price",                                 :default => 0.0, :null => false
-    t.float   "minimum_quantity",                      :default => 0.0, :null => false
-    t.integer "options_minimum_unit_id",               :default => 1,   :null => false
+    t.integer "pricing_method_id",                     :default => 0,     :null => false
+    t.float   "price",                                 :default => 0.0,   :null => false
+    t.float   "minimum_quantity",                      :default => 0.0,   :null => false
+    t.integer "options_minimum_unit_id",               :default => 1,     :null => false
     t.string  "photo_file_name"
     t.string  "photo_content_type"
     t.integer "photo_file_size"
-    t.integer "apply_to",                              :default => 0,   :null => false
+    t.integer "apply_to",                              :default => 0,     :null => false
     t.integer "module_type_id",                        :default => 1
+    t.boolean "emphasize",                             :default => false
   end
 
   create_table "options_minimum_units", :force => true do |t|
@@ -365,7 +380,7 @@ ActiveRecord::Schema.define(:version => 20120725092249) do
     t.string   "consultant"
     t.float    "deposit"
     t.float    "taxes_pst"
-    t.string   "slug",                                               :null => false
+    t.string   "slug"
   end
 
   add_index "quotations", ["slug"], :name => "quotations_slug_index", :unique => true
