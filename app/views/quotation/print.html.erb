@@ -28,7 +28,7 @@
 </table>
 
 <!-- customer information -->
-<table width="100%">
+<table width="100%" style="font-size: small;">
   <tr valign="top">
     <td width="50%">
       <%= trn_geth('PRINT_LABEL_CUSTOMER') %>
@@ -39,7 +39,7 @@
   </tr>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
 
-      <table width="100%">
+      <table width="100%" style="font-size: small;">
         <tr>
           <td><%= @quotation.customer_name %></td>
         </tr>
@@ -83,7 +83,7 @@
 <br/>
 
 <!-- content -->
-<table width="100%" cellspacing="0" cellpadding="3">
+<table width="100%" cellspacing="0" cellpadding="3" style="font-size: small;">
   <% total = 0 %>
     <thead style="display:table-header-group;">
       <tr bgcolor="#b2b2b2">
@@ -107,47 +107,44 @@
           options[:height] = 175
         end
       %>
-      <td width="1%" valign="top"><%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td width="1%" valign="top" rowspan="2" style="border-bottom: 2px solid #cccccc;">
+        <%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %>
+        <br><span style="font-size:x-small;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+      </td>
       <td >
-        <table width="100%">
+        <table width="100%" style="font-size: small;">
           <% if ql.label and !ql.label.empty? %>
           <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= ql.label %></td>
+            <td colspan="3"><%= ql.label %></td>
           </tr>
           <% end %>
           <tr>
             <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= ql.serie.tr_name %></td>
-          </tr>
-          <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= ql.shape.tr_name %></td>
           </tr>
           <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
+            <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
           </tr>
           <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= number_with_precision ql.width %></td>
-          </tr>
-          <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= number_with_precision ql.height %></td>
           </tr>
-          <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
-            <tr>
-              <td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-              <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
-            </tr>
-          <% end %>
-          <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank?%>
-            <tr>
-              <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-              <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
-            </tr>
-          <% end %>
+           <tr>
+              <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
+                <td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
+                <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+              <% end %>
+              <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank?%>
+                <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
+                <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
+              <% end %>
+           </tr>
         </table>
       </td>
       <% ql_price = ql.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
@@ -156,30 +153,16 @@
       <td width="10%" align="right"><%= number_to_currency(ql_price * ql.quantity) %></td>
     </tr>
     <tr valign="top" style="page-break-inside: avoid;">
-        <td  style="border-bottom: 2px dotted #808080;">
-            <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
-        </td>
-        <td colspan="3"  style="border-bottom: 2px dotted #808080;">
+        <td colspan="3"  style="border-bottom: 2px solid #cccccc;">
 
             <% if ql.options_quotation_lines.length > 0 %>
                 <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
-                <%
-                  first = true
-                  ql.options_quotation_lines.each { |opt| %>
-                    <%= ', ' if !first %>
-                    <%= show_option opt.option %>
-                    <% if opt.quantity != 1 %>
-                      x <%= opt.quantity %>
-                    <% end %>
-                <%
-                    first = false
-                  } %>
+                <%= ql.options_quotation_lines.collect {|opt| show_option_with_quantity(opt.option, opt.quantity)}.join(", ").html_safe %>
             <% else %>
               &nbsp;
             <% end %>
-
         </td>
-        <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+        <td  style="border-bottom: 2px solid #cccccc;">&nbsp;</td>
     </tr>
     <% total += ql_price * ql.quantity %>
   <% end %>
@@ -199,7 +182,7 @@
       <td width="1%" valign="top"><%= image_tag "/system/images/doors/preview_#{dl.id}.png", options %></td>
       <td >
 
-        <table>
+        <table style="font-size: small;">
           <tr>
             <td><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= dl.door_combination.tr_name %></td>
@@ -256,30 +239,20 @@
       <td width="10%" align="right"><%= number_to_currency(dl_price * dl.quantity) %></td>
     </tr>
     <tr valign="top" style="page-break-inside: avoid;" >
-        <td  style="border-bottom: 2px dotted #808080;">
-            <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+        <td rowspan="2" style="border-bottom: 2px solid #cccccc;">
+            <span style="font-size:x-small;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
         </td>
-        <td colspan="3"  style="border-bottom: 2px dotted #808080;">
+        <td colspan="3"  style="border-bottom: 2px solid #cccccc;">
 
             <% if dl.door_line_options.length > 0 %>
                 <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
-                <%
-                  first = true
-                  dl.door_line_options.each { |opt| %>
-                    <%= ', ' if !first %>
-                    <%= show_option opt.option %>
-                    <% if opt.quantity != 1 %>
-                      x <%= opt.quantity %>
-                    <% end %>
-                <%
-                    first = false
-                  } %>
+                <%= ql.door_line_options.collect {|opt| show_option_with_quantity(opt.option, opt.quantity)}.join(", ").html_safe %>
             <% else %>
               &nbsp;
             <% end %>
 
         </td>
-        <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+        <td  style="border-bottom: 2px solid #cccccc;">&nbsp;</td>
     </tr>
     <% total += dl_price * dl.quantity %>
   <% end %>
@@ -297,13 +270,13 @@
       <% print_header = false %>
     <% end %>
     <tr valign="top">
-      <td colspan="2" style="border-bottom: 2px dotted #808080;">
+      <td colspan="2" style="border-bottom: 2px solid #cccccc;">
         <%= show_option option.option %>
       </td>
       <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
-      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price %></td>
-      <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %></td>
-      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price * option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price %></td>
+      <td width="10%" align="center" style="border-bottom: 2px solid #cccccc;"><%= option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price * option.quantity %></td>
     </tr>
     <% total += option_price * option.quantity %>
   <% end %>
@@ -320,19 +293,19 @@
       <% print_header = false %>
     <% end %>
     <tr valign="top">
-      <td colspan="2" style="border-bottom: 2px dotted #808080;">
+      <td colspan="2" style="border-bottom: 2px solid #cccccc;">
         <%= option.description %>
       </td>
       <% option_price = option.unit_price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
-      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price %></td>
-      <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %></td>
-      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price * option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price %></td>
+      <td width="10%" align="center" style="border-bottom: 2px solid #cccccc;"><%= option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price * option.quantity %></td>
     </tr>
     <% total += option_price * option.quantity %>
   <% end %>
 
   <!-- total -->
-  <tr>
+  <tr style="page-break-inside: avoid;">
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
     <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
     <td colspan="3"><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
@@ -340,7 +313,7 @@
   <% if @quotation.ready_to_sign %>
 </table>
 <div style="page-break-before:always;">
-<table >
+<table style="font-size: small;" >
   <% end %>
   <tr >
     <td colspan="3" rowspan="5" style="border:1px solid #808080;" valign="top">
@@ -406,7 +379,7 @@
   <% if @quotation.ready_to_sign %>
     <tr >
       <td colspan="5" style="border-left:1px solid #808080;border-right:1px solid #808080;border-bottom:1px solid #808080;">
-      <table cellspacing="5">
+      <table cellspacing="5" style="font-size: small;">
         <tr>
           <td valign="top" colspan="5">
             <p>
