@@ -21,7 +21,7 @@
      cookies.delete :auth_token
      reset_session
      flash[:notice] = trn_get('LOGGED_OUT_FLASH')
-     Audit.write_audit(user, "Logout", "Success")
+     Audit.write_audit(user, "logout", "Success")
      redirect_to login_path
    end
    
