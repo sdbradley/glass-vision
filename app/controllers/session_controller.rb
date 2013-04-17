@@ -16,11 +16,13 @@
    end
   
    def destroy
+     user = self.current_user
      self.current_user.forget_me if logged_in?
      cookies.delete :auth_token
      reset_session
      flash[:notice] = trn_get('LOGGED_OUT_FLASH')
-     redirect_to login_path    
+     Audit.write_audit(user, "Logout", "Success")
+     redirect_to login_path
    end
    
    protected
@@ -31,11 +33,14 @@
      if user == nil
        failed_login('LOGIN_FAILED_FLASH')
      elsif user.activated_at.blank?  
+       Audit.write_audit(user, "login", "Failure", "User is not activated")
        failed_login('LOGIN_ACCT_NOT_ACTIVE_FLASH')
      elsif user.enabled == false
+       Audit.write_audit(user, "login", "Failure", "User is disabled")
        failed_login('LOGIN_ACCT_DISABLED_FLASH')
      else
        self.current_user = user
+       Audit.write_audit(user, "login", "Success", "from username/password")
        successful_login
      end
    end

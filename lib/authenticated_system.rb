@@ -150,21 +150,38 @@ module AuthenticatedSystem
 
     # Called from #current_user.  First attempt to login by the user id stored in the session.
     def login_from_session
-      self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
+      if session[:user_id]
+        user = User.where(:id => session[:user_id]).first
+        return nil if user.nil? #protect against deleted / nonexistent users
+
+        Audit.write_audit(user, "login", 'Failure', "From session - User is disabled") unless user.enabled?
+        self.current_user = user if user.enabled?
+      end
     end
 
     # Called from #current_user.  Now, attempt to login by basic authentication information.
     def login_from_basic_auth
       username, passwd = get_auth_data
-      self.current_user = user.authenticate(username, passwd) if username && passwd
+      self.current_user = User.authenticate(username, passwd) if username && passwd
     end
 
-    # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
+    # Called from #current_user.  Finally, attempt to login by an expiring token in the cookie.
     def login_from_cookie
-      user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
-      if user && user.remember_token?
+      user = cookies[:auth_token] && User.where(:remember_token => cookies[:auth_token]).first
+      return nil if user.nil? #protect against deleted / nonexistent users
+
+      unless user.enabled?
+        Audit.write_audit(user, "login", "Failure", "User is disabled")
+        return nil
+      end
+
+      if user.remember_token?
         cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+        Audit.write_audit(user, "login", "Success", "From cookie")
         self.current_user = user
+      else
+        Audit.write_audit(user, "login", "Failure", "Cookie expired")
+        return nil
       end
     end
 
