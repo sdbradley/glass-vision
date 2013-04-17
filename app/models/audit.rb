@@ -1,6 +1,6 @@
 class Audit < ActiveRecord::Base
 
-  has_many :users
+  belongs_to :user
 
   def readonly?
     !new_record?
