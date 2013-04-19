@@ -57,11 +57,26 @@ class Quotation < ActiveRecord::Base
 
   def generate_new_slug(slug)
     last = 1
-    base_slug = slug.slice(/.*-/) || slug + "-"
+
+    base_slug = Quotation.get_base_slug(slug)
     existing_slugs = Quotation.connection.select_all("select slug from quotations where slug like '#{base_slug}%'")
     existing_slugs = existing_slugs.collect {|s| s["slug"]}
     last = existing_slugs.collect{|s| s[((s.rindex('-')||-1)+1)..-1].to_i}.max() + 1  unless existing_slugs.empty?
 
     return base_slug + last.to_s
+  end
+
+  private
+  def self.get_base_slug(slug)
+    # we have to handle the following cases:
+    # 1) quotation that's never been copied and slug is original id (eg 900), no dashes at all
+    # 2) quotation with new format slug (eg 13-0101), never copied
+    # 3) quotation with id + copy (eg 900-2)
+    # 4) quotation with new format slug that's been copied (13-01010-1)
+
+    # cases 2 and 4 can be handled the same way, as we just want the root slug.
+    base_slug = slug.slice(/\d+-\d{4}-/) # case #4
+    base_slug ||= slug.slice(/\d+-/) unless slug.match(/^\d+(-\d{4})*$/) # case 3
+    base_slug ||= slug + '-'
   end
 end

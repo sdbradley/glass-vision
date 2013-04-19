@@ -35,7 +35,7 @@ class QuotationController < ApplicationController
     end
     if @quotation.save
     	if @quotation.slug.blank?
-    	  @quotation.slug = @quotation.id.to_s
+    	  @quotation.slug = InvoiceNumber.get_next_invoice_number
     	  @quotation.save
     	end
       customer_msg += "<br />" unless customer_msg.blank?
