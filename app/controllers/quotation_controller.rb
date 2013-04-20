@@ -102,7 +102,7 @@ class QuotationController < ApplicationController
     @quotation.save!
     @quotation.regenerate_previews
     flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-    redirect_to edit_quotation_path(@quotation.slug)
+    redirect_to quotation_path(@quotation.slug)
   end
 
   def search
