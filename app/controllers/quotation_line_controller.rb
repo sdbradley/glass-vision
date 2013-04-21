@@ -90,6 +90,7 @@ class QuotationLineController < ApplicationController
         # save calculated dimensions
         @quotation_line.height = @total_height
         @quotation_line.width = @total_width
+        @quotation_line.position = @quotation_line.quotation.quotation_lines.count() + 1
         if @quotation_line.save
 
           # save openings

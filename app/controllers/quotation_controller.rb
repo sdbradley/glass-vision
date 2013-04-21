@@ -95,7 +95,7 @@ class QuotationController < ApplicationController
 #    return unless request.xhr?
     @orig_quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:quotation_id])
     if @orig_quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
-      flash[notice] = trn_get("PERMISSION_DENIED")
+      flash[notice] = trn_get('PERMISSION_DENIED')
       redirect_to :action => 'index'
     end
     @quotation = Quotation.copy(@orig_quotation)
@@ -107,7 +107,7 @@ class QuotationController < ApplicationController
 
   def search
     save_search_params_to_session
-    params[:action] = "index"
+    params[:action] = 'index'
 
     if @current_user.has_role?('administrator')
       @quotations = Quotation.includes(:user).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
@@ -162,7 +162,9 @@ protected
   end
 
   def find_quotation
-    @quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:id])
+    @quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening},
+                                                         {:options_quotation_lines=> :option}]
+                                   ).find_by_slug(params[:id])
   end
 
   def set_taxes_if_not_present

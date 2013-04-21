@@ -6,6 +6,7 @@ class Quotation < ActiveRecord::Base
   belongs_to :user
   belongs_to :company
 
+
   validates_presence_of :project_name
   validates_numericality_of :markup, :allow_nil => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 35
   validates_numericality_of :deposit, :allow_nil => true, :greater_than_or_equal_to => 0

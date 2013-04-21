@@ -108,7 +108,7 @@
     <th></th>
   </tr>
   <% total = 0 %>
-  <% for line in @quotation.quotation_lines %>
+  <% for line in @quotation.quotation_lines.order('position asc') %>
     <%   total += line.quantity * line.price %>
   <tr valign="top" class="quotation-line">
     <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/system/images/previews/preview_#{line.id}.png" %></td>
