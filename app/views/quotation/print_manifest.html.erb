@@ -3,7 +3,7 @@
 <table cellpadding="5" width="100%">
   <tr valign="top" width="1%">
     <td rowspan="2">
-      <%= image_tag @quotation.company.logo.url %>
+      <%= wicked_pdf_dynamic_image_tag @quotation.company.logo.url %>
     </td>
     <td rowspan="2" width="1%" nowrap="nowrap">
       <strong><%= @quotation.company.name %></strong><br/>
@@ -105,7 +105,7 @@
           options[:height] = 100
         end
       %>
-      <td width="<%=options[:width]%>" valign="top"><%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td width="<%=options[:width]%>" valign="top"><%= wicked_pdf_dynamic_image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
       <td >
         <table width="100%">
           <% if ql.label and !ql.label.empty? %>
@@ -196,7 +196,7 @@
           options[:height] = 100
         end
       %>
-      <td width="<%=options[:width]%>" valign="top"><%= image_tag "/system/images/doors/preview_#{dl.id}.png", options %></td>
+      <td width="<%=options[:width]%>" valign="top"><%= wicked_pdf_dynamic_image_tag "/system/images/doors/preview_#{dl.id}.png", options %></td>
       <td >
         <table width="100%">
           <tr>

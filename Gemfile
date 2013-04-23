@@ -11,3 +11,5 @@ gem 'validation_reflection'
 gem 'mysql2','0.2.7'
 gem 'rmagick'
 gem 'deep_cloneable', "~> 1.4.1"
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'

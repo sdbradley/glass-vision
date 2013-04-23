@@ -72,20 +72,20 @@ class QuotationController < ApplicationController
   end
 
   def print
-    render :layout => 'printer'
+    render :pdf => "#{@quotation.slug}-#{@quotation.project_name}", :layout => 'printer', :debug => 1
   end
 
   def print_invoice
-    render :layout => 'printer'
+    render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("PRINT_INVOICE_TITLE")}", :layout => 'printer', :debug => 1
   end
 
   def print_manifest
-    render :layout => 'printer'
+    render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_MANIFEST")}", :layout => 'printer', :debug => 1
   end
 
   def print_calculations
     if current_user.has_role?('administrator')
-      render :layout => 'printer'
+      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_CALCULATIONS")}", :layout => 'printer', :debug => 1
     else
       redirect_to :action => 'index'
     end

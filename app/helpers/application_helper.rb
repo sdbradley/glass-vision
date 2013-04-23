@@ -2,6 +2,7 @@
 include TranslationGet
 module ApplicationHelper
   include SortableTable::App::Helpers::ApplicationHelper
+  include WickedPdfHelper
 
   def yes_or_no(b)
     trn_get(b ? 'MSG_YES' : 'MSG_NO')
@@ -71,5 +72,10 @@ module ApplicationHelper
     display_label = trn_geth(link_label)
     display_label += ' - ' + options[:label] if options[:label]
     "<a href=#{url_for link}>#{image_tag(image + '.png', :size => "32x32", :border => 0)}<label>#{display_label}</label></a>".html_safe
+  end
+
+
+  def wicked_pdf_dynamic_image_tag(img, options={})
+    image_tag "file:///#{File.join(Rails.root,'public', img)}", options
   end
 end

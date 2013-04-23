@@ -2,7 +2,7 @@
 <table cellpadding="5" width="100%">
   <tr valign="top" width="1%">
     <td rowspan="2">
-      <%= image_tag @quotation.company.logo.url %>
+      <%= wicked_pdf_dynamic_image_tag @quotation.company.logo.url %>
     </td>
     <td rowspan="2" width="1%" nowrap="nowrap">
       <strong><%= @quotation.company.name %></strong><br/>
@@ -108,7 +108,7 @@
         end
       %>
       <td width="1%" valign="top" rowspan="2" style="border-bottom: 2px solid #cccccc;">
-        <%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %>
+        <%= wicked_pdf_dynamic_image_tag "/system/images/previews/preview_#{ql.id}.png", options %>
         <br><span style="font-size:x-small;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
       </td>
       <td >
@@ -179,7 +179,7 @@
           options[:height] = 175
         end
       %>
-      <td width="1%" valign="top"><%= image_tag "/system/images/doors/preview_#{dl.id}.png", options %></td>
+      <td width="1%" valign="top"><%= wicked_pdf_dynamic_image_tag "/system/images/doors/preview_#{dl.id}.png", options %></td>
       <td >
 
         <table style="font-size: small;">
