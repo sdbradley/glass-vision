@@ -228,15 +228,15 @@
     <% total += option_price * option.quantity %>
   <% end %>
 
+</table>
+<div style="page-break-before:always;">
+<table style="width:100%;font-size: small;" >
   <!-- total -->
   <tr style="page-break-inside: avoid;">
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
     <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
     <td colspan="3"><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
-</table>
-<div style="page-break-before:always;">
-    <table style="width:100%;font-size: small;" >
   <tr >
     <td colspan="3" rowspan="6" style="border:1px solid #808080;" valign="top">
       <p>
@@ -300,7 +300,7 @@
     <% if !@quotation.comments.blank? %>
       <%= render :partial => 'print_comment_block' %>
     <% end %>
-  </table>
+</table>
   <% if @quotation.ready_to_sign %>
     <%= render :partial => 'print_signature_block' %>
   <% end %>

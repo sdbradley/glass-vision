@@ -221,7 +221,9 @@
       <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;">&nbsp;</td>
     </tr>
   <% end %>
-
+</table>
+<div style="page-break-before:always;">
+  <table style="width:100%;font-size: small;" cellspacing="0" cellpadding="3" >
   <tr style="page-break-inside: avoid;">
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
     <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
@@ -251,17 +253,11 @@
     <td align="right" style="border-right:1px solid #808080;border-bottom:1px solid #808080;">
     </td>
   </tr>
-<% if !@quotation.comments.blank? %>
-  <tr>
-   <td colspan="5" style="border:1px solid #808080;" valign="top">
-      <p>
-        <strong><%= trn_geth('PRINT_LABEL_COMMENTS') %></strong><br />
-          <%= @quotation.comments.gsub("\n", '<br/>').html_safe %>
-      </p>
-    </td>
-   </tr>
-<% end %>
+  <% if !@quotation.comments.blank? %>
+    <%= render :partial => 'print_comment_block' %>
+  <% end %>
+</table>
   <% if @quotation.ready_to_sign %>
     <%= render :partial => 'print_signature_block' %>
   <% end %>
-</table>
+</div>
