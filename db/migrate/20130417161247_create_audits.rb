@@ -6,7 +6,7 @@ class CreateAudits < ActiveRecord::Migration
       t.string :result
       t.string :reason
 
-      t.datetime created_at
+      t.datetime :created_at
     end
   end
 
