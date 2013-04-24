@@ -75,8 +75,7 @@ class QuotationController < ApplicationController
   def print
     retryable(:tries => 5, :on => RuntimeError) do
       render :pdf => "#{@quotation.slug}-#{@quotation.project_name}", :layout => 'printer', :disposition => "inline", 
-	             :temp_path => Rails.root.join('tmp'),
-		     :save_to_file => Rails.root.join("public/system", "#{@quotation.slug}-#{@quotation.project_name}.pdf")
+	           :temp_path => Rails.root.join('tmp')
     end
   end
 
