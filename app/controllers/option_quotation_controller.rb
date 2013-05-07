@@ -1,7 +1,7 @@
 class OptionQuotationController < ApplicationController
   def add
     @options = Option.all(:order => :description)
-    @quotation = Quotation.find(params[:id])
+    @quotation = Quotation.find_by_slug(params[:id])
     @quantity = 1
   end
 
@@ -25,8 +25,8 @@ class OptionQuotationController < ApplicationController
   end
 
   def delete
-    option = OptionsQuotation.find(params[:id])
-    option.destroy
-    redirect_to :controller => 'quotation', :action => 'show', :id => option.quotation.slug
+    @option = OptionsQuotation.find(params[:id])
+    @option.destroy
+    redirect_to :controller => 'quotation', :action => 'show', :id => @option.quotation.slug
   end
 end

@@ -12,7 +12,7 @@ class QuotationLineController < ApplicationController
       redirect_to :controller => 'doors', :action => 'new', :id => params[:id]
     end
     @quotation_line = QuotationLine.new
-    @quotation_line.quotation_id = params[:id]
+    @quotation_line.quotation_id = Quotation.find_by_slug(params[:id]).id
   end
 
   def add2

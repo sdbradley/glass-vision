@@ -1,7 +1,8 @@
 class ManualLinesController < ApplicationController
 
   def new
-    @manual_line = ManualLine.new(:quotation_id => params[:id], :quantity => 1, :unit_price => 0)
+    quotation = Quotation.find_by_slug(params[:id])
+    @manual_line = ManualLine.new(:quotation_id => quotation, :quantity => 1, :unit_price => 0)
   end
 
   def create
@@ -29,10 +30,10 @@ class ManualLinesController < ApplicationController
   end
 
   def delete
-    manual_line = ManualLine.find(params[:id])
-    manual_line.destroy
+    @manual_line = ManualLine.find(params[:id])
+    @manual_line.destroy
     flash[:notice] = trn_geth('LABEL_MANUAL_OPTION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :controller => 'quotation', :action => 'show', :id => manual_line.quotation.slug
+    redirect_to :controller => 'quotation', :action => 'show', :id => @manual_line.quotation.slug
   end
 
 end
