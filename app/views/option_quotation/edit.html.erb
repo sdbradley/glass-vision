@@ -8,5 +8,5 @@
   <%= text_field_tag 'quantity', @option.quantity, :size => 6 %><br/>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @option.quotation.id %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @option.quotation.slug %>
 

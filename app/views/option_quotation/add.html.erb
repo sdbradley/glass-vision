@@ -6,7 +6,7 @@
 </script>
 <h2><%= trn_get('TITLE_ADD_OPTION_IN_QUOTATION') %></h2>
 
-<%= form_tag :action => 'create', :id => @quotation.id do %>
+<%= form_tag :action => 'create', :id => @quotation.slug do %>
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr height="50">
 		<td> <%= trn_gett('LABEL_OPTION') %><%= trn_get('LABEL_SEMICOLON') %></td>
@@ -31,6 +31,6 @@
 		</td><td>		</td><td></td></tr>
 </table>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation.id %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation.slug %>
 
 
