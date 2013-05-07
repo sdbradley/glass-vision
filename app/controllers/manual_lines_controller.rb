@@ -2,7 +2,7 @@ class ManualLinesController < ApplicationController
 
   def new
     quotation = Quotation.find_by_slug(params[:id])
-    @manual_line = ManualLine.new(:quotation_id => quotation, :quantity => 1, :unit_price => 0)
+    @manual_line = ManualLine.new(:quotation_id => quotation.id, :quantity => 1, :unit_price => 0)
   end
 
   def create
