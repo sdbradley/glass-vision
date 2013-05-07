@@ -5,7 +5,7 @@ class DoorsController < ApplicationController
 
     # create new door line with default settings
     @door_line = DoorLine.new
-    @door_line.quotation_id = params[:id]
+    @door_line.quotation_id = Quotation.find_by_slug(params[:id]).id
     @door_line.door_frame = @door_frames.first
     @door_line.door_combination = DoorCombination.first(:conditions => { :door_frame_id => @door_line.door_frame_id })
     @door_line.frame_profile = @frame_profiles.first
