@@ -34,6 +34,8 @@
   </td>
 </tr>
   <tr>
-    <td colspan="5"><%= trn_get('DISCLAIMER_TEXT').gsub("\n", '<br/>').html_safe  %></td>
+    <td colspan="5" style="border-left:1px solid #808080;border-right:1px solid #808080;border-bottom:1px solid #808080;">
+      <%= trn_get('DISCLAIMER_TEXT').gsub("\n", '<br/><br/>').html_safe  %>
+    </td>
   </tr>
 </table>
