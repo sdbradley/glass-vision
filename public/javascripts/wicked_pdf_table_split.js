@@ -108,7 +108,7 @@ $(window).load(function () {
 	//   first, clear all rows from the table still in the dom
         $origin_table.find('> tbody > tr').remove();
         $origin_table.find('> tfoot > tr').remove();
-
+        insertPageBreak($origin_table);
 	//   next, start adding rows until the table doesn't fit
 
         $orig_table.find('> tbody > tr').each(function () {
@@ -151,6 +151,11 @@ $(window).load(function () {
         var $br = $('<div class="page-breaker" style="height: 10px;"></div>').css('page-break-before', 'always');
         $(what).appendTo($(after).parent());
         $br.insertAfter(what);
+    }
+
+    function insertPageBreak(after) {
+        var $br = $('<div class="page-breaker" style="height: 10px;"></div>').css('page-break-before', 'always');
+        $br.insertAfter(after);
     }
 
 
