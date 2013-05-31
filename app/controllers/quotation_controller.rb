@@ -75,26 +75,26 @@ class QuotationController < ApplicationController
   def print
     retryable(:tries => 5, :on => RuntimeError) do
       render :pdf => "#{@quotation.slug}-#{@quotation.project_name}", :layout => 'printer', :disposition => "inline", 
-	           :temp_path => Rails.root.join('tmp')
+	           :temp_path => Rails.root.join('tmp'), :show_as_html => params[:debug].present?
     end
   end
 
   def print_invoice
     retryable(:tries => 5, :on => RuntimeError) do
-      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("PRINT_INVOICE_TITLE")}", :layout => 'printer'
+      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("PRINT_INVOICE_TITLE")}", :layout => 'printer', :show_as_html => params[:debug].present?
     end
   end
 
   def print_manifest
     retryable(:tries => 5, :on => RuntimeError) do
-      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_MANIFEST")}", :layout => 'printer'
+      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_MANIFEST")}", :layout => 'printer', :show_as_html => params[:debug].present?
     end
   end
 
   def print_calculations
     if current_user.has_role?('administrator')
       retryable(:tries => 5, :on => RuntimeError) do
-        render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_CALCULATIONS")}", :layout => 'printer'
+        render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_CALCULATIONS")}", :layout => 'printer', :show_as_html => params[:debug].present?
       end
     else
       redirect_to :action => 'index'

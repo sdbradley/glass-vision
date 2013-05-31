@@ -23,17 +23,19 @@
         <% end %>
         <tr>
           <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= ql.serie.tr_name %></td>
-          <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= ql.shape.tr_name %></td>
+          <td width="45%"><%= ql.serie.tr_name %></td>
+          <td width="1%"></td>
+          <td></td>
         </tr>
         <tr>
+          <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td width="45%"><%= ql.shape.tr_name %></td>
           <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
           <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation }.join %></td>
         </tr>
         <tr>
           <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= number_with_precision ql.width %></td>
+          <td width="45%"><%= number_with_precision ql.width %></td>
           <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
           <td><%= number_with_precision ql.height %></td>
         </tr>
@@ -49,11 +51,11 @@
         </tr>
       </table>
     </td>
-    <td width="10%" align="right"><%= number_to_currency(ql_price) %></td>
+    <td width="10%" align="right"></td>
+    <td width="10%" align="right"></td>
     <td width="10%" align="center"><%= ql.quantity %></td>
-    <td width="10%" align="right"><%= number_to_currency(ql_price * ql.quantity) %></td>
   </tr>
-  <tr valign="top">
+  <tr valign="top" >
     <td colspan="3" style="border-bottom: 2px solid #cccccc;">
 
       <% if ql.options_quotation_lines.length > 0 %>

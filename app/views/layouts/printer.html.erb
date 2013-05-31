@@ -11,6 +11,9 @@
         <%= wicked_pdf_javascript_include_tag 'jquery','wicked_pdf_table_split' %>
         <%= wicked_pdf_stylesheet_link_tag 'print' %>
     <% end %>
+    <style>
+        <%= yield :extra_styles %>
+    </style>
   </head>
   <body>
     <%= yield %>

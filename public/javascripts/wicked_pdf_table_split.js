@@ -93,7 +93,7 @@ $(window).load(function () {
 //console.log("splitForPrint running: x_pos " + x_pos);
 
         var $template = $origin_table.clone()
-	    var $orig_table = $origin_table.clone();
+        var $orig_table = $origin_table.clone();
 
         $template.find('> tbody > tr').remove();
         $template.find('> tfoot > tr').remove();
@@ -103,30 +103,30 @@ $(window).load(function () {
         split_tables.push($origin_table)
 
 
-	// see how many rows we can fit into the original table 
-	// before we need to do a page break
-	//   first, clear all rows from the table still in the dom
+        // see how many rows we can fit into the original table
+        // before we need to do a page break
+        //   first, clear all rows from the table still in the dom
         $origin_table.find('> tbody > tr').remove();
         $origin_table.find('> tfoot > tr').remove();
         insertPageBreak($origin_table);
-	//   next, start adding rows until the table doesn't fit
+        //   next, start adding rows until the table doesn't fit
 
         $orig_table.find('> tbody > tr').each(function () {
             var $tr = $(this);
 
-		    // move row to new table
+            // move row to new table
             $tr.detach().appendTo(split_tables[current_table].find('> tbody'));
 
 //console.log("current table height " + $(split_tables[current_table]).height() + ", usable page: " + ((pageHeight - splitThreshold)));
             if ($(split_tables[current_table]).height() + x_pos > (pageHeight - splitThreshold)) {
 //console.log("splitting table at "  + ($(split_tables[current_table]).height() + x_pos));
-	
+
                 current_table++
                 split_tables.push($template.clone())
                 insertIntoDom($origin_table, split_tables[current_table])
-               // move row to new table
-		$tr.detach().appendTo(split_tables[current_table].find('> tbody'));
-		x_pos = 0;
+                // move row to new table
+                $tr.detach().appendTo(split_tables[current_table].find('> tbody'));
+                x_pos = 0;
             }
 
         });

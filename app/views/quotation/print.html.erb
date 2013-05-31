@@ -24,7 +24,7 @@
     <% ql_price = ql.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
       <tr>
         <td colspan="5">
-          <%= render :partial => 'quotation_line_summary', :locals => {:ql => ql, :ql_price => ql_price} %>
+          <%= render :partial => 'quotation_line_summary', :locals => {:ql => ql, :ql_price => ql_price, :max_thumbnail_size => 175} %>
         </td>
       </tr>
     <% total += ql_price * ql.quantity %>
