@@ -77,6 +77,7 @@ module ApplicationHelper
 
 
   def wicked_pdf_dynamic_image_tag(img, options={})
-    image_tag "file:///#{File.join(Rails.root,'public', img)}", options
+    wicked_pdf_image_tag img, options # "file:///#{File.join(Rails.root,'public', img)}", options unless params[:debug].present?
+    image_tag img, options if params[:debug].present?
   end
 end
