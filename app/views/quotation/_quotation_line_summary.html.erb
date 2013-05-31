@@ -4,9 +4,9 @@
        dims = ql.get_image_size
        options = {:style => "margin-top: 3px;"}
        if dims[0] > dims[1]
-         options[:width] = :max_thumbnail_size
+         options[:width] = max_thumbnail_size
        else
-         options[:height] = :max_thumbnail_size
+         options[:height] = max_thumbnail_size
        end
     %>
     <td width="1%" valign="top" rowspan="2" style="border-bottom: 2px solid #cccccc;">
