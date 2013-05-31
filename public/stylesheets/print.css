@@ -6,3 +6,11 @@
 	margin-bottom: 0pt;
 	letter-spacing:40px;
 	}
+
+#table, tr, td, th, tbody, thead, tfoot {
+#    page-break-inside: avoid !important;
+#}
+
+#div.page-breaker {
+#  outline: 1px solid red;
+#}
