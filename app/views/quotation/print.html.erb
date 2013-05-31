@@ -22,7 +22,7 @@
   <% for ql in @quotation.quotation_lines.order('position asc') %>
     <% ql_price = ql.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
       <tr>
-        <td>
+        <td colspan="5">
           <%= render :partial => 'quotation_line_summary', :locals => {:ql => ql, :ql_price => ql_price} %>
         </td>
       </tr>
@@ -33,7 +33,7 @@
   <% for dl in @quotation.door_lines.order('position asc') %>
       <% dl_price = dl.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
       <tr>
-        <td>
+        <td colspan="5">
             <%= render :partial => 'door_line_summary', :locals => {:dl => dl, :dl_price => dl_price}  %>
         </td>
       </tr>
