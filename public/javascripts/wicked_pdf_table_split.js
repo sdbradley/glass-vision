@@ -93,7 +93,8 @@ $(window).load(function () {
 //console.log("splitForPrint running: x_pos " + x_pos);
 
         var $template = $origin_table.clone()
-	var $orig_table = $origin_table.clone();
+	    var $orig_table = $origin_table.clone();
+
         $template.find('> tbody > tr').remove();
         $template.find('> tfoot > tr').remove();
 
@@ -105,16 +106,14 @@ $(window).load(function () {
 	// see how many rows we can fit into the original table 
 	// before we need to do a page break
 	//   first, clear all rows from the table still in the dom
-        $origin_table.find('> tbody > tr').detach();
-        $origin_table.find('> tfoot > tr').detach();
+        $origin_table.find('> tbody > tr').remove();
+        $origin_table.find('> tfoot > tr').remove();
 
 	//   next, start adding rows until the table doesn't fit
 
         $orig_table.find('> tbody > tr').each(function () {
             var $tr = $(this);
 
-var $t = "<br/>current row " + $tr.find("td").first().html();
-$tr.find("td").first().append($t);
 		    // move row to new table
             $tr.detach().appendTo(split_tables[current_table].find('> tbody'));
 
@@ -133,7 +132,7 @@ $tr.find("td").first().append($t);
         });
 
         //table footer
-        var $tfoot = $origin_table.find('> tfoot')
+        var $tfoot = $orig_table.find('> tfoot')
 
         var last_table_height = $(split_tables[current_table]).height();// + $(split_tables[current_table]).position().top;
         if (last_table_height + $tfoot.height() > (pageHeight - splitThreshold)) {
@@ -143,7 +142,7 @@ $tr.find("td").first().append($t);
             alert('made new table for footer')
         }
         $tfoot.detach().appendTo($(split_tables[current_table]))
-        $origin_table.remove()
+//        $origin_table.remove()
 
         $('div.page-breaker').last().remove()
     });
