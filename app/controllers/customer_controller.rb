@@ -1,4 +1,5 @@
 class CustomerController < ApplicationController
+
   def index
     list
     render :action => 'list'
@@ -16,15 +17,6 @@ class CustomerController < ApplicationController
     end
   end
 
-  def autocomplete_for_name
-    if request.xml_http_request?
-      @customers = Customer.where('name like ?', "%#{params[:quotation][:customer_name]}%")
-      @customers.where(:user_id => @current_user.id) unless @current_user.has_role?('administrator')
-      render :partial => "list", :layout => false
-    else
-      render :nothing => true
-    end
-  end
 
   def show
     @customer = Customer.find(params[:id])
@@ -37,7 +29,7 @@ class CustomerController < ApplicationController
   def show_by_name
     if request.xml_http_request?
       @customer = Customer.where('name = ?', "#{params[:customer_name]}").first
-      render :partial => "show_by_name", :layout => false unless @customer.nil?
+      render :partial => 'show_by_name', :layout => false unless @customer.nil?
     else
       render :nothing => true
     end

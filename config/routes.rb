@@ -50,6 +50,7 @@ GlassVision::Application.routes.draw do
   resource :session, :controller => :session
   resource :passwords
   resources :quotations, :controller => :quotation do
+    get :autocomplete_customer_name, :on => :collection
     collection do
         post :search
     end

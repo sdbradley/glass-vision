@@ -4,21 +4,10 @@
   <tr>
     <td align="right"><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= select 'quotation_line', 'serie_id', Serie.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
-    <%= observe_field 'quotation_line_serie_id',
-                      :on => 'onselect',
-                      :url => { :controller => 'quotation_line', :action => 'change_series'},
-                      :with => "'serie_id='+value+'&'+Form.serialize('ql')"
-                      %>
   </tr>
   <tr>
     <td align="right"><%= trn_geth('LABEL_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= select 'quotation_line', 'shape_id', Shape.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
-    <%= observe_field 'quotation_line_shape_id',
-                      :on => 'onchanged',
-                      :url => { :controller => 'quotation_line', :action => 'change_shape'},
-                      :with => "'shape_id='+value+'&'+Form.serialize('ql')"
-                      %>
-
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -31,3 +20,23 @@
 </table>
 
 <%= render :partial => 'openings_and_dimensions' %>
+
+<% content_for :extra_javascript do %>
+    $('#quotation_line_serie_id').change(function () {
+        $.ajax({
+        url: "<%= url_for(:controller => 'quotation_line', :action => 'change_series') %>",
+        dataType: 'script',
+        data:  $('#ql').serialize()
+        });
+    });
+
+    $('#quotation_line_shape_id').change(function () {
+        $.ajax({
+        url: "<%= url_for(:controller => 'quotation_line', :action => 'change_shape') %>",
+        dataType: 'script',
+        data: $('#ql').serialize()
+        });
+    });
+
+
+<% end %>

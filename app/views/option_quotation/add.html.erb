@@ -1,9 +1,10 @@
-<script type="text/javascript" charset="utf-8">
-	function change_photo(id) {
-		 var option_id = $('option_id');
-		$('photo').src = $(option_id.options[id]).getStyle("background-image").replace(/url\((.*)\)/, "$1").replace("thumb", "original");
-	}
-</script>
+<% content_for :extra_javascript do %>
+  $('#option_id').change(function () {
+      var new_image_url = $('#option_id option:selected').css('background-image').replace(/url\(\"(.*)\"\)/, "$1").replace("thumb", "original");
+      $('#photo').attr('src', new_image_url);
+  });
+
+<% end %>
 <h2><%= trn_get('TITLE_ADD_OPTION_IN_QUOTATION') %></h2>
 
 <%= form_tag :action => 'create', :id => @quotation.slug do %>
@@ -12,10 +13,7 @@
 		<td> <%= trn_gett('LABEL_OPTION') %><%= trn_get('LABEL_SEMICOLON') %></td>
 		<td><%= select_tag('option_id', options_for_select_with_style(@options.map { |o| 
 	      [o.tr_description, "padding: 2px; padding-left: 32px;background: no-repeat url(#{image_path o.photo.url(:thumb)})", o.id]}), 
-				:style => 'padding:2px 2px 2px 32px;', 
-				:onchange => 'change_photo(option_id.selectedIndex);',
-				:onkeyup => 'change_photo(option_id.selectedIndex)')
-	%>
+				:style => 'padding:2px 2px 2px 32px;')%>
 		</td>
 		<td rowspan="3" width="300" height="300" style="vertical-align:top;">
 			<%=image_tag(@options[0].photo.url, :id=>'photo') %>

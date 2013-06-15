@@ -13,3 +13,6 @@ gem 'rmagick'
 gem 'deep_cloneable', "~> 1.4.1"
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+gem 'jquery-rails', '~> 2.1'
+gem 'rails3-jquery-autocomplete'
+gem "jquery-migrate-rails"

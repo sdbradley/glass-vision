@@ -1,5 +1,6 @@
 require 'retryable'
 class QuotationController < ApplicationController
+  autocomplete :customer, :name, :full => true, :extra_data => [:address]
 
   before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
   sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
@@ -181,6 +182,17 @@ protected
     return unless params[:quotation]
     params[:quotation]['taxes']     = 0.0 if params[:quotation]['taxes'].blank?
     params[:quotation]['taxes_pst'] = 0.0 if params[:quotation]['taxes_pst'].blank?
+  end
+
+
+  protected
+
+  def get_autocomplete_items(parameters)
+    if  @current_user.has_role?('administrator')
+      super(parameters)
+    else
+      super(parameters).where(:user_id => @current_user.id)
+    end
   end
 
 end

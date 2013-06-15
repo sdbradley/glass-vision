@@ -35,16 +35,18 @@ tr.odd {
 tr.even {
 }
 
-.notice table, .error table {
-  background-color: #ffc800;
-  margin-left: auto;
-  margin-right: auto;
-}
+.notice p {text-align: center;}
+.error p {text-align: center;}
+/*.notice table, .error table {*/
+  /*background-color: #ffc800;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+/*}*/
 
- .error table {
-  background-color: #ff0000;
-  color: white;
-}
+ /*.error table {*/
+  /*background-color: #ff0000;*/
+  /*color: white;*/
+/*}*/
 
 
 .notice td, .error td{

@@ -72,7 +72,7 @@ module ApplicationHelper
     display_label = trn_geth(link_label)
     display_label += ' - ' + options[:label] if options[:label]
 
-    "<a href=#{url_for link}>#{image_tag(image + '.png', :size => "32x32", :border => 0)}#{display_label}</a>".html_safe
+    "<a href='#{url_for link}'>#{image_tag(image + '.png', :size => "32x32", :border => 0)}#{display_label}</a>".html_safe
   end
 
 
