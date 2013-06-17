@@ -126,7 +126,7 @@ class QuotationController < ApplicationController
       @quotations = Quotation.includes(:user).where("user_id = ?", @current_user.id).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
     end
 
-    render :partial => 'quotation_list'
+#    render :partial => 'quotation_list'
   end
 
 
