@@ -28,7 +28,7 @@ module QuotationLineHelper
       js << "pics_#{section}.img_#{o.id} = '/images/openings/#{o.preview_image_name}';"
     end
     output << javascript_tag(js)
-    output << select_tag("openings_combo_#{section}", options_for_select([['----', 0]] + @quotation_line.serie.openings.map { |o| ["#{o.name} (#{o.abbreviation})", o.id] }, selected), :onchange => "$('#openings_#{section}').val($(this).value); $('#opening_pic_#{section}').attr('src', pics_#{section}['img_' + $(this).val())];")
+    output << select_tag("openings_combo_#{section}", options_for_select([['----', 0]] + @quotation_line.serie.openings.map { |o| ["#{o.name} (#{o.abbreviation})", o.id] }, selected), :onchange => "$('#openings_#{section}').val($(this).value); $('#opening_pic_#{section}').attr('src', pics_#{section}['img_' + $(this).val()]);")
     output << "<![endif]-->"
     output << "</div>"
     output.html_safe
