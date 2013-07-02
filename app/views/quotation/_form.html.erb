@@ -18,7 +18,13 @@
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td>
       <%#= text_field :quotation, :customer_name, :size => 50  %>
-      <%= autocomplete_field :quotation, :customer_name, autocomplete_customer_name_quotations_path, :size => 50, :update_elements  => { :address   => '#customer_address'} %>
+      <%= autocomplete_field :quotation, :customer_name, autocomplete_customer_name_quotations_path, :size => 50,
+                             :update_elements  => {
+                                     :address   => '#customer_address',
+                                     :phone => '#customer_phone',
+                                     :email => '#customer_email',
+                                     :fax => '#customer_fax'
+                             } %>
     </td>
   </tr>
   <tr valign="top">
