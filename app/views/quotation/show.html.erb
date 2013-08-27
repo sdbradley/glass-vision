@@ -2,6 +2,7 @@
 
 <%= render :partial => 'show' %>
 
+<% if current_user.has_role?('administrator') %>
 <div id='price-override-dialog' title='<%= trn_geth('Override Price') %>' >
   <form>
     <fieldset>
@@ -41,7 +42,7 @@
   </form>
 </div>
 
-<% content_for :extra_javascript do %>
+  <% content_for :extra_javascript do %>
     $('#price-override-dialog').dialog({
         autoOpen: false,
         height: 300,
@@ -81,7 +82,7 @@
             var discount = parseFloat($('#discount').html());
             var price = parseFloat(currentPrice);
             var computedPrice = price * (1.0 - discount / 100) * (1.0 + markup / 100);
-            $('#computed-price').html(computedPrice);
+            $('#computed-price').html(computedPrice.toMoney());
             $('#update-button').button('option', 'disabled', false);
         }
         else
@@ -105,14 +106,14 @@
             caption = caption + " for " + label;
 
         $('#markup').html(markup);
-        $('#discount').html(discount);
+        $('#discount').html(parseFloat(discount).toMoney());
 
         if (original_price)
-            $('#original-price').html(original_price);
+            $('#original-price').html(original_price.toMoney());
         else
-            $('#original-price').html(current_price);
+            $('#original-price').html(parseFloat(current_price).toMoney());
 
-        $('#full-price').html(full_price);
+        $('#full-price').html(parseFloat(full_price).toMoney());
         $('#current-price').val(current_price);
         $('#line-id').val(quotation_line_id);
 
@@ -120,4 +121,5 @@
         $('#price-override-dialog').dialog("open");
     });
 
-<% end  %>
+  <% end  %>
+<% end %> <!-- admin check -->
