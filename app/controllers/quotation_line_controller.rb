@@ -311,7 +311,7 @@ class QuotationLineController < ApplicationController
     updated_price = params[:current_price]
     @quotation_line = QuotationLine.find(params[:id])
     unless updated_price.blank?
-      original_price = @quotation_line.original_price || quotation_line.price
+      original_price = @quotation_line.original_price || @quotation_line.price
       @quotation_line.update_attributes(:original_price => original_price, :price => updated_price )
     else
       render :nothing => true

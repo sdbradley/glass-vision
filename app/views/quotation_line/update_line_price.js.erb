@@ -2,4 +2,5 @@ var item = $('.price-override-handle[data-line-id=<%= @quotation_line.id %>]');
 $(item).data('full-price', <%= @quotation_line.price %>);
 $(item).data('current-price', <%= @quotation_line.compute_final_price %>);
 $(item).data('original-price', <%= @quotation_line.original_price %>);
-$(item).html('<%= @quotation_line.compute_final_price  %>')
+$(item).html('<%= number_to_currency(@quotation_line.compute_final_price) %>');
+$('.total-price[data-line-id=<%= @quotation_line.id %>]').html('<%= number_to_currency(@quotation_line.compute_final_price * @quotation_line.quantity) %>');
