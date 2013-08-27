@@ -313,6 +313,8 @@ class QuotationLineController < ApplicationController
     unless updated_price.blank?
       original_price = @quotation_line.original_price || @quotation_line.price
       @quotation_line.update_attributes(:original_price => original_price, :price => updated_price )
+
+      render :js => 'window.location = "' + quotation_path(@quotation_line.quotation.slug) + '"'
     else
       render :nothing => true
     end

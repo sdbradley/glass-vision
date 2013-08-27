@@ -109,7 +109,7 @@
         $('#discount').html(parseFloat(discount).toMoney());
 
         if (original_price)
-            $('#original-price').html(original_price.toMoney());
+            $('#original-price').html(parseFloat(original_price).toMoney());
         else
             $('#original-price').html(parseFloat(current_price).toMoney());
 
