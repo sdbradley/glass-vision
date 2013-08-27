@@ -11,12 +11,10 @@
   <%= csrf_meta_tag %>
 
   <script type="text/javascript" charset="utf-8">
-      jQuery.noConflict();
-      $=jQuery;
 
       jQuery(document).ready(function($) {
           // put all your jQuery goodness in here.
-          jQuery("img.popup").thumbPopup({
+          $("img.popup").thumbPopup({
               imgSmallFlag: "thumb",
               imgLargeFlag: "original"
           });

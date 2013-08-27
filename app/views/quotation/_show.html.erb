@@ -142,25 +142,25 @@
     <th></th>
   </tr>
   <% total = 0 %>
-  <% for line in @quotation.quotation_lines.order('position asc') %>
-    <% line_price = line.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100) %>
+  <% @quotation.quotation_lines.order('position asc').each do |line| %>
+    <% line_price = line.compute_final_price %>
     <% total += line.quantity * line_price %>
-    <%= render :partial => 'quotation_line', :locals => { :line => line, :line_price => line_price } %>
+    <%= render :partial => 'quotation_line', :locals => { :line => line, :line_price => line_price, :quotation => @quotation } %>
   <% end %>
-  <% for door in @quotation.door_lines.order('position asc') %>
+  <% @quotation.door_lines.order('position asc').each do |door| %>
     <% door_price = door.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100) %>
     <% total += door.quantity * door_price %>
-    <%= render :partial => 'door_line', :locals => { :door => door, :door_price => door_price } %>
+    <%= render :partial => 'door_line', :locals => { :door => door, :door_price => door_price, :quotation => @quotation  } %>
   <% end %>
-  <% for option in @quotation.options_quotations %>
+  <% @quotation.options_quotations.each do |option| %>
     <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
     <% total += option.quantity * option_price %>
-    <%= render :partial => 'option', :locals => { :option => option, :option_price => option_price } %>
+    <%= render :partial => 'option', :locals => { :option => option, :option_price => option_price, :quotation => @quotation } %>
   <% end %>
-  <% for option in @quotation.manual_lines.order('position asc') %>
+  <% @quotation.manual_lines.order('position asc').each do |option| %>
     <% option_price = option.unit_price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
     <% total += option.quantity * option_price %>
-    <%= render :partial => 'manual_line', :locals => { :option => option, :option_price => option_price } %>
+    <%= render :partial => 'manual_line', :locals => { :option => option, :option_price => option_price, :quotation => @quotation } %>
   <% end %>
   <tr>
     <td align="right"><%=trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>

@@ -17,7 +17,6 @@ class QuotationLine < ActiveRecord::Base
   validates_presence_of :width, :height, :serie_id, :quantity
   validates_numericality_of :width, :height, :quantity
 
-
   before_destroy :delete_preview_image
 
   # constants for drawing
@@ -25,7 +24,7 @@ class QuotationLine < ActiveRecord::Base
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 3
 
-  def create_image()
+  def create_image
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 
@@ -251,6 +250,18 @@ end
     glass_area = section_area / glasses_quantity
     glass_area = option.minimum_quantity if glass_area < option.minimum_quantity
     glass_area * glasses_quantity
+  end
+
+  def compute_final_price
+    self.price * (1 - self.quotation.discount / 100) * (1 + self.quotation.markup / 100)
+  end
+
+  def has_interior_color?
+    !interior_color.blank? || !standard_interior_color.blank?
+  end
+
+  def has_exterior_color?
+    !exterior_color.blank? || !standard_exterior_color.blank?
   end
 
   protected

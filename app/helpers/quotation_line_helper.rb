@@ -403,6 +403,13 @@ module QuotationLineHelper
     return nil
   end
 
-  
+  def display_interior_color_name(line)
+    line.interior_color.blank? ? line.standard_interior_color.tr_name : line.tr_interior_color + trn_get("LABEL_CUSTOM")
+  end
+
+  def display_exterior_color_name(line)
+    line.exterior_color.blank? ? line.standard_exterior_color.tr_name : line.tr_exterior_color + trn_get("LABEL_CUSTOM")
+  end
+
 end
 

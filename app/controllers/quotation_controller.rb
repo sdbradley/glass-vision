@@ -129,8 +129,7 @@ class QuotationController < ApplicationController
 #    render :partial => 'quotation_list'
   end
 
-
-protected
+  protected
   def search_params_from_session
     SEARCH_FIELDS.each { |x| params[x.to_sym] = session[x.to_sym]}
   end

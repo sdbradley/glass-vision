@@ -80,6 +80,7 @@ class QuotationLineController < ApplicationController
       new_selected_options = get_options_from_params(params)
       begin
         @quotation_line.price = calculate_price(@quotation_line.serie_id, @quotation_line.shape_id, @openings, new_selected_options)
+        @quotation_line.original_price = @quotation_line.price
       rescue PriceError => err
         @quotation_line.price = 0
         flash[:notice] = err.message
@@ -215,6 +216,7 @@ class QuotationLineController < ApplicationController
 
       begin
         @quotation_line.price = calculate_price(@quotation_line.serie_id, @quotation_line.shape_id, @openings, new_selected_options)
+        @quotation_line.original_price = @quotation_line.price
       rescue PriceError => err
         @quotation_line.price = 0
         flash[:notice] = err.message
@@ -304,6 +306,19 @@ class QuotationLineController < ApplicationController
     flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :controller => 'quotation', :action => 'show', :id => quotation_line.quotation.slug
   end
+
+  def update_line_price
+    updated_price = params[:current_price]
+    @quotation_line = QuotationLine.find(params[:id])
+    unless updated_price.blank?
+      original_price = @quotation_line.original_price || quotation_line.price
+      @quotation_line.update_attributes(:original_price => original_price, :price => updated_price )
+    else
+      render :nothing => true
+    end
+
+  end
+
 
 private
 
