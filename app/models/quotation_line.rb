@@ -253,7 +253,12 @@ end
   end
 
   def compute_final_price
-    self.price * (1 - self.quotation.discount / 100) * (1 + self.quotation.markup / 100)
+    if self.price == self.original_price
+      self.price * (1 - self.quotation.discount / 100) * (1 + self.quotation.markup / 100)
+    else
+      # if the price has been overridden do not apply the discount
+      self.price * (1 + self.quotation.markup / 100)
+    end
   end
 
   def has_interior_color?
