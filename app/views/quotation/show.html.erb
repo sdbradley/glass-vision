@@ -31,7 +31,7 @@
         <tr style='border-top:1px solid #cccccc;background-color: #ffffff;'>
           <td>New Price</td>
           <td><input type="text" name="current-price" id="current-price" class="text ui-widget-content ui-corner-all" style="width: 100%;text-align: right;"/></td>
-          <td>w/Disc. &amp;Comm.</td>
+          <td>w/Comm.</td>
           <td id='computed-price'></td>
         </tr>
         </tbody>
@@ -81,7 +81,9 @@
             var markup = parseFloat($('#markup').html());
             var discount = parseFloat($('#discount').html());
             var price = parseFloat(currentPrice);
-            var computedPrice = price * (1.0 - discount / 100) * (1.0 + markup / 100);
+//          var computedPrice = price * (1.0 - discount / 100) * (1.0 + markup / 100);
+            // do not apply discount per Daniel. Does not fit this workflow
+            var computedPrice = price * (1.0 + markup / 100);
             $('#computed-price').html(computedPrice.toMoney());
             $('#update-button').button('option', 'disabled', false);
         }
