@@ -22,7 +22,7 @@
 
   <!-- fenetres -->
   <% for ql in @quotation.quotation_lines.order('position asc') %>
-      <% ql_price = ql.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
+      <% ql_price = ql.compute_final_price  %>
       <tr>
         <td colspan="5">
             <%= render :partial => 'quotation_line_summary', :locals => {:ql => ql, :ql_price => ql_price, :max_thumbnail_size => 175} %>
