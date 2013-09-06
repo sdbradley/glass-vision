@@ -303,21 +303,20 @@ class QuotationLineController < ApplicationController
   def delete
     quotation_line = QuotationLine.find(params[:id])
     quotation_line.destroy
-    flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :controller => 'quotation', :action => 'show', :id => quotation_line.quotation.slug
   end
 
   def update_line_price
     updated_price = params[:current_price]
     @quotation_line = QuotationLine.find(params[:id])
-    unless updated_price.blank?
-      original_price = @quotation_line.original_price || @quotation_line.price
-      @quotation_line.update_attributes(:original_price => original_price, :price => updated_price )
+    original_price = @quotation_line.original_price || @quotation_line.price
 
-      render :js => 'window.location = "' + quotation_path(@quotation_line.quotation.slug) + '"'
-    else
-      render :nothing => true
-    end
+    # if the new price is empty or not supplied (nil), revert to original price
+    updated_price = original_price if updated_price.blank?
+    @quotation_line.update_attributes(:original_price => original_price, :price => updated_price )
+
+    render :js => 'window.location = "' + quotation_path(@quotation_line.quotation.slug) + '"'
 
   end
 

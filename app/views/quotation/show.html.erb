@@ -65,6 +65,22 @@
                     $(this).dialog( "close" );
                 }
             },
+        "Remove": {
+                text: 'Remove',
+                id: 'remove-button',
+                click: function() {
+                $.ajax({
+                url: "<%= url_for(:controller => 'quotation_line', :action => 'update_line_price')%>/" +$('#line-id').val(),
+                method: 'POST',
+                dataType: 'script',
+                data: { current_price : $('#original-price').val()}
+                }).done(function (data) {
+                    eval(data);
+                });
+
+                $(this).dialog( "close" );
+                }
+            },
         Cancel: function() {
             $( this ).dialog( "close" );
           }
@@ -81,7 +97,6 @@
             var markup = parseFloat($('#markup').html());
             var discount = parseFloat($('#discount').html());
             var price = parseFloat(currentPrice);
-//          var computedPrice = price * (1.0 - discount / 100) * (1.0 + markup / 100);
             // do not apply discount per Daniel. Does not fit this workflow
             var computedPrice = price * (1.0 + markup / 100);
             $('#computed-price').html(computedPrice.toMoney());

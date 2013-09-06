@@ -58,7 +58,10 @@
           <td class="price-override-handle" data-line-id='<%= line.id %>' data-label='<%= line.label %>' data-full-price='<%= line.price %>'
                                             data-discount='<%= quotation.discount %>' data-markup='<%= quotation.markup %>'
                                             data-current-price='<%= line.price %>' data-original-price='<%= line.original_price %>' style='cursor:pointer'>
-            <%= number_to_currency line_price %>
+            <% unit_price_style = current_user.has_role?('administrator') && line.has_price_override? ? 'font-weight:bold;font-style:italic;' : '' %>
+            <%= content_tag 'span', :style => unit_price_style do -%>
+              <%= number_to_currency(line_price) %>
+            <% end -%>
           </td>
         </tr>
         <tr>
