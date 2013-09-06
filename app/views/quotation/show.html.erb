@@ -118,6 +118,9 @@
         $('#full-price').html(parseFloat(full_price).toMoney());
         $('#current-price').val(current_price);
         $('#line-id').val(quotation_line_id);
+        // do not apply discount per Daniel. Does not fit this workflow
+        var computedPrice = current_price * (1.0 + markup / 100);
+        $('#computed-price').html(computedPrice.toMoney());
 
         $('#price-override-dialog').dialog('option', 'title', caption);
         $('#price-override-dialog').dialog("open");
