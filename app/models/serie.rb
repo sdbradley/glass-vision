@@ -4,18 +4,19 @@ class Serie < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  has_many :widths, :order => "value"
-  has_many :heights, :order => "value"
+  has_many :widths, :order => 'value'
+  has_many :heights, :order => 'value'
   has_many :quotation_lines, :dependent => :destroy
   has_and_belongs_to_many :options, :order => 'options.description', :include => [:option_categories]
   has_and_belongs_to_many :openings
+  has_and_belongs_to_many :shapes
 
   def standard_product?
-    series_type == "StandardProduct" 
+    series_type == 'StandardProduct'
   end
   
   def priced_by_area?
-    series_type == "PerSqFtProduct"
+    series_type == 'PerSqFtProduct'
   end
 
 

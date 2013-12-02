@@ -6,11 +6,6 @@ class QuotationLineController < ApplicationController
   before_filter :prepare_vars, :only => {"edit", "print_calculations"}
 
   def add
-    # some ugly hardcoding, but hard to do without as doors are totally different from windows
-    # and the app has not been build around a common ground between doors and windows (like EasyQuote)
-    if params[:mt].to_i == 2
-      redirect_to :controller => 'doors', :action => 'new', :id => params[:id]
-    end
     @quotation_line = QuotationLine.new
     @quotation_line.quotation_id = Quotation.find_by_slug(params[:id]).id
   end
@@ -32,6 +27,14 @@ class QuotationLineController < ApplicationController
 
     initialize_options_for_series()
 
+  end
+
+  def get_shapes_for_series
+    return unless request.xhr?
+    # given a series id, render the shape gallery
+    serie_id = params[:serie_id]
+    @series = Serie.find(serie_id, :include => 'shapes')
+    @shapes = @series.shapes
   end
 
   # ajax call to change the series for this line

@@ -123,10 +123,8 @@ class QuotationController < ApplicationController
     if @current_user.has_role?('administrator')
       @quotations = Quotation.includes(:user).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
     else
-      @quotations = Quotation.includes(:user).where("user_id = ?", @current_user.id).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
+      @quotations = Quotation.includes(:user).where('user_id = ?', @current_user.id).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
     end
-
-#    render :partial => 'quotation_list'
   end
 
   protected

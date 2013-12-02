@@ -33,6 +33,11 @@
     <td align="right"><%= trn_geth('LABEL_ALLOW_RIGHT_SIDELIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= yes_or_no @shape.has_right_sidelight %></td>
   </tr>
+  <tr valign="top">
+     <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+     <td><%= image_tag(@shape.photo.url, :class => 'popup') unless @shape.photo.original_filename.blank?%></td>
+   </tr>
+ </table>
 
 </table>
 <br />

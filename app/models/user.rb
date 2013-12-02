@@ -167,6 +167,10 @@ class User < ActiveRecord::Base
     
     active_companies
   end
+
+  def can_create?(module_name)
+    return module_types.collect(&:name).include?(module_name)
+  end
 protected
     # before filter 
     def encrypt_password

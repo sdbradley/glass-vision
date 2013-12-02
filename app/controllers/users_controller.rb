@@ -38,7 +38,6 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    debug_log "Saving user id #{@user.id}, discount is #{params[:user]}"
     if @user.update_attributes(params[:user])
 
       # saving access to modules

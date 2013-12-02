@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130325011604) do
+ActiveRecord::Schema.define(:version => 20131201200316) do
+
+  create_table "audits", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "action"
+    t.string   "result"
+    t.string   "reason"
+    t.datetime "created_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -151,6 +159,8 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
     t.string   "interior_color"
     t.integer  "standard_interior_color_id"
     t.integer  "standard_exterior_color_id"
+    t.integer  "position"
+    t.float    "original_price"
   end
 
   create_table "door_openings", :force => true do |t|
@@ -225,6 +235,13 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
     t.float    "gap_slf",            :default => 0.0
   end
 
+  create_table "invoice_numbers", :force => true do |t|
+    t.integer  "year"
+    t.integer  "invoice_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "manual_lines", :force => true do |t|
     t.text     "description"
     t.integer  "quantity"
@@ -232,6 +249,7 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
     t.integer  "quotation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   create_table "module_types", :force => true do |t|
@@ -295,6 +313,7 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
     t.integer "option_id",         :default => 0, :null => false
     t.integer "quotation_line_id", :default => 0, :null => false
     t.integer "quantity",          :default => 1, :null => false
+    t.float   "original_price"
   end
 
   create_table "options_quotations", :force => true do |t|
@@ -348,6 +367,8 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
     t.string  "interior_color"
     t.integer "standard_interior_color_id"
     t.integer "standard_exterior_color_id"
+    t.integer "position"
+    t.float   "original_price"
     t.float   "secondary_height",           :default => 0.0, :null => false
   end
 
@@ -404,12 +425,18 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
   end
 
   create_table "series", :force => true do |t|
-    t.string  "name",             :limit => 50,  :default => "",    :null => false
-    t.string  "description",                     :default => "",    :null => false
-    t.text    "comments"
-    t.text    "series_type",      :limit => 255
-    t.boolean "fixed_sizes_only",                :default => false
+    t.string "name",        :limit => 50,  :default => "", :null => false
+    t.string "description",                :default => "", :null => false
+    t.text   "comments"
+    t.text   "series_type", :limit => 255
   end
+
+  create_table "series_shapes", :id => false, :force => true do |t|
+    t.integer "shape_id", :null => false
+    t.integer "serie_id", :null => false
+  end
+
+  add_index "series_shapes", ["shape_id", "serie_id"], :name => "index_series_shapes_on_shape_id_and_serie_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id"
@@ -421,15 +448,19 @@ ActiveRecord::Schema.define(:version => 20130325011604) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "shapes", :force => true do |t|
-    t.string  "name",                    :limit => 50, :default => "",    :null => false
-    t.integer "sections_width",                        :default => 0,     :null => false
-    t.integer "sections_height",                       :default => 0,     :null => false
-    t.integer "corners",                               :default => 4,     :null => false
-    t.boolean "has_upper_transom",                     :default => false
-    t.boolean "has_lower_transom",                     :default => false
-    t.boolean "has_left_sidelight",                    :default => false
-    t.boolean "has_right_sidelight",                   :default => false
-    t.boolean "has_secondary_dimension"
+    t.string   "name",                    :limit => 50, :default => "",    :null => false
+    t.integer  "sections_width",                        :default => 0,     :null => false
+    t.integer  "sections_height",                       :default => 0,     :null => false
+    t.integer  "corners",                               :default => 4,     :null => false
+    t.boolean  "has_upper_transom",                     :default => false
+    t.boolean  "has_lower_transom",                     :default => false
+    t.boolean  "has_left_sidelight",                    :default => false
+    t.boolean  "has_right_sidelight",                   :default => false
+    t.boolean  "has_secondary_dimension"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "slab_materials", :force => true do |t|
