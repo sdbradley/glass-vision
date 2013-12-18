@@ -1,41 +1,127 @@
-<%= error_messages_for "quotation_line" %>
+<%= error_messages_for 'quotation_line' %>
 
-<table>
-  <tr>
-    <td align="right"><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select 'quotation_line', 'serie_id', Serie.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
-  </tr>
-  <tr>
-    <td align="right"><%= trn_geth('LABEL_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select 'quotation_line', 'shape_id', Shape.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
-  </tr>
-  <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field 'quotation_line', 'quantity', :size => 10 %></td>
-  </tr>
-  <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field 'quotation_line', 'label', :size => 30 %></td>
-  </tr>
-</table>
+<%= render 'series_shape_and_quantity' %>
+<%= render 'openings_and_dimensions' %>
 
-<%= render :partial => 'openings_and_dimensions' %>
+<div id="change-series-or-shape-dialog" style="display: none">
+  <div id="loading_dialog">&nbsp;</div>
+
+  <table>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= select 'quotation_line', 'serie_id', Serie.all(:order => 'name').collect{|s| [s.tr_name, s.id]}, {:include_blank => trn_geth('MSG_SELECT_ONE')}, :id => 'change_quotation_line_serie_id' %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+          <table id="shape-gallery" cellspacing="5"></table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 
 <% content_for :extra_javascript do %>
-    $('#quotation_line_serie_id').change(function () {
-        $.ajax({
-        url: "<%= url_for(:controller => 'quotation_line', :action => 'change_series') %>",
-        dataType: 'script',
-        data:  $('#ql').serialize()
-        });
+
+    // show the gallery
+    $(document).on('click', '#series-change-handle', function(){
+        $('#change-series-or-shape-dialog').dialog("open");
     });
 
-    $('#quotation_line_shape_id').change(function () {
+    $('#change-series-or-shape-dialog').dialog({
+            autoOpen: false,
+            height: 600,
+            width: 850,
+            modal: true,
+            buttons: {
+                "Change": {
+                        text: 'Change',
+                        id: 'change-button',
+                        disabled: true,
+                        click: function() {
+
+                            $('#quotation_line_serie_id').val($('#change_quotation_line_serie_id').val());
+                            $('#quotation_line_shape_id').val($('#shape-gallery td.selected').data('shape-id'));
+                            $.ajax({
+                                url: "<%= url_for(:controller => 'quotation_line', :action => 'change_shape')%>",
+                                method: 'POST',
+                                dataType: 'script',
+                                data:  $('#ql').serialize()
+                            }).done(function (data) {
+                                eval(data);
+                            });
+
+                            $(this).dialog( "close" );
+                        }
+                },
+            Cancel: function() {
+                $(this).dialog( "close" );
+              }
+            },
+            open: function() {
+                var series = $('#quotation_line_serie_id').val();
+                // Select the current series
+                $('#change_quotation_line_serie_id').val(series);
+
+                var shape_to_select = $('#quotation_line_shape_id').val();
+                // if shape gallery has not been loaded yet, load it. and select the current shape
+                load_shape_gallery(series, shape_to_select);
+            },
+            close: function() {
+                reset_dialog();
+            }
+         });
+
+    function reset_dialog() {
+        $('#shape-gallery').empty();
+        $('#change-button').button("disable");
+    }
+
+    function select_shape(shape) {
+        if (shape === undefined) return;
+        var sel = 'td[data-shape-id="' + shape + '"]';
+
+        clear_selection();
+        $(sel).addClass('selected');
+        enable_change_button();
+    }
+
+    function clear_selection() {
+        $('#shape-gallery td.selected').removeClass('selected');
+    }
+
+    function enable_change_button() {
+        $('#change-button').button('enable');
+    }
+
+    function load_shape_gallery(series, shape_to_select) {
         $.ajax({
-        url: "<%= url_for(:controller => 'quotation_line', :action => 'change_shape') %>",
-        dataType: 'script',
-        data: $('#ql').serialize()
+            url: "<%= url_for(:controller => 'quotation_line', :action => 'get_shapes_for_series') %>",
+            dataType: 'script',
+            data: { serie_id : series}
+        }).done(function (data){
+            select_shape(shape_to_select);
         });
+    }
+
+    // fetch shape gallery when select menu changes
+    $(document).on('change', '#change_quotation_line_serie_id', function() {
+        var series = $(this).val();
+        // clear the gallery if the user chose the prompt
+        if (series == "") {
+            reset_dialog();
+        } else {
+            load_shape_gallery(series);
+        }
+
+    });
+
+    // Single-select UI handling
+    $(document).on('click', '#shape-gallery td', function(){
+        clear_selection();
+        $(this).addClass('selected');
+        enable_change_button();
     });
 
 

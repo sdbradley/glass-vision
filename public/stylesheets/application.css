@@ -343,8 +343,18 @@ padding-left: 15px;
 .related-items-details       {border-left:1px solid black;}
 
 #shape-gallery {border-collapse: separate;}
-#shape-gallery td {text-align: center; vertical-align: top; padding-bottom: 10px;  background-color: #CCCCCC;  border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;}
+#shape-gallery td {text-align: center; vertical-align: top; padding-bottom: 10px;  background-color: #CCCCCC;  border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;border:5px solid #CCCCCC}
 #shape-gallery td:hover {cursor: pointer; background-color: #888888;}
 #shape-gallery td.selected { background-color: #888888; border:5px solid #AABBCC}
-#button-next:disabled { color: #CCCCCC; font-style: italic;
-    cursor: not-allowed;}
+#button-next:disabled, #change-button:disabled { color: #CCCCCC; font-style: italic; cursor: not-allowed;}
+
+
+.ui-dialog .ui-dialog-content.ui-dialog-spinner {
+    background: url(/images/ajax-loader.gif) no-repeat scroll 15px 15px transparent;
+    padding: 20px 0 0px 70px;
+    border: 2px solid #DDDDDD;
+    font-weight: 900;
+    line-height: 0.8em;
+    font-size: 1.5em;
+    color: #737373;
+}

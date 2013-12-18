@@ -3,7 +3,7 @@ end
 
 class QuotationLineController < ApplicationController
 
-  before_filter :prepare_vars, :only => {"edit", "print_calculations"}
+  before_filter :prepare_vars, :only => {'edit', 'print_calculations'}
 
   def add
     @quotation_line = QuotationLine.new
@@ -12,14 +12,16 @@ class QuotationLineController < ApplicationController
 
   def add2
     @quotation_line = QuotationLine.new(params[:quotation_line])
-    @quotation_line.width = 0
-    @quotation_line.height = 0
-    @quotation_line.quantity = 1
+    #@quotation_line.width = 0
+    #@quotation_line.height = 0
+    #@quotation_line.quantity = 1
 
     initialize_by_shape()
 
     @openings = {}
-    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(@quotation_line.serie_id)
+    @serie = @quotation_line.serie
+    # preload options
+#    @serie.options.includes(:pricing_method, :options_minimum_unit).all
 
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered
@@ -45,7 +47,9 @@ class QuotationLineController < ApplicationController
     @openings = {} #params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
-    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(serie_id)
+#    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(serie_id)
+    @serie = @quotation_line.serie
+
     initialize_options_for_series()
   end
 
@@ -56,7 +60,7 @@ class QuotationLineController < ApplicationController
     @openings = params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
-    @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(@quotation_line.serie_id)
+    @serie = @quotation_line.serie
     initialize_options_for_series()
   end
 

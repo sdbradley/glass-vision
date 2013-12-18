@@ -1,0 +1,12 @@
+<table id="series-data">
+  <tr valign="top" id="series-change-handle" style="cursor: pointer">
+    <td align="right"><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td><td><%= @serie.tr_name %></td>
+    <td align="right"><%= trn_geth('LABEL_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td><td><%= @quotation_line.shape.tr_name %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'quotation_line', 'label', :size => 30 %></td>
+    <td align="right"><%= trn_geth('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'quotation_line', 'quantity', :size => 10 %></td>
+  </tr>
+</table>
