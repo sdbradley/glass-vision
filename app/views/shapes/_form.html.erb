@@ -3,7 +3,7 @@
 <%= semantic_form_for(@shape, :as => 'shape') do |form| %>
   <div><%= form.error_messages %></div><br/>
 	<% form.inputs :style => 'border:1px;' do %>
-        <div style="float: right;padding:10px;margin-right:20px;margin-bottom: 50px; display:block">
+        <div style="float:right; height:370px !important; width:350px; display:block">
           <%= image_tag @shape.photo.url(:original) if @shape.photo.url %>
           <br />
           <%= form.label trn_geth('LABEL_PHOTO') %>: <%= form.file_field :photo %>
