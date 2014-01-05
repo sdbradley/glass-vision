@@ -1,5 +1,9 @@
 <%= error_messages_for 'quotation_line' %>
 
+<%= hidden_field 'quotation_line', 'quotation_id' %>
+<%= hidden_field 'quotation_line', 'serie_id' %>
+<%= hidden_field 'quotation_line', 'shape_id' %>
+
 <%= render 'series_shape_and_quantity' %>
 <%= render 'openings_and_dimensions' %>
 

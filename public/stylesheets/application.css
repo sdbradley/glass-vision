@@ -358,3 +358,9 @@ padding-left: 15px;
     font-size: 1.5em;
     color: #737373;
 }
+
+#shape_edit {width:1000px}
+#shape_series_input .choices-group {padding-left: 158px !important;}
+#shape_series_input label { width:auto;  }
+#shape_series_input input { margin-right:5px;  }
+#shape_series_input li {display: block; float: left; width: 50%;padding:0;margin:0;}

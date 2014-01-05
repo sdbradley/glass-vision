@@ -1,5 +1,13 @@
 <h2><%= trn_geth('TITLE_SHAPE_SHOW') %></h2>
 
+<div style="height:350px">
+<div style="float: right;padding:10px;margin-right:20px;margin-bottom: 50px; display:block">
+  <%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %>
+  <br />
+  <%= image_tag @shape.photo.url(:original) if @shape.photo.url %>
+</div>
+
+
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -33,13 +41,9 @@
     <td align="right"><%= trn_geth('LABEL_ALLOW_RIGHT_SIDELIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= yes_or_no @shape.has_right_sidelight %></td>
   </tr>
-  <tr valign="top">
-     <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-     <td><%= image_tag(@shape.photo.url, :class => 'popup') unless @shape.photo.original_filename.blank?%></td>
-   </tr>
  </table>
 
-</table>
+</div>
 <br />
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), shapes_path %> |
 <%= link_to trn_geth('BUTTON_EDIT'), edit_shape_path(@shape)%> |

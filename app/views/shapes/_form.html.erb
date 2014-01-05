@@ -1,24 +1,14 @@
 <% semicolon = trn_geth('LABEL_SEMICOLON')%>
 
-<div style="float: right;background-color:#BFBAA8;padding:10px;margin-right:20px;display:none">
-<p>
-  This shape is used by the following Series:<br /><br />
-  <table style="width:100%;">
-    <tr>
-      <td class="related-items-title-outside" ><%= trn_geth('LABEL_NAME') %></td>
-    </tr>
-    <%= "<tr><td><span style='font-style:italic'>#{trn_get('None')}</span></td></tr>".html_safe if @shape.series.empty?%>
-    <% @shape.series.each {|s| %>
-    <tr>
-      <td><%= h s.tr_name %></td>
-    <% } %>
-  </table>
-</p>
-</div>
-
-<%= semantic_form_for @shape do |form| %>
+<%= semantic_form_for(@shape, :as => 'shape') do |form| %>
   <div><%= form.error_messages %></div><br/>
 	<% form.inputs :style => 'border:1px;' do %>
+        <div style="float: right;padding:10px;margin-right:20px;margin-bottom: 50px; display:block">
+          <%= image_tag @shape.photo.url(:original) if @shape.photo.url %>
+          <br />
+          <%= form.label trn_geth('LABEL_PHOTO') %>: <%= form.file_field :photo %>
+        </div>
+
 		<%= form.input :name, :size => 50, :label => trn_geth('LABEL_NAME') + semicolon, :input_html => { :width =>30} %>
 		<%= form.input :sections_width, :size => 10,  :label => trn_geth('LABEL_SECTIONS_WIDTH') + semicolon %>
 		<%= form.input :sections_height, :size => 10,  :label => trn_geth('LABEL_SECTIONS_HEIGHT') + semicolon %>
@@ -27,8 +17,8 @@
 		<%= form.input :has_lower_transom, :label => trn_geth('LABEL_ALLOW_LOWER_TRANSOM') %>
         <%= form.input :has_left_sidelight, :label => trn_geth('LABEL_ALLOW_LEFT_SIDELIGHT') %>
       	<%= form.input :has_right_sidelight, :label => trn_geth('LABEL_ALLOW_RIGHT_SIDELIGHT') %>
-        <%= form.input :series, :required => true, :input_html => {:style => 'height:200px'} %>
-        <%= form.label trn_geth('LABEL_PHOTO') %>: <%= form.file_field :photo %>
+        <br />
+        <%= form.input :series, :required => true, :as => :check_boxes, :label => trn_get('TITLE_SERIE_LIST') + semicolon  %>
 	<% end %>
     <br />
 	<% form.actions do %>

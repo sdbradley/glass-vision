@@ -279,6 +279,13 @@ end
     !exterior_color.blank? || !standard_exterior_color.blank?
   end
 
+
+  def get_preview_image_path
+    create_image unless File.exists?(preview_image_path)
+    preview_image_path
+  end
+
+
   protected
 
   def get_section_width(idx)
@@ -360,6 +367,11 @@ end
     rescue
       # no problem if file does not exist
     end
+  end
+
+private
+  def preview_image_path
+    "/system/images/previews/preview_#{self.id}.png"
   end
 
 end
