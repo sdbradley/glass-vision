@@ -364,3 +364,5 @@ padding-left: 15px;
 #shape_series_input label { width:auto;  }
 #shape_series_input input { margin-right:5px;  }
 #shape_series_input li {display: block; float: left; width: 50%;padding:0;margin:0;}
+
+.two-column-list {display: block; float: left; width: 50%;padding:0;margin:0;}
