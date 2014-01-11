@@ -12,16 +12,11 @@ class QuotationLineController < ApplicationController
 
   def add2
     @quotation_line = QuotationLine.new(params[:quotation_line])
-    #@quotation_line.width = 0
-    #@quotation_line.height = 0
-    #@quotation_line.quantity = 1
 
     initialize_by_shape()
 
     @openings = {}
     @serie = @quotation_line.serie
-    # preload options
-#    @serie.options.includes(:pricing_method, :options_minimum_unit).all
 
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered

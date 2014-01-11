@@ -40,11 +40,16 @@
         $('#shape-gallery td.selected').removeClass('selected');
         $(this).addClass('selected');
         $('#button-next').removeAttr('disabled');
+//        $('#button-next').trigger('click');
+        $('#quotation_line_shape_id').val($('#shape-gallery td.selected').data('shape-id'));
+        var form = $(this).parents('form:first');
+        form.submit();
+
     });
 
     $('#button-next').click(function(){
         $('#quotation_line_shape_id').val($('#shape-gallery td.selected').data('shape-id'));
     });
-    $('#button-next').attr("disabled", "disabled");
+//    $('#button-next').attr("disabled", "disabled");
 
 <% end %>
