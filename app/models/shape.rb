@@ -4,6 +4,7 @@ class Shape < ActiveRecord::Base
                     :whiny_thumbnails => true,
                     :styles => {
                         :thumb => '32x32',
+                        :small => '100x100',
                         :normal => '150x150',
                         :original => '300x300'
                     },
