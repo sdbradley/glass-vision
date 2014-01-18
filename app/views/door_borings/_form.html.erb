@@ -7,7 +7,7 @@
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PREVIEW_IMAGE_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= f.file_field :photo %></td>
+    <td><%= f.file_field :photo %><span style="font-size:smaller"><%= display_minimum_dimensions(300) %></span></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>

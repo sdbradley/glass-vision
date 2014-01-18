@@ -1,6 +1,14 @@
 <%= error_messages_for 'option' %>
-
 <%= f.hidden_field :module_type_id %>
+
+<div style="float:right; height:370px !important; width:350px; display:block">
+  <%= image_tag @option.photo.url(:original) if @option.photo.url %>
+  <br />
+  <%= f.label trn_geth('LABEL_PHOTO') %>: <%= f.file_field :photo %>
+  <br />
+  <span style="font-size:smaller"><%= display_minimum_dimensions(300) %></span>
+</div>
+
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -32,22 +40,22 @@
 		<td>
 			<%= f.text_field :minimum_quantity, :size => 5, :disabled => @option.pricing_method_id > 2  %>
 			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] }, {},
-			{:disabled => @option.pricing_method_id > 2 } %> <strong><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong>
+			{:disabled => @option.pricing_method_id > 2 } %> 
 		</td>
+	</tr>
+	<tr>
+	 <td></td>
+	 <td><strong style="font-size:smaller"><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong></td>
+	</tr>
+	<tr>
+	 <td></td>
+	 <td>&nbsp;</td>
 	</tr>
   <tr>
     <td align="right">&nbsp;</td>
     <td>
       <%= f.check_box :emphasize %><label for="option_emphasize"><%= trn_geth('LABEL_EMPHASIZE')%></label>
     </td>
-  </tr>
-  <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= f.file_field :photo %></td>
-  </tr>
-  <tr valign="top">
-    <td align="right"></td>
-    <td><%= image_tag(@option.photo.url, :class => 'popup') unless @option.photo.original_filename.blank?  %></td>
   </tr>
 </table>
 <p>

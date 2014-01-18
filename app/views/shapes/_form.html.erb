@@ -7,6 +7,7 @@
           <%= image_tag @shape.photo.url(:original) if @shape.photo.url %>
           <br />
           <%= form.label trn_geth('LABEL_PHOTO') %>: <%= form.file_field :photo %>
+          <span style="font-size:smaller"><%= display_minimum_dimensions(300) %></span>
         </div>
 
 		<%= form.input :name, :size => 50, :label => trn_geth('LABEL_NAME') + semicolon, :input_html => { :width =>30} %>

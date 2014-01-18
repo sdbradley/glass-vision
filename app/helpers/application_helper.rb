@@ -4,6 +4,11 @@ module ApplicationHelper
   include SortableTable::App::Helpers::ApplicationHelper
   include WickedPdfHelper
 
+
+  def display_minimum_dimensions(dimension)
+    trn_get('HELP_IMAGE_MIN_DIMENSIONS') % dimension
+  end
+  
   def yes_or_no(b)
     trn_get(b ? 'MSG_YES' : 'MSG_NO')
   end

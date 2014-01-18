@@ -10,6 +10,10 @@
     <td><%= f.file_field :photo %></td>
   </tr>
   <tr valign="top">
+    <td></td>
+    <td><span style="font-size:smaller"><%= display_minimum_dimensions(300) %></span></td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_field "width", :size => 20 %></td>
   </tr>

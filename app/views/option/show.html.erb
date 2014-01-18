@@ -1,5 +1,9 @@
 <h2><%= trn_geth('TITLE_OPTION_SHOW') %></h2>
 
+<div style="float:right; height:370px !important; width:350px; display:block">
+  <%= image_tag @option.photo.url(:original) %>
+</div>
+
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -36,10 +40,6 @@
     <td>&nbsp;</td>
     <td><%= check_box "option","emphasize", :disabled => true%><label for="option_emphasize"><%= trn_geth('LABEL_EMPHASIZE')%> </label>
     </td>
-  </tr>
- <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= image_tag(@option.photo.url, :class => 'popup') unless @option.photo.original_filename.blank?%></td>
   </tr>
 </table>
 <br />
