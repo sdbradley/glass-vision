@@ -25,7 +25,7 @@ class QuotationLine < ActiveRecord::Base
   PIXELS_PER_INCH = 3
 
   def after_initialize
-    if self.new_record?
+    if self.new_record? && quantity.blank?
       self.quantity = 1
     end
   end
