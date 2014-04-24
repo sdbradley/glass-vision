@@ -741,7 +741,7 @@ protected
     end
 
     area += compute_section_area(upper_transom_index(shape), openable, openings, @total_width) if shape.has_upper_transom?
-    area += compute_section_area(lower_transom_index(shape), openable, openings, @total_width) if shape.has_upper_transom?
+    area += compute_section_area(lower_transom_index(shape), openable, openings, @total_width) if shape.has_lower_transom?
 
     area += compute_section_area(left_sidelight_index(shape), openable, openings) if shape.has_left_sidelight?
     area += compute_section_area(right_sidelight_index(shape), openable, openings) if shape.has_right_sidelight?
