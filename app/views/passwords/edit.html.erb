@@ -1,4 +1,4 @@
-<%= form_tag url_for(:action => "update", :id => params[:id]) do %>
+<%= form_tag url_for(:action => "update", :id => params[:id]), :method => :put  do %>
     <%= trn_geth('PASSWORD_LABEL')%> :<br />
     <%= password_field_tag :password %><br />
     <%= trn_geth('CONFIRM_PASSWORD_LABEL')%> :<br />

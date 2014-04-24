@@ -51,28 +51,34 @@ class PasswordsController < ApplicationController
       render :action => 'edit', :id => params[:id]
       return
     end
-    @user = User.find_by_password_reset_code(params[:id]) if params[:id]
+
+    @user = User.find_by_password_reset_code(params[:id])
     raise if @user.nil?
-    return if @user unless params[:password]
-      if (params[:password] == params[:password_confirmation])
+    if (params[:password] == params[:password_confirmation])
+
       #Uncomment and comment lines with @user to have the user logged in after reset - not recommended
-        #self.current_user = @user #for the next two lines to work
-        #current_user.password_confirmation = params[:password_confirmation]
-        #current_user.password = params[:password]
-        #@user.reset_password
-    #flash[:notice] = current_user.save ? "Password reset" : "Password not reset"
-    @user.password_confirmation = params[:password_confirmation]
-    @user.password = params[:password]
-    @user.reset_password        
-    flash[:notice] = trn_get(@user.save ? 'PASSWORD_RESET' : 'PASSWORD_NOT_RESET')
-      else
-        flash[:notice] = trn_get('PASSWORD_MISMATCH')
-        render :action => 'edit', :id => params[:id]
-      return
-      end  
+      #self.current_user = @user #for the next two lines to work
+      #current_user.password_confirmation = params[:password_confirmation]
+      #current_user.password = params[:password]
+      #@user.reset_password
+      #flash[:notice] = current_user.save ? "Password reset" : "Password not reset"
+
+      @user.password_confirmation = params[:password_confirmation]
+      @user.password = params[:password]
+      @user.reset_password
+
+      flash[:notice] = trn_get(@user.save ? 'PASSWORD_RESET' : 'PASSWORD_NOT_RESET')
+
       redirect_to login_path
-  rescue
-    logger.error "Invalid Reset Code entered"
+    else
+      flash[:notice] = trn_get('PASSWORD_MISMATCH')
+      render :action => 'edit', :id => params[:id]
+      return
+    end
+
+    redirect_to login_path
+  rescue Exception => e
+    logger.error 'Invalid Reset Code entered: ' + e.to_s
     flash[:notice] = trn_get('BAD_PASSWORD_RESET_CODE')
     redirect_to new_user_path
   end
