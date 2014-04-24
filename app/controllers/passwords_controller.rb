@@ -69,7 +69,6 @@ class PasswordsController < ApplicationController
 
       flash[:notice] = trn_get(@user.save ? 'PASSWORD_RESET' : 'PASSWORD_NOT_RESET')
 
-      redirect_to login_path
     else
       flash[:notice] = trn_get('PASSWORD_MISMATCH')
       render :action => 'edit', :id => params[:id]
