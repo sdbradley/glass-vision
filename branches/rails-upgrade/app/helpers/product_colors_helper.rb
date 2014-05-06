@@ -1,2 +1,0 @@
-module ProductColorsHelper
-end

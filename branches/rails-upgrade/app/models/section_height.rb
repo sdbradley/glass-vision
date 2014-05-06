@@ -1,2 +1,0 @@
-class SectionHeight < SectionDimension
-end

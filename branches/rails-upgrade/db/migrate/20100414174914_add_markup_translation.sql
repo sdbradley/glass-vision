@@ -1,1 +1,0 @@
-INSERT INTO `translations` VALUES (463, 'LABEL_MARKUP', 'Commission', '', 'Commission', 'Comisión');

@@ -1,1 +1,0 @@
-INSERT INTO translations (id, translation_key, fr, en, es) VALUES (637, 'HELP_IMAGE_MIN_DIMENSIONS', 'Pour de meilleurs résultats, l\'image doit être au moins %s pixels dans chaque dimension', '"For best results, the image should be at least %s pixels in either dimension"', 'Para obtener mejores resultados, la imagen debe ser por lo menos %s píxeles en cualquier dimensión');
