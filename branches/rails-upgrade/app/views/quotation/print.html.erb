@@ -1,0 +1,159 @@
+<!-- header -->
+<%= render :partial => 'print_header' %>
+
+<!-- customer information -->
+<%= render :partial => 'print_customer_information' %>
+<br/>
+
+<!-- content -->
+<div>
+<table width="100%" cellspacing="0" cellpadding="3" style="font-size: small;" class="splitForPrint">
+  <% total = 0 %>
+    <thead style="display:table-header-group;">
+      <tr bgcolor="#b2b2b2">
+        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
+        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+    </thead>
+
+  <!-- fenetres -->
+  <% for ql in @quotation.quotation_lines.order('position asc') %>
+      <% ql_price = ql.compute_final_price  %>
+      <tr>
+        <td colspan="5">
+          <%= render :partial => 'quotation_line_summary', :locals => {:ql => ql, :ql_price => ql_price, :max_thumbnail_size => 175} %>
+        </td>
+      </tr>
+    <% total += ql_price * ql.quantity %>
+  <% end %>
+
+  <!-- portes -->
+  <% for dl in @quotation.door_lines.order('position asc') %>
+      <% dl_price = dl.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
+      <tr>
+        <td colspan="5">
+            <%= render :partial => 'door_line_summary', :locals => {:dl => dl, :dl_price => dl_price}  %>
+        </td>
+      </tr>
+    <% total += dl_price * dl.quantity %>
+  <% end %>
+
+  <!-- options -->
+  <% print_header = true if @quotation.options_quotations.length > 0 %>
+  <% for option in @quotation.options_quotations %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th colspan="2"><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <td colspan="2" style="border-bottom: 2px solid #cccccc;">
+        <%= show_option option.option %>
+      </td>
+      <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price %></td>
+      <td width="10%" align="center" style="border-bottom: 2px solid #cccccc;"><%= option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price * option.quantity %></td>
+    </tr>
+    <% total += option_price * option.quantity %>
+  <% end %>
+  <!-- manual lines -->
+  <% print_header = true if @quotation.manual_lines.length > 0 %>
+  <% for option in @quotation.manual_lines.order('position asc') %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th colspan="2"><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <td colspan="2" style="border-bottom: 2px solid #cccccc;">
+        <%= option.description %>
+      </td>
+      <% option_price = option.unit_price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price %></td>
+      <td width="10%" align="center" style="border-bottom: 2px solid #cccccc;"><%= option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price * option.quantity %></td>
+    </tr>
+    <% total += option_price * option.quantity %>
+  <% end %>
+
+</table>
+</div>
+<div style="page-break-before:always;" >
+    <table style="width:100%;font-size: small;" >
+      <!-- total -->
+      <tr style="page-break-inside: avoid;">
+        <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
+        <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
+        <td colspan="3"><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
+      </tr>
+      <tr >
+        <td colspan="3" rowspan="5" style="border:1px solid #808080;" valign="top">
+          <p>
+            <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
+              <%= @quotation.notes.gsub("\n", '<br/>').html_safe if @quotation.notes and !@quotation.notes.empty?%>
+          </p>
+        </td>
+        <td align="right" colspan="1"  width="20%"  bgcolor="#b2b2b2" style="border-top:1px solid #808080;">
+          <strong><%= trn_get('PRINT_HEADER_SUBTOTAL')%></strong>
+        </td>
+        <td align="right" bgcolor="#b2b2b2" style="border-top:1px solid #808080;border-right:1px solid #808080;">
+          <strong><%= number_to_currency total %></strong>
+        </td>
+      </tr>
+      <% total += @quotation.transport %>
+      <% taxes = @quotation.calculate_taxes(total) %>
+      <% total += taxes %>
+      <% pst_taxes = @quotation.calculate_pst(total)%>
+      <tr bgcolor="#b2b2b2">
+        <td align="right" bgcolor="#b2b2b2" width="20%" >
+          <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+        </td>
+        <td align="right" bgcolor="#b2b2b2" style="border-right:1px solid #808080;">
+          <strong><%= number_to_currency @quotation.transport %></strong>
+        </td>
+        </tr>
+      <tr bgcolor="#b2b2b2">
+        <td align="right" colspan="1"  width="20%">
+          <strong><%= trn_get('PRINT_HEADER_TAXES') % number_to_percentage(@quotation.taxes) %></strong>
+        </td>
+        <td align="right" style="border-right:1px solid #808080;">
+          <strong><%= number_to_currency taxes %></strong>
+        </td>
+      </tr>
+      <tr bgcolor="#b2b2b2" >
+        <td align="right" colspan="1" style="border-bottom:1px solid #808080;">
+          <strong><%= trn_get('PRINT_HEADER_PST_TAXES') % number_to_percentage(@quotation.taxes_pst) %></strong>
+        </td>
+        <td align="right" style="border-right:1px solid #808080;border-bottom:1px solid #808080;">
+          <strong><%= number_to_currency pst_taxes %></strong>
+        </td>
+      </tr>
+      <% total += pst_taxes %>
+      <tr bgcolor="#b2b2b2" >
+        <td align="right" colspan="1" style="border-bottom:1px solid #808080;">
+          <strong><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></strong>
+        </td>
+        <td align="right" style="border-right:1px solid #808080;border-bottom:1px solid #808080;">
+          <strong><%= number_to_currency total %></strong>
+        </td>
+      </tr>
+    <% if !@quotation.comments.blank? %>
+      <%= render :partial => 'print_comment_block' %>
+    <% end %>
+  </table>
+  <% if @quotation.ready_to_sign %>
+    <%= render :partial => 'print_signature_block' %>
+  <% end %>
+</div>

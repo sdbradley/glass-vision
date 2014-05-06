@@ -1,0 +1,31 @@
+<h2><%= trn_geth('TITLE_SHAPE_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_shape_path %>
+<table cellspacing="0" style="width:100%;">
+  <tr class="header">
+    <th colspan="2"><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_SECTIONS_WIDTH') %></th>
+    <th><%= trn_geth('HEADER_SECTIONS_HEIGHT') %></th>
+    <th><%= trn_geth('HEADER_CORNERS_NUMBER') %></th>
+    <th><%= trn_get('HEADER_SERIES_COUNT') %></th>
+    <th></th>
+  </tr>
+<% for shape in @shapes %>
+  <tr class="<%= cycle('odd', 'even') %>" style='line-height:40px'>
+    <td>
+      <%= link_to(image_tag(shape.photo.url(:thumb), :class => 'command-icon'), edit_shape_path(shape)) %>
+    </td>
+    <td>
+      <%= link_to shape.tr_name, edit_shape_path(shape) %>
+    </td>
+    <td><%= shape.sections_width %></td>
+    <td><%= shape.sections_height %></td>
+    <td><%= shape.corners %></td>
+    <td><%= shape.series.count %></td>
+    <td valign='middle'>
+      <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_shape_path(shape) %>
+      <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), shape, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,65 @@
+<h2><%= trn_geth('TITLE_SHAPE_SHOW') %></h2>
+
+<div >
+  <div style="float: right;height:370px; width:350px; display:block">
+    <%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %>
+    <br/>
+    <%= image_tag @shape.photo.url(:original) if @shape.photo.url %>
+  </div>
+
+  <table>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= @shape.tr_name %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_SECTIONS_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= @shape.sections_width %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_SECTIONS_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= @shape.sections_height %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_CORNERS_NUMBER') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= @shape.corners %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_ALLOW_UPPER_TRANSOM') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= yes_or_no @shape.has_upper_transom %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_ALLOW_LOWER_TRANSOM') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= yes_or_no @shape.has_lower_transom %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_ALLOW_LEFT_SIDELIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= yes_or_no @shape.has_left_sidelight %></td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= trn_geth('LABEL_ALLOW_RIGHT_SIDELIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= yes_or_no @shape.has_right_sidelight %></td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+  <br clear="right"/>
+
+  <div style="width:75%;height: 300px;">
+    <%= trn_get('TITLE_SERIE_LIST') %><%= trn_geth('LABEL_SEMICOLON') %>
+    <br/>
+    <ul>
+      <% @shape.series.each do |series| %>
+          <li class="two-column-list"><%= series.tr_name %></li>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
+<br clear="right"/>
+<br/>
+<br/>
+
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), shapes_path %> |
+<%= link_to trn_geth('BUTTON_EDIT'), edit_shape_path(@shape) %> |
+<%= link_to trn_geth('BUTTON_DELETE'), @shape, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

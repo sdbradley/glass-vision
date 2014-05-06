@@ -1,0 +1,98 @@
+<%= error_messages_for 'option' %>
+<%= f.hidden_field :module_type_id %>
+
+<div style="float:right; height:370px !important; width:350px; display:block">
+  <%= image_tag @option.photo.url(:original) if @option.photo.url %>
+  <br />
+  <%= f.label trn_geth('LABEL_PHOTO') %>: <%= f.file_field :photo %>
+  <br />
+  <span style="font-size:smaller"><%= display_minimum_dimensions(300) %></span>
+</div>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field :description, :size => 50 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_area  :comments, :cols => '39', :rows => '10' %></td>
+  </tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= f.collection_select(:option_category_ids, @all_option_categories, "id", "tr_name") %></td>
+	</tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.select :pricing_method_id, PricingMethod.all(:order => 'description').map { |p| [p.tr_description, p.id] } %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD_APPLIES_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.select :apply_to, Option.options_for_select, {},{ :disabled => @option.pricing_method_id != 1} %>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field :price, :size => 5 %></td>
+  </tr>
+	<tr>
+		<td align="right"><%= trn_geth('LABEL_MINIMUM_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td>
+			<%= f.text_field :minimum_quantity, :size => 5, :disabled => @option.pricing_method_id > 2  %>
+			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] }, {},
+			{:disabled => @option.pricing_method_id > 2 } %> 
+		</td>
+	</tr>
+	<tr>
+	 <td></td>
+	 <td><strong style="font-size:smaller"><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong></td>
+	</tr>
+	<tr>
+	 <td></td>
+	 <td>&nbsp;</td>
+	</tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+      <%= f.check_box :emphasize %><label for="option_emphasize"><%= trn_geth('LABEL_EMPHASIZE')%></label>
+    </td>
+  </tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<script type="text/javascript" charset="utf-8">
+  function toggle_apply_to(el)
+  {
+    if (jQuery(el).val() == '1')
+      jQuery('#option_apply_to').removeAttr('disabled');
+    else {
+      jQuery('#option_apply_to').val('2');    
+      jQuery('#option_apply_to').attr('disabled', 'disabled');    
+    }
+  }
+  function toggle_min_quantity(el)
+  {
+    var val = jQuery(el).val();
+    if (val == '1' || val == '2')
+    {
+      jQuery('#option_minimum_quantity').removeAttr('disabled');
+      jQuery('#option_options_minimum_unit_id').removeAttr('disabled');
+    }
+    else
+    {
+      jQuery('#option_minimum_quantity').attr('disabled', 'disabled');        
+      jQuery('#option_options_minimum_unit_id').attr('disabled', 'disabled');
+    }
+  }
+  jQuery("#option_pricing_method_id").change(function(){
+    toggle_apply_to(this);
+    toggle_min_quantity(this);
+  });
+  jQuery("#option_pricing_method_id").keyup(function(){
+    toggle_apply_to(this);
+    toggle_min_quantity(this);
+  });
+
+</script>

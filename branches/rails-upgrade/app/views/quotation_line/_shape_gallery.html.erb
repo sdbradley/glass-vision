@@ -1,0 +1,9 @@
+<% @shapes.each_with_index do |shape, idx| %>
+    <%= '<tr>'.html_safe  if idx % 5 == 0 %>
+    <td data-shape-id="<%= shape.id %>">
+      <%= shape.tr_name %>
+      <br />
+      <%= image_tag shape.photo(:small) %>
+    </td>
+    <%= '</tr>'.html_safe if idx % 5 == 4 %>
+<% end %>

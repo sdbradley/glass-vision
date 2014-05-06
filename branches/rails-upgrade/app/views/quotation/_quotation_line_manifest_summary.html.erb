@@ -1,0 +1,70 @@
+<table>
+  <tr valign="top">
+    <%
+       dims = ql.get_image_size
+       options = {:style => "margin-top: 3px;"}
+       if dims[0] > dims[1]
+         options[:width] = max_thumbnail_size
+       else
+         options[:height] = max_thumbnail_size
+       end
+    %>
+    <td width="1%" valign="top" rowspan="2" style="border-bottom: 2px solid #cccccc;">
+      <%= wicked_pdf_dynamic_image_tag "/system/images/previews/preview_#{ql.id}.png", options %>
+      <br><span style="font-size:x-small;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+    </td>
+    <td>
+      <table width="100%" style="font-size: small;">
+        <% if ql.label and !ql.label.empty? %>
+            <tr>
+              <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+              <td colspan="3"><%= ql.label %></td>
+            </tr>
+        <% end %>
+        <tr>
+          <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td width="45%"><%= ql.serie.tr_name %></td>
+          <td width="1%"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td width="45%"><%= ql.shape.tr_name %></td>
+          <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation }.join %></td>
+        </tr>
+        <tr>
+          <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td width="45%"><%= number_with_precision ql.width %></td>
+          <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= number_with_precision ql.height %></td>
+        </tr>
+        <tr>
+          <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
+              <td><%= trn_get('LABEL_INTERIOR_COLOR') %></td>
+              <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+          <% end %>
+          <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank? %>
+              <td><%= trn_get('LABEL_EXTERIOR_COLOR') %></td>
+              <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
+          <% end %>
+        </tr>
+      </table>
+    </td>
+    <td width="10%" align="right"></td>
+    <td width="10%" align="right"></td>
+    <td width="10%" align="center"><%= ql.quantity %></td>
+  </tr>
+  <tr valign="top" >
+    <td colspan="3" style="border-bottom: 2px solid #cccccc;">
+
+      <% if ql.options_quotation_lines.length > 0 %>
+          <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
+          <%= ql.options_quotation_lines.collect { |opt| show_option_with_quantity(opt.option, opt.quantity) }.join(", ").html_safe %>
+      <% else %>
+          &nbsp;
+      <% end %>
+    </td>
+    <td style="border-bottom: 2px solid #cccccc;">&nbsp;</td>
+  </tr>
+</table>

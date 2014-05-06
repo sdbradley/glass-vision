@@ -1,0 +1,27 @@
+<table cellpadding="5" width="100%">
+  <tr valign="top" width="1%">
+    <td rowspan="2">
+      <%= wicked_pdf_dynamic_image_tag @quotation.company.logo.url %>
+    </td>
+    <td rowspan="2" width="1%" nowrap="nowrap">
+      <strong><%= @quotation.company.name %></strong><br/>
+      <%= @quotation.company.address.gsub(/\n/, '<br/>').html_safe %><br/>
+      <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.phone %><br/>
+      <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.fax %>
+    </td>
+    <td width="98%" align="right">
+      <h2>
+        #<%= @quotation.slug %>
+        <%= @quotation.project_name %>
+      </h2>
+      <%= gv_humanize_time @quotation.updated_at %>
+      <br/>
+      <%= @quotation.consultant%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= @quotation.description %>
+    </td>
+  </tr>
+</table>

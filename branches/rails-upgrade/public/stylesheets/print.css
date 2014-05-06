@@ -1,0 +1,18 @@
+.reporttitle {
+	font-family: "Times New Roman", "Courier New", "Georgia";
+	text-align: center; 
+	font-size: 36px;
+	color: #CCCCCC; 
+	margin-bottom: 0pt;
+//	letter-spacing: -1.5em;
+	}
+
+/*
+table, tr, td, th, tbody, thead, tfoot {
+    page-break-inside: avoid !important;
+}
+
+div.page-breaker {
+  outline: 1px solid red;
+}
+*/
