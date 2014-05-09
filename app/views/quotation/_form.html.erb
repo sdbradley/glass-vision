@@ -1,17 +1,17 @@
-<%= error_messages_for "quotation" %>
+<%= error_messages_for 'quotation' %>
 
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "description", :size => 50%></td>
+    <td><%= text_field 'quotation', 'description', :size => 50%></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_area "quotation", "comments", :cols => "39", :rows => "7" %></td>
+    <td><%= text_area 'quotation', 'comments', :cols => '39', :rows => '7' %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PROJECT_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "project_name", :size => 50 %><strong> *</strong></td>
+    <td><%= text_field 'quotation', 'project_name', :size => 50 %><strong> *</strong></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -28,70 +28,70 @@
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME_PICK') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select('customer', 'name', Customer.all().collect(&:name)) %>
+    <td><%= select('customer', 'name', Customer.all.collect(&:name)) %>
     </td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_area "quotation", "customer_address", :cols => "39", :rows => "5", :id => 'customer_address'  %></td>
+    <td><%= text_area 'quotation', 'customer_address', :cols => '39', :rows => '5', :id => 'customer_address'  %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DELIVERY_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_area "quotation", "delivery_address", :cols => "39", :rows => "5", :id => 'delivery_address'  %>
+    <td><%= text_area 'quotation', 'delivery_address', :cols => '39', :rows => '5', :id => 'delivery_address'  %>
       <br />
       <%= check_box_tag 'use_billing_address', @quotation.use_billing_address?-%><%= trn_get('LABEL_SAME_DELIVERY_ADDRESS') -%>
     </td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "customer_phone", :size => 50, :id => 'customer_phone'  %></td>
+    <td><%= text_field 'quotation', 'customer_phone', :size => 50, :id => 'customer_phone'  %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_FAX') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "customer_fax", :size => 50, :id => 'customer_fax'  %></td>
+    <td><%= text_field 'quotation', 'customer_fax', :size => 50, :id => 'customer_fax'  %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_EMAIL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "customer_email", :size => 50, :id => 'customer_email'  %></td>
+    <td><%= text_field 'quotation', 'customer_email', :size => 50, :id => 'customer_email'  %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_area "quotation", "notes", :cols => "39", :rows => "5"  %></td>
+    <td><%= text_area 'quotation', 'notes', :cols => '39', :rows => '5' %></td>
   </tr>
 </table>
 <hr/>
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "transport", :size => 10, :style => "text-align: right;" %>$</td>
+    <td><%= text_field 'quotation', 'transport', :size => 10, :style => 'text-align: right;' %>$</td>
   </tr>
   <% if current_user.has_role?('administrator')%>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "discount", :size => 10, :style => "text-align: right;" %>%</td>
+    <td><%= text_field 'quotation', 'discount', :size => 10, :style => 'text-align: right;' %>%</td>
   </tr>
   <% else %>
-    <%= hidden_field "quotation", "discount" %>
+    <%= hidden_field 'quotation', 'discount' %>
   <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_MARKUP') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "markup", :size => 10, :style => "text-align: right;" %>%</td>
+    <td><%= text_field 'quotation', 'markup', :size => 10, :style => 'text-align: right;' %>%</td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_get('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "taxes", :size => 10, :style => "text-align: right;" %>%</td>
+    <td><%= text_field 'quotation', 'taxes', :size => 10, :style => 'text-align: right;' %>%</td>
   </tr>  
   <tr valign="top">
     <td align="right"><%= trn_get('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "taxes_pst", :size => 10, :style => "text-align: right;" %>%</td>
+    <td><%= text_field 'quotation', 'taxes_pst', :size => 10, :style => 'text-align: right;' %>%</td>
   </tr>  
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field "quotation", "deposit", :size => 10, :style => "text-align: right;" %>$</td>
+    <td><%= text_field 'quotation', 'deposit', :size => 10, :style => 'text-align: right;' %>$</td>
   </tr>  
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= check_box "quotation", "ready_to_sign" %></td>
+    <td><%= check_box 'quotation', 'ready_to_sign' %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -101,6 +101,12 @@
     <td align="right"><%= trn_geth('LABEL_CONSULTANT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field 'quotation', 'consultant',  :size => 50  %></td>
   </tr>
+<% if @current_user.has_role?('administrator') %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ASSIGNED_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation', 'user_id',  User.all.map {|u| [u.login, u.id]}  %></td>
+  </tr>
+<% end %>
 </table>
 
 <% content_for :extra_javascript do %>
