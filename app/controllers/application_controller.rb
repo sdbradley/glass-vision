@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  layout proc{ |c| c.request.xhr? ? false : "application" }
+  layout proc{ |c| c.request.xhr? ? false : 'application' }
 
   before_filter do |c|
     ActiveRecord::Base.lang = c.session[:lang] ||= request.cookies['lang'] ||= "fr"
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     logger.error  "#################### #{text} ####################"
     if value
       logger.error value.inspect
-      logger.error "------------------------------------------------"
+      logger.error '------------------------------------------------'
     end
   end
 end
