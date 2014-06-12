@@ -19,22 +19,22 @@
 
   <%
     internal_width = section_width - frame_thickness
-    internal_height_buttom = section_height2 + frame_thickness * 0.5
-    internal_height_top = section_height - internal_height_buttom - frame_thickness
+    internal_height_bottom = section_height2 + frame_thickness * 0.5
+    internal_height_top = section_height - internal_height_bottom - frame_thickness
   %>
 
   <g id="layer2" >
     <path
        style="fill:#ddeef2;stroke:#000000;stroke-width:<%= frame_thickness %>px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %> m 0,<%= internal_height_top %> c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width/2.0*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width/2.0 %>,-<%= internal_height_top %> <%= internal_width/2.0*0.55228475 %>,0 <%= internal_width/2.0 %>,<%= internal_height_top*(1-0.55228475) %> <%= internal_width/2.0 %>,<%= internal_height_top %> v <%= internal_height_buttom %> h <%= -internal_width %> z"
+       d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %> m 0,<%= internal_height_top %> c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width/2.0*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width/2.0 %>,-<%= internal_height_top %> <%= internal_width/2.0*0.55228475 %>,0 <%= internal_width/2.0 %>,<%= internal_height_top*(1-0.55228475) %> <%= internal_width/2.0 %>,<%= internal_height_top %> v <%= internal_height_bottom %> h <%= -internal_width %> z"
        id="path2"/>
     <path
        style="fill:none;stroke:#ffffff;stroke-width:<%= frame_thickness*0.8 %>px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %> m 0,<%= internal_height_top %> c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width/2.0*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width/2.0 %>,-<%= internal_height_top %> <%= internal_width/2.0*0.55228475 %>,0 <%= internal_width/2.0 %>,<%= internal_height_top*(1-0.55228475) %> <%= internal_width/2.0 %>,<%= internal_height_top %> v <%= internal_height_buttom %> h <%= -internal_width %> z"
+       d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %> m 0,<%= internal_height_top %> c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width/2.0*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width/2.0 %>,-<%= internal_height_top %> <%= internal_width/2.0*0.55228475 %>,0 <%= internal_width/2.0 %>,<%= internal_height_top*(1-0.55228475) %> <%= internal_width/2.0 %>,<%= internal_height_top %> v <%= internal_height_bottom %> h <%= -internal_width %> z"
        id="path3"/>
     <path
        style="fill:none;stroke:#000000;stroke-width:<%= frame_thickness*0.1 %>px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %> m 0,<%= internal_height_top %> c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width/2.0*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width/2.0 %>,-<%= internal_height_top %> <%= internal_width/2.0*0.55228475 %>,0 <%= internal_width/2.0 %>,<%= internal_height_top*(1-0.55228475) %> <%= internal_width/2.0 %>,<%= internal_height_top %> v <%= internal_height_buttom %> h <%= -internal_width %> z"
+       d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %> m 0,<%= internal_height_top %> c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width/2.0*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width/2.0 %>,-<%= internal_height_top %> <%= internal_width/2.0*0.55228475 %>,0 <%= internal_width/2.0 %>,<%= internal_height_top*(1-0.55228475) %> <%= internal_width/2.0 %>,<%= internal_height_top %> v <%= internal_height_bottom %> h <%= -internal_width %> z"
        id="path4"/>
   </g>
 
