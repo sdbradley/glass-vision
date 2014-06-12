@@ -72,7 +72,6 @@ class QuotationLine < ActiveRecord::Base
       left_sidelight_width = section_width
     end
     # loop on rows
-    if true
 
     0.upto(shape.sections_height - 1) do |h|
 
@@ -102,8 +101,6 @@ class QuotationLine < ActiveRecord::Base
 
       # update coordinates
       current_y += section_height
-
-    end
 
     end
 
@@ -153,7 +150,6 @@ class QuotationLine < ActiveRecord::Base
       current_x += section_width
     end
 
-if true
     # initialize offset
     current_y = 0
     if shape.has_upper_transom?
@@ -178,7 +174,6 @@ if true
       # update coordinates
       current_y += section_height
     end
-end
 
     # write final image
     canvas.write final_file_name
@@ -281,7 +276,7 @@ end
 
 
   def get_preview_image_path
-    create_image unless File.exists?(preview_image_path)
+    create_image unless File.exists?(File.join(Rails.root, 'public', preview_image_path))
     preview_image_path
   end
 
@@ -305,7 +300,7 @@ end
     # constants
     frame_thickness = FRAME_THICKNESS
     arrow_size = ARROW_SIZE
-    section_height2 = 5
+    section_height2 = 0
 
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     # load erb file for section and generate scaled svg file
@@ -315,7 +310,9 @@ end
     end
 
     # load svg file
-    section_image = Image.read(temp_file_name)[0]
+    image_blob = IO.popen("rsvg-convert -a #{temp_file_name}")
+    section_image = Image.from_blob(image_blob.read).first
+#    section_image = Image.read(temp_file_name)[0]
   end
 
   def draw_vertical_measurement(canvas, section_height, current_y)
