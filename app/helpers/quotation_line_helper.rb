@@ -353,7 +353,7 @@ module QuotationLineHelper
     if cpt_missing == 0
       # no missing heights so just compute the total height if not supplied
       @total_height = acc_dimension + total_transom_height if @total_height == 0
-      return trn_get('MSG_HEIGHTS_DONT_MATCH') if @total_height != acc_dimension + total_transom_height
+      return trn_get('MSG_HEIGHTS_DONT_MATCH') if (@total_height - acc_dimension - total_transom_height > 0.001)
     else
         # any height not accounted for to be spread across any openings with 0 height
         deducted = (@total_height - acc_dimension - total_transom_height) / cpt_missing
@@ -388,7 +388,7 @@ module QuotationLineHelper
     # complete missing widths if possible
     if cpt_missing == 0
       @total_width = acc_dimension + total_sidelight_width if @total_width == 0
-      return trn_get('MSG_WIDTHS_DONT_MATCH') if @total_width != acc_dimension + total_sidelight_width
+      return trn_get('MSG_WIDTHS_DONT_MATCH') if (@total_width - acc_dimension - total_sidelight_width) < 0.001
     else
         deducted = (@total_width - acc_dimension - total_sidelight_width) / cpt_missing
         @real_width.each do |k, v|
