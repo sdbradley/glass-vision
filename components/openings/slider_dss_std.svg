@@ -16,10 +16,10 @@
 <% arrow_hht = arrow_size / 2 %>
 
 
-  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: black" x="0" y="0" width="<%= section_width %>" height="<%= section_height %>"/>
-  <rect style="fill:#ddeef2; fill-opacity:1; stroke-width: 0.1; stroke: black" x="<%= frame_thickness %>" y="<%= frame_thickness %>" width="<%= small_width %>" height="<%= small_height %>"/>
-  <rect style="fill:#ddeef2; fill-opacity:1; stroke-width: 0.1; stroke: black" x="<%= small_width + frame_thickness * 2 %>" y="<%= frame_thickness %>" width="<%= center_width %>" height="<%= small_height %>"/>
-  <rect style="fill:#ddeef2; fill-opacity:1; stroke-width: 0.1; stroke: black" x="<%= small_width + center_width + frame_thickness * 3 %>" y="<%= frame_thickness %>" width="<%= small_width %>" height="<%= small_height %>"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.25; stroke: black" x="0" y="0" width="<%= section_width %>" height="<%= section_height %>"/>
+  <rect style="fill:#ddeef2; fill-opacity:1; stroke-width: 0.25; stroke: black" x="<%= frame_thickness %>" y="<%= frame_thickness %>" width="<%= small_width %>" height="<%= small_height %>"/>
+  <rect style="fill:#ddeef2; fill-opacity:1; stroke-width: 0.25; stroke: black" x="<%= small_width + frame_thickness * 2 %>" y="<%= frame_thickness %>" width="<%= center_width %>" height="<%= small_height %>"/>
+  <rect style="fill:#ddeef2; fill-opacity:1; stroke-width: 0.25; stroke: black" x="<%= small_width + center_width + frame_thickness * 3 %>" y="<%= frame_thickness %>" width="<%= small_width %>" height="<%= small_height %>"/>
 
 <!-- new arrows -->
 <% start_x = right_arrow_vertex_horiz_position + arrow_size %>
