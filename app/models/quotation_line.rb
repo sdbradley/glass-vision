@@ -11,8 +11,8 @@ class QuotationLine < ActiveRecord::Base
   has_many :section_heights, :dependent => :destroy
   has_many :section_widths, :dependent => :destroy
 
-  belongs_to :standard_interior_color, :class_name => "ProductColor"
-  belongs_to :standard_exterior_color, :class_name => "ProductColor"
+  belongs_to :standard_interior_color, :class_name => 'ProductColor'
+  belongs_to :standard_exterior_color, :class_name => 'ProductColor'
 
   validates_presence_of :width, :height, :serie_id, :quantity
   validates_numericality_of :width, :height, :quantity
@@ -23,6 +23,8 @@ class QuotationLine < ActiveRecord::Base
   FRAME_THICKNESS = 3.0
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 3
+  WINDOW_FILL_COLOR = '#C9DAE7'
+
 
   def after_initialize
     if self.new_record? && quantity.blank?
@@ -38,6 +40,7 @@ class QuotationLine < ActiveRecord::Base
     # constants
     frame_thickness = FRAME_THICKNESS
     arrow_size = ARROW_SIZE
+    window_fill_color = WINDOW_FILL_COLOR
 
     # define canvas for final image
     image_width = (width + 40) * PIXELS_PER_INCH
@@ -49,6 +52,7 @@ class QuotationLine < ActiveRecord::Base
     current_y = 0
     left_sidelight_width = 0
     upper_transom_height = 0
+    section_height = 0
 
     # draw upper transom
     if shape.has_upper_transom?
@@ -300,6 +304,8 @@ class QuotationLine < ActiveRecord::Base
     # constants
     frame_thickness = FRAME_THICKNESS
     arrow_size = ARROW_SIZE
+    window_fill_color = WINDOW_FILL_COLOR
+
     section_height2 = 0
 
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")

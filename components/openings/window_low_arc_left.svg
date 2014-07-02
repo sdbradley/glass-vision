@@ -25,7 +25,7 @@
 
   <g id="layer1" >
     <path
-       style="fill:#ddeef2;stroke:#000000;stroke-width:<%= frame_thickness %>px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:<%= window_fill_color %>;stroke:#000000;stroke-width:<%= frame_thickness %>px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M <%= frame_thickness*0.5 %>,<%= frame_thickness*0.5 %>
           m 0,<%= internal_height_top %>
           c 0,-<%= internal_height_top*0.55228475 %> <%= internal_width*(1-0.55228475) %>,-<%= internal_height_top %> <%= internal_width %>,-<%= internal_height_top %>
