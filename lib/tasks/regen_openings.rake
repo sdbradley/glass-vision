@@ -40,7 +40,7 @@ task :regen_openings do
       f.write ERB.new(File.read(svg_file)).result(binding)
     end
   #   convert to png
-    File.unlink(output_file_name)
+    File.unlink(output_file_name) if File.exist?(output_file_name)
     system("rsvg-convert -a #{temp_file_name} -o #{output_file_name}")
   end
 
