@@ -16,8 +16,6 @@ task :regen_openings do
   arrow_size = ARROW_SIZE
   window_fill_color = WINDOW_FILL_COLOR
 
-#  section_height = 150
-#  section_width = 150
   section_height2 = 0
 
 
@@ -30,8 +28,8 @@ task :regen_openings do
     output_file_name  = File.join(Rails.root, image_base_name)
 
     img = Image.read(image_file_name).first
-    section_width = img.columns
-    section_height = img.rows
+    section_width = img.columns - 1
+    section_height = img.rows - 1
 
     temp_file_name = File.join(Rails.root, 'tmp', File.basename(svg_file))
 
