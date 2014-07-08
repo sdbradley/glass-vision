@@ -9,15 +9,16 @@ module QuotationLineHelper
       output << image_tag('openings/' + Opening.find(selected).preview_image_name, :onclick => "$('#opening_list_#{section}').toggle();", :id => "opening_pic_#{section}")
     end
     # non IE version
-    output << "<!--[if !IE]> <!-->"
+    output << '<!--[if !IE]> <!-->'
     output << "<div id=\"opening_list_#{section}\" class=\"opening_list\" style=\"display: none;\">"
     @quotation_line.serie.openings.each do |o|
       output << "<div class=\"image\" onmouseover=\"$(this).addClass('hover')\" onmouseout=\"$(this).removeClass('hover')\" onclick=\"$('#openings_#{section}').val(#{o.id}); $('#opening_pic_#{section}').attr('src', '/images/openings/#{o.preview_image_name}'); $('#opening_list_#{section}').toggle();\">"
       output << image_tag('openings/' + o.preview_image_name)
-      output << "<br/>" + o.tr_abbreviation
-      output << "</div>"
+      output << '<br/>' + o.tr_abbreviation
+      output << "<br/><span style='font-size:x-small'>#{@quotation_line.serie.tr_name.split[0..1].join(" ").sub(',', '')}</span>"
+      output << '</div>'
     end
-    output << "</div>"
+    output << '</div>'
     output << "<!--<![endif]-->"
     # IE version
     output << "<!--[if IE]>"
