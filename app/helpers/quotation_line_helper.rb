@@ -1,12 +1,14 @@
 module QuotationLineHelper
 
   def select_opening(section, selected)
+    selected_opening = selected == 0? nil : Opening.find(selected)
     output = "<div class=\"opening_list_caller\">"
     output << hidden_field_tag("openings[#{section}]", selected)
     if selected == 0
       output << image_tag('openings/none.png', :onclick => "$('#opening_list_#{section}').toggle();", :id => "opening_pic_#{section}")
     else
-      output << image_tag('openings/' + Opening.find(selected).preview_image_name, :onclick => "$('#opening_list_#{section}').toggle();", :id => "opening_pic_#{section}")
+      output << image_tag('openings/' + selected_opening.preview_image_name, :onclick => "$('#opening_list_#{section}').toggle();", :id => "opening_pic_#{section}")
+      output << "<br/><span style='font-size:x-small'>#{selected_opening.tr_label}</span>"
     end
     # non IE version
     output << '<!--[if !IE]> <!-->'
@@ -15,7 +17,7 @@ module QuotationLineHelper
       output << "<div class=\"image\" onmouseover=\"$(this).addClass('hover')\" onmouseout=\"$(this).removeClass('hover')\" onclick=\"$('#openings_#{section}').val(#{o.id}); $('#opening_pic_#{section}').attr('src', '/images/openings/#{o.preview_image_name}'); $('#opening_list_#{section}').toggle();\">"
       output << image_tag('openings/' + o.preview_image_name)
       output << '<br/>' + o.tr_abbreviation
-      output << "<br/><span style='font-size:x-small'>#{@quotation_line.serie.tr_name.split[0..1].join(" ").sub(',', '')}</span>"
+      output << "<br/><span style='font-size:x-small'>#{o.tr_label}</span>"
       output << '</div>'
     end
     output << '</div>'

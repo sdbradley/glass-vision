@@ -2,7 +2,7 @@ class OpeningController < ApplicationController
   before_filter :check_administrator_role
 
   def list
-    @openings = Opening.all(:order => "name")
+    @openings = Opening.all(:order => 'name')
   end
 
   def show
@@ -16,7 +16,7 @@ class OpeningController < ApplicationController
   def create
     @opening = Opening.new(params[:opening])
     if @opening.save
-      flash[:notice] = trn_geth('LABEL_OPENING') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'list'
     else
       render :action => 'add'
@@ -30,7 +30,7 @@ class OpeningController < ApplicationController
   def update
     @opening = Opening.find(params[:id])
     if @opening.update_attributes(params[:opening])
-      flash[:notice] = trn_geth('LABEL_OPENING') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -39,7 +39,7 @@ class OpeningController < ApplicationController
 
   def delete
     Opening.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_OPENING') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'list'
   end
 end
