@@ -44,6 +44,7 @@ class Quotation < ActiveRecord::Base
   def self.copy(orig_quotation)
     quotation = orig_quotation.clone(:include => [:options_quotations, {:quotation_lines => [:quotation_lines_openings, :options_quotation_lines, :section_heights, :section_widths] }, {:door_lines => [:door_line_sections, :door_line_options]}])
     quotation.slug = quotation.generate_new_slug(orig_quotation.slug)
+    quotation.created_at = nil # ensure the new quotation has the current date.
     quotation
   end
 
