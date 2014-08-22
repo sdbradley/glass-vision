@@ -3,7 +3,7 @@ require 'RMagick'
 include Magick
 
 class QuotationLine < ActiveRecord::Base
-  belongs_to :quotation
+  belongs_to :quotation, :touch => true
   belongs_to :serie
   belongs_to :shape
   has_many :quotation_lines_openings, :order => 'sort_order', :dependent => :destroy
