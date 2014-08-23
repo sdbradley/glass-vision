@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="<%= section_width * PIXELS_PER_INCH + PIXELS_PER_INCH %>" height="<%= section_height * PIXELS_PER_INCH + PIXELS_PER_INCH %>" viewBox="0 0 <%= section_width + 1 %> <%= section_height + 1 %>">
+<% small_width = section_width - frame_thickness * 2 %>
+<% small_height = section_height - frame_thickness * 2 %>
+
+<path d="M0,0V<%= section_height%>H<%= section_width %>Z" style="fill: #FFFFFF; fill-opacity:1; stroke-width: 0.25; stroke: #000000" />
+
+<path d="M<%= frame_thickness  %>,<%= frame_thickness * 2 %>V<%= small_height + frame_thickness%>H<%= small_width - frame_thickness * 2 %>Z" style="fill: <%= window_fill_color %>; fill-opacity:1; stroke-width: 0.25; stroke: #000000" />
+
+  
+</svg>
