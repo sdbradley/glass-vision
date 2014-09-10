@@ -4,9 +4,12 @@
 <% small_width = section_width - frame_thickness * 2 %>
 <% small_height = section_height - frame_thickness * 2 %>
 
-<path d="M0,<%= section_height %>H<%= section_width%>V0Z" style="fill: #FFFFFF; fill-opacity:1; stroke-width: 0.25; stroke: #000000" />
+<g>
+    <polygon points="0 0 <%= section_width %> <%= section_height %> 0 <%= section_height %> " fill="<%= window_fill_color %>"  
+			 stroke="#FFFFFF" stroke-width="<%= frame_thickness -1 %>" 
+			 stroke-linejoin="miter"></polygon>
+</g>
 
-<path d="M<%= frame_thickness * 4 %>,<%= small_height + frame_thickness %>H<%= small_width  + frame_thickness%>V<%= frame_thickness*2 %>Z" style="fill: <%= window_fill_color %>; fill-opacity:1; stroke-width: 0.25; stroke: #000000" />
 
   
 </svg>
