@@ -11,7 +11,7 @@
   	<!-- draw thin black border -->
 	 <polyline points="0 <%= section_height %> <%= section_width %> 
 	                  <%= section_height %> <%= section_width %> 0 0 <%= section_height %> " 
-	           fill="none"  stroke="#000000" stroke-width="0.5" 
+	           fill="none"  stroke="#000000" stroke-width="0.25" 
 			   stroke-linejoin="miter" />
 </g>
 
