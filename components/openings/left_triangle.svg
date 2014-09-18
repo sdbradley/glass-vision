@@ -3,9 +3,16 @@
 <svg width="<%= section_width * PIXELS_PER_INCH + PIXELS_PER_INCH %>" height="<%= section_height * PIXELS_PER_INCH + PIXELS_PER_INCH %>" viewBox="0 0 <%= section_width + 1 %> <%= section_height + 1 %>">
 
 <g>
+	<!-- draw blue triangle with white border -->
     <polygon points="0 <%= section_height %> <%= section_width %> <%= section_height %> <%= section_width %> 0" 
 	         fill="<%= window_fill_color %>"  stroke="#FFFFFF" stroke-width="<%= frame_thickness -1 %>" 
 			 stroke-linejoin="miter"></polygon>
+
+  	<!-- draw thin black border -->
+	 <polyline points="0 <%= section_height %> <%= section_width %> 
+	                  <%= section_height %> <%= section_width %> 0 0 <%= section_height %> " 
+	           fill="none"  stroke="#000000" stroke-width="0.5" 
+			   stroke-linejoin="miter" />
 </g>
 
   

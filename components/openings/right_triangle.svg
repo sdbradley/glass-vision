@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
 <svg width="<%= section_width * PIXELS_PER_INCH + PIXELS_PER_INCH %>" height="<%= section_height * PIXELS_PER_INCH + PIXELS_PER_INCH %>" viewBox="0 0 <%= section_width + 1 %> <%= section_height + 1 %>">
-<% small_width = section_width - frame_thickness * 2 %>
-<% small_height = section_height - frame_thickness * 2 %>
 
 <g>
+	<!-- draw blue triangle with white border -->
     <polygon points="0 0 <%= section_width %> <%= section_height %> 0 <%= section_height %> " fill="<%= window_fill_color %>"  
 			 stroke="#FFFFFF" stroke-width="<%= frame_thickness -1 %>" 
-			 stroke-linejoin="miter"></polygon>
+			 stroke-linejoin="miter" />
+
+ 	<!-- draw thin black border -->
+	<polyline points="0 0 <%= section_width %> <%= section_height %> 0 <%= section_height %> 0 0 "
+    		  fill="none" stroke="#000000" stroke-width="0.5" 
+			  stroke-linejoin="miter" />
 </g>
 
 
