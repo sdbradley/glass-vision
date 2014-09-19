@@ -1,4 +1,8 @@
 class Option < ActiveRecord::Base
+
+  # the type of opening this option applies to
+  OPTION_APPLIES_TO = [APPLIES_TO_FIXED = 0, APPLIES_TO_OPENABLE = 1, APPLIES_TO_ALL = 2]
+
   include Translatable
 
   belongs_to :pricing_method
@@ -42,9 +46,9 @@ class Option < ActiveRecord::Base
   end
   
   def self.options_for_select
-    [[trn_get('LABEL_PRICING_METHOD_APPLIES_TO_ALL'), 2],
-                                   [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_FIXED'), 0],          
-                                   [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_OPENABLE'), 1]]
+    [[trn_get('LABEL_PRICING_METHOD_APPLIES_TO_ALL'), APPLIES_TO_ALL],
+                                   [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_FIXED'), APPLIES_TO_FIXED],
+                                   [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_OPENABLE'), APPLIES_TO_OPENABLE]]
   end
   
   def apply_to_value_string

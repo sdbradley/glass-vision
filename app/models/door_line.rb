@@ -12,6 +12,8 @@ class DoorLine < ActiveRecord::Base
   belongs_to :standard_interior_color, :class_name => 'ProductColor'
   belongs_to :standard_exterior_color, :class_name => 'ProductColor'
 
+  before_destroy :delete_preview_image
+
   def update_price
     self.price = 0
 
@@ -54,13 +56,11 @@ class DoorLine < ActiveRecord::Base
     end
     width += 2 * frame_profile.width
     width += (door_line_sections.count - 1) * frame_profile.separator_width
-    width
   end
 
   def total_height
     height = 0
     height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap_slab + frame_profile.sill
-    height
   end
 
 
@@ -70,6 +70,15 @@ class DoorLine < ActiveRecord::Base
 
   def create_image
     DoorPreviewCreator.new(self).call
+  end
+
+  def delete_preview_image
+    # delete the line image
+    begin
+      File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+    rescue
+      # no problem if file does not exist
+    end
   end
 
 

@@ -719,9 +719,9 @@ protected
       end
     else
       case option.apply_to
-        when 2 # applies to all
+        when Option.APPLIES_TO_ALL # applies to all
           area = (@total_width / 12) * (@total_height / 12)
-        when 0,1 # applies to fixed / openable openings only
+        when Option.APPLIES_TO_FIXED,Option.APPLIES_TO_OPENABLE
           area = compute_area_for_openings(shape, openings, option.apply_to)
       end
     end

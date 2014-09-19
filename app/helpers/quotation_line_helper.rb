@@ -225,9 +225,9 @@ module QuotationLineHelper
         end
       else
         case option.apply_to
-          when 2 # applies to all
+          when Option.APPLIES_TO_ALL # applies to all
             area = (@total_width / 12) * (@total_height / 12)
-          when 0,1 # applies to fixed / openable openings only
+          when Option.APPLIES_TO_FIXED,Option.APPLIES_TO_OPENABLE
             area = compute_area_for_openings(shape, openings, option.apply_to)
         end
       end
@@ -275,14 +275,14 @@ module QuotationLineHelper
   end
 
     def compute_minimum_section_area(section_area, option, opening)
-      return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
+      return 0 if option.apply_to != Option.APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
       section_area = option.minimum_quantity if section_area < option.minimum_quantity
       section_area
     end
 
     def compute_minimum_glass_area(section_area, option, opening)
       # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-      return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
+      return 0 if option.apply_to != Option.APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
 
       glasses_quantity = (opening.glasses_quantity || 1)
       glass_area = section_area / glasses_quantity

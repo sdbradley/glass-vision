@@ -43,25 +43,25 @@ class QuotationLine < ActiveRecord::Base
 
   def applies_to(opening, apply_to)
     case apply_to
-      when 0
+      when Option.APPLIES_TO_FIXED
         return opening.openable == false
-      when 1
+      when Option.APPLIES_TO_OPENABLE
         return opening.openable == true
-      when 2
+      when Option.APPLIES_TO_ALL
         true
     end
   end
 
   def compute_minimum_section_area(section_area, option, opening)
     # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-    return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
+    return 0 if option.apply_to != Option.APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
     section_area = option.minimum_quantity if section_area < option.minimum_quantity
     section_area
   end
 
   def compute_minimum_glass_area(section_area, option, opening)
     # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-    return 0 if option.apply_to != 2 && !applies_to(opening, option.apply_to)
+    return 0 if option.apply_to != Option.APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
 
     glasses_quantity = (opening.glasses_quantity || 1)
     glass_area = section_area / glasses_quantity
