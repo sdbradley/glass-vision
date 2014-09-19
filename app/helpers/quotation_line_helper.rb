@@ -48,23 +48,23 @@ module QuotationLineHelper
   def calculate_one_option_price(option, openings, shape)
     option_price = 0.0
       case option.pricing_method_id
-        when 1 # price per square foot
+        when PricingMethod::PER_SQ_FOOT # price per square foot
           option_price = calc_one_option_price_per_sq_ft(openings, option, shape)
-        when 2 # price by foot of perimeter
+        when PricingMethod::PER_PERIMETER_FOOT # price by foot of perimeter
           option_price = calc_one_option_price_per_ft_of_perimeter(openings, option, shape)
-        when 3 # price per section
+        when PricingMethod::PER_SECTION # price per section
           option_price = option.price * openings.length
-        when 4 # price per opening section
+        when PricingMethod::PER_OPENABLE_SECTION # price per opening section
           nb_sections = openings.values.count{|v| Opening.find(v.to_i).openable}
           option_price = option.price * nb_sections
-        when 5 # price by fixed section
+        when PricingMethod::PER_FIXED_SECTION # price by fixed section
           nb_sections = openings.values.count{|v| !Opening.find(v.to_i).openable}
           option_price = option.price * nb_sections
-        when 6 # unit price
+        when PricingMethod::UNIT_PRICE # unit price
           option_price = option.price
-        when 7 # price per corner
+        when PricingMethod::PER_CORNER # price per corner
           option_price = option.price * shape.corners
-        when 8 # price per total width
+        when PricingMethod::PER_TOTAL_WIDTH # price per total width
           option_price = option.price * (@total_width / 12.0).round
       end
       option_price
@@ -225,9 +225,9 @@ module QuotationLineHelper
         end
       else
         case option.apply_to
-          when Option.APPLIES_TO_ALL # applies to all
+          when Option::APPLIES_TO_ALL # applies to all
             area = (@total_width / 12) * (@total_height / 12)
-          when Option.APPLIES_TO_FIXED,Option.APPLIES_TO_OPENABLE
+          when Option::APPLIES_TO_FIXED,Option::APPLIES_TO_OPENABLE
             area = compute_area_for_openings(shape, openings, option.apply_to)
         end
       end
@@ -265,24 +265,24 @@ module QuotationLineHelper
 
   def applies_to(opening, apply_to)
     case apply_to
-      when 0
+      when Option::APPLIES_TO_FIXED
         return opening.openable == false
-      when 1
+      when Option::APPLIES_TO_OPENABLE
         return opening.openable == true
-      when 2
+      when Option::APPLIES_TO_ALL
         true
     end
   end
 
     def compute_minimum_section_area(section_area, option, opening)
-      return 0 if option.apply_to != Option.APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
+      return 0 if option.apply_to != Option::APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
       section_area = option.minimum_quantity if section_area < option.minimum_quantity
       section_area
     end
 
     def compute_minimum_glass_area(section_area, option, opening)
       # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
-      return 0 if option.apply_to != Option.APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
+      return 0 if option.apply_to != Option::APPLIES_TO_ALL && !applies_to(opening, option.apply_to)
 
       glasses_quantity = (opening.glasses_quantity || 1)
       glass_area = section_area / glasses_quantity

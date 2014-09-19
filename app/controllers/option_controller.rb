@@ -37,7 +37,7 @@ class OptionController < ApplicationController
 
   def update
     @option = Option.find(params[:id])
-    params[:option][:apply_to] = Option.APPLIES_TO_ALL.to_s if (params[:option][:pricing_method_id] != '1')
+    params[:option][:apply_to] = Option::APPLIES_TO_ALL.to_s if (params[:option][:pricing_method_id] != '1')
 
     if @option.update_attributes(params[:option])
       flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
