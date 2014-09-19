@@ -2,9 +2,9 @@ require 'erb'
 require 'RMagick'
 include Magick
 
+# this class is a Service Object for creating preview images for Window Lines
 
 class WindowPreviewCreator
-
 
   def initialize(quotation_line)
     @quotation_line = quotation_line
@@ -29,9 +29,6 @@ class WindowPreviewCreator
     @quotation_line.quotation_lines_openings.select { |o| o.sort_order == idx }.first.opening
   end
 
-  def get_image_size
-    return (width + 30) * PIXELS_PER_INCH, (height + 20) * PIXELS_PER_INCH
-  end
 
   def width
     @quotation_line.width
@@ -287,10 +284,5 @@ class WindowPreviewCreator
     #    section_image = Image.read(temp_file_name)[0]
   end
 
-  # constants for drawing
-  FRAME_THICKNESS = 3.0
-  ARROW_SIZE = 5.0
-  PIXELS_PER_INCH = 3
-  WINDOW_FILL_COLOR = '#C9DAE7'
 
 end

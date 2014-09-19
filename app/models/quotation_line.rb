@@ -37,6 +37,10 @@ class QuotationLine < ActiveRecord::Base
     (shape.sections_width * shape.sections_height + 4)
   end
 
+  def get_image_size
+    return (width + 30) * PIXELS_PER_INCH, (height + 20) * PIXELS_PER_INCH
+  end
+
   def applies_to(opening, apply_to)
     case apply_to
       when 0
