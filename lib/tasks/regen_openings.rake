@@ -69,8 +69,8 @@ task :regen_triangles do
   #    section_width = img.columns - 1
   #    section_height = img.rows - 1
 
-    section_width = 150
-    section_height = 75
+    section_width = 76
+    section_height = 38
     temp_file_name = File.join(Rails.root, 'tmp', File.basename(svg_file))
 
   #   load file, run through erb
