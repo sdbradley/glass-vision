@@ -17,3 +17,6 @@ gem 'jquery-rails', '~> 2.1'
 gem 'rails3-jquery-autocomplete', '1.0.10'
 gem 'jquery-migrate-rails'
 
+group(:development) do
+  gem 'yard'
+end
