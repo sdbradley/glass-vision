@@ -22,4 +22,9 @@ class Shape < ActiveRecord::Base
   has_and_belongs_to_many :series, :class_name => 'Serie'
 
 
+  # @return [int] total number of sections in this shape . Does not include transoms
+  def total_sections
+    sections_width * sections_height
+  end
+
 end

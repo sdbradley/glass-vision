@@ -45,7 +45,7 @@ class WindowPreviewCreator
   def draw_special_section(canvas, current_x, current_y, index)
     section_width = get_section_width(index)
     section_height = get_section_height(index)
-    logger.info "draw special section WxH #{section_width}, #{section_height}"
+    Rails.logger.info "draw special section WxH #{section_width}, #{section_height}"
 
     # load svg file
     section_image = get_section_image(index, section_height, section_width)
@@ -54,7 +54,7 @@ class WindowPreviewCreator
     offset_x_px = current_x * PIXELS_PER_INCH
     offset_y_px = current_y * PIXELS_PER_INCH
 
-    logger.info "draw special section #{current_x}, #{current_y}, @ #{offset_x_px}, #{offset_y_px} index #{index}"
+    Rails.logger.info "draw special section #{current_x}, #{current_y}, @ #{offset_x_px}, #{offset_y_px} index #{index}"
     # paint the image on canvas
     canvas.composite! section_image, offset_x_px, offset_y_px, OverCompositeOp
     return section_height, section_width
@@ -98,7 +98,7 @@ class WindowPreviewCreator
       # initialize coordinates
       current_x = 0
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, left_sidelight_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.left_sidelight_index(shape))
       # update coordinates
       current_x += section_width
       left_sidelight_width = section_width
@@ -141,7 +141,7 @@ class WindowPreviewCreator
       # initialize coordinates
       current_y = upper_transom_height
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, right_sidelight_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.right_sidelight_index(shape))
       # update coordinates
       current_x += section_width
     end
@@ -150,7 +150,7 @@ class WindowPreviewCreator
       # initialize coordinates
       current_x = 0
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, lower_transom_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.lower_transom_index(shape))
 
       # update coordinates
       current_y += section_height
@@ -160,7 +160,7 @@ class WindowPreviewCreator
     current_x = 0
     if shape.has_left_sidelight?
       # define values for binding
-      section_width = get_section_width(left_sidelight_index(shape))
+      section_width = get_section_width(@quotation_line.left_sidelight_index(shape))
       draw_horizontal_measurement(canvas, section_width, current_x)
       # update coordinates
       current_x += section_width
@@ -176,7 +176,7 @@ class WindowPreviewCreator
     end
     if shape.has_right_sidelight?
       # define values for binding
-      section_width = get_section_width(right_sidelight_index(shape))
+      section_width = get_section_width(@quotation_line.right_sidelight_index(shape))
       draw_horizontal_measurement(canvas, section_width, current_x)
       # update coordinates
       current_x += section_width
@@ -186,7 +186,7 @@ class WindowPreviewCreator
     current_y = 0
     if shape.has_upper_transom?
       # define values for binding
-      section_height = get_section_height(upper_transom_index(shape))
+      section_height = get_section_height(@quotation_line.upper_transom_index(shape))
       draw_vertical_measurement(canvas, section_height, current_y)
       # update coordinates
       current_y += section_height
@@ -201,7 +201,7 @@ class WindowPreviewCreator
     end
     if shape.has_lower_transom?
       # define values for binding
-      section_height = get_section_height(lower_transom_index(shape))
+      section_height = get_section_height(@quotation_line.lower_transom_index(shape))
       draw_vertical_measurement(canvas, section_height, current_y)
       # update coordinates
       current_y += section_height

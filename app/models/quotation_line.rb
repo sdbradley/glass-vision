@@ -21,26 +21,33 @@ class QuotationLine < ActiveRecord::Base
     end
   end
 
+  # @param [Shape] shape
   def upper_transom_index(shape)
-    (shape.sections_width * shape.sections_height + 1)
+    shape.total_sections + 1
   end
 
+
+  # @param [Shape] shape
   def lower_transom_index(shape)
-    (shape.sections_width * shape.sections_height + 2)
+    shape.total_sections + 2
   end
 
+  # @param [Shape] shape
   def left_sidelight_index(shape)
-    (shape.sections_width * shape.sections_height + 3)
+    shape.total_sections + 3
   end
 
+  # @param [Shape] shape
   def right_sidelight_index(shape)
-    (shape.sections_width * shape.sections_height + 4)
+    shape.total_sections + 4
   end
 
   def get_image_size
     return (width + 30) * PIXELS_PER_INCH, (height + 20) * PIXELS_PER_INCH
   end
 
+  # @param [Opening] opening
+  # @param [int] apply_to
   def applies_to(opening, apply_to)
     case apply_to
       when Option::APPLIES_TO_FIXED
@@ -52,6 +59,9 @@ class QuotationLine < ActiveRecord::Base
     end
   end
 
+
+  # @param [Option] option
+  # @param [Opening] opening
   def compute_minimum_section_area(section_area, option, opening)
     # don't count this area if the opening isn't applicable (eg, we're only counting fixed or openable openings)
     return 0 if option.apply_to != Option::APPLIES_TO_ALL && !applies_to(opening, option.apply_to)

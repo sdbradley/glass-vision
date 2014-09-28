@@ -2,6 +2,7 @@ class Option < ActiveRecord::Base
 
   # the type of opening this option applies to
   OPTION_APPLIES_TO = [APPLIES_TO_FIXED = 0, APPLIES_TO_OPENABLE = 1, APPLIES_TO_ALL = 2]
+  PRICED_PER = [ PRICED_PER_WINDOW = 1, PRICED_PER_SECTION = 2,  PRICED_PER_GLASS = 3 ]
 
   include Translatable
 

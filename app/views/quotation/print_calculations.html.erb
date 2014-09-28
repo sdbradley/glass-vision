@@ -71,18 +71,21 @@
         </table>
       </td>
       <%
-        calculate_dimensions(ql)
         ql_price = ql.price * discount_percent
 
          # compute the option prices
          total_option_prices = 0
-         option_string = ""
+         option_string = ''
+         line_info = QuotationLineParameters.new(ql)
+         option_calculator = Pricing::ComputeOptionPrice.new(ql, line_info)
 
          ql.options_quotation_lines.each do |opt|
-           option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent
+           option_price = option_calculator.call(opt.option, line_info.openings, ql.shape)
+           option_price = option_price * discount_percent
+           Rails.logger.debug "Option #{opt.option.description}: $#{option_price}"
            total_option_prices += option_price
 
-               option_string += ', ' unless option_string.blank?
+           option_string += ', ' unless option_string.blank?
            option_string += opt.option.tr_description
            option_string += " x #{opt.quantity}" if opt.quantity != 1
            option_string += " (#{number_to_currency(option_price)})"
