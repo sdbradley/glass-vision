@@ -10,6 +10,7 @@ GlassVision::Application.routes.draw do
   match '/forgot_password', :to => 'passwords#new', :as => :forgot_password
   match '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
   match '/change_password', :to => 'accounts#edit', :as => :change_password
+  match '/customers/search', :to => 'customer#search', :as => :search_customer, :method => :post
 
   resources :users do
     post :enable
