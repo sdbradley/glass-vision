@@ -1,5 +1,8 @@
 class CustomerController < ApplicationController
 
+  sortable_attributes  :name, :email
+  SEARCH_FIELDS = %w(search_name search_address search_email)
+
   def index
     list
     render :action => 'list'
@@ -10,18 +13,20 @@ class CustomerController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    if (@current_user.has_role?('administrator'))
-      @customers = Customer.paginate :page => params[:page], :per_page => 25
-    else
-      @customers = Customer.where("user_id = ?", @current_user.id).paginate(:page => params[:page], :per_page => 25)
-    end
+
+    searcher = SearchConditions.new(session, SEARCH_FIELDS)
+
+    conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
+    search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
+
+    @customers = Customer.where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order(:default => 'ascending'))
   end
 
 
   def show
     @customer = Customer.find(params[:id])
     if @customer.user_id != @current_user.id && !@current_user.has_role?('administrator')
-      flash[:notice] = "Permission denied"
+      flash[:notice] = 'Permission denied'
       redirect_to :action => 'list'
     end
   end
@@ -42,7 +47,7 @@ class CustomerController < ApplicationController
   def create
     @customer = Customer.new(params[:customer])
     if @customer.save
-      flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -68,4 +73,29 @@ class CustomerController < ApplicationController
     flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'list'
   end
+
+  def search
+    searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
+
+    params[:action] = 'index'
+    conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
+    search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
+
+    @customers = Customer.where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order(:default => 'ascending'))
+  end
+
+  protected
+  def search_condition_for(field, value, searcher)
+    return nil if value.blank?
+    case field.gsub(/search_/, '')
+      when 'name'
+        'name '+ searcher.send(:match_anywhere, value)
+      when 'address'
+        'address' + searcher.send(:match_anywhere, value)
+      when 'email'
+        'email' + searcher.send(:match_anywhere, value)
+    end
+  end
+
+
 end

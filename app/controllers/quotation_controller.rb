@@ -4,18 +4,21 @@ class QuotationController < ApplicationController
 
   before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
   sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
-  
+
   SEARCH_FIELDS = %w(search_description search_slug)
 
   def index
-    search_params_from_session
+    searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
+
     conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
-    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || "updated_at DESC")
+    search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
+
+    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || 'updated_at DESC')
   end
 
   def show
     if @quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
-      flash[:notice] = trn_geth("PERMISSION_DENIED")
+      flash[:notice] = trn_geth('PERMISSION_DENIED')
       redirect_to :action => 'index'
     end
   end
@@ -31,17 +34,17 @@ class QuotationController < ApplicationController
 
     @quotation = Quotation.new(params[:quotation])
     @quotation.user_id = @current_user.id
-    customer_msg = ""
+    customer_msg = ''
     if Customer.create_from_quotation_if_new(@quotation)
-      customer_msg = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      customer_msg = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     end
     if @quotation.save
     	if @quotation.slug.blank?
     	  @quotation.slug = InvoiceNumber.get_next_invoice_number
     	  @quotation.save
     	end
-      customer_msg += "<br />" unless customer_msg.blank?
-      customer_msg +=  trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      customer_msg += '<br />' unless customer_msg.blank?
+      customer_msg +=  trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       flash[notice] = customer_msg.html_safe
       redirect_to :action => 'show', :id => @quotation.slug
     else
@@ -60,7 +63,7 @@ class QuotationController < ApplicationController
     @quotation = Quotation.find(params[:id])
 
     if @quotation.update_attributes(params[:quotation])
-      flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'show', :id => @quotation.slug
     else
       render :action => 'edit'
@@ -69,33 +72,33 @@ class QuotationController < ApplicationController
 
   def destroy
     Quotation.find_by_slug(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'index'
   end
 
   def print
     retryable(:tries => 5, :on => RuntimeError) do
-      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}", :layout => 'printer', :disposition => "inline", 
+      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}", :layout => 'printer', :disposition => 'inline',
 	           :temp_path => Rails.root.join('tmp'), :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
     end
   end
 
   def print_invoice
     retryable(:tries => 5, :on => RuntimeError) do
-      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("PRINT_INVOICE_TITLE")}", :layout => 'printer', :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
+      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get('PRINT_INVOICE_TITLE')}", :layout => 'printer', :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
     end
   end
 
   def print_manifest
     retryable(:tries => 5, :on => RuntimeError) do
-      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_MANIFEST")}", :layout => 'printer', :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
+      render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get('BUTTON_PRINT_MANIFEST')}", :layout => 'printer', :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
     end
   end
 
   def print_calculations
     if current_user.has_role?('administrator')
       retryable(:tries => 5, :on => RuntimeError) do
-        render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get("BUTTON_PRINT_CALCULATIONS")}", :layout => 'printer', :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
+        render :pdf => "#{@quotation.slug}-#{@quotation.project_name}-#{trn_get('BUTTON_PRINT_CALCULATIONS')}", :layout => 'printer', :show_as_html => params[:debug].present?, :header => { :right => '[page] of [topage]' }
       end
     else
       redirect_to :action => 'index'
@@ -112,61 +115,30 @@ class QuotationController < ApplicationController
     @quotation = Quotation.copy(@orig_quotation)
     @quotation.save!
     @quotation.regenerate_previews
-    flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+    flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     redirect_to quotation_path(@quotation.slug)
   end
 
   def search
-    save_search_params_to_session
-    params[:action] = 'index'
+    searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
-    if @current_user.has_role?('administrator')
-      @quotations = Quotation.includes(:user).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
-    else
-      @quotations = Quotation.includes(:user).where('user_id = ?', @current_user.id).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
-    end
+    params[:action] = 'index'
+    conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
+    search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
+
+    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || 'updated_at DESC')
   end
 
   protected
-  def search_params_from_session
-    SEARCH_FIELDS.each { |x| params[x.to_sym] = session[x.to_sym]}
-  end
 
-  def save_search_params_to_session
-    SEARCH_FIELDS.each { |x| session[x.to_sym] = params[x.to_sym]}
-  end
-
-  def match_beginning(value)
-    " like \'#{value}%\'"
-  end
-
-  def match_ending(value)
-    " like \'%#{value}\'"
-  end
-
-  def match_anywhere(value)
-    " like \'%#{value}%\'"
-  end
-
-  def match_exact(value)
-    new_value = value.gsub /\*/, '%'
-    " like '#{new_value}'"
-  end
-
-  def search_condition_for(field, value)
+  def search_condition_for(field, value, searcher)
     return nil if value.blank?
-    case field.gsub(/search_/, "")
-      when "slug"
-        "slug "+ match_anywhere(value)
-      when "description"
-        "customer_name" + match_anywhere(value)
+    case field.gsub(/search_/, '')
+      when 'slug'
+        'slug '+ searcher.send(:match_anywhere, value)
+      when 'description'
+        'customer_name' + searcher.send(:match_anywhere, value)
     end
-  end
-
-  def search_conditions
-    conditions = SEARCH_FIELDS.collect{|x| search_condition_for(x, params[x.to_sym])}
-    conditions = conditions.delete_if{|x| x.nil?}
-    conditions.join(" and ")
   end
 
   def find_quotation
