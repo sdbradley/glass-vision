@@ -1,11 +1,11 @@
 class DatabaseTranslationController < ApplicationController
   before_filter :check_administrator_role
   def list
-    @dbtfs = DatabaseTranslationField.order("`table`, `translation_field_name`")
+    @dbtfs = DatabaseTranslationField.order('translation_table_name, translation_field_name')
     if params[:dbtf] ||= session[:dbtf]
       session[:dbtf] = (params[:dbtf] ||= session[:dbtf])
       @dbtf = DatabaseTranslationField.find(params[:dbtf] ||= session[:dbtf])
-      @dbts = DatabaseTranslation.where(:table => @dbtf.table).where(:translation_field_name => @dbtf.translation_field_name)
+      @dbts = DatabaseTranslation.where(:translation_table_name => @dbtf.translation_table_name).where(:translation_field_name => @dbtf.translation_field_name)
     end
   end
 
@@ -14,20 +14,20 @@ class DatabaseTranslationController < ApplicationController
     DatabaseTranslationField.all.each { |dbtf|
       new_items = 0
       old_items = 0
-      new_ids = dbtf.table.singularize.camelize.constantize.all.collect(&:id)
-      old_ids = DatabaseTranslation.where(:table => dbtf.table).where(:translation_field_name => dbtf.translation_field_name).collect{ |r| r.record_id}
+      new_ids = dbtf.translation_table_name.singularize.camelize.constantize.all.collect(&:id)
+      old_ids = DatabaseTranslation.where(:translation_table_name => dbtf.translation_table_name).where(:translation_field_name => dbtf.translation_field_name).collect{ |r| r.record_id}
       (new_ids - old_ids).each { |id|
         DatabaseTranslation.create :record_id => id,
-                                   :table => dbtf.table,
+                                   :translation_table_name => dbtf.translation_table_name,
                                    :translation_field_name => dbtf.translation_field_name
         new_items += 1
       }
       ids_to_destroy = (old_ids - new_ids)
       old_items  = ids_to_destroy.length
-      DatabaseTranslation.where(:record_id => ids_to_destroy).where(:table=> dbtf.table).where(:translation_field_name => dbtf.translation_field_name).destroy_all
+      DatabaseTranslation.where(:record_id => ids_to_destroy).where(:translation_table_name=> dbtf.translation_table_name).where(:translation_field_name => dbtf.translation_field_name).destroy_all
 
-      @log << new_items.to_s + " " + dbtf.table + " / " + dbtf.translation_field_name + " " + trn_get('LABEL_CREATED') + "." if new_items > 0
-      @log << old_items.to_s + " " + dbtf.table + " / " + dbtf.translation_field_name + " " + trn_get('LABEL_DELETED') + "." if old_items > 0
+      @log << new_items.to_s + ' ' + dbtf.translation_table_name + ' / ' + dbtf.translation_field_name + ' ' + trn_get('LABEL_CREATED') + '.' if new_items > 0
+      @log << old_items.to_s + ' ' + dbtf.translation_table_name + ' / ' + dbtf.translation_field_name + ' ' + trn_get('LABEL_DELETED') + '.' if old_items > 0
     }
     list
     render :action => 'list'
@@ -40,7 +40,7 @@ class DatabaseTranslationController < ApplicationController
   def update
     @dbt = DatabaseTranslation.find(params[:id])
     if @dbt.update_attributes(params[:dbt])
-      flash[:notice] = trn_geth('LABEL_TRANSLATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = trn_geth('LABEL_TRANSLATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'list'
 
     else

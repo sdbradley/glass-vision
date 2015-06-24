@@ -106,14 +106,14 @@ require 'bundler/capistrano'
    task :cold do
      update
      site5::link_public_html
-     site5::kill_dispatch_fcgi
+     site5::restart_passenger
    end
 
    desc <<-DESC
      Site5 version of restart task.
    DESC
    task :restart do
-     site5::kill_dispatch_fcgi
+     site5::restart_passenger
    end
 
    namespace :site5 do
@@ -127,12 +127,8 @@ require 'bundler/capistrano'
      desc <<-DESC
        Kills Ruby instances on Site5
      DESC
-     task :kill_dispatch_fcgi do
-       if #{"environment"} == 'production'
-         run "touch #{current_path}/tmp/restart.txt"
-       else
-         run "skill -u #{user} -c ruby"
-       end
+     task :restart_passenger do
+       run "touch #{current_path}/tmp/restart.txt"
      end
 
      desc "Ensure files and folders have correct permissions on site5"

@@ -25,17 +25,16 @@
 
   <!-- fenetres -->
   <% for ql in @quotation.quotation_lines.order('position asc') %>
-      <% ql_price = 1 %>
         <tr>
           <td colspan="5">
-            <%= render :partial => 'quotation_line_manifest_summary', :locals => {:ql => ql, :ql_price => ql_price, :max_thumbnail_size => 100} %>
+            <%= render :partial => 'quotation_line_manifest_summary', :locals => {:ql => ql, :max_thumbnail_size => 100} %>
           </td>
         </tr>
   <% end %>
 
   <!-- portes -->
   <% for dl in @quotation.door_lines.order('position asc') %>
-    <%= render :partial => 'door_line_manifest_summary', :locals => {:dl => dl, :dl_price => dl_price, :max_thumbnail_size => 100} %>
+    <%= render :partial => 'door_line_manifest_summary', :locals => {:dl => dl, :max_thumbnail_size => 100} %>
   <% end %>
 
   <!-- options -->

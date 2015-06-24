@@ -75,7 +75,7 @@
 
     <% if dl.door_line_options.length > 0 %>
         <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
-        <%= ql.door_line_options.collect {|opt| show_option_with_quantity(opt.option, opt.quantity)}.join(", ").html_safe %>
+        <%= dl.door_line_options.collect {|opt| show_option_with_quantity(opt.option, opt.quantity)}.join(", ").html_safe %>
     <% else %>
         &nbsp;
     <% end %>

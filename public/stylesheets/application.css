@@ -184,7 +184,7 @@ div#content {
 
 #leftnav {
   float:left;
-  width:250px;
+  width:260px;
   height:100%;
   background-color: #948B6D;
 }
@@ -215,7 +215,7 @@ div#content {
   display:block;
   height:40px;
   padding-top:4px;
-  width:230px;
+  width:240px;
 }
 
 #leftnav ul li a, #leftnav ul li a:visited {

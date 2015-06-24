@@ -102,7 +102,7 @@ class DoorPreviewCreator
     draw_vertical_measurement(canvas, total_height, 0)
 
     # print total horizontal size
-    draw_horizontal_measurement(canvas, total_width, 0, 50)
+    draw_horizontal_measurement(canvas, total_width, 0, 50)   if door_line_sections.length > 1
 
     # write final image
     canvas.write final_file_name

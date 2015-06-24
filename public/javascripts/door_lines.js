@@ -29,14 +29,14 @@ $j(document).ready(function() {
       selected_panel.closest('.selection-door-panel').find('.selected-door-panel').html(selected_panel.html());
 
       // load the interface to configure glass families
-      $j.get('../configure_glass_families', {door_panel_id: id, door_glass_id: door_glass_id}, function(response) {
+      $j.get('/doors/configure_glass_families', {door_panel_id: id, door_glass_id: door_glass_id}, function(response) {
         section.find('.selection-door-glass-family').html(response);
         attach_door_glass_families_configuration_events(section);
         section.find('#door_glass_family').change();
       });
 
       // load the interface to configure panel dimensions
-      $j.get('../configure_panel_dimensions', {door_panel_id: id, door_panel_dimension_id: door_panel_dimension_id}, function(response) {
+      $j.get('/doors/configure_panel_dimensions', {door_panel_id: id, door_panel_dimension_id: door_panel_dimension_id}, function(response) {
         section.find('.selection-door-panel-dimensions').html(response);
         attach_door_panel_dimension_configuration_events(section);
         section.find('#door_panel_dimension').change();
@@ -63,7 +63,7 @@ $j(document).ready(function() {
         section.find('.selection-door-glass').html('');
       } else {
         // load the interface to configure glasses
-        $j.get('../configure_glasses', {door_panel_id: door_panel_id, door_glass_family_id: id, door_glass_id: door_glass_id}, function(response) {
+        $j.get('/doors/configure_glasses', {door_panel_id: door_panel_id, door_glass_family_id: id, door_glass_id: door_glass_id}, function(response) {
           section.find('.selection-door-glass').html(response);
           attach_door_glasses_configuration_events(section);
           section.find('.door-glass.selected').click();
@@ -148,7 +148,7 @@ $j(document).ready(function() {
     $j('#door_line_slab_material_id').trigger('change');
 
     // load the corresponding openings
-    $j.get('../configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
+    $j.get('/doors/configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
       $j('#door-openings-configuration').html(response);
       attach_door_openings_configuration_events();
 
@@ -180,7 +180,7 @@ $j(document).ready(function() {
     var slab_material_id = $j(this).val();
 
     // load the interface to configure panels
-    $j.get('../configure_panels', $j('#door-panels-configuration input,#door-panels-configuration select').serialize() + '&door_combination_id=' + door_combination_id + '&door_line_id=' + door_line_id + '&slab_material_id=' + slab_material_id, function(response) {
+    $j.get('/doors/configure_panels', $j('#door-panels-configuration input,#door-panels-configuration select').serialize() + '&door_combination_id=' + door_combination_id + '&door_line_id=' + door_line_id + '&slab_material_id=' + slab_material_id, function(response) {
       $j('#door-panels-configuration').html(response);
       attach_door_panels_configuration_events();
       $j('#door-panels-configuration .door-panel.selected').click();

@@ -2,7 +2,7 @@ class DatabaseTranslationFieldController < ApplicationController
   before_filter :check_administrator_role
 
   def list
-    @dbtfs = DatabaseTranslationField.all(:order => "`table`, `translation_field_name`")
+    @dbtfs = DatabaseTranslationField.all(:order => 'translation_table_name, translation_field_name')
   end
 
   def add
@@ -12,7 +12,7 @@ class DatabaseTranslationFieldController < ApplicationController
   def create
     @dbtf = DatabaseTranslationField.new(params[:dbtf])
     if @dbtf.save
-      flash[:notice] = trn_geth('LABEL_DBTF') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_M')
+      flash[:notice] = trn_geth('LABEL_DBTF') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_M')
       redirect_to :action => 'list'
     else
       render :action => 'add'
@@ -26,7 +26,7 @@ class DatabaseTranslationFieldController < ApplicationController
   def update
     @dbtf = DatabaseTranslationField.find(params[:id])
     if @dbtf.update_attributes(params[:dbtf])
-      flash[:notice] = trn_geth('LABEL_DBTF') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
+      flash[:notice] = trn_geth('LABEL_DBTF') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -36,8 +36,8 @@ class DatabaseTranslationFieldController < ApplicationController
   def delete
     dbtf = DatabaseTranslationField.find(params[:id])
     dbtf.destroy
-    DatabaseTranslation.destroy_all.where(:table => dbtf.table, :translation_field_name => dbtf.translation_field_name)
-    flash[:notice] = trn_geth('LABEL_DBTF') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_M')
+    DatabaseTranslation.destroy_all.where(:translation_table_name => dbtf.translation_table_name, :translation_field_name => dbtf.translation_field_name)
+    flash[:notice] = trn_geth('LABEL_DBTF') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_M')
     redirect_to :action => 'list'
   end
 end

@@ -1,6 +1,6 @@
 <% semicolon = trn_geth('LABEL_SEMICOLON')%>
 
-<%= semantic_form_for(@shape, :as => 'shape') do |form| %>
+<%= semantic_form_for(@shape, :as => 'shape', :html => {:multipart => true}) do |form| %>
   <div><%= form.error_messages %></div><br/>
 	<% form.inputs :style => 'border:1px;' do %>
         <div style="float:right; height:370px !important; width:350px; display:block">

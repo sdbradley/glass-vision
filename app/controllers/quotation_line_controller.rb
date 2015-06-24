@@ -1,3 +1,4 @@
+require 'shape'
 class PriceError < RuntimeError
 end
 

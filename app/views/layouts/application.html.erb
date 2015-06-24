@@ -88,13 +88,11 @@
           <li><%= menu_item 'series', 'TITLE_SERIE_LIST', :controller => 'serie', :action => 'list' %></li>
           <li><%= menu_item 'window', 'TITLE_SHAPE_LIST', shapes_path %></li>
           <li><%= menu_item 'image_32', 'TITLE_OPENING_LIST', :controller => 'opening', :action => 'list' %></li>
-          <% ModuleType.all.each do |mt| %>
-            <li><%= menu_item 'process', 'TITLE_OPTION_LIST', { :controller => 'option', :action => 'list', :mt => mt.id }, :label => mt.tr_name.downcase %></li>
-          <% end %>
+          <li><%= menu_item 'process', 'TITLE_OPTION_LIST_WINDOW', { :controller => 'option', :action => 'list', :mt => 1 }%></li>
+          <li><%= menu_item 'process', 'TITLE_OPTION_LIST_DOOR', { :controller => 'option', :action => 'list', :mt => 2 } %></li>
           <li><%= menu_item 'process', 'TITLE_OPTION_CATEGORY_LIST', :controller => 'option_category', :action => 'list' %></li>
-          <% ModuleType.all.each do |mt| %>
-            <li><%= menu_item 'colors', 'TITLE_PRODUCT_COLORS_LIST', product_colors_path(:mt => mt.id), :label => mt.tr_name.downcase %></li>
-          <% end %>
+          <li><%= menu_item 'colors', 'TITLE_PRODUCT_COLORS_LIST_WINDOW', product_colors_path(:mt => 1) %></li>
+          <li><%= menu_item 'colors', 'TITLE_PRODUCT_COLORS_LIST_DOOR', product_colors_path(:mt => 2) %></li>
           <li><%= menu_item 'companies', 'TITLE_COMPANY_LIST', :controller => 'company', :action => 'list' %></li>
           <li><%= menu_item 'user', 'MENU_ADMIN_USERS_LABEL', users_path %></li>
           <li><%= menu_item 'comment', 'TITLE_TRANSLATION_LIST', :controller => 'translation', :action => 'list' %></li>

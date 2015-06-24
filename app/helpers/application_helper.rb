@@ -8,7 +8,7 @@ module ApplicationHelper
   def display_minimum_dimensions(dimension)
     trn_get('HELP_IMAGE_MIN_DIMENSIONS') % dimension
   end
-  
+
   def yes_or_no(b)
     trn_get(b ? 'MSG_YES' : 'MSG_NO')
   end
@@ -78,7 +78,6 @@ module ApplicationHelper
     display_label += ' - ' + options[:label] if options[:label]
 
     link_to(image_tag(image + '.png', :size => '32x32', :border => 0, :style => {:padding => '5px'}) + display_label, link).html_safe
-#    "<a href='#{url_for link}'>#{image_tag(image + '.png', :size => '32x32', :border => 0, :style => {:padding => '5px'})}#{display_label}</a>".html_safe
   end
 
 

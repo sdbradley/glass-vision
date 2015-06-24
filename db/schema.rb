@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201200316) do
+ActiveRecord::Schema.define(:version => 20150622115437) do
 
   create_table "audits", :force => true do |t|
     t.integer  "user_id"
@@ -49,13 +49,13 @@ ActiveRecord::Schema.define(:version => 20131201200316) do
   end
 
   create_table "database_translation_fields", :force => true do |t|
-    t.string "table",                  :limit => 50, :default => "", :null => false
+    t.string "translation_table_name", :limit => 50, :default => "", :null => false
     t.string "translation_field_name", :limit => 50, :default => "", :null => false
   end
 
   create_table "database_translations", :force => true do |t|
     t.integer "record_id",                            :default => 0,  :null => false
-    t.string  "table",                  :limit => 50, :default => "", :null => false
+    t.string  "translation_table_name", :limit => 50, :default => "", :null => false
     t.string  "translation_field_name", :limit => 50, :default => "", :null => false
     t.text    "fr"
     t.text    "en"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(:version => 20131201200316) do
     t.boolean "openable",                          :default => false, :null => false
     t.string  "preview_image_name", :limit => 100
     t.integer "glasses_quantity",                  :default => 1,     :null => false
+    t.string  "label"
   end
 
   create_table "openings_series", :id => false, :force => true do |t|
@@ -456,11 +457,11 @@ ActiveRecord::Schema.define(:version => 20131201200316) do
     t.boolean  "has_lower_transom",                     :default => false
     t.boolean  "has_left_sidelight",                    :default => false
     t.boolean  "has_right_sidelight",                   :default => false
-    t.boolean  "has_secondary_dimension"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.boolean  "has_secondary_dimension"
   end
 
   create_table "slab_materials", :force => true do |t|
