@@ -62,7 +62,9 @@ class DoorPreviewCreator
       # render the glass here if any
       if door_line_section.door_glass
         src_image = door_line_section.door_glass.photo.url(:normal)
-        src_image = src_image.gsub(File.basename(src_image), 'rendered.png')
+        # we have no idea how to position the glass on a door. Each door will need to have
+        # x, y, width, height of glass area.
+        # src_image = src_image.gsub(File.basename(src_image), 'rendered.png')
         src_image = File.join(Rails.root, 'public', src_image)
         if File.exist?(src_image)
           glass_image = Image.read(src_image)[0]
