@@ -10,10 +10,19 @@
 </div>
 
 <table>
+
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_field :description, :size => 50 %></td>
   </tr>
+  <% [:es, :fr].each do |lang| %>
+    <%= f.globalize_fields_for lang do |g| %>
+      <tr valign="top">
+        <td align="right"><%= lang.to_s.upcase + ' ' + trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+        <td><%= g.text_field :description, :size => 50 %></td>
+      </tr>
+    <% end %>
+  <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_area  :comments, :cols => '39', :rows => '10' %></td>
@@ -40,7 +49,7 @@
 		<td>
 			<%= f.text_field :minimum_quantity, :size => 5, :disabled => @option.pricing_method_id > 2  %>
 			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] }, {},
-			{:disabled => @option.pricing_method_id > 2 } %> 
+			{:disabled => @option.pricing_method_id > 2 } %>
 		</td>
 	</tr>
 	<tr>
@@ -68,8 +77,8 @@
     if (jQuery(el).val() == '1')
       jQuery('#option_apply_to').removeAttr('disabled');
     else {
-      jQuery('#option_apply_to').val('2');    
-      jQuery('#option_apply_to').attr('disabled', 'disabled');    
+      jQuery('#option_apply_to').val('2');
+      jQuery('#option_apply_to').attr('disabled', 'disabled');
     }
   }
   function toggle_min_quantity(el)
@@ -82,7 +91,7 @@
     }
     else
     {
-      jQuery('#option_minimum_quantity').attr('disabled', 'disabled');        
+      jQuery('#option_minimum_quantity').attr('disabled', 'disabled');
       jQuery('#option_options_minimum_unit_id').attr('disabled', 'disabled');
     }
   }

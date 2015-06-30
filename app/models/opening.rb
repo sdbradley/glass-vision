@@ -1,5 +1,6 @@
 class Opening < ActiveRecord::Base
-  include Translatable
+  translates :name, :abbreviation
+  accepts_nested_attributes_for :translations
 
   has_many :serie_prices, :dependent => :destroy
   has_many :quotation_lines_openings, :dependent => :destroy

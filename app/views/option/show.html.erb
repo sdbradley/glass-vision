@@ -5,10 +5,14 @@
 </div>
 
 <table>
-  <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @option.tr_description %></td>
-  </tr>
+
+  <% [:en, :es, :fr].each do |lang| %>
+      <tr valign="top">
+        <td align="right"><%= trn_geth('LABEL_DESCRIPTION') + " (#{lang})" %><%= trn_geth('LABEL_SEMICOLON') %></td>
+        <td><%=  Globalize.with_locale(lang) { @option.description }  %></td>
+      </tr>
+  <% end %>
+
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @option.tr_comments %></td>

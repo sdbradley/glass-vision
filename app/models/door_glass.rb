@@ -1,5 +1,7 @@
 class DoorGlass < ActiveRecord::Base
   include Priceable
+  translates :name
+  accepts_nested_attributes_for :translations
 
   belongs_to :door_glass_family
   has_and_belongs_to_many :door_panels
