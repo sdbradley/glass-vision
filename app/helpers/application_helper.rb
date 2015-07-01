@@ -85,4 +85,37 @@ module ApplicationHelper
     image_tag "file:///#{File.join(Rails.root,'public', img)}", options #unless params[:debug].present?
 #    image_tag img, options if params[:debug].present?
   end
+
+
+  def gv_show_translations(obj, field, label)
+    result = ''
+    [:en, :es, :fr].each do |lang|
+        result += "
+<tr valign='top'>
+  <td align='right'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')} </td>
+  <td> #{ Globalize.with_locale(lang) { obj.send(field) } }</td>
+</tr>"
+    end
+    result.html_safe
+  end
+
+  def gv_fields_for(form, field, label, options)
+    result = "
+    <tr valign='top'>
+        <td align='right'>#{trn_geth(label)} (en) #{trn_geth('LABEL_SEMICOLON')} </td>
+        <td>#{form.text_field field, options}</td>
+      </tr>
+    "
+    [:es, :fr].each do |lang|
+      form.globalize_fields_for lang do |g|
+        result += "
+        <tr valign='top'>
+          <td align='right'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')}</td>
+          <td>#{g.text_field field, options }</td>
+        </tr>"
+      end
+    end
+    result.html_safe
+  end
+
 end
