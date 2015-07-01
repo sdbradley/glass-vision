@@ -89,7 +89,7 @@ module ApplicationHelper
 
   def gv_show_translations(obj, field, label)
     result = ''
-    [:en, :es, :fr].each do |lang|
+    [:en, :fr, :es].each do |lang|
         result += "
 <tr valign='top'>
   <td align='right'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')} </td>
