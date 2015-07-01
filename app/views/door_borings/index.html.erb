@@ -9,7 +9,7 @@
   </tr>
 <% for door_boring in @door_borings %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= door_boring.tr_name %></td>
+    <td><%= door_boring.name %></td>
     <td>
       <%= image_tag door_boring.photo.url(:thumb), :class => "#{ 'popup' unless door_boring.photo.original_filename.blank? }" %>
     </td>
