@@ -106,7 +106,7 @@ module ApplicationHelper
         <td>#{form.text_field field, options}</td>
       </tr>
     "
-    [:es, :fr].each do |lang|
+    [:fr, :es].each do |lang|
       form.globalize_fields_for lang do |g|
         result += "
         <tr valign='top'>
