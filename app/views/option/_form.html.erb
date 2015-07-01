@@ -11,29 +11,18 @@
 
 <table>
 
-  <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= f.text_field :description, :size => 50 %></td>
-  </tr>
-  <% [:es, :fr].each do |lang| %>
-    <%= f.globalize_fields_for lang do |g| %>
-      <tr valign="top">
-        <td align="right"><%= lang.to_s.upcase + ' ' + trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-        <td><%= g.text_field :description, :size => 50 %></td>
-      </tr>
-    <% end %>
-  <% end %>
+  <%= gv_fields_for(f, :description, 'LABEL_DESCRIPTION', :size => 50) %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_area  :comments, :cols => '39', :rows => '10' %></td>
   </tr>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= f.collection_select(:option_category_ids, @all_option_categories, "id", "tr_name") %></td>
+		<td><%= f.collection_select(:option_category_ids, @all_option_categories, "id", "name") %></td>
 	</tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= f.select :pricing_method_id, PricingMethod.all(:order => 'description').map { |p| [p.tr_description, p.id] } %></td>
+    <td><%= f.select :pricing_method_id, PricingMethod.all(:order => 'description').map { |p| [p.description, p.id] } %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD_APPLIES_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -48,7 +37,7 @@
 		<td align="right"><%= trn_geth('LABEL_MINIMUM_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
 		<td>
 			<%= f.text_field :minimum_quantity, :size => 5, :disabled => @option.pricing_method_id > 2  %>
-			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] }, {},
+			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.description, p.id] }, {},
 			{:disabled => @option.pricing_method_id > 2 } %>
 		</td>
 	</tr>
