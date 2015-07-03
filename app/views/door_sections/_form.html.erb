@@ -3,10 +3,10 @@
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @door_section.tr_name %></td>
+    <td><%= @door_section.name %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= f.text_field "price", :size => 20 %></td>
+    <td><%= f.text_field 'price', :size => 20 %></td>
   </tr>
 </table>
