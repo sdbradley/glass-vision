@@ -1,4 +1,3 @@
-require 'batch_translation'
 class Option < ActiveRecord::Base
   translates :description
   accepts_nested_attributes_for :translations
