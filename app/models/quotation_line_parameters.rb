@@ -1,4 +1,4 @@
-require 'Shape'
+require 'shape'
 
 # @attr [float] real_height
 # @attr [float] real_width
