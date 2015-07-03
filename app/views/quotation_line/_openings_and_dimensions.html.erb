@@ -29,9 +29,9 @@
       <tr>
         <td><%= trn_geth('LABEL_UPPER_TRANSOM')%></td>
         <td colspan="<%=sec_width + num_sidelights%>" style="vertical-align:middle;">
-          <%= select_opening @upper_transom_index, @openings[@upper_transom_index].to_i %>
+          <%= select_opening @line_info.upper_transom_index, @openings[@line_info.upper_transom_index].to_i %>
         </td>
-        <td><%= text_field_tag "section_height[#{@upper_transom_index}]", @section_height[@upper_transom_index], :size => 6 %> </td>
+        <td><%= text_field_tag "section_height[#{@line_info.upper_transom_index}]", @section_height[@line_info.upper_transom_index], :size => 6 %> </td>
         <td style="border-left:1px solid #AAA;"></td>
       </tr>
     <% end %>
@@ -46,7 +46,7 @@
       <td></td>
       <% if @quotation_line.shape.has_left_sidelight? && !left_sidelight_displayed %>
           <td rowspan="<%= sec_height %>">
-            <%= select_opening @left_sidelight_index, @openings[@left_sidelight_index].to_i %>
+            <%= select_opening @line_info.left_sidelight_index, @openings[@line_info.left_sidelight_index].to_i %>
           </td>
           <%  left_sidelight_displayed = true %>
       <% end %>
@@ -58,7 +58,7 @@
       </td>
       <% end %>
       <% if @quotation_line.shape.has_right_sidelight? && !right_sidelight_displayed %>
-          <td rowspan="<%= sec_height %>"><%= select_opening @right_sidelight_index, @openings[@right_sidelight_index].to_i %></td>
+          <td rowspan="<%= sec_height %>"><%= select_opening @line_info.right_sidelight_index, @openings[@line_info.right_sidelight_index].to_i %></td>
           <%  right_sidelight_displayed = true %>
       <% end %>
 
@@ -89,7 +89,7 @@
     <tr>
       <td colspan="1"><%= trn_geth('HEADER_SECTIONS_WIDTHS') %></td>
        <% if @quotation_line.shape.has_left_sidelight? %>
-          <td><%= text_field_tag "section_width[#{@left_sidelight_index}]", @section_width[@left_sidelight_index], :size => 6 %></td>
+          <td><%= text_field_tag "section_width[#{@line_info.left_sidelight_index}]", @section_width[@line_info.left_sidelight_index], :size => 6 %></td>
        <% end %>
 
       <% 1.upto(sec_width) do |c| %>
@@ -104,7 +104,7 @@
       </td>
       <% end %>
       <% if @quotation_line.shape.has_right_sidelight? %>
-         <td><%= text_field_tag "section_width[#{@right_sidelight_index}]", @section_width[@right_sidelight_index], :size => 6 %></td>
+         <td><%= text_field_tag "section_width[#{@line_info.right_sidelight_index}]", @section_width[@line_info.right_sidelight_index], :size => 6 %></td>
       <% elsif num_transoms > 0 %>
         <td></td>
       <% end %>
@@ -119,9 +119,9 @@
       <tr>
         <td><%= trn_geth('LABEL_LOWER_TRANSOM')%></td>
         <td colspan="<%=sec_width + num_sidelights%>">
-          <%= select_opening @lower_transom_index, @openings[@lower_transom_index].to_i %>
+          <%= select_opening @line_info.lower_transom_index, @openings[@line_info.lower_transom_index].to_i %>
         </td>
-        <td><%= text_field_tag "section_height[#{@lower_transom_index}]", @section_height[@lower_transom_index], :size => 6 %> </td>
+        <td><%= text_field_tag "section_height[#{@line_info.lower_transom_index}]", @section_height[@line_info.lower_transom_index], :size => 6 %> </td>
         <td style="border-left:1px solid #AAA;"></td>
       </tr>
     <% end %>

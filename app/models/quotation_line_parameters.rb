@@ -29,13 +29,13 @@ class QuotationLineParameters
     initialize_by_shape(shape)
     @openings = params[:openings] ||  {}
 
-    @section_height = params[:section_height] || {}
-    @section_width = params[:section_width] || {}
+    # @section_height = params[:section_height] || {}
+    # @section_width = params[:section_width] || {}
 
-    @upper_transom_index = @quotation_line.upper_transom_index(shape).to_s if shape.has_upper_transom?
-    @lower_transom_index = @quotation_line.lower_transom_index(shape).to_s if shape.has_lower_transom?
-    @left_sidelight_index = @quotation_line.left_sidelight_index(shape).to_s if shape.has_left_sidelight?
-    @right_sidelight_index = @quotation_line.right_sidelight_index(shape).to_s if shape.has_right_sidelight?
+    # @upper_transom_index = @quotation_line.upper_transom_index(shape).to_s if shape.has_upper_transom?
+    # @lower_transom_index = @quotation_line.lower_transom_index(shape).to_s if shape.has_lower_transom?
+    # @left_sidelight_index = @quotation_line.left_sidelight_index(shape).to_s if shape.has_left_sidelight?
+    # @right_sidelight_index = @quotation_line.right_sidelight_index(shape).to_s if shape.has_right_sidelight?
 
     self
   end
@@ -94,24 +94,45 @@ class QuotationLineParameters
     end
 
     if shape.has_upper_transom?
-      @upper_transom_index = upper_transom_index(shape)
+      @upper_transom_index = get_upper_transom_index(shape)
       @section_height[@upper_transom_index] = 0
     end
 
     if shape.has_lower_transom?
-      @lower_transom_index = lower_transom_index(shape)
+      @lower_transom_index = get_lower_transom_index(shape)
       @section_height[@lower_transom_index] = 0
     end
 
     if shape.has_left_sidelight?
-      @left_sidelight_index = left_sidelight_index(shape)
+      @left_sidelight_index = get_left_sidelight_index(shape)
       @section_height[@left_sidelight_index] = 0
     end
 
     if shape.has_right_sidelight?
-      @right_sidelight_index = right_sidelight_index(shape)
+      @right_sidelight_index = get_right_sidelight_index(shape)
       @section_height[@right_sidelight_index] = 0
     end
+  end
+
+
+  def get_upper_transom_index(shape)
+    shape.total_sections + 1
+  end
+
+
+  # @param [Shape] shape
+  def get_lower_transom_index(shape)
+    shape.total_sections + 2
+  end
+
+  # @param [Shape] shape
+  def get_left_sidelight_index(shape)
+    shape.total_sections + 3
+  end
+
+  # @param [Shape] shape
+  def get_right_sidelight_index(shape)
+    shape.total_sections + 4
   end
 
 end
