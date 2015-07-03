@@ -29,13 +29,13 @@ class QuotationLineParameters
     initialize_by_shape(shape)
     @openings = params[:openings] ||  {}
 
-    # @section_height = params[:section_height] || {}
-    # @section_width = params[:section_width] || {}
+    @section_height = params[:section_height] || {}
+    @section_width = params[:section_width] || {}
 
-    # @upper_transom_index = @quotation_line.upper_transom_index(shape).to_s if shape.has_upper_transom?
-    # @lower_transom_index = @quotation_line.lower_transom_index(shape).to_s if shape.has_lower_transom?
-    # @left_sidelight_index = @quotation_line.left_sidelight_index(shape).to_s if shape.has_left_sidelight?
-    # @right_sidelight_index = @quotation_line.right_sidelight_index(shape).to_s if shape.has_right_sidelight?
+    @upper_transom_index = @quotation_line.upper_transom_index(shape).to_s if shape.has_upper_transom?
+    @lower_transom_index = @quotation_line.lower_transom_index(shape).to_s if shape.has_lower_transom?
+    @left_sidelight_index = @quotation_line.left_sidelight_index(shape).to_s if shape.has_left_sidelight?
+    @right_sidelight_index = @quotation_line.right_sidelight_index(shape).to_s if shape.has_right_sidelight?
 
     self
   end
