@@ -8,6 +8,7 @@ class CreateTranslationsTables < ActiveRecord::Migration
     DoorGlassFamily.create_translation_table!({:name => :string})
     DoorOpening.create_translation_table!({:name => :string})
     DoorPanel.create_translation_table!({:name => :string})
+    DoorPanelFamily.create_translation_table!({:name => :string})
     DoorSection.create_translation_table!({:name => :string})
     FrameProfile.create_translation_table!({:name => :string})
     Opening.create_translation_table!({:abbreviation => :string, :name => :string})
@@ -25,6 +26,7 @@ class CreateTranslationsTables < ActiveRecord::Migration
     migrate_data(DoorGlassFamily,    {:name => :string})
     migrate_data(DoorOpening,        {:name => :string})
     migrate_data(DoorPanel,          {:name => :string})
+    migrate_data(DoorPanelFamily,    {:name => :string})
     migrate_data(DoorSection,        {:name => :string})
     migrate_data(FrameProfile,       {:name => :string})
     migrate_data(Opening,            {:abbreviation => :string, :name => :string})
@@ -45,6 +47,7 @@ class CreateTranslationsTables < ActiveRecord::Migration
     DoorGlassFamily.drop_translation_table!
     DoorOpening.drop_translation_table!
     DoorPanel.drop_translation_table!
+    DoorPanelFamily.drop_translation_table!
     DoorSection.drop_translation_table!
     FrameProfile.drop_translation_table!
     Opening.drop_translation_table!
