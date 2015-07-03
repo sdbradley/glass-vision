@@ -13,7 +13,7 @@
 <br/>
 
 <%= form_for [@door_panel_family, @door_panel, @door_panel_dimension] do |f| %>
-  <%= render :partial => 'form' %>
+  <%= render :partial => 'form', :locals => { :f => f} %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_panel_family_door_panel_door_panel_dimensions_path(@door_panel_family, @door_panel) %> |
