@@ -18,6 +18,8 @@ class CreateTranslationsTables < ActiveRecord::Migration
     PricingMethod.create_translation_table!({:comments => :string})
     ProductColor.create_translation_table!({:name => :string})
     Serie.create_translation_table!({:comments => :string})
+    ModuleType.create_translation_table!({:name => :string})
+
 
     migrate_data(DoorBoring,         {:name => :string})
     migrate_data(DoorCombination,    {:name => :string})
@@ -29,13 +31,14 @@ class CreateTranslationsTables < ActiveRecord::Migration
     migrate_data(DoorPanelFamily,    {:name => :string})
     migrate_data(DoorSection,        {:name => :string})
     migrate_data(FrameProfile,       {:name => :string})
-    migrate_data(Opening,            {:abbreviation => :string, :name => :string})
+    migrate_data(Opening,            {:abbreviation => :string, :name => :string}) # needs to be converted to restful
     migrate_data(Option,             {:description => :string})
     migrate_data(OptionsMinimumUnit, {:description => :string, :comments => :string})
     migrate_data(OptionCategory,     {:description => :string,:name => :string})
     migrate_data(PricingMethod,      {:comments => :string})
     migrate_data(ProductColor,       {:name => :string})
     migrate_data(Serie,              {:comments => :string})
+    migrate_data(ModuleType,         {:name => :string})
 
   end
 
@@ -57,6 +60,7 @@ class CreateTranslationsTables < ActiveRecord::Migration
     PricingMethod.drop_translation_table!
     ProductColor.drop_translation_table!
     Serie.drop_translation_table!
+    ModuleType.drop_translation_table!
   end
 
   private

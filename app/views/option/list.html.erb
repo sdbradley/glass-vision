@@ -1,4 +1,4 @@
-<h2><%= trn_geth('TITLE_OPTION_LIST') %> - <%= @module_type.tr_name %></h2>
+<h2><%= trn_geth('TITLE_OPTION_LIST') %> - <%= @module_type.name %></h2>
 
 <%= link_to trn_geth('BUTTON_ADD'), :action => 'add', :mt => @module_type.id %>
 <table cellspacing="0">
@@ -12,8 +12,8 @@
 <% for option in @options %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %>
-      <%= link_to option.tr_description, :action => 'show', :id => option %></td>
-    <td><%= option.pricing_method.tr_description %></td>
+      <%= link_to option.description, :action => 'show', :id => option %></td>
+    <td><%= option.pricing_method.description %></td>
     <td><%= number_to_currency option.price %></td>
     <td>
       <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>

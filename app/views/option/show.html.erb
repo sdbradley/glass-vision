@@ -10,11 +10,11 @@
 
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @option.tr_comments %></td>
+    <td><%= @option.comments %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @option.pricing_method.tr_description %></td>
+    <td><%= @option.pricing_method.description %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD_APPLIES_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -23,7 +23,7 @@
   </tr>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= @option.option_categories[0].tr_name if @option.categorized? %></td>
+		<td><%= @option.option_categories[0].name if @option.categorized? %></td>
 	</tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
