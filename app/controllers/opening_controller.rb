@@ -1,7 +1,7 @@
 class OpeningController < ApplicationController
   before_filter :check_administrator_role
 
-  def list
+  def index
     @openings = Opening.all(:order => 'name')
   end
 
@@ -9,8 +9,12 @@ class OpeningController < ApplicationController
     @opening = Opening.find(params[:id])
   end
 
-  def add
+  def new
     @opening = Opening.new
+  end
+
+  def edit
+    @opening = Opening.find(params[:id])
   end
 
   def create
@@ -21,10 +25,6 @@ class OpeningController < ApplicationController
     else
       render :action => 'add'
     end
-  end
-
-  def edit
-    @opening = Opening.find(params[:id])
   end
 
   def update

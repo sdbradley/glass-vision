@@ -4,5 +4,5 @@
   <%= render :partial => 'form' %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
-<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @opening}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), openings_path %> |
+<%= link_to trn_geth('BUTTON_DELETE'), @opening, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

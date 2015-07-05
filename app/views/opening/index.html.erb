@@ -1,6 +1,6 @@
 <h2><%= trn_geth('TITLE_OPENING_LIST') %></h2>
 
-<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<%= link_to trn_geth('BUTTON_ADD'), new_opening_path %>
 <table cellspacing="0" style="width:100%;">
   <tr class="header">
     <th><%= trn_geth('HEADER_NAME') %></th>
@@ -11,11 +11,11 @@
     <th><%= trn_geth('HEADER_PREVIEW') %></th>
     <th></th>
   </tr>
-<% for opening in @openings %>
+<%  @openings.each do |opening| %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= link_to opening.tr_name, :action => 'edit', :id => opening %></td>
-    <td><%= opening.tr_label %></td>
-    <td><%= opening.tr_abbreviation %></td>
+    <td><%= link_to opening.name, edit_opening_path(opening) %></td>
+    <td><%= opening.label %></td>
+    <td><%= opening.abbreviation %></td>
     <td><%= yes_or_no(opening.openable) %></td>
     <td><%= opening.glasses_quantity %></td>
     <td>
@@ -24,8 +24,8 @@
       <% end %>
     </td>
     <td valign='middle'>
-      <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), :action => 'edit', :id => opening %>
-      <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), {:action => 'delete', :id => opening}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+      <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_opening_path(opening) %>
+      <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), opening, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
     </td>
   </tr>
 <% end %>
