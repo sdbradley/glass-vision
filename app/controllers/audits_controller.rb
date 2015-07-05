@@ -1,4 +1,4 @@
-class AuditController < ApplicationController
+class AuditsController < ApplicationController
 
   sortable_attributes  :created_at, :user_id, :action, :result, :reason
 

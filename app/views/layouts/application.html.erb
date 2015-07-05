@@ -83,7 +83,7 @@
       <% if logged_in? %>
         <li><%= menu_item 'folder', 'TITLE_QUOTATION_LIST', quotations_path %></li>
         <li><%= menu_item 'users_two', 'MENU_CUSTOMERS', :controller => 'customer', :action => 'list' %></li>
-        <li><%= menu_item 'mail', 'MENU_SEND_MAIL', :controller => 'emails', :action => 'new' %></li>
+        <li><%= menu_item 'mail', 'MENU_SEND_MAIL', new_email_path %></li>
         <% if current_user.has_role?('administrator') %>
           <li><%= menu_item 'series', 'TITLE_SERIE_LIST', :controller => 'serie', :action => 'list' %></li>
           <li><%= menu_item 'window', 'TITLE_SHAPE_LIST', shapes_path %></li>
@@ -96,8 +96,6 @@
           <li><%= menu_item 'companies', 'TITLE_COMPANY_LIST', :controller => 'company', :action => 'list' %></li>
           <li><%= menu_item 'user', 'MENU_ADMIN_USERS_LABEL', users_path %></li>
           <li><%= menu_item 'comment', 'TITLE_TRANSLATION_LIST', :controller => 'translation', :action => 'list' %></li>
-          <!--<li><%= menu_item 'comment', 'TITLE_DBTF_LIST', :controller => 'database_translation_field', :action => 'list' %></li>-->
-          <!--<li><%= menu_item 'comment', 'TITLE_DBT_LIST', :controller => 'database_translation', :action => 'list' %></li>-->
           <li><%= menu_item 'door', 'TITLE_DOOR_FRAME_LIST', door_frames_path %></li>
           <li><%= menu_item 'door_frame', 'TITLE_DOOR_COMBINATION_LIST', door_combinations_path %></li>
           <li><%= menu_item 'window', 'TITLE_FRAME_PROFILE_LIST', frame_profiles_path %></li>
@@ -107,7 +105,7 @@
           <li><%= menu_item 'window', 'TITLE_DOOR_OPENING_LIST', door_openings_path %></li>
           <li><%= menu_item 'window', 'TITLE_DOOR_BORING_LIST', door_borings_path %></li>
           <li><%= menu_item 'window', 'TITLE_DOOR_SECTION_LIST', door_sections_path %></li>
-          <li><%= menu_item 'log_zoom', 'TITLE_AUDIT_TRAIL', :controller => :audit, :action => :index%></li>
+          <li><%= menu_item 'log_zoom', 'TITLE_AUDIT_TRAIL', audits_path%></li>
         <% end %>
       <% end %>
     </ul>

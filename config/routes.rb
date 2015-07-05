@@ -19,6 +19,7 @@ GlassVision::Application.routes.draw do
     resources :roles
   end
 
+  resources :audits, :only => :index
   resources :product_colors
   resources :shapes
   resources :openings
