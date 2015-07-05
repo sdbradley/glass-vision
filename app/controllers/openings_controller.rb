@@ -1,4 +1,4 @@
-class OpeningController < ApplicationController
+class OpeningsController < ApplicationController
   before_filter :check_administrator_role
 
   def index
@@ -21,9 +21,9 @@ class OpeningController < ApplicationController
     @opening = Opening.new(params[:opening])
     if @opening.save
       flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-      redirect_to :action => 'list'
+      redirect_to openings_path
     else
-      render :action => 'add'
+      render :action => 'new'
     end
   end
 
@@ -31,15 +31,15 @@ class OpeningController < ApplicationController
     @opening = Opening.find(params[:id])
     if @opening.update_attributes(params[:opening])
       flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'list'
+      redirect_to openings_path
     else
       render :action => 'edit'
     end
   end
 
-  def delete
+  def destroy
     Opening.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list'
+    redirect_to openings_path
   end
 end

@@ -87,7 +87,7 @@
         <% if current_user.has_role?('administrator') %>
           <li><%= menu_item 'series', 'TITLE_SERIE_LIST', :controller => 'serie', :action => 'list' %></li>
           <li><%= menu_item 'window', 'TITLE_SHAPE_LIST', shapes_path %></li>
-          <li><%= menu_item 'image_32', 'TITLE_OPENING_LIST', :controller => 'opening', :action => 'list' %></li>
+          <li><%= menu_item 'image_32', 'TITLE_OPENING_LIST', openings_path %></li>
           <li><%= menu_item 'process', 'TITLE_OPTION_LIST_WINDOW', { :controller => 'option', :action => 'list', :mt => 1 }%></li>
           <li><%= menu_item 'process', 'TITLE_OPTION_LIST_DOOR', { :controller => 'option', :action => 'list', :mt => 2 } %></li>
           <li><%= menu_item 'process', 'TITLE_OPTION_CATEGORY_LIST', :controller => 'option_category', :action => 'list' %></li>
