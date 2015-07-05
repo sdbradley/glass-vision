@@ -1,7 +1,7 @@
-class OptionController < ApplicationController
+class OptionsController < ApplicationController
     before_filter :check_administrator_role
 
-  def list
+  def index
     @module_type = ModuleType.find(params[:mt] || 1)
     @options = Option.all(:order => 'description', :include => [:pricing_method, :options_minimum_unit], :conditions => { :module_type_id => @module_type.id })
   end
@@ -11,7 +11,7 @@ class OptionController < ApplicationController
     @module_type = @option.module_type
   end
 
-  def add
+  def new
     @module_type = ModuleType.find(params[:mt] || 1)
     @option = Option.new(:module_type_id => @module_type.id)
     @all_option_categories = OptionCategory.all(:order => :display_order)
@@ -49,7 +49,7 @@ class OptionController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @option = Option.find(params[:id])
     @module_type = @option.module_type
     @option.destroy

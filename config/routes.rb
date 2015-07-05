@@ -24,6 +24,7 @@ GlassVision::Application.routes.draw do
   resources :shapes
   resources :openings
   resources :customers
+  resources :options
 
   resources :doors do
     collection do
