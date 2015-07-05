@@ -1,19 +1,9 @@
-class CustomerController < ApplicationController
+class CustomersController < ApplicationController
 
   sortable_attributes  :name, :email
   SEARCH_FIELDS = %w(search_name search_address search_email)
 
   def index
-    list
-    render :action => 'list'
-  end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
-
-  def list
-
     searcher = SearchConditions.new(session, SEARCH_FIELDS)
 
     conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
@@ -21,6 +11,10 @@ class CustomerController < ApplicationController
 
     @customers = Customer.where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order(:default => 'ascending'))
   end
+
+  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
+  verify :method => :post, :only => [ :destroy, :create, :update ],
+         :redirect_to => { :action => :list }
 
 
   def show
@@ -48,7 +42,7 @@ class CustomerController < ApplicationController
     @customer = Customer.new(params[:customer])
     if @customer.save
       flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-      redirect_to :action => 'list'
+      redirect_to customers_path
     else
       render :action => 'new'
     end
@@ -62,7 +56,7 @@ class CustomerController < ApplicationController
     @customer = Customer.find(params[:id])
     if @customer.update_attributes(params[:customer])
       flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'show', :id => @customer
+      redirect_to customer_path(@customer)
     else
       render :action => 'edit'
     end
@@ -71,7 +65,7 @@ class CustomerController < ApplicationController
   def destroy
     Customer.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list'
+    redirect_to customers_path
   end
 
   def search

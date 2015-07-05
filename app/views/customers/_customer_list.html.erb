@@ -19,14 +19,14 @@
     </td>
   </tr>
 
-  <% for customer in @customers %>
+  <% @customers.each do |customer| %>
     <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= link_to(customer.name, :action => 'edit', :id => customer) %></td>
+      <td><%= link_to customer.name, edit_customer_path(customer) %></td>
       <td><%= customer.address %></td>
       <td><a href="tel:<%= customer.phone %>"><%= customer.phone %></a></td>
       <td><%= customer.fax %></td>
       <td><a href="mailto:<%= customer.email %>"><%= customer.email %></a></td>
-      <td colspan="5"><%= link_to trn_geth('BUTTON_DELETE'), { :action => 'destroy', :id => customer }, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :post %></td>
+      <td colspan="5"><%= link_to trn_geth('BUTTON_DELETE'), customer, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %></td>
     </tr>
   <% end %>
   </tbody>

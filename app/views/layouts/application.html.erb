@@ -82,7 +82,7 @@
       <li><%= menu_item 'home', 'MENU_HOME', :controller => 'home' %></li>
       <% if logged_in? %>
         <li><%= menu_item 'folder', 'TITLE_QUOTATION_LIST', quotations_path %></li>
-        <li><%= menu_item 'users_two', 'MENU_CUSTOMERS', :controller => 'customer', :action => 'list' %></li>
+        <li><%= menu_item 'users_two', 'MENU_CUSTOMERS', customers_path %></li>
         <li><%= menu_item 'mail', 'MENU_SEND_MAIL', new_email_path %></li>
         <% if current_user.has_role?('administrator') %>
           <li><%= menu_item 'series', 'TITLE_SERIE_LIST', :controller => 'serie', :action => 'list' %></li>
