@@ -23,13 +23,13 @@
         <% end %>
         <tr>
           <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= ql.serie.tr_name %></td>
+          <td><%= ql.serie.name %></td>
           <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= ql.shape.tr_name %></td>
+          <td><%= ql.shape.name %></td>
         </tr>
         <tr>
           <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation }.join %></td>
+          <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.abbreviation }.join %></td>
         </tr>
         <tr>
           <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -40,11 +40,11 @@
         <tr>
           <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
               <td><%= trn_get('LABEL_INTERIOR_COLOR') %></td>
-              <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+              <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.name : ql.interior_color + trn_get("LABEL_CUSTOM") %></td>
           <% end %>
           <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank? %>
               <td><%= trn_get('LABEL_EXTERIOR_COLOR') %></td>
-              <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
+              <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.name : ql.exterior_color + trn_get("LABEL_CUSTOM") %> </td>
           <% end %>
         </tr>
       </table>

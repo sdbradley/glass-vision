@@ -10,8 +10,8 @@
   </tr>
 <% for serie in @series %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= serie.tr_name %></td>
-    <td><%= serie.tr_description %></td>
+    <td><%= serie.name %></td>
+    <td><%= serie.description %></td>
     <td><%= humanize_series_type serie.series_type %></td>
     <td>
       <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => serie %> |

@@ -18,7 +18,7 @@
           <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
         </div>
         <div class="label">
-          <%= door_frame.tr_name %>
+          <%= door_frame.name %>
         </div>
       </div>
     <% end %>
@@ -38,7 +38,7 @@
             <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
           </div>
           <div class="label">
-            <%= door_combination.tr_name %>
+            <%= door_combination.name %>
           </div>
         </div>
       <% end %>
@@ -58,7 +58,7 @@
           <%= image_tag frame_profile.photo.url(:normal) %>
         </div>
         <div class="label">
-          <%= frame_profile.tr_name %>
+          <%= frame_profile.name %>
         </div>
       </div>
     <% end %>
@@ -70,7 +70,7 @@
     <%= trn_get('SLAB_MATERIAL_INTRO') %>
   </div>
 
-  <%= select 'door_line', 'slab_material_id', @slab_materials.map { |sm| [sm.tr_name, sm.id] } %>
+  <%= select 'door_line', 'slab_material_id', @slab_materials.map { |sm| [sm.name, sm.id] } %>
 </div>
 
 <div id="color-selection" class="section">
@@ -133,7 +133,7 @@
           <%= image_tag door_boring.photo.url(:normal) %>
         </div>
         <div class="label">
-          <%= door_boring.tr_name %>
+          <%= door_boring.name %>
         </div>
       </div>
     <% end %>
@@ -149,7 +149,7 @@
     <% categorized_options = Serie.categorize_options(@options) %>
     <% categorized_options.keys.sort.each do |i| %>
       <% categorized_options[i].each do |category, options| %>
-        <span class="section-title"><%= h category.tr_name %></span><br />
+        <span class="section-title"><%= h category.name %></span><br />
         <% for option in options %>
           <% if category.multiselect %>
             <%= check_box_tag 'options[]', option.id, @selected_options.include?(option.id) %>
@@ -157,13 +157,13 @@
             <%= radio_button_tag "options_category_#{category.id}", option.id, @selected_options.include?(option.id) %>
           <% end %>
           <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
-          <%= option.tr_description %>
-          (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
+          <%= option.description %>
+          (<%= option.pricing_method.description %><%= trn_geth('LABEL_SEMICOLON') %>
           <%= option.price %>
           <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
             , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
             <%= option.minimum_quantity %>
-            <%= option.options_minimum_unit.tr_description %>
+            <%= option.options_minimum_unit.description %>
           <% end %>
           )
           <% if option.pricing_method.quantifiable %>

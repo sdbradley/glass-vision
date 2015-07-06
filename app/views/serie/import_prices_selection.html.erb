@@ -6,11 +6,11 @@
 <table>
   <tr>
     <td><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select_tag 'selected_serie_id', options_for_select(@series.map { |s| [s.tr_name, s.id]}) %></td>
+    <td><%= select_tag 'selected_serie_id', options_for_select(@series.map { |s| [s.name, s.id]}) %></td>
   </tr>
   <tr>
     <td><%= trn_geth('LABEL_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select_tag 'selected_opening_id', options_for_select(@openings.map { |s| [s.tr_name, s.id]}) %></td>
+    <td><%= select_tag 'selected_opening_id', options_for_select(@openings.map { |s| [s.name, s.id]}) %></td>
   </tr>
 </table>
 

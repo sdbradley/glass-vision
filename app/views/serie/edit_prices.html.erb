@@ -1,7 +1,7 @@
 <h2><%= trn_get('TITLE_SERIE_EDIT_PRICES') %></h2>
 
 <%= trn_geth('LABEL_EDIT_PRICES_FOR_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %>
-<strong><%= @opening.tr_name %></strong>
+<strong><%= @opening.name %></strong>
 
 <br/>
 <%= link_to trn_geth('BUTTON_IMPORT_PRICES'), :action => 'import_prices_selection', :id => @serie, :opening_id => @opening.id %>

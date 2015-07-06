@@ -3,11 +3,11 @@
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @serie.tr_name %></td>
+    <td><%= @serie.name %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @serie.tr_description %></td>
+    <td><%= @serie.description %></td>
   </tr>
 </table>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
@@ -23,10 +23,10 @@
 <% else %>
 	<% @categorized_options.each_value do |category_and_options| %>
 		<% category_and_options.each do |category, options| %>
-			<h4><%= h category.tr_name %></h4>
+			<h4><%= h category.name %></h4>
 			<ul>
 		  <% for option in options %>
-		    <li><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %><%= option.tr_description %></li>
+		    <li><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %><%= option.description %></li>
 		  <% end %>
 		</ul>
 		<% end %>

@@ -11,15 +11,15 @@
         <% end %>
         <tr>
           <td><%= trn_geth('HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.serie.tr_name %></td>
+          <td><%= line.serie.name %></td>
         </tr>
         <tr>
           <td><%= trn_geth('HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.shape.tr_name %></td>
+          <td><%= line.shape.name %></td>
         </tr>
         <tr>
           <td><%= trn_geth('HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
+          <td><%= line.quotation_lines_openings.map { |o| o.opening.abbreviation}.join %></td>
         </tr>
         <% if line.has_interior_color? %>
             <tr>
@@ -38,7 +38,7 @@
           <td valign="top"><%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
           <td>
             <% line.options_quotation_lines.each do |option| %>
-              <%= option.option.tr_description %>
+              <%= option.option.description %>
               <%= "x #{option.quantity}" if option.quantity > 1 %>
               <br/>
             <% end %>

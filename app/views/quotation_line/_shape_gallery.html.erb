@@ -1,7 +1,7 @@
 <% @shapes.each_with_index do |shape, idx| %>
     <%= '<tr>'.html_safe  if idx % 5 == 0 %>
     <td data-shape-id="<%= shape.id %>">
-      <%= shape.tr_name %>
+      <%= shape.name %>
       <br />
       <%= image_tag shape.photo(:small) %>
     </td>

@@ -16,7 +16,7 @@
       <%= link_to(image_tag(shape.photo.url(:thumb), :class => 'command-icon'), edit_shape_path(shape)) %>
     </td>
     <td>
-      <%= link_to shape.tr_name, edit_shape_path(shape) %>
+      <%= link_to shape.name, edit_shape_path(shape) %>
     </td>
     <td><%= shape.sections_width %></td>
     <td><%= shape.sections_height %></td>
