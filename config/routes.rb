@@ -29,6 +29,7 @@ GlassVision::Application.routes.draw do
     get :edit_options
     post :update_options
   end
+  resources :pricing_methods
 
   resources :doors do
     collection do

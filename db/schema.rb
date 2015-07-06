@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150630000433) do
+ActiveRecord::Schema.define(:version => 20150706023522) do
 
   create_table "audits", :force => true do |t|
     t.integer  "user_id"
@@ -253,6 +253,17 @@ ActiveRecord::Schema.define(:version => 20150630000433) do
     t.datetime "updated_at"
   end
 
+  create_table "door_panel_family_translations", :force => true do |t|
+    t.integer  "door_panel_family_id"
+    t.string   "locale",               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_panel_family_translations", ["door_panel_family_id"], :name => "index_door_panel_family_translations_on_door_panel_family_id"
+  add_index "door_panel_family_translations", ["locale"], :name => "index_door_panel_family_translations_on_locale"
+
   create_table "door_panel_translations", :force => true do |t|
     t.integer  "door_panel_id"
     t.string   "locale",        :null => false
@@ -350,6 +361,17 @@ ActiveRecord::Schema.define(:version => 20150630000433) do
     t.datetime "updated_at"
     t.integer  "position"
   end
+
+  create_table "module_type_translations", :force => true do |t|
+    t.integer  "module_type_id"
+    t.string   "locale",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "module_type_translations", ["locale"], :name => "index_module_type_translations_on_locale"
+  add_index "module_type_translations", ["module_type_id"], :name => "index_module_type_translations_on_module_type_id"
 
   create_table "module_types", :force => true do |t|
     t.string   "name"
@@ -493,6 +515,7 @@ ActiveRecord::Schema.define(:version => 20150630000433) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comments"
+    t.string   "description"
   end
 
   add_index "pricing_method_translations", ["locale"], :name => "index_pricing_method_translations_on_locale"

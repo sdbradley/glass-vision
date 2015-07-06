@@ -1,0 +1,23 @@
+<%= form_for(@pricing_method) do |f| %>
+  <% if @pricing_method.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pricing_method.errors.count, trn_get('MSG_ERROR')) %> <%= trn_get('MSG_ERROR_TEXT') %> </h2>
+
+      <ul>
+      <% @pricing_method.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <%= gv_fields_for(f, :description, 'HEADER_DESCRIPTION', {}) %>
+    <%= gv_fields_for(f, :comments, 'LABEL_COMMENTS', {}) %>
+  </table>
+
+  <br/>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
