@@ -1,0 +1,9 @@
+<h1><%= trn_gett('TITLE_EDIT_CATEGORY') %></h1>
+
+<%= form_for(@option_category) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  <%= submit_tag trn_get('BUTTON_EDIT') %>
+<% end %>
+
+<%= link_to trn_get('BUTTON_SHOW'), option_category_path(@option_category) %> |
+<%= link_to trn_get('BUTTON_BACK_TO_LIST'), option_categories_path %>

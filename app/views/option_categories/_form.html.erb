@@ -1,0 +1,20 @@
+<%= error_messages_for 'option_category' %>
+
+<table>
+<!--[form:option_category]-->
+<%= gv_fields_for(f, :name, 'LABEL_NAME', {}) %>
+<%= gv_fields_for(f, :description, 'HEADER_DESCRIPTION', {}) %>
+
+  <tr valign='top'>
+    <td align='right'></td>
+    <td>  <%= f.check_box 'multiselect'  %>
+      <label for="option_category_multiselect"><%= trn_get('LABEL_ALLOW_MULTISELECT_OPTIONS') %></label>
+    </td>
+  </tr>
+  <tr valign='top'>
+    <td align='right'><label for="option_category_order"><%= trn_get('LABEL_DISPLAY_ORDER') %></label></td>
+    <td><%= f.text_field 'display_order'  %></td>
+  </tr>
+</table>
+<!--[eoform:option_category]-->
+

@@ -10,16 +10,16 @@
     <th><%= trn_geth('HEADER_ACTION') %></th>
   </tr>
 
-  <% for option_category in @option_categories %>
+  <% @option_categories.each do |option_category| %>
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= option_category.display_order %></td>
-        <td><%= option_category.tr_name %></td>
-        <td><%= option_category.tr_description %></td>
+        <td><%= option_category.name %></td>
+        <td><%= option_category.description %></td>
         <td>
-          <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => option_category %> |
-          <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => option_category %> |
-          <%= link_to trn_geth('BUTTON_EDIT_OPTIONS'), :action => 'edit_options', :id => option_category %> |
-          <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => option_category}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+          <%= link_to trn_geth('BUTTON_SHOW'), option_category_path(option_category) %> |
+          <%= link_to trn_geth('BUTTON_EDIT'), edit_option_category_path(option_category) %> |
+          <%= link_to trn_geth('BUTTON_EDIT_OPTIONS'), option_category_edit_options_path(option_category) %> |
+          <%= link_to trn_geth('BUTTON_DELETE'),  option_category, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
         </td>
       </tr>
   <% end %>

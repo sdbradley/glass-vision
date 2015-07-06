@@ -25,6 +25,10 @@ GlassVision::Application.routes.draw do
   resources :openings
   resources :customers
   resources :options
+  resources :option_categories do
+    get :edit_options
+    post :update_options
+  end
 
   resources :doors do
     collection do
