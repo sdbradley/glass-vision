@@ -2,7 +2,7 @@ class SerieController < ApplicationController
     before_filter :check_administrator_role
 
   def list
-    @series = Serie.order("name")
+    @series = Serie.order('name')
   end
 
   def show
@@ -12,7 +12,7 @@ class SerieController < ApplicationController
 
   def add
     @serie = Serie.new
-    @series = Serie.order("name")
+    @series = Serie.order('name')
   end
 
   def create
@@ -35,7 +35,7 @@ class SerieController < ApplicationController
     end
 
     if @serie.save
-      flash[:notice] = trn_geth('LABEL_SERIE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       if must_import_prices && orig_series
         @serie.openings.each do |opening|
           # copy prices
@@ -55,7 +55,7 @@ class SerieController < ApplicationController
   def update
     @serie = Serie.find(params[:id])
     if @serie.update_attributes(params[:serie])
-      flash[:notice] = trn_geth('LABEL_SERIE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -118,7 +118,7 @@ class SerieController < ApplicationController
 
   def delete
     Serie.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_SERIE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'list'
   end
 
