@@ -37,7 +37,7 @@
 	<div id="colorswatch" style="<%="float:right;background-color:#{@product_color.value};width:100px;height:100px;"%>"></div>
 	<%= form.inputs  do %>
     <%= form.input :module_type_id, :as => :hidden %>
-		<%= form.input :name, :label => trn_geth('LABEL_NAME') %>
+    <%= gv_simple_fields_for(form, :name, 'LABEL_NAME') %>
 		<%= form.input :value, :label => trn_geth('LABEL_COLOR_VALUE'), :input_html => {:onchange=> 'change_swatch();', :onkeyup=> 'change_swatch();'}%>
 	<% end %>
 	<%= form.actions do %>

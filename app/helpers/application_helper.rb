@@ -118,4 +118,19 @@ module ApplicationHelper
     result.html_safe
   end
 
+  def gv_simple_fields_for(form, field, label)
+    result = form.input(field, :label => trn_geth(label))
+
+    [:fr, :es].each do |lang|
+      form.globalize_fields_for lang do |g|
+        result += content_tag('li', :class => 'string stringish input') do
+         g.label(field, trn_geth(label)+ " (#{lang}) ", :class => 'label')  +
+         g.text_field(field, :maxlength => 255)
+        end
+
+      end
+    end
+    result.html_safe
+  end
+
 end
