@@ -14,14 +14,14 @@ class CustomersController < ApplicationController
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+         :redirect_to => { :action => :index }
 
 
   def show
     @customer = Customer.find(params[:id])
     if @customer.user_id != @current_user.id && !@current_user.has_role?('administrator')
       flash[:notice] = 'Permission denied'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 

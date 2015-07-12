@@ -25,7 +25,7 @@ class OptionsController < ApplicationController
     else
       @module_type = @option.module_type
       @all_option_categories = OptionCategory.all(:order => :display_order)
-      render :action => 'add'
+      render :action => 'new'
     end
   end
 
@@ -41,7 +41,7 @@ class OptionsController < ApplicationController
 
     if @option.update_attributes(params[:option])
       flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'show', :id => @option
+      redirect_to option_path(@option)
     else
       @module_type = @option.module_type
       @all_option_categories = OptionCategory.all(:order => :display_order)
@@ -54,6 +54,6 @@ class OptionsController < ApplicationController
     @module_type = @option.module_type
     @option.destroy
     flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list', :mt => @module_type.id
+    redirect_to options_path(:mt => @module_type.id)
   end
 end

@@ -54,6 +54,6 @@ class CompanyController < ApplicationController
   def delete
     Company.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_COMPANY') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 end
