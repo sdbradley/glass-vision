@@ -70,6 +70,10 @@ GlassVision::Application.routes.draw do
     get :print_calculations
     get :print_manifest
   end
+
+  resources :series do
+    get :edit_prices
+  end
   root :to => 'home#index'
 
   match '/:controller(/:action(/:id))'

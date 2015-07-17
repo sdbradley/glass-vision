@@ -1,9 +1,8 @@
 <%= error_messages_for 'option_category' %>
 
-<table>
 <!--[form:option_category]-->
-<%= gv_fields_for(f, :name, 'LABEL_NAME', {}) %>
-<%= gv_fields_for(f, :description, 'HEADER_DESCRIPTION', {}) %>
+<%= gv_fields_for(f, :name, 'LABEL_NAME', {:size => 75}) %>
+<%= gv_fields_for(f, :description, 'HEADER_DESCRIPTION', {:size => 75}) %>
 
   <tr valign='top'>
     <td align='right'></td>
@@ -15,6 +14,6 @@
     <td align='right'><label for="option_category_order"><%= trn_get('LABEL_DISPLAY_ORDER') %></label></td>
     <td><%= f.text_field 'display_order'  %></td>
   </tr>
-</table>
+
 <!--[eoform:option_category]-->
 

@@ -92,7 +92,7 @@ module ApplicationHelper
     [:en, :fr, :es].each do |lang|
         result += "
 <tr valign='top'>
-  <td align='right'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')} </td>
+  <td align='right' class='nowrap'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')} </td>
   <td> #{ Globalize.with_locale(lang) { obj.send(field) } }</td>
 </tr>"
     end
@@ -102,7 +102,7 @@ module ApplicationHelper
   def gv_fields_for(form, field, label, options)
     result = "
     <tr valign='top'>
-        <td align='right'>#{trn_geth(label)} (en) #{trn_geth('LABEL_SEMICOLON')} </td>
+        <td align='right' class='nowrap'>#{trn_geth(label)} (en) #{trn_geth('LABEL_SEMICOLON')} </td>
         <td>#{form.text_field field, options}</td>
       </tr>
     "
@@ -110,7 +110,7 @@ module ApplicationHelper
       form.globalize_fields_for lang do |g|
         result += "
         <tr valign='top'>
-          <td align='right'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')}</td>
+          <td align='right' class='nowrap'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')}</td>
           <td>#{g.text_field field, options }</td>
         </tr>"
       end

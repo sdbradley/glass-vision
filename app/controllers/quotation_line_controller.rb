@@ -161,7 +161,7 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-    @quotation_line = QuotationLine.includes(:serie => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
+    @quotation_line = QuotationLine.includes(:series => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
 
     # we have two use cases..this is is #2
     @line_info = QuotationLineParameters.new(@quotation_line).from_line

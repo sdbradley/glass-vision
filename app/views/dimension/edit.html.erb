@@ -4,6 +4,6 @@
   <%= render :partial => 'form' %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_SERIE'), :controller => 'serie', :action => 'show', :id => @dimension.serie_id %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_SERIE'), :controller => 'series', :action => 'show', :id => @dimension.serie_id %> |
 <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @dimension %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @dimension}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

@@ -1,4 +1,4 @@
-module SerieHelper
+module SeriesHelper
   def humanize_series_type(series_type)
     case series_type
     when "StandardProduct"

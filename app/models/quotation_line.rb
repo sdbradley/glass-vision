@@ -1,6 +1,6 @@
 class QuotationLine < ActiveRecord::Base
   belongs_to :quotation, :touch => true
-  belongs_to :serie
+  belongs_to :series
   belongs_to :shape
   has_many :quotation_lines_openings, :order => 'sort_order', :dependent => :destroy
   has_many :options_quotation_lines, :dependent => :destroy

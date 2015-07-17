@@ -17,7 +17,7 @@ class CreateTranslationsTables < ActiveRecord::Migration
     OptionCategory.create_translation_table!({:description => :string,:name => :string})
     PricingMethod.create_translation_table!({:description => :string, :comments => :string})
     ProductColor.create_translation_table!({:name => :string})
-    Serie.create_translation_table!({:comments => :string})
+    Serie.create_translation_table!({:description => :string,:name => :string, :comments => :string})
     ModuleType.create_translation_table!({:name => :string})
 
 
@@ -37,7 +37,7 @@ class CreateTranslationsTables < ActiveRecord::Migration
     migrate_data(OptionCategory,     {:description => :string,:name => :string})
     migrate_data(PricingMethod,      {:description => :string, :comments => :string})
     migrate_data(ProductColor,       {:name => :string})
-    migrate_data(Serie,              {:comments => :string})
+    migrate_data(Serie,              {:description => :string,:name => :string, :comments => :string})
     migrate_data(ModuleType,         {:name => :string})
 
   end

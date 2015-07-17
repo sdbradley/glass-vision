@@ -1,0 +1,24 @@
+<h2><%= trn_get('TITLE_SERIE_ADD') %></h2>
+
+<table>
+<%= form_for(Serie.new, :url => series_index_path) do |f| %>
+  <%= render :partial => 'form', :locals =>{:f => f} %>
+  <br/>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('SERIES_TYPE_LABEL') %></td>
+      <%
+      series_options = [[trn_get('SERIES_STANDARD_OPT'), 'StandardProduct'],
+                        [trn_get('SERIES_CUSTOM_OPT'),   'Serie'],
+                        [trn_get('SERIES_PERSQFT_OPT'),  'PerSqFtProduct']]
+      %>
+     <td><%= select('serie', 'series_type', series_options) %> </td>
+  </tr>
+    <tr valign="top">
+      <td><%= trn_geth('SERIES_COPY')%></td>
+      <td><%= select_tag(:source_series, options_from_collection_for_select(Serie.order('name'), 'id', 'name'),
+                          :selected => nil, :include_blank => true) %></td>
+    </tr>
+</table>
+    <br />
+  <%= submit_tag trn_geth('BUTTON_ADD') %> <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), series_index_path %>
+<% end %>

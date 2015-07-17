@@ -4,9 +4,9 @@ require 'serie_controller'
 # Re-raise errors caught by the controller.
 class SerieController; def rescue_action(e) raise e end; end
 
-class SerieControllerTest < Test::Unit::TestCase
+class SeriesControllerTest < Test::Unit::TestCase
   def setup
-    @controller = SerieController.new
+    @controller = SeriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end

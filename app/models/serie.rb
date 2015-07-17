@@ -1,5 +1,5 @@
 class Serie < ActiveRecord::Base
-  translates :comments
+  translates :comments, :name, :description
   accepts_nested_attributes_for :translations
 
   validates_presence_of :name

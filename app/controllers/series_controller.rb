@@ -1,7 +1,7 @@
-class SerieController < ApplicationController
+class SeriesController < ApplicationController
     before_filter :check_administrator_role
 
-  def list
+  def index
     @series = Serie.order('name')
   end
 
@@ -10,9 +10,7 @@ class SerieController < ApplicationController
     @categorized_options = Serie.categorize_options(@serie.options)
   end
 
-  def add
-    @serie = Serie.new
-    @series = Serie.order('name')
+  def new
   end
 
   def create
@@ -42,9 +40,9 @@ class SerieController < ApplicationController
           copy_prices_from_series_and_opening(orig_series, opening, opening)
         end
       end
-      redirect_to :action => 'list'
+      redirect_to series_index_path
     else
-      render :action => 'add'
+      render :action => 'new'
     end
   end
 
@@ -56,7 +54,7 @@ class SerieController < ApplicationController
     @serie = Serie.find(params[:id])
     if @serie.update_attributes(params[:serie])
       flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'list'
+      redirect_to series_index_path
     else
       render :action => 'edit'
     end
@@ -67,10 +65,10 @@ class SerieController < ApplicationController
   def generate_sizes
     @serie = Serie.find(params[:id])
 
-    min_w = params[:series][:minimum_width].to_f
-    min_h = params[:series][:minimum_height].to_f
-    max_w = params[:series][:maximum_width].to_f
-    max_h = params[:series][:maximum_height].to_f
+    min_w = params[:serie][:minimum_width].to_f
+    min_h = params[:serie][:minimum_height].to_f
+    max_w = params[:serie][:maximum_width].to_f
+    max_h = params[:serie][:maximum_height].to_f
 
     # should probably delete all existing dimensions and sizes first...
 
@@ -91,7 +89,7 @@ class SerieController < ApplicationController
     end
 
     # given all the above params, generate w,h dimension every 2 inches and set price.
-    redirect_to :action => 'show', :id => params[:id]
+    redirect_to series_path(@serie)
   end
 
   def generate_prices
@@ -116,10 +114,10 @@ class SerieController < ApplicationController
     redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
   end
 
-  def delete
+  def destroy
     Serie.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list'
+    redirect_to series_index_path
   end
 
   def edit_prices
@@ -164,7 +162,7 @@ class SerieController < ApplicationController
     (old_selected_options - new_selected_options).each { |o|
       @serie.options.delete Option.find(o)
     }
-    redirect_to :action => 'show', :id => @serie
+    redirect_to series_path(@serie)
   end
 
   def import_prices_selection
@@ -191,8 +189,7 @@ class SerieController < ApplicationController
     redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
   end
 
-
-    def edit_openings
+  def edit_openings
     @serie = Serie.find(params[:id])
     @openings = Opening.all(:order => 'name')
   end
@@ -205,7 +202,7 @@ class SerieController < ApplicationController
     (old_selected_openings - new_selected_openings).each { |o|
       @serie.openings.delete Opening.find(o)
     }
-    redirect_to :action => 'show', :id => @serie
+    redirect_to series_path(@serie)
   end
 
 private
