@@ -20,9 +20,9 @@ class QuotationLineController < ApplicationController
 
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered
-    copy_options_from_last_line() if params[:ql_copy_options]
+    copy_options_from_last_line if params[:ql_copy_options]
 
-    initialize_options_for_series()
+    initialize_options_for_series
 
     # for the view
     @openings = @line_info.openings
@@ -539,7 +539,7 @@ protected
   end
 
   def initialize_options_for_series()
-    @options = @serie.options.sort_by { |o| o.tr_description }
+    @options = @serie.options.sort_by { |o| o.description }
     @options.each do |option|
       if option.pricing_method.quantifiable
         oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}

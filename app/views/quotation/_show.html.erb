@@ -129,8 +129,8 @@
 <br/>
 
 <h3><%= trn_geth('HEADER_LINES')%></h3>
-<%= link_to_if @current_user.can_create?('Fenêtre'), "#{trn_geth('BUTTON_ADD_WINDOW')}", :controller => 'quotation_line', :action => 'add', :id => @quotation.slug %>
-<%= link_to_if @current_user.can_create?('Porte'), "#{trn_geth('BUTTON_ADD_DOOR')}", :controller => 'doors', :action => 'new', :id => @quotation.slug %>
+<%= link_to_if @current_user.can_create?('Door'), "#{trn_geth('BUTTON_ADD_WINDOW')}", :controller => 'quotation_line', :action => 'add', :id => @quotation.slug %>
+<%= link_to_if @current_user.can_create?('Window'), "#{trn_geth('BUTTON_ADD_DOOR')}", :controller => 'doors', :action => 'new', :id => @quotation.slug %>
 <%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation.slug %>
 <%= link_to trn_geth('BUTTON_ADD_MANUAL_LINE'), :controller => 'manual_lines', :action => 'new', :id => @quotation.slug %>
 <table class="quotation">

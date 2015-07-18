@@ -142,7 +142,7 @@ class QuotationController < ApplicationController
   end
 
   def find_quotation
-    @quotation = Quotation.includes(:quotation_lines => [:series, :shape, {:quotation_lines_openings => :opening},
+    @quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening},
                                                          {:options_quotation_lines=> :option}]
                                    ).find_by_slug(params[:id])
   end
