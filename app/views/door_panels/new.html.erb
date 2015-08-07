@@ -8,8 +8,8 @@
 </table>
 <br/>
 
-<%= form_for [@door_panel_family, @door_panel], :method => :post do %>
-  <%= render :partial => 'form' %>
+<%= form_for [@door_panel_family, @door_panel], :method => :post do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
   <%= submit_tag trn_geth('BUTTON_ADD') %>
 <% end %>
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_panel_family_door_panels_path(@door_panel_family) %>

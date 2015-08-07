@@ -43,6 +43,6 @@
 </table>
 <br />
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), options_path(:mt => @module_type.id) %> |
-<%= link_to trn_geth('BUTTON_EDIT'), option_path(@option) %> |
+<%= link_to trn_geth('BUTTON_EDIT'), edit_option_path(@option) %> |
 <%= link_to trn_geth('BUTTON_DELETE'), @option, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
 

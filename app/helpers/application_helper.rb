@@ -100,13 +100,14 @@ module ApplicationHelper
   end
 
   def gv_fields_for(form, field, label, options)
-    result = "
-    <tr valign='top'>
-        <td align='right' class='nowrap'>#{trn_geth(label)} (en) #{trn_geth('LABEL_SEMICOLON')} </td>
-        <td>#{form.text_field field, options}</td>
-      </tr>
-    "
-    [:fr, :es].each do |lang|
+    # result = "
+    # <tr valign='top'>
+    #     <td align='right' class='nowrap'>#{trn_geth(label)} (en) #{trn_geth('LABEL_SEMICOLON')} </td>
+    #     <td>#{form.text_field field, options}</td>
+    #   </tr>
+    # "
+    result = ''
+    [:en, :fr, :es].each do |lang|
       form.globalize_fields_for lang do |g|
         result += "
         <tr valign='top'>

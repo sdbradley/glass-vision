@@ -1,6 +1,6 @@
 <h2><%= trn_geth('TITLE_OPTION_LIST') %> - <%= @module_type.name %></h2>
 
-<%= link_to trn_geth('BUTTON_ADD'), :action => 'add', :mt => @module_type.id %>
+<%= link_to trn_geth('BUTTON_ADD'), new_option_path(:mt => @module_type.id) %>
 <table cellspacing="0">
   <tr class="header">
     <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
@@ -21,7 +21,7 @@
       <% end %>
     </td>
     <td>
-      <%= link_to trn_geth('BUTTON_EDIT'), option_path(option) %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_option_path(option) %> |
       <%= link_to trn_geth('BUTTON_DELETE'), option, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
     </td>
   </tr>
