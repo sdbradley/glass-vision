@@ -44,13 +44,13 @@
           <% end %>
           <tr>
             <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= ql.serie.tr_name %></td>
+            <td><%= ql.serie.name %></td>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= ql.shape.tr_name %></td>
+            <td><%= ql.shape.name %></td>
           </tr>
           <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
+            <td colspan="3"><%= ql.quotation_lines_openings.map { |o| o.opening.abbreviation}.join %></td>
           </tr>
           <tr>
             <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -61,11 +61,11 @@
            <tr>
               <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
                 <td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-                <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+                <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.name : ql.interior_color + trn_get("LABEL_CUSTOM") %></td>
               <% end %>
               <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank?%>
                 <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-                <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
+                <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.name : ql.exterior_color + trn_get("LABEL_CUSTOM")%> </td>
               <% end %>
            </tr>
         </table>
@@ -86,7 +86,7 @@
            total_option_prices += option_price
 
            option_string += ', ' unless option_string.blank?
-           option_string += opt.option.tr_description
+           option_string += opt.option.description
            option_string += " x #{opt.quantity}" if opt.quantity != 1
            option_string += " (#{number_to_currency(option_price)})"
         end
@@ -134,46 +134,46 @@
         <table style="font-size: small;">
           <tr>
             <td><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= dl.door_combination.tr_name %></td>
+            <td><%= dl.door_combination.name %></td>
           </tr>
           <tr>
             <td><%= trn_geth('HEADER_FRAME_PROFILE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= dl.frame_profile.tr_name %></td>
+            <td><%= dl.frame_profile.name %></td>
           </tr>
           <tr>
             <td><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= dl.slab_material.tr_name %></td>
+            <td><%= dl.slab_material.name %></td>
           </tr>
           <% if !dl.interior_color.blank? || !dl.standard_interior_color.blank? %>
             <tr>
               <td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-              <td><%= h dl.interior_color.blank? ? dl.standard_interior_color.tr_name : dl.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+              <td><%= h dl.interior_color.blank? ? dl.standard_interior_color.name : dl.interior_color + trn_get("LABEL_CUSTOM") %></td>
             </tr>
           <% end %>
           <% if !dl.exterior_color.blank? || !dl.standard_exterior_color.blank?%>
             <tr>
               <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-              <td><%= h dl.exterior_color.blank? ? dl.standard_exterior_color.tr_name : dl.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
+              <td><%= h dl.exterior_color.blank? ? dl.standard_exterior_color.name : dl.exterior_color + trn_get("LABEL_CUSTOM")%> </td>
             </tr>
           <% end %>
           <tr>
             <td><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= dl.door_opening.tr_name %></td>
+            <td><%= dl.door_opening.name %></td>
           </tr>
           <tr>
             <td><%= trn_geth('HEADER_DOOR_BORING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= dl.door_boring.tr_name %></td>
+            <td><%= dl.door_boring.name %></td>
           </tr>
           <% dl.door_line_sections.each_with_index do |section, index| %>
           <tr>
             <td valign="top"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td>
-              <%= section.door_section.tr_name %>,
+              <%= section.door_section.name %>,
               <% if section.door_panel %>
-                <%= section.door_panel.tr_name %>,
+                <%= section.door_panel.name %>,
               <% end %>
               <% if section.door_glass %>
-                <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %>,
+                <%= section.door_glass.door_glass_family.name %> / <%= section.door_glass.name %>,
               <% end %>
               <%= section.door_panel_dimension.width %>"
             </td>
@@ -195,7 +195,7 @@
           total_option_prices += option_price
 
           option_string += ', ' unless first_time
-          option_string += opt.option.tr_description
+          option_string += opt.option.description
           option_string += " x #{opt.quantity}" if opt.quantity != 1
           option_string += " (#{number_to_currency(option_price)})"
 
@@ -245,7 +245,7 @@
     <% end %>
     <tr valign="top">
       <td colspan="2" style="border-bottom: 2px solid #cccccc;">
-	<%= option.option.tr_description %>
+	<%= option.option.description %>
       </td>
         <% option_price = option.option.price * (1 - @quotation.discount / 100) %>
       <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price %></td>

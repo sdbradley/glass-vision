@@ -1,0 +1,32 @@
+<h2><%= trn_geth('TITLE_OPENING_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_opening_path %>
+<table cellspacing="0" style="width:100%;">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_LABEL') %></th>
+    <th><%= trn_geth('HEADER_ABBREVIATION') %></th>
+    <th><%= trn_geth('HEADER_OPENABLE') %></th>
+    <th><%= trn_geth('HEADER_GLASSES_QUANTITY') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<%  @openings.each do |opening| %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= link_to opening.name, edit_opening_path(opening) %></td>
+    <td><%= opening.label %></td>
+    <td><%= opening.abbreviation %></td>
+    <td><%= yes_or_no(opening.openable) %></td>
+    <td><%= opening.glasses_quantity %></td>
+    <td>
+      <% if opening.preview_image_name and !opening.preview_image_name.empty? %>
+        <%= image_tag 'openings/' + opening.preview_image_name %>
+      <% end %>
+    </td>
+    <td valign='middle'>
+      <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_opening_path(opening) %>
+      <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), opening, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

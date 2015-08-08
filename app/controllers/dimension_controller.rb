@@ -7,8 +7,8 @@ class DimensionController < ApplicationController
   def create
     @dimension = params[:type].constantize.new(params[:dimension])
     if @dimension.save
-      flash[:notice] = trn_geth('LABEL_DIMENSION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-      redirect_to :controller => "serie", :action => 'show', :id => @dimension.serie_id
+      flash[:notice] = trn_geth('LABEL_DIMENSION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      redirect_to series_path(:id => @dimension.serie_id)
     else
       render :action => 'add'
     end
@@ -21,8 +21,8 @@ class DimensionController < ApplicationController
   def update
     @dimension = Dimension.find(params[:id])
     if @dimension.update_attributes(params[:dimension])
-      flash[:notice] = trn_geth('LABEL_DIMENSION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :controller => "serie", :action => 'show', :id => @dimension.serie_id
+      flash[:notice] = trn_geth('LABEL_DIMENSION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      redirect_to series_path(:id => @dimension.serie_id)
     else
       render :action => 'edit'
     end
@@ -31,7 +31,7 @@ class DimensionController < ApplicationController
   def delete
     dimension = Dimension.find(params[:id])
     dimension.destroy
-    flash[:notice] = trn_geth('LABEL_DIMENSION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :controller => "serie", :action => 'show', :id => dimension.serie_id
+    flash[:notice] = trn_geth('LABEL_DIMENSION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    redirect_to series_path(:id => @dimension.serie_id)
   end
 end

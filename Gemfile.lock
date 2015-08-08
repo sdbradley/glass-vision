@@ -37,6 +37,9 @@ GEM
       abstract (>= 1.0.0)
     formtastic (2.2.1)
       actionpack (>= 3.0)
+    globalize (3.0.4)
+      activemodel (>= 3.0.0, < 4.0.0)
+      activerecord (>= 3.0.0, < 4.0.0)
     i18n (0.5.4)
     jquery-migrate-rails (1.2.1)
     jquery-rails (2.3.0)
@@ -99,6 +102,7 @@ PLATFORMS
 DEPENDENCIES
   deep_cloneable (~> 1.4.1)
   formtastic
+  globalize (= 3.0.4)
   jquery-migrate-rails
   jquery-rails (~> 2.1)
   mysql2 (= 0.2.7)

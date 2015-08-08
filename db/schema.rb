@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150622115437) do
+ActiveRecord::Schema.define(:version => 20150711015340) do
 
   create_table "audits", :force => true do |t|
     t.integer  "user_id"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
 
   create_table "database_translations", :force => true do |t|
     t.integer "record_id",                            :default => 0,  :null => false
-    t.string  "translation_table_name", :limit => 50, :default => "", :null => false
+    t.string  "translation_table_name", :limit => 50,                 :null => false
     t.string  "translation_field_name", :limit => 50, :default => "", :null => false
     t.text    "fr"
     t.text    "en"
@@ -68,6 +68,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.string  "type",     :limit => 6, :default => "",  :null => false
   end
 
+  create_table "door_boring_translations", :force => true do |t|
+    t.integer  "door_boring_id"
+    t.string   "locale",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_boring_translations", ["door_boring_id"], :name => "index_door_boring_translations_on_door_boring_id"
+  add_index "door_boring_translations", ["locale"], :name => "index_door_boring_translations_on_locale"
+
   create_table "door_borings", :force => true do |t|
     t.string   "name"
     t.string   "photo_file_name"
@@ -77,6 +88,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.datetime "updated_at"
     t.float    "price",              :default => 0.0
   end
+
+  create_table "door_combination_translations", :force => true do |t|
+    t.integer  "door_combination_id"
+    t.string   "locale",              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_combination_translations", ["door_combination_id"], :name => "index_door_combination_translations_on_door_combination_id"
+  add_index "door_combination_translations", ["locale"], :name => "index_door_combination_translations_on_locale"
 
   create_table "door_combinations", :force => true do |t|
     t.string   "name"
@@ -93,6 +115,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.integer "door_opening_id"
   end
 
+  create_table "door_frame_translations", :force => true do |t|
+    t.integer  "door_frame_id"
+    t.string   "locale",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_frame_translations", ["door_frame_id"], :name => "index_door_frame_translations_on_door_frame_id"
+  add_index "door_frame_translations", ["locale"], :name => "index_door_frame_translations_on_locale"
+
   create_table "door_frames", :force => true do |t|
     t.string   "name"
     t.integer  "sections"
@@ -107,6 +140,28 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "door_glass_family_translations", :force => true do |t|
+    t.integer  "door_glass_family_id"
+    t.string   "locale",               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_glass_family_translations", ["door_glass_family_id"], :name => "index_door_glass_family_translations_on_door_glass_family_id"
+  add_index "door_glass_family_translations", ["locale"], :name => "index_door_glass_family_translations_on_locale"
+
+  create_table "door_glass_translations", :force => true do |t|
+    t.integer  "door_glass_id"
+    t.string   "locale",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_glass_translations", ["door_glass_id"], :name => "index_door_glass_translations_on_door_glass_id"
+  add_index "door_glass_translations", ["locale"], :name => "index_door_glass_translations_on_locale"
 
   create_table "door_glasses", :force => true do |t|
     t.string   "name"
@@ -163,6 +218,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.float    "original_price"
   end
 
+  create_table "door_opening_translations", :force => true do |t|
+    t.integer  "door_opening_id"
+    t.string   "locale",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_opening_translations", ["door_opening_id"], :name => "index_door_opening_translations_on_door_opening_id"
+  add_index "door_opening_translations", ["locale"], :name => "index_door_opening_translations_on_locale"
+
   create_table "door_openings", :force => true do |t|
     t.string   "name"
     t.string   "preview_image_name"
@@ -187,6 +253,28 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.datetime "updated_at"
   end
 
+  create_table "door_panel_family_translations", :force => true do |t|
+    t.integer  "door_panel_family_id"
+    t.string   "locale",               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_panel_family_translations", ["door_panel_family_id"], :name => "index_door_panel_family_translations_on_door_panel_family_id"
+  add_index "door_panel_family_translations", ["locale"], :name => "index_door_panel_family_translations_on_locale"
+
+  create_table "door_panel_translations", :force => true do |t|
+    t.integer  "door_panel_id"
+    t.string   "locale",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_panel_translations", ["door_panel_id"], :name => "index_door_panel_translations_on_door_panel_id"
+  add_index "door_panel_translations", ["locale"], :name => "index_door_panel_translations_on_locale"
+
   create_table "door_panels", :force => true do |t|
     t.string   "name"
     t.string   "preview_image_name"
@@ -201,6 +289,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.integer "door_panel_id"
     t.integer "door_section_id"
   end
+
+  create_table "door_section_translations", :force => true do |t|
+    t.integer  "door_section_id"
+    t.string   "locale",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "door_section_translations", ["door_section_id"], :name => "index_door_section_translations_on_door_section_id"
+  add_index "door_section_translations", ["locale"], :name => "index_door_section_translations_on_locale"
 
   create_table "door_sections", :force => true do |t|
     t.string   "name"
@@ -217,6 +316,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "frame_profile_translations", :force => true do |t|
+    t.integer  "frame_profile_id"
+    t.string   "locale",           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "frame_profile_translations", ["frame_profile_id"], :name => "index_frame_profile_translations_on_frame_profile_id"
+  add_index "frame_profile_translations", ["locale"], :name => "index_frame_profile_translations_on_locale"
 
   create_table "frame_profiles", :force => true do |t|
     t.string   "name"
@@ -252,6 +362,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.integer  "position"
   end
 
+  create_table "module_type_translations", :force => true do |t|
+    t.integer  "module_type_id"
+    t.string   "locale",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "module_type_translations", ["locale"], :name => "index_module_type_translations_on_locale"
+  add_index "module_type_translations", ["module_type_id"], :name => "index_module_type_translations_on_module_type_id"
+
   create_table "module_types", :force => true do |t|
     t.string   "name"
     t.string   "gender"
@@ -263,6 +384,18 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.integer "module_type_id"
     t.integer "user_id"
   end
+
+  create_table "opening_translations", :force => true do |t|
+    t.integer  "opening_id"
+    t.string   "locale",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "abbreviation"
+    t.string   "name"
+  end
+
+  add_index "opening_translations", ["locale"], :name => "index_opening_translations_on_locale"
+  add_index "opening_translations", ["opening_id"], :name => "index_opening_translations_on_opening_id"
 
   create_table "openings", :force => true do |t|
     t.string  "name",               :limit => 50,  :default => "",    :null => false
@@ -290,6 +423,29 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.integer "option_id"
   end
 
+  create_table "option_category_translations", :force => true do |t|
+    t.integer  "option_category_id"
+    t.string   "locale",             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+    t.string   "name"
+  end
+
+  add_index "option_category_translations", ["locale"], :name => "index_option_category_translations_on_locale"
+  add_index "option_category_translations", ["option_category_id"], :name => "index_option_category_translations_on_option_category_id"
+
+  create_table "option_translations", :force => true do |t|
+    t.integer  "option_id"
+    t.string   "locale",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+  end
+
+  add_index "option_translations", ["locale"], :name => "index_option_translations_on_locale"
+  add_index "option_translations", ["option_id"], :name => "index_option_translations_on_option_id"
+
   create_table "options", :force => true do |t|
     t.string  "description",             :limit => 50, :default => "",    :null => false
     t.text    "comments"
@@ -304,6 +460,18 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.integer "module_type_id",                        :default => 1
     t.boolean "emphasize",                             :default => false
   end
+
+  create_table "options_minimum_unit_translations", :force => true do |t|
+    t.integer  "options_minimum_unit_id"
+    t.string   "locale",                  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+    t.string   "comments"
+  end
+
+  add_index "options_minimum_unit_translations", ["locale"], :name => "index_options_minimum_unit_translations_on_locale"
+  add_index "options_minimum_unit_translations", ["options_minimum_unit_id"], :name => "index_c8948b17624f39c7c9943bdcff961768ae0f770f"
 
   create_table "options_minimum_units", :force => true do |t|
     t.string "description", :limit => 50, :default => "", :null => false
@@ -341,11 +509,34 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
     t.string  "image_name"
   end
 
+  create_table "pricing_method_translations", :force => true do |t|
+    t.integer  "pricing_method_id"
+    t.string   "locale",            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "comments"
+    t.string   "description"
+  end
+
+  add_index "pricing_method_translations", ["locale"], :name => "index_pricing_method_translations_on_locale"
+  add_index "pricing_method_translations", ["pricing_method_id"], :name => "index_pricing_method_translations_on_pricing_method_id"
+
   create_table "pricing_methods", :force => true do |t|
     t.string  "description",  :limit => 50, :default => "",    :null => false
     t.text    "comments"
     t.boolean "quantifiable",               :default => false
   end
+
+  create_table "product_color_translations", :force => true do |t|
+    t.integer  "product_color_id"
+    t.string   "locale",           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "product_color_translations", ["locale"], :name => "index_product_color_translations_on_locale"
+  add_index "product_color_translations", ["product_color_id"], :name => "index_product_color_translations_on_product_color_id"
 
   create_table "product_colors", :force => true do |t|
     t.string   "name"
@@ -438,6 +629,17 @@ ActiveRecord::Schema.define(:version => 20150622115437) do
   end
 
   add_index "series_shapes", ["shape_id", "serie_id"], :name => "index_series_shapes_on_shape_id_and_serie_id"
+
+  create_table "series_translations", :force => true do |t|
+    t.integer  "series_id"
+    t.string   "locale",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "comments"
+  end
+
+  add_index "series_translations", ["locale"], :name => "index_series_translations_on_locale"
+  add_index "series_translations", ["series_id"], :name => "index_series_translations_on_series_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id"

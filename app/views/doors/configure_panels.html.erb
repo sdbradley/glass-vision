@@ -2,7 +2,7 @@
   <div class="door-line-section<%= ' last' if index == @door_line_sections.length - 1 %>">
 
     <div class="label">
-      <%= door_line_section[:door_section].tr_name %>
+      <%= door_line_section[:door_section].name %>
     </div>
 
     <%= hidden_field_tag "door_line_sections[][door_section_id]", door_line_section[:door_line_section].door_section_id, :id => 'door-section-id '%>
@@ -15,7 +15,7 @@
         <div class="selected-door-panel"></div>
         <div class="door-panels-list choice-list door-popup">
           <% door_line_section[:door_panel_families].each do |door_panel_family| %>
-            <div class="family-name"><%= door_panel_family.tr_name %></div>
+            <div class="family-name"><%= door_panel_family.name %></div>
             <% door_line_section[:door_section].door_panels.each do |door_panel| %>
               <% if door_panel.door_panel_family_id == door_panel_family.id %>
                 <div class="choice door-panel <%= 'selected' if door_panel.id == door_line_section[:door_line_section].door_panel_id %>" id="dp-<%= door_panel.id %>">
@@ -23,7 +23,7 @@
                     <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
                   </div>
                   <div class="label">
-                    <%= door_panel.tr_name %>
+                    <%= door_panel.name %>
                   </div>
                 </div>
               <% end %>

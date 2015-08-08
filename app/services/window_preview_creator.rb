@@ -87,7 +87,7 @@ class WindowPreviewCreator
       # initialize coordinates
       current_x = 0
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, upper_transom_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.upper_transom_index(shape))
       # update coordinates
       current_y += section_height
       upper_transom_height = section_height

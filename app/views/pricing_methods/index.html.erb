@@ -1,0 +1,19 @@
+<h1><%= trn_geth('PRICING_METHODS') %></h1>
+
+<table>
+  <tr>
+    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+    <th><%= trn_geth('LABEL_COMMENTS') %></th>
+    <th colspan="3"><%= trn_geth('HEADER_ACTION') %></th>
+  </tr>
+
+<% @pricing_methods.each do |pricing_method| %>
+  <tr class="<%= cycle('odd', 'even')%>" >
+    <td><%= pricing_method.description %></td>
+    <td><%= pricing_method.comments %></td>
+    <td><%= link_to 'Edit', edit_pricing_method_path(pricing_method) %></td>
+    <td><%= link_to 'Destroy', pricing_method, :confirm => trn_get('LABEL_DELETE_QUESTION'), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+

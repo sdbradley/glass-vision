@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
 
   before_filter do |c|
     ActiveRecord::Base.lang = c.session[:lang] ||= request.cookies['lang'] ||= "fr"
+    I18n.locale =    ActiveRecord::Base.lang
   end
   # require authenticated user for all actions (have to exclude signup and login right?)
   before_filter :login_required

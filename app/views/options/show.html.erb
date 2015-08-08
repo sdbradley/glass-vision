@@ -1,0 +1,48 @@
+<h2><%= trn_geth('TITLE_OPTION_SHOW') %></h2>
+
+<div style="float:right; height:370px !important; width:350px; display:block">
+  <%= image_tag @option.photo.url(:original) %>
+</div>
+
+<table>
+
+  <%= gv_show_translations(@option, :description, 'LABEL_DESCRIPTION') %>
+
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option.comments %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option.pricing_method.description %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD_APPLIES_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option.apply_to_value_string %>
+    </td>
+  </tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= @option.option_categories[0].name if @option.categorized? %></td>
+	</tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option.price %></td>
+  </tr>
+  <% if @option.minimum_quantity != 0 and (@option.pricing_method_id == 1 or @option.pricing_method_id == 2) %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_MINIMUM_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option.minimum_quantity %> <%= @option.options_minimum_unit.description %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <td>&nbsp;</td>
+    <td><%= check_box "option","emphasize", :disabled => true%><label for="option_emphasize"><%= trn_geth('LABEL_EMPHASIZE')%> </label>
+    </td>
+  </tr>
+</table>
+<br />
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), options_path(:mt => @module_type.id) %> |
+<%= link_to trn_geth('BUTTON_EDIT'), edit_option_path(@option) %> |
+<%= link_to trn_geth('BUTTON_DELETE'), @option, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+

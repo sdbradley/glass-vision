@@ -14,8 +14,9 @@ class QuotationLine < ActiveRecord::Base
   validates_numericality_of :width, :height, :quantity
 
   before_destroy :delete_preview_image
+  after_initialize :set_default_quantity
 
-  def after_initialize
+  def set_default_quantity
     if self.new_record? && quantity.blank?
       self.quantity = 1
     end

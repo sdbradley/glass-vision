@@ -126,7 +126,7 @@ body {
 }
 
 div#content {
-  margin-left: 250px;
+  margin-left: 260px;
 	padding: 10px;
 	background-color: #ffffff;
 }
@@ -366,3 +366,5 @@ padding-left: 15px;
 #shape_series_input li {display: block; float: left; width: 50%;padding:0;margin:0;}
 
 .two-column-list {display: block; float: left; width: 50%;padding:0;margin:0;}
+
+.nowrap { white-space: nowrap}

@@ -62,22 +62,22 @@ private
             end
           end
           if shape.has_upper_transom?
-            index = upper_transom_index(shape)
+            index = @line_info.upper_transom_index
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_section_area(@line_info.section_height[index].to_f * @line_info.total_width / 144.0, option, opening)
           end
           if shape.has_lower_transom?
-            index = lower_transom_index(shape)
+            index = @line_info.lower_transom_index
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_section_area(@line_info.section_height[index].to_f * @line_info.total_width / 144.0, option, opening)
           end
           if shape.has_left_sidelight?
-            index = left_sidelight_index(shape)
+            index = @line_info.left_sidelight_index
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_section_area(@line_info.section_height[index].to_f * @line_info.section_width[index].to_f / 144.0, option, opening)
           end
           if shape.has_right_sidelight?
-            index = right_sidelight_index(shape)
+            index = @line_info.right_sidelight_index
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_section_area(@line_info.section_height[index].to_f * @line_info.section_width[index].to_f / 144.0, option, opening)
           end
@@ -91,25 +91,25 @@ private
             end
           end
           if shape.has_upper_transom?
-            index = upper_transom_index(shape)
+            index = @line_info.upper_transom_index
             section_area = @line_info.section_height[index].to_f * @line_info.total_width / 144.0
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
           end
           if shape.has_lower_transom?
-            index = lower_transom_index(shape)
+            index = @line_info.lower_transom_index
             section_area = @line_info.section_height[index].to_f * @line_info.total_width / 144.0
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
           end
           if shape.has_left_sidelight?
-            index = left_sidelight_index(shape)
+            index = @line_info.left_sidelight_index
             section_area = @line_info.section_height[index].to_f * @line_info.section_width[index].to_f / 144.0
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
           end
           if shape.has_right_sidelight?
-            index = right_sidelight_index(shape)
+            index = @line_info.right_sidelight_index
             section_area = @line_info.section_height[index].to_f * @line_info.section_width[index].to_f / 144.0
             opening = Opening.find(openings[index].to_i)
             area += @quotation_line.compute_minimum_glass_area(section_area, option, opening)
@@ -143,23 +143,23 @@ private
             end
           end
           if shape.has_upper_transom?
-            section_perimeter = (@line_info.section_height[upper_transom_index(shape)].to_i * 2 + @line_info.total_width * 2) / 12
+            section_perimeter = (@line_info.section_height[@line_info.upper_transom_index].to_i * 2 + @line_info.total_width * 2) / 12
             section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
             perimeter += section_perimeter
           end
           if shape.has_lower_transom?
-            section_perimeter = (@line_info.section_height[lower_transom_index(shape)].to_i * 2 + @line_info.total_width * 2) / 12
+            section_perimeter = (@line_info.section_height[@line_info.lower_transom_index].to_i * 2 + @line_info.total_width * 2) / 12
             section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
             perimeter += section_perimeter
           end
           if shape.has_left_sidelight?
-            index = left_sidelight_index(shape)
+            index = left_sidelight_index
             section_perimeter = (@line_info.section_height[index].to_i * 2 + @line_info.section_width[index] * 2) / 12
             section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
             perimeter += section_perimeter
           end
           if shape.has_right_sidelight?
-            index = right_sidelight_index(shape)
+            index = right_sidelight_index
             section_perimeter = (@line_info.section_height[index].to_i * 2 + @line_info.section_width[index] * 2) / 12
             section_perimeter = option.minimum_quantity if section_perimeter < option.minimum_quantity
             perimeter += section_perimeter
@@ -177,22 +177,22 @@ private
             end
           end
           if shape.has_upper_transom?
-            opening = Opening.find(openings[upper_transom_index(shape)].to_i)
+            opening = Opening.find(openings[@line_info.upper_transom_index].to_i)
             glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
             # for now, consider all glasses of the section to be of equal perimeter
-            glass_perimeter = (@line_info.section_height[upper_transom_index(shape)].to_i * 2 + @line_info.total_width * 2 / glasses_quantity) / 12
+            glass_perimeter = (@line_info.section_height[@line_info.upper_transom_index].to_i * 2 + @line_info.total_width * 2 / glasses_quantity) / 12
             glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
             perimeter += glass_perimeter * glasses_quantity
           end
           if shape.has_lower_transom?
-            opening = Opening.find(openings[lower_transom_index(shape)].to_i)
+            opening = Opening.find(openings[@line_info.lower_transom_index].to_i)
             glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
-            glass_perimeter = (@line_info.section_height[lower_transom_index(shape)].to_i * 2 + @line_info.total_width * 2 / glasses_quantity) / 12
+            glass_perimeter = (@line_info.section_height[@line_info.lower_transom_index].to_i * 2 + @line_info.total_width * 2 / glasses_quantity) / 12
             glass_perimeter = option.minimum_quantity if glass_perimeter < option.minimum_quantity
             perimeter += glass_perimeter * glasses_quantity
           end
           if shape.has_left_sidelight?
-            index = left_sidelight_index(shape)
+            index = left_sidelight_index
             opening = Opening.find(openings[index].to_i)
             glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
             # for now, consider all glasses of the section to be of equal perimeter
@@ -201,7 +201,7 @@ private
             perimeter += glass_perimeter * glasses_quantity
           end
           if shape.has_right_sidelight?
-            index = right_sidelight_index(shape)
+            index = right_sidelight_index
             opening = Opening.find(openings[index].to_i)
             glasses_quantity = (opening.glasses_quantity == 0 ? 1 : opening.glasses_quantity)
             glass_perimeter = (@line_info.section_height[index].to_i * 2 + @line_info.section_width[index] * 2 / glasses_quantity) / 12
@@ -227,11 +227,11 @@ private
       end
     end
 
-    area += compute_section_area(upper_transom_index(shape), openable, openings, @line_info.total_width) if shape.has_upper_transom?
-    area += compute_section_area(lower_transom_index(shape), openable, openings, @line_info.total_width) if shape.has_lower_transom?
+    area += compute_section_area(@line_info.upper_transom_index, openable, openings, @line_info.total_width) if shape.has_upper_transom?
+    area += compute_section_area(@line_info.lower_transom_index, openable, openings, @line_info.total_width) if shape.has_lower_transom?
 
-    area += compute_section_area(left_sidelight_index(shape), openable, openings) if shape.has_left_sidelight?
-    area += compute_section_area(right_sidelight_index(shape), openable, openings) if shape.has_right_sidelight?
+    area += compute_section_area(@line_info.left_sidelight_index, openable, openings) if shape.has_left_sidelight?
+    area += compute_section_area(@line_info.right_sidelight_index, openable, openings) if shape.has_right_sidelight?
 
     area
   end

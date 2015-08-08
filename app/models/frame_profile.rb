@@ -1,5 +1,6 @@
 class FrameProfile < ActiveRecord::Base
-  include Translatable
+  translates :name
+  accepts_nested_attributes_for :translations
   include Priceable
 
   has_attached_file :photo,

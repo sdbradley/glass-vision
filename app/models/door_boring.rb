@@ -1,6 +1,7 @@
 class DoorBoring < ActiveRecord::Base
-  include Translatable
   include Priceable
+  translates :name
+  accepts_nested_attributes_for :translations
 
   has_attached_file :photo,
                     :url => "/system/:class/:attachment/:id/:style_:basename.:extension",

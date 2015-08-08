@@ -55,7 +55,7 @@ class ProductColorsController < ApplicationController
         format.html { redirect_to(product_colors_url(:mt => @module_type.id)) }
         format.xml  { render :xml => @product_color, :status => :created, :location => @product_color }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @product_color.errors, :status => :unprocessable_entity }
       end
     end
@@ -73,7 +73,7 @@ class ProductColorsController < ApplicationController
         format.html { redirect_to(product_colors_url(:mt => @module_type.id)) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @product_color.errors, :status => :unprocessable_entity }
       end
     end

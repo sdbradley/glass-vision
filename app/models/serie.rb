@@ -1,5 +1,6 @@
 class Serie < ActiveRecord::Base
-  include Translatable
+  translates :comments, :name, :description
+  accepts_nested_attributes_for :translations
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -14,7 +15,7 @@ class Serie < ActiveRecord::Base
   def standard_product?
     series_type == 'StandardProduct'
   end
-  
+
   def priced_by_area?
     series_type == 'PerSqFtProduct'
   end
@@ -25,7 +26,7 @@ class Serie < ActiveRecord::Base
     # we need to order this list by display order too
     # hash is keyed on category display order. Value is {cat, option[]}
     categorized_options = {}
-    options.each { |opt| 
+    options.each { |opt|
        opt.option_categories.each { |cat|
          categorized_options[cat.display_order] ||= {cat, []}
          categorized_options[cat.display_order][cat] << opt
@@ -40,7 +41,7 @@ class Serie < ActiveRecord::Base
 #      }
 #    }
     categorized_options
-  end  
+  end
 
   # return max width available
   def maximum_width

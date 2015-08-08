@@ -20,7 +20,7 @@
     <% ModuleType.all.each do |mt| %>
       <li>
         <%= check_box_tag "module_type[#{mt.id}]", '1', @user.module_types.find(:first, :conditions => { :id => mt.id }) ? true : false %>
-        <%= mt.tr_name %>
+        <%= mt.name %>
       </li>
     <% end %>
   </ul>

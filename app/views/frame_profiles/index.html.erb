@@ -9,7 +9,7 @@
   </tr>
 <% for frame_profile in @frame_profiles %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= frame_profile.tr_name %></td>
+    <td><%= frame_profile.name %></td>
     <td>
       <%= image_tag frame_profile.photo.url(:thumb), :class => "#{ 'popup' unless frame_profile.photo.original_filename.blank? }" %>
     </td>
