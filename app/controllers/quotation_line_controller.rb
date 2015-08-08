@@ -43,6 +43,10 @@ class QuotationLineController < ApplicationController
     return unless request.xhr?
     serie_id = params[:serie_id]
     @quotation_line = QuotationLine.new(params[:quotation_line])
+    shape = Shape.find(@quotation_line.shape_id)
+
+    @line_info = QuotationLineParameters.new(@quotation_line).from_params(params, shape)
+
 
     @openings = {} #params[:openings]
     @section_height = params[:section_height] || {}
@@ -63,6 +67,9 @@ class QuotationLineController < ApplicationController
     @openings = params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
+    shape = Shape.find(@quotation_line.shape_id)
+
+    @line_info = QuotationLineParameters.new(@quotation_line).from_params(params, shape)
 
     initialize_options_for_series()
   end
@@ -161,7 +168,7 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-    @quotation_line = QuotationLine.includes(:series => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
+    @quotation_line = QuotationLine.includes(:serie => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
 
     # we have two use cases..this is is #2
     @line_info = QuotationLineParameters.new(@quotation_line).from_line
