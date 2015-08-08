@@ -55,7 +55,7 @@ class CustomersControllerTest < Test::Unit::TestCase
     post :create, :customer => {}
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to customers_path
 
     assert_equal num_customers + 1, Customer.count
   end
@@ -73,7 +73,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to show_customer_path @first_id
   end
 
   def test_destroy
@@ -83,7 +83,7 @@ class CustomersControllerTest < Test::Unit::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to customers_path
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Customer.find(@first_id)

@@ -11,7 +11,8 @@ class PricingMethod < ActiveRecord::Base
       PER_TOTAL_WIDTH = 8
   ]
 
-  include Translatable
+  translates :comments, :description
+  accepts_nested_attributes_for :translations
 
   has_many :options
 end

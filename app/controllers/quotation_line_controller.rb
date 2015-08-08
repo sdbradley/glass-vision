@@ -20,9 +20,9 @@ class QuotationLineController < ApplicationController
 
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered
-    copy_options_from_last_line() if params[:ql_copy_options]
+    copy_options_from_last_line if params[:ql_copy_options]
 
-    initialize_options_for_series()
+    initialize_options_for_series
 
     # for the view
     @openings = @line_info.openings
@@ -43,6 +43,10 @@ class QuotationLineController < ApplicationController
     return unless request.xhr?
     serie_id = params[:serie_id]
     @quotation_line = QuotationLine.new(params[:quotation_line])
+    shape = Shape.find(@quotation_line.shape_id)
+
+    @line_info = QuotationLineParameters.new(@quotation_line).from_params(params, shape)
+
 
     @openings = {} #params[:openings]
     @section_height = params[:section_height] || {}
@@ -63,6 +67,9 @@ class QuotationLineController < ApplicationController
     @openings = params[:openings]
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
+    shape = Shape.find(@quotation_line.shape_id)
+
+    @line_info = QuotationLineParameters.new(@quotation_line).from_params(params, shape)
 
     initialize_options_for_series()
   end
@@ -539,7 +546,7 @@ protected
   end
 
   def initialize_options_for_series()
-    @options = @serie.options.sort_by { |o| o.tr_description }
+    @options = @serie.options.sort_by { |o| o.description }
     @options.each do |option|
       if option.pricing_method.quantifiable
         oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}

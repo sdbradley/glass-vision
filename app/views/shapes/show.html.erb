@@ -10,7 +10,7 @@
   <table>
     <tr valign="top">
       <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-      <td><%= @shape.tr_name %></td>
+      <td><%= @shape.name %></td>
     </tr>
     <tr valign="top">
       <td align="right"><%= trn_geth('LABEL_SECTIONS_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
@@ -50,7 +50,7 @@
     <br/>
     <ul>
       <% @shape.series.each do |series| %>
-          <li class="two-column-list"><%= series.tr_name %></li>
+          <li class="two-column-list"><%= series.name %></li>
       <% end %>
     </ul>
   </div>

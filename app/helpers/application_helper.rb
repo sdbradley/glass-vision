@@ -74,7 +74,7 @@ module ApplicationHelper
   end
 
   def menu_item(image, link_label, link, options = {})
-    display_label = trn_geth(link_label)
+    display_label = trn_get(link_label)
     display_label += ' - ' + options[:label] if options[:label]
 
     link_to(image_tag(image + '.png', :size => '32x32', :border => 0, :style => {:padding => '5px'}) + display_label, link).html_safe
@@ -85,4 +85,53 @@ module ApplicationHelper
     image_tag "file:///#{File.join(Rails.root,'public', img)}", options #unless params[:debug].present?
 #    image_tag img, options if params[:debug].present?
   end
+
+
+  def gv_show_translations(obj, field, label)
+    result = ''
+    [:en, :fr, :es].each do |lang|
+        result += "
+<tr valign='top'>
+  <td align='right' class='nowrap'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')} </td>
+  <td> #{ Globalize.with_locale(lang) { obj.send(field) } }</td>
+</tr>"
+    end
+    result.html_safe
+  end
+
+  def gv_fields_for(form, field, label, options)
+    # result = "
+    # <tr valign='top'>
+    #     <td align='right' class='nowrap'>#{trn_geth(label)} (en) #{trn_geth('LABEL_SEMICOLON')} </td>
+    #     <td>#{form.text_field field, options}</td>
+    #   </tr>
+    # "
+    result = ''
+    [:en, :fr, :es].each do |lang|
+      form.globalize_fields_for lang do |g|
+        result += "
+        <tr valign='top'>
+          <td align='right' class='nowrap'>#{trn_geth(label)} (#{lang}) #{trn_geth('LABEL_SEMICOLON')}</td>
+          <td>#{g.text_field field, options }</td>
+        </tr>"
+      end
+    end
+    result.html_safe
+  end
+
+  def gv_simple_fields_for(form, field, label)
+    result = form.input(field, :label => trn_geth(label))
+
+    [:fr, :es].each do |lang|
+      form.globalize_fields_for lang do |g|
+        result += content_tag('li', :class => 'string stringish input') do
+         g.label(field, trn_geth(label)+ " (#{lang}) ", :class => 'label')  +
+         g.text_field(field, :maxlength => 255)
+        end
+
+      end
+    end
+    result.html_safe
+  end
+
 end

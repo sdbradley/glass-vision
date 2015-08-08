@@ -14,27 +14,27 @@
       <table width="100%">
         <tr>
           <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td width="45%"><%= dl.door_combination.tr_name %></td>
+          <td width="45%"><%= dl.door_combination.name %></td>
           <td nowrap="nowrap"><%= trn_geth('HEADER_FRAME_PROFILE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.frame_profile.tr_name %></td>
+          <td><%= dl.frame_profile.name %></td>
         </tr>
         <tr>
           <td nowrap="nowrap"><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td width="45%"><%= dl.slab_material.tr_name %></td>
+          <td width="45%"><%= dl.slab_material.name %></td>
           <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.door_opening.tr_name %></td>
+          <td><%= dl.door_opening.name %></td>
         </tr>
         <tr>
           <% if !dl.interior_color.blank? || !dl.standard_interior_color.blank? %>
               <td nowrap="nowrap"><%= trn_get('LABEL_INTERIOR_COLOR') %></td>
-              <td width="45%"><%= h dl.interior_color.blank? ? dl.standard_interior_color.tr_name : dl.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+              <td width="45%"><%= h dl.interior_color.blank? ? dl.standard_interior_color.name : dl.interior_color + trn_get("LABEL_CUSTOM") %></td>
           <% else %>
               <td></td>
               <td></td>
           <% end %>
           <% if !dl.exterior_color.blank? || !dl.standard_exterior_color.blank? %>
               <td nowrap="nowrap"><%= trn_get('LABEL_EXTERIOR_COLOR') %></td>
-              <td><%= h dl.exterior_color.blank? ? dl.standard_exterior_color.tr_name : dl.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
+              <td><%= h dl.exterior_color.blank? ? dl.standard_exterior_color.name : dl.exterior_color + trn_get("LABEL_CUSTOM") %> </td>
           <% else %>
               <td></td>
               <td></td>
@@ -42,7 +42,7 @@
         </tr>
         <tr>
           <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_BORING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td width="45%"><%= dl.door_boring.tr_name %></td>
+          <td width="45%"><%= dl.door_boring.name %></td>
           <td></td>
           <td></td>
         </tr>
@@ -50,12 +50,12 @@
             <tr>
               <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
               <td colspan="3">
-                <%= section.door_section.tr_name %>,
+                <%= section.door_section.name %>,
                 <% if section.door_panel %>
-                    <%= section.door_panel.tr_name %>,
+                    <%= section.door_panel.name %>,
                 <% end %>
                 <% if section.door_glass %>
-                    <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %>,
+                    <%= section.door_glass.door_glass_family.name %> / <%= section.door_glass.name %>,
                 <% end %>
                 <%= section.door_panel_dimension.width %>"
               </td>

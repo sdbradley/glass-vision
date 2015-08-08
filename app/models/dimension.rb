@@ -1,5 +1,5 @@
 class Dimension < ActiveRecord::Base
-  belongs_to :serie
+  belongs_to :series
 
   validates_presence_of :serie_id
   validates_presence_of :value

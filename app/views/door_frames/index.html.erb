@@ -10,7 +10,7 @@
   </tr>
 <% for door_frame in @door_frames %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= door_frame.tr_name %></td>
+    <td><%= door_frame.name %></td>
     <td><%= door_frame.sections %></td>
     <td>
       <% unless door_frame.preview_image_name.blank? %>

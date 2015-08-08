@@ -19,8 +19,17 @@ GlassVision::Application.routes.draw do
     resources :roles
   end
 
+  resources :audits, :only => :index
   resources :product_colors
   resources :shapes
+  resources :openings
+  resources :customers
+  resources :options
+  resources :option_categories do
+    get :edit_options
+    post :update_options
+  end
+  resources :pricing_methods
 
   resources :doors do
     collection do
@@ -60,6 +69,10 @@ GlassVision::Application.routes.draw do
     get :print_invoice
     get :print_calculations
     get :print_manifest
+  end
+
+  resources :series do
+    get :edit_prices
   end
   root :to => 'home#index'
 

@@ -12,7 +12,7 @@ class DoorCombinationsController < ApplicationController
   def create
     @door_combination = DoorCombination.new(params[:door_combination])
     if @door_combination.save
-      flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to door_combinations_path
     else
       render :action => 'new'

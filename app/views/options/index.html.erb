@@ -1,0 +1,29 @@
+<h2><%= trn_geth('TITLE_OPTION_LIST') %> - <%= @module_type.name %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_option_path(:mt => @module_type.id) %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+    <th><%= trn_geth('HEADER_PRICING_METHOD') %></th>
+    <th><%= trn_geth('HEADER_PRICE') %></th>
+    <th><%= trn_geth('HEADER_MINIMUM_QUANTITY') %></th>
+    <th></th>
+  </tr>
+<% @options.each do |option| %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %>
+      <%= link_to option.description, option_path(option) %></td>
+    <td><%= option.pricing_method.description %></td>
+    <td><%= number_to_currency option.price %></td>
+    <td>
+      <% if option.minimum_quantity != 0 and (option.pricing_method_id == PricingMethod::PER_SQ_FOOT or option.pricing_method_id == PricingMethod::PER_PERIMETER_FOOT) %>
+        <%= option.minimum_quantity %> <%= option.options_minimum_unit.description %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_option_path(option) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), option, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -61,7 +61,7 @@ class OptionCategoryControllerTest < Test::Unit::TestCase
     post :create, :option_category => {:name=>"a", :display_order => 1}
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to option_categories_path
 
     assert_equal num_option_categories + 1, OptionCategory.count
   end
@@ -79,7 +79,7 @@ class OptionCategoryControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to option_category_path(@first_id)
   end
 
   def test_destroy
