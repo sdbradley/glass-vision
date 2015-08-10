@@ -1,5 +1,3 @@
-require 'pp'
-
 # Filters added to this controller will be run for all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
@@ -13,8 +11,8 @@ class ApplicationController < ActionController::Base
   layout proc{ |c| c.request.xhr? ? false : 'application' }
 
   before_filter do |c|
-    ActiveRecord::Base.lang = c.session[:lang] ||= request.cookies['lang'] ||= "fr"
-    I18n.locale =    ActiveRecord::Base.lang
+    ActiveRecord::Base.lang = c.session[:lang] ||= request.cookies['lang'] ||= 'fr'
+    I18n.locale = ActiveRecord::Base.lang
   end
   # require authenticated user for all actions (have to exclude signup and login right?)
   before_filter :login_required
