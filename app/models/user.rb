@@ -16,9 +16,9 @@ class User < ActiveRecord::Base
   validates_numericality_of :discount #, :less_than => 0, :message => 'must be less than 100'
   #validates_numericality_of :discount, :greater_than_or_equal_to => 0, :message => 'must be greater than or equal to 0'
   validates_inclusion_of    :discount, :in => 0..100, :message => "must be between 0 and 100"
-  
+
   before_save :encrypt_password
-  before_create :make_activation_code 
+  before_create :make_activation_code
 
   # add relationships for roles and users
   has_many :permissions, :dependent => :destroy
@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :module_types
 
   scope :enabled, where(:enabled => true)
-   
+
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :password, :password_confirmation, :discount
@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   before_create :set_company
-  
+
   def set_company
     if self.companies.empty?
       self.companies << Company.where(:name => "Glass-Vision").first
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   end
 
   def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at 
+    remember_token_expires_at && Time.now.utc < remember_token_expires_at
   end
 
   # These create and unset the fields required for remembering users between browser closes
@@ -133,23 +133,23 @@ class User < ActiveRecord::Base
      @forgotten_password = true
      self.make_password_reset_code
   end
-  
+
   def reset_password
     # First update the password_reset_code before setting the
     # reset_password flag to avoid duplicate email notifications.
     update_attribute(:password_reset_code, nil)
     @reset_password = true
-  end  
-  
+  end
+
   #used in user_observer
   def recently_forgot_password?
     @forgotten_password
   end
-  
+
   def recently_reset_password?
     @reset_password
-  end  
-  
+  end
+
   def self.find_for_forget(email)
     User.where('email = ? and activated_at IS NOT NULL', email).first
   end
@@ -164,25 +164,28 @@ class User < ActiveRecord::Base
     else
       active_companies = self.companies
     end
-    
+
     active_companies
   end
 
   def can_create?(module_name)
-    return module_types.collect(&:name).include?(module_name)
+    I18n.with_locale(:en) do
+      return module_types.collect(&:name).include?(module_name)
+    end
   end
+
 protected
-    # before filter 
+    # before filter
     def encrypt_password
       return if password.blank?
       self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
       self.crypted_password = encrypt(password)
     end
-      
+
     def password_required?
       crypted_password.blank? || !password.blank?
     end
-    
+
     def make_activation_code
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end
@@ -190,15 +193,15 @@ protected
     def make_password_reset_code
       self.password_reset_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end
-   
+
     private
-    
+
     def activate!
       @activated = true
       self.update_attribute(:activated_at, Time.now.utc)
-    end    
-  
+    end
+
     def self.get_administrator
       @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id").select("users.*").order("id ASC")
-    end        
+    end
 end
