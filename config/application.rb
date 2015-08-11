@@ -32,8 +32,8 @@ module GlassVision
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.enforce_available_locales = false
 #    config.i18n.load_path += Dir[Rails.root.join('lib', 'locale', '*.rb,yml').to_s]
-    config.i18n.available_locales = [:en, :fr, :es]
-    config.i18n.fallbacks = { :fr => :en, :es => :en }
+    config.i18n.available_locales = [:en, :'fr-CA', :es]
+    config.i18n.fallbacks = { :'fr-CA' => :en, :es => :en }
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
