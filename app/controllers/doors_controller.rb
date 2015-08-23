@@ -166,6 +166,19 @@ class DoorsController < ApplicationController
     redirect_to quotation_path(door_line.quotation.slug)
   end
 
+  def update_line_price
+    updated_price = params[:current_price]
+    door_line = DoorLine.find(params[:id])
+    original_price = door_line.original_price || door_line.price
+
+    # if the new price is empty or not supplied (nil), revert to original price
+    updated_price = original_price if updated_price.blank?
+    door_line.update_attributes(:original_price => original_price, :price => updated_price )
+
+    render :js => 'window.location = "' + quotation_path(door_line.quotation.slug) + '"'
+
+  end
+
   private ####################################################################
 
   def init_variables

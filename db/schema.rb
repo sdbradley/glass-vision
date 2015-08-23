@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150711015340) do
+ActiveRecord::Schema.define(:version => 20150823123933) do
 
   create_table "audits", :force => true do |t|
     t.integer  "user_id"
@@ -355,11 +355,12 @@ ActiveRecord::Schema.define(:version => 20150711015340) do
   create_table "manual_lines", :force => true do |t|
     t.text     "description"
     t.integer  "quantity"
-    t.float    "unit_price",   :default => 0.0
+    t.float    "unit_price",     :default => 0.0
     t.integer  "quotation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
+    t.float    "original_price"
   end
 
   create_table "module_type_translations", :force => true do |t|
@@ -632,10 +633,12 @@ ActiveRecord::Schema.define(:version => 20150711015340) do
 
   create_table "series_translations", :force => true do |t|
     t.integer  "series_id"
-    t.string   "locale",     :null => false
+    t.string   "locale",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comments"
+    t.string   "name"
+    t.string   "description"
   end
 
   add_index "series_translations", ["locale"], :name => "index_series_translations_on_locale"
