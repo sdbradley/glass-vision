@@ -38,7 +38,7 @@
       </table>
 
     </fieldset>
-    <input type='hidden' id='line-id' />
+    <input type='hidden' id='controller' />
   </form>
 </div>
 
@@ -54,10 +54,10 @@
                     id: 'update-button',
                     click: function() {
                         $.ajax({
-                        url: "<%= url_for(:controller => 'quotation_line', :action => 'update_line_price')%>/" +$('#line-id').val(),
-                        method: 'POST',
-                        dataType: 'script',
-                        data: { current_price : $('#current-price').val()}
+                          url: $('#controller').html(),
+                          method: 'POST',
+                          dataType: 'script',
+                          data: { current_price : $('#current-price').val()}
                         }).done(function (data) {
                             eval(data);
                         });
@@ -70,7 +70,7 @@
                 id: 'remove-button',
                 click: function() {
                 $.ajax({
-                    url: "<%= url_for(:controller => 'quotation_line', :action => 'update_line_price')%>/" +$('#line-id').val(),
+                    url: $('#controller').html(),
                     method: 'POST',
                     dataType: 'script',
                     data: { current_price : $('#original-price').val()}
@@ -110,13 +110,13 @@
     });
 
     $(document).on('click', '.price-override-handle', function() {
-        var quotation_line_id = $(this).data('line-id');
         var full_price = $(this).data('full-price');
         var markup = $(this).data('markup');
         var discount = $(this).data('discount');
         var current_price = $(this).data('current-price');
         var original_price = $(this).data('original-price');
         var label = $(this).data('label');
+        var controller = $(this).data('uri');
 
         var caption = "Override Price";
         if (label)
@@ -132,10 +132,10 @@
 
         $('#full-price').html(parseFloat(full_price).toMoney());
         $('#current-price').val(current_price);
-        $('#line-id').val(quotation_line_id);
         // do not apply discount per Daniel. Does not fit this workflow
         var computedPrice = current_price * (1.0 + markup / 100);
         $('#computed-price').html(computedPrice.toMoney());
+        $('#controller').html(controller);
 
         $('#price-override-dialog').dialog('option', 'title', caption);
         $('#price-override-dialog').dialog("open");
