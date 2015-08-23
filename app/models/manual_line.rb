@@ -1,14 +1,15 @@
 class ManualLine < ActiveRecord::Base
   belongs_to :quotation, :touch => true
 
+  after_find :update_original_price
 
-
-  def label
-    ''
-  end
 
   def has_price_override?
     self.unit_price != self.original_price
+  end
+
+  def update_original_price
+    self.original_price = self.unit_price if self.original_price.nil?
   end
 
   def compute_final_price

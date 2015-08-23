@@ -12,6 +12,7 @@ class DoorLine < ActiveRecord::Base
   belongs_to :standard_interior_color, :class_name => 'ProductColor'
   belongs_to :standard_exterior_color, :class_name => 'ProductColor'
 
+  after_find :update_original_price
   before_destroy :delete_preview_image
 
   def update_price
@@ -83,6 +84,10 @@ class DoorLine < ActiveRecord::Base
 
   def has_price_override?
     self.price != self.original_price
+  end
+
+  def update_original_price
+    self.original_price = self.price if self.original_price.nil?
   end
 
   def compute_final_price

@@ -68,16 +68,17 @@
         <% end %>
         <tr>
           <td><%= trn_geth('HEADER_UNIT_PRICE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td class="price-override-handle" data-line-id='<%= door.id %>' data-uri='<%= url_for(:controller => 'doors', :action => 'update_line_price', :id => door.id ) %>' data-full-price='<%= door.price %>'
-                                            data-discount='<%= quotation.discount %>' data-markup='<%= quotation.markup %>'
-                                            data-current-price='<%= door.price %>' data-original-price='<%= door.original_price %>' style='cursor:pointer'>
+          <td class="price-override-handle"
+              data-uri='<%= url_for(:controller => 'doors', :action => 'update_line_price', :id => door.id ) %>'
+              data-full-price='<%= door.price %>' data-discount='<%= quotation.discount %>'
+              data-markup='<%= quotation.markup %>'
+              data-current-price='<%= door.price %>' data-original-price='<%= door.original_price %>'
+              style='cursor:pointer'>
             <% unit_price_style = current_user.has_role?('administrator') && door.has_price_override? ? 'font-weight:bold;font-style:italic;' : '' %>
             <%= content_tag 'span', :style => unit_price_style do -%>
               <%= number_to_currency(door_price) %>
             <% end -%>
           </td>
-
-
         </tr>
         <tr>
           <td><%= trn_geth('HEADER_QUANTITY') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
