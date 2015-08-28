@@ -54,7 +54,7 @@
                     id: 'update-button',
                     click: function() {
                         $.ajax({
-                          url: $('#controller').html(),
+                          url: $('#controller').val(),
                           method: 'POST',
                           dataType: 'script',
                           data: { current_price : $('#current-price').val()}
@@ -70,7 +70,7 @@
                 id: 'remove-button',
                 click: function() {
                 $.ajax({
-                    url: $('#controller').html(),
+                    url: $('#controller').val(),
                     method: 'POST',
                     dataType: 'script',
                     data: { current_price : $('#original-price').val()}
@@ -135,7 +135,7 @@
         // do not apply discount per Daniel. Does not fit this workflow
         var computedPrice = current_price * (1.0 + markup / 100);
         $('#computed-price').html(computedPrice.toMoney());
-        $('#controller').html(controller);
+        $('#controller').val(controller);
 
         $('#price-override-dialog').dialog('option', 'title', caption);
         $('#price-override-dialog').dialog("open");
