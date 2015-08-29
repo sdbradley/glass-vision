@@ -11,6 +11,7 @@ class OptionsQuotation < ActiveRecord::Base
   end
 
   def update_original_price
+    self.unit_price = self.option.price if self.unit_price.nil?
     self.original_price = self.unit_price if self.original_price.nil?
   end
 
