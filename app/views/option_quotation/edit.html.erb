@@ -1,9 +1,16 @@
+<% content_for :extra_javascript do %>
+  $('#option_id').change(function () {
+      var new_image_url = $('#option_id option:selected').css('background-image').replace(/url\(\"(.*)\"\)/, "$1").replace("thumb", "original");
+      $('#photo').attr('src', new_image_url);
+  });
+<% end %>
+
 <h2><%= trn_get('TITLE_EDIT_OPTION_IN_QUOTATION') %></h2>
 
 <%= form_tag :action => 'update', :id => @option.id do %>
-  <%= image_tag @option.option.photo.url(:original), :style => "float:right;"   %>
+  <%= image_tag @option.option.photo.url(:original), :style => 'float:right;', :id => 'photo' %>
   <%= trn_gett('LABEL_OPTION') %><%= trn_get('LABEL_SEMICOLON') %>
-  <%= select_tag 'option_id', options_for_select(@options.map { |o| [o.description, o.id]}, @option.option.id) %><br/>
+  <%= select_tag('option_id', options_for_select_with_style(@options.map { |o| [o.description, "padding: 2px; padding-left: 32px;background: no-repeat url(#{image_path o.photo.url(:thumb)})", o.id]}), :style => 'padding:2px 2px 2px 32px;') %>
   <%= trn_gett('LABEL_QUANTITY') %><%= trn_get('LABEL_SEMICOLON') %>
   <%= text_field_tag 'quantity', @option.quantity, :size => 6 %><br/>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
