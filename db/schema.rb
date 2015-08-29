@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150823123933) do
+ActiveRecord::Schema.define(:version => 20150829170102) do
 
   create_table "audits", :force => true do |t|
     t.integer  "user_id"
@@ -483,13 +483,14 @@ ActiveRecord::Schema.define(:version => 20150823123933) do
     t.integer "option_id",         :default => 0, :null => false
     t.integer "quotation_line_id", :default => 0, :null => false
     t.integer "quantity",          :default => 1, :null => false
-    t.float   "original_price"
   end
 
   create_table "options_quotations", :force => true do |t|
-    t.integer "option_id",    :default => 0,   :null => false
-    t.integer "quotation_id", :default => 0,   :null => false
-    t.float   "quantity",     :default => 1.0, :null => false
+    t.integer "option_id",      :default => 0,   :null => false
+    t.integer "quotation_id",   :default => 0,   :null => false
+    t.float   "quantity",       :default => 1.0, :null => false
+    t.float   "unit_price"
+    t.float   "original_price"
   end
 
   create_table "options_series", :id => false, :force => true do |t|
