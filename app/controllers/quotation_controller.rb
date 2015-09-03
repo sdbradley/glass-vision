@@ -107,7 +107,7 @@ class QuotationController < ApplicationController
 
   def copy
 #    return unless request.xhr?
-    @orig_quotation = Quotation.includes(:quotation_lines => [:series, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:quotation_id])
+    @orig_quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:quotation_id])
     if @orig_quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
       flash[notice] = trn_get('PERMISSION_DENIED')
       redirect_to :action => 'index'
