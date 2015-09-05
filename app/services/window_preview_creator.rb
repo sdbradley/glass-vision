@@ -14,7 +14,6 @@ class WindowPreviewCreator
     create_image()
   end
 
-
   private
 
   def get_section_width(idx)
@@ -28,7 +27,6 @@ class WindowPreviewCreator
   def get_opening(idx)
     @quotation_line.quotation_lines_openings.select { |o| o.sort_order == idx }.first.opening
   end
-
 
   def width
     @quotation_line.width
@@ -281,7 +279,6 @@ class WindowPreviewCreator
     # load svg file
     image_blob = IO.popen("rsvg-convert -a #{temp_file_name}")
     section_image = Image.from_blob(image_blob.read).first
-    #    section_image = Image.read(temp_file_name)[0]
   end
 
 

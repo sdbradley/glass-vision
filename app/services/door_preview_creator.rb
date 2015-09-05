@@ -12,7 +12,6 @@ class DoorPreviewCreator
     create_image
   end
 
-
   private
 
 
@@ -45,6 +44,13 @@ class DoorPreviewCreator
     current_x = frame_profile.width
     current_y = frame_profile.width + frame_profile.gap_slab / 2
 
+    # for no glass:
+    gradient_background = "<linearGradient id='glassbkg' x1='16.5' y1='16.5' x2='80%' y2='53%' gradientUnits='userSpaceOnUse' >
+      <stop style='stop-color:#ffffff;stop-opacity:1;' offset='0' />
+      <stop style='stop-color:#80ffff;stop-opacity:0.5;' offset='1'/>
+    </linearGradient>"
+
+
     # loop on sections
     door_line_sections.each do |door_line_section|
       current_x += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") / 2 if door_line_section.door_panel
@@ -52,25 +58,26 @@ class DoorPreviewCreator
       # get the file to be painted
       if door_line_section.door_panel
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
+        glass_background = "<pattern id='glassbkg' patternUnits='userSpaceOnUse' width='100%' height='100%'>
+           <image xlink:href='#{door_line_section.door_glass.photo.url}' x='0' y='0' width='100%' height='100%' />
+         </pattern>"
+
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
+        if door_line_section.door_glass
+          glass_or_gradient = glass_background
+        else
+          glass_or_gradient = gradient_background
+        end
+        File.open(temp_file_name, 'w') do |f|
+         f.write ERB.new(File.read(src_image)).result(binding)
+        end
+
+        section_image = Image.read(temp_file_name)[0]
       else
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.png')
+        section_image = Image.read(src_image)[0]
       end
 
-      # load section image
-      section_image = Image.read(src_image)[0]
-
-      # render the glass here if any
-      if door_line_section.door_glass
-        src_image = door_line_section.door_glass.photo.url(:normal)
-        # we have no idea how to position the glass on a door. Each door will need to have
-        # x, y, width, height of glass area.
-        # src_image = src_image.gsub(File.basename(src_image), 'rendered.png')
-        src_image = File.join(Rails.root, 'public', src_image)
-        if File.exist?(src_image)
-          glass_image = Image.read(src_image)[0]
-          section_image.composite! glass_image, 0, 0, OverCompositeOp
-        end
-      end
 
       # resize the section image to fit the dimensions
       section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
@@ -116,8 +123,8 @@ class DoorPreviewCreator
     rescue
       # don't care
     end
-  end
 
+  end
 
 
   def draw_vertical_measurement(canvas, section_height, current_y)
