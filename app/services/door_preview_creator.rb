@@ -8,8 +8,8 @@ class DoorPreviewCreator
     @door_line = door_line
   end
 
-  def call
-    create_image
+  def call(base_url)
+    create_image(base_url)
   end
 
   private
@@ -31,7 +31,10 @@ class DoorPreviewCreator
     @door_line.door_line_sections
   end
 
-  def create_image
+  def create_image(base_url)
+    # make sure url has a trailing /
+    base_url.chomp('/') if base_url.last == '/'
+
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{@door_line.id}.svg")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{@door_line.id}.png")
 
@@ -59,7 +62,7 @@ class DoorPreviewCreator
       if door_line_section.door_panel
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
         glass_background = "<pattern id='glassbkg' patternUnits='userSpaceOnUse' width='100%' height='100%'>
-           <image xlink:href='#{door_line_section.door_glass.photo.url}' x='0' y='0' width='100%' height='100%' />
+           <image xlink:href='#{base_url}#{door_line_section.door_glass.photo.url}' x='0' y='0' width='100%' height='100%' />
          </pattern>"
 
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
@@ -119,7 +122,7 @@ class DoorPreviewCreator
 
     # delete temp file
     begin
-      File.delete temp_file_name
+#      File.delete temp_file_name
     rescue
       # don't care
     end

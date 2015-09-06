@@ -7,7 +7,7 @@ class DoorGlass < ActiveRecord::Base
   has_and_belongs_to_many :door_panels
 
   has_attached_file :photo,
-                    :url => "#{Rails.configuration.host_with_port}/system/:class/:attachment/:id/:style_:basename.:extension",
+                    :url => '/system/:class/:attachment/:id/:style_:basename.:extension',
                     :path => ":rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension",
                     :default_url => "/images/:class/missing_:style.png",
                     :default_style => :original,

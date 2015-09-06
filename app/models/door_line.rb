@@ -69,8 +69,8 @@ class DoorLine < ActiveRecord::Base
     return (total_width + 30) * PIXELS_PER_INCH, (total_height + 35) * PIXELS_PER_INCH
   end
 
-  def create_image
-    DoorPreviewCreator.new(self).call
+  def create_image(base_url)
+    DoorPreviewCreator.new(self).call(base_url)
   end
 
   def delete_preview_image

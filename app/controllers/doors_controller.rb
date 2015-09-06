@@ -132,7 +132,8 @@ class DoorsController < ApplicationController
     if @door_line.save
       save_sections_and_options
       @door_line.update_price
-      @door_line.create_image
+      application_url = "#{request.protocol}#{request.host_with_port}"
+      @door_line.create_image(application_url)
       redirect_to quotation_path(@door_line.quotation.slug)
     else
       init_variables
@@ -154,7 +155,8 @@ class DoorsController < ApplicationController
       @door_line.door_line_options.clear
       save_sections_and_options
       @door_line.update_price
-      @door_line.create_image
+      application_url = "#{request.protocol}#{request.host_with_port}"
+      @door_line.create_image(application_url)
       redirect_to quotation_path(@door_line.quotation.slug)
     end
   end
