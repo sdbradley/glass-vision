@@ -61,8 +61,8 @@ class DoorPreviewCreator
       # get the file to be painted
       if door_line_section.door_panel
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
-        glass_background = "<pattern id='glassbkg' patternUnits='userSpaceOnUse' width='100%' height='100%'>
-           <image xlink:href='#{base_url}#{door_line_section.door_glass.photo.url}' x='0' y='0' width='100%' height='100%' />
+        glass_background = "<pattern id='glassbkg' patternUnits='objectBoundingBox' width='100%' height='100%'>
+           <image xlink:href='#{base_url}#{door_line_section.door_glass.photo.url}' height='1' width='1' preserveAspectRatio='xMidYMid slice' />
          </pattern>"
 
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
@@ -71,6 +71,10 @@ class DoorPreviewCreator
         else
           glass_or_gradient = gradient_background
         end
+
+        section_width = door_line_section.door_panel_dimension.width * PIXELS_PER_INCH
+        section_height = door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
+        Rails.logger.debug "#{src_image}, width #{section_width}, height #{section_height}"
         File.open(temp_file_name, 'w') do |f|
          f.write ERB.new(File.read(src_image)).result(binding)
         end
@@ -79,11 +83,10 @@ class DoorPreviewCreator
       else
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.png')
         section_image = Image.read(src_image)[0]
+        # resize the section image to fit the dimensions
+        section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
       end
 
-
-      # resize the section image to fit the dimensions
-      section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
 
       # define offset to paint section
       offsetx_px = current_x * PIXELS_PER_INCH

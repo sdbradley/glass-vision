@@ -4,8 +4,8 @@
 <svg
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   width="80"
-   height="190"
+   width="<%= section_width %>"
+   height="<%= section_height %>"
    id="svg2"
    version="1.1"
    style="display:inline">
