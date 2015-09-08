@@ -62,10 +62,6 @@ class DoorPreviewCreator
       if door_line_section.door_panel
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
 
-        # glass_background = "<pattern id='glassbkg' patternUnits='userSpaceOnUse'  width='100%' height='100%' viewbox='0 0 1 1'>
-        #    <image xlink:href='#{base_url}#{door_line_section.door_glass.photo.url}' height='100%' width='100%' preserveAspectRatio='none' />
-        #  </pattern>"
-
         glass_background = "<pattern id='glassbkg' patternUnits='objectBoundingBox' width='100%' height='100%'>
            <image xlink:href='#{base_url}#{door_line_section.door_glass.photo.url}' height='100%' width='100%' preserveAspectRatio='none' />
          </pattern>"
