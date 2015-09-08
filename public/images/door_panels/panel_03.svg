@@ -6,7 +6,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    width="<%= section_width %>"
    height="<%= section_height %>"
-   viewbox="0 0 80 190"
+   viewBox="0 0 80 190"
    id="svg2"
    version="1.1"
    style="display:inline">

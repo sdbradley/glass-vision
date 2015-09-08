@@ -11,7 +11,7 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="<%= section_width %>"
    height="<%= section_height %>"
-   viewbox="0 0 30 190"
+   viewBox="0 0 30 190"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
