@@ -21,6 +21,6 @@ gem 'globalize', '3.0.4'
 
 group(:development) do
   gem 'yard'
-  gem 'capistrano', '~> 2.5.8'
-  gem 'rvm-capistrano'
+  gem 'capistrano', '~> 2.5.8', :require => false
+  gem 'rvm-capistrano', :require => false
 end

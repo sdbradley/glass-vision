@@ -28,7 +28,7 @@ class Serie < ActiveRecord::Base
     categorized_options = {}
     options.each { |opt|
        opt.option_categories.each { |cat|
-         categorized_options[cat.display_order] ||= {cat, []}
+         categorized_options[cat.display_order] ||= {cat => []}
          categorized_options[cat.display_order][cat] << opt
          }
     }

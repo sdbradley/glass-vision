@@ -137,6 +137,3 @@ DEPENDENCIES
   will_paginate (>= 3.0.pre2)
   wkhtmltopdf-binary
   yard
-
-BUNDLED WITH
-   1.10.6
