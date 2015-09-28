@@ -100,7 +100,7 @@
     <td colspan="3"><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
   <tr >
-    <td colspan="3" rowspan="6" style="border:1px solid #808080;" valign="top">
+    <td colspan="3" rowspan="6" style="border:1px solid #808080;" valign="top" width="60%">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
           <%= @quotation.notes.gsub("\n", '<br/>').html_safe if @quotation.notes and !@quotation.notes.empty?%>
