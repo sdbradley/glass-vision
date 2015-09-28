@@ -276,9 +276,9 @@ class WindowPreviewCreator
       f.write ERB.new(File.read(File.join(Rails.root, 'components', 'openings', image_file_name))).result(binding)
     end
 
-    # load svg file
-    image_blob = IO.popen("rsvg-convert -a #{temp_file_name}")
-    section_image = Image.from_blob(image_blob.read).first
+    IO.popen("rsvg-convert -a #{temp_file_name}") do |image_blob|
+      section_image = Image.from_blob(image_blob.read).first
+    end
   end
 
 
