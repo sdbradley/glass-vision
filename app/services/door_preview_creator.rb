@@ -36,6 +36,7 @@ class DoorPreviewCreator
     base_url.chomp('/') if base_url.last == '/'
 
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{@door_line.id}.svg")
+    temp_bin_file = File.join(Rails.root, 'tmp', File.basename(temp_file_name, '.svg') + '.png')
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{@door_line.id}.png")
 
     # define canvas for final image
@@ -67,27 +68,24 @@ class DoorPreviewCreator
          </pattern>"
 
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
-        if door_line_section.door_glass
-          glass_or_gradient = glass_background
-        else
-          glass_or_gradient = gradient_background
-        end
 
+        glass_or_gradient = door_line_section.door_glass ? glass_background : gradient_background
         section_width = door_line_section.door_panel_dimension.width * PIXELS_PER_INCH
         section_height = door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
-        Rails.logger.debug "#{src_image}, width #{section_width}, height #{section_height}"
+
         File.open(temp_file_name, 'w') do |f|
          f.write ERB.new(File.read(src_image)).result(binding)
         end
 
-        section_image = Image.read(temp_file_name)[0]
+        system("convert #{temp_file_name} #{temp_bin_file}")
+        section_image = Image.read(temp_bin_file)[0]
+
       else
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.png')
         section_image = Image.read(src_image)[0]
         # # resize the section image to fit the dimensions
-        # section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
+        section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
       end
-
 
       # define offset to paint section
       offsetx_px = current_x * PIXELS_PER_INCH
@@ -106,13 +104,17 @@ class DoorPreviewCreator
       current_x += (door_line_section.id == door_line_sections.last.id ? frame_profile.width : frame_profile.separator_width)
     end
 
-    # global frame
-    frame = Draw.new
-    frame.fill_opacity 0
-    frame.stroke_width 1
-    frame.stroke 'black'
-    frame.rectangle 0, 0, total_width * PIXELS_PER_INCH - 1, total_height * PIXELS_PER_INCH - 1
-    frame.draw canvas
+      cx = (total_width ) * PIXELS_PER_INCH - 1
+      cy = (total_height - 1 ) * PIXELS_PER_INCH - PIXELS_PER_INCH
+  #    Rails.logger.debug "\nFrame is #{cx}x#{cy}\n"
+
+      # global frame
+      frame = Draw.new
+      frame.fill_opacity 0
+      frame.stroke_width 1
+      frame.stroke 'black'
+      frame.rectangle 0, 0, cx, cy #total_width  * PIXELS_PER_INCH - 1, total_height * PIXELS_PER_INCH - PIXELS_PER_INCH / 2
+      frame.draw canvas
 
     # print vertical size
     draw_vertical_measurement(canvas, total_height, 0)
@@ -126,7 +128,8 @@ class DoorPreviewCreator
 
     # delete temp file
     begin
-#      File.delete temp_file_name
+      File.delete temp_file_name
+      File.delete temp_bin_file
     rescue
       # don't care
     end
