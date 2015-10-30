@@ -120,7 +120,8 @@ class DoorPreviewCreator
     draw_vertical_measurement(canvas, total_height, 0)
 
     # print total horizontal size
-    draw_horizontal_measurement(canvas, total_width, 0, 50)   if door_line_sections.length > 1
+    # JDP 30OCT2015 always draw this line for doors, per Daniel
+    draw_horizontal_measurement(canvas, total_width, 0, 50) # if door_line_sections.length > 1
 
     # write final image
     canvas.write final_file_name
