@@ -63,12 +63,12 @@
 <table>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field 'quotation', 'transport', :size => 10, :style => 'text-align: right;' %>$</td>
+    <td>$<%= text_field 'quotation', 'transport', :size => 10, :style => 'text-align: right;' %></td>
   </tr>
   <% if current_user.has_role?('administrator')%>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= text_field 'quotation', 'discount', :size => 10, :style => 'text-align: right;' %>%</td>
+    <td>$<%= text_field 'quotation', 'discount', :size => 10, :style => 'text-align: right;' %></td>
   </tr>
   <% else %>
     <%= hidden_field 'quotation', 'discount' %>
@@ -80,15 +80,15 @@
   <tr valign="top">
     <td align="right"><%= trn_get('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field 'quotation', 'taxes', :size => 10, :style => 'text-align: right;' %>%</td>
-  </tr>  
+  </tr>
   <tr valign="top">
     <td align="right"><%= trn_get('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field 'quotation', 'taxes_pst', :size => 10, :style => 'text-align: right;' %>%</td>
-  </tr>  
+  </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field 'quotation', 'deposit', :size => 10, :style => 'text-align: right;' %>$</td>
-  </tr>  
+  </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= check_box 'quotation', 'ready_to_sign' %></td>

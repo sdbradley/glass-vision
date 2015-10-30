@@ -28,7 +28,7 @@
         </tr>
       </table>
     </td>
-    <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', line.quantity * line_price) %>$</td>
+    <td align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency(line.quantity * line_price) %></td>
     <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
       <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'option_quotation', :action => 'edit', :id => line.id %> |
       <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'option_quotation', :action => 'delete', :id => line.id}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
