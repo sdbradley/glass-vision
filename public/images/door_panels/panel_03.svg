@@ -13,57 +13,20 @@
   <defs id="defs4">
     <%= glass_or_gradient %>
   </defs>
-  <g id="layer1" transform="translate(0,-862.36218)">
-    <rect
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2987"
-       width="79"
-       height="189.00005"
-       x="0.50000006"
-       y="862.86218" />
+  <g id="layer1" transform="translate(0 -862.36)">
+    <rect id="rect2987" fill-rule="evenodd" height="189" width="79" stroke="#000" y=".5" x=".5" fill="#fff"/>
   </g>
-  <g id="layer3" style="display:inline">
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3048-1"
-       width="19"
-       height="48"
-       x="14.5"
-       y="121.5" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3048-9-0"
-       width="15"
-       height="44"
-       x="16.5"
-       y="123.5" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       id="rect3048-1-0"
-       width="19"
-       height="48"
-       x="46.5"
-       y="121.5" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       id="rect3048-9-0-2"
-       width="15"
-       height="44"
-       x="48.5"
-       y="123.5" />
-    <rect
-       style="fill:none;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3765"
-       width="51"
-       height="85"
-       x="14.5"
-       y="16.5" />
-    <rect
-       style="fill:url(#glassbkg);fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       id="rect3765-7"
-       width="47"
-       height="81"
-       x="16.5"
-       y="18.5" />
+  <g id="layer3" stroke="#808080">
+   <g fill="#fff">
+    <rect id="rect3048-1" height="48" width="19" y="121.5" x="14.5"/>
+    <rect id="rect3048-9-0" height="44" width="15" y="123.5" x="16.5"/>
+    <rect id="rect3048-1-0" height="48" width="19" y="121.5" x="46.5"/>
+    <rect id="rect3048-9-0-2" height="44" width="15" y="123.5" x="48.5"/>
+   </g>
+
+    <!-- top panel outer border -->
+    <rect id="rect3763" height="85" width="55" stroke-linecap="square" y="16.5" x="12.5" fill="none"/>
+    <!-- top panel innner rect : glass panel url(#glassbkg)-->
+    <rect id="rect3763-0" height="81" width="51" stroke-linecap="square" y="18.5" x="14.5" fill="url(#glassbkg)"/>
   </g>
 </svg>

@@ -10,27 +10,22 @@
   <defs id="defs4">
     <%= glass_or_gradient %>
   </defs>
+  <!-- outer rectangle -->
   <g id="layer1" transform="translate(0,-862.36218)">
-    <rect
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2987"
-       width="79" height="189.00005" x="0.50000006" y="862.86218" />
+    <rect id="rect2987" fill-rule="evenodd" height="189" width="79" stroke="#000" y=".5" x=".5" fill="#fff"/>
   </g>
-  <g id="layer3" style="display:inline">
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3048-1"
-       width="50.999996" height="48" x="14.5" y="121.5" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3048-9-0"
-       width="46.944347" height="44" x="16.555649" y="123.5" />
-    <rect
-       style="fill:none;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3763"
-       width="51" height="85" x="14.5" y="16.5" />
-    <rect
-       style="fill:url(#glassbkg);fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       id="rect3763-0" width="47" height="81" x="16.5" y="18.5" />
+
+  <g id="layer3" stroke="#808080">
+    <!--bottom panel outer border -->
+    <rect height="48" width="55" y="121.5" x="12.5" fill="#fff"/>
+
+   <!-- bottom panel inner -->
+    <rect stroke-opacity=".5" height="44" width="51" y="123.5" x="14.5" fill="#fff"/>
+
+    <!-- top panel outer border -->
+    <rect id="rect3763" height="85" width="55" stroke-linecap="square" y="16.5" x="12.5" fill="none"/>
+
+    <!-- top panel innner rect : glass panel url(#glassbkg)-->
+    <rect id="rect3763-0" height="81" width="51" stroke-linecap="square" y="18.5" x="14.5" fill="url(#glassbkg)"/>
   </g>
 </svg>
