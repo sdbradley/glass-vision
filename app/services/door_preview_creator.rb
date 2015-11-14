@@ -54,6 +54,7 @@ class DoorPreviewCreator
       <stop style='stop-color:#80ffff;stop-opacity:0.5;' offset='1'/>
     </linearGradient>"
 
+    glass_background = nil
 
     # loop on sections
     door_line_sections.each do |door_line_section|
@@ -61,14 +62,25 @@ class DoorPreviewCreator
 
       # get the file to be painted
       if door_line_section.door_panel
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg')
+#        src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
 
-        glass_background = "<pattern id='glassbkg' patternUnits='objectBoundingBox' width='100%' height='100%'>
-           <image xlink:href='#{base_url}#{door_line_section.door_glass.photo.url}' height='100%' width='100%' preserveAspectRatio='none' />
-         </pattern>"
+        if door_line_section.door_glass
 
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
+          geometry = Paperclip::Geometry.from_file(door_line_section.door_glass.photo.path)
+          glass_width  = geometry.width.to_i
+          glass_height = geometry.height.to_i
 
+          # enable to use embed image in SVG
+          image_data = ActiveSupport::Base64.strict_encode64(File.read(door_line_section.door_glass.photo.path))
+          glass_uri = "data:#{door_line_section.door_glass.photo.content_type};base64," + image_data
+
+          glass_background = "
+  <pattern id='glassbkg' viewBox='0,0,#{glass_width},#{glass_height}' width='100%' height='100%'>
+    <image width='#{glass_width}px' preserveAspectRatio='xMinYMin meet' xlink:href=\"#{glass_uri}\" height='#{glass_height}px' />
+  </pattern>"
+
+        end
         glass_or_gradient = door_line_section.door_glass ? glass_background : gradient_background
         section_width = door_line_section.door_panel_dimension.width * PIXELS_PER_INCH
         section_height = door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
@@ -77,7 +89,7 @@ class DoorPreviewCreator
          f.write ERB.new(File.read(src_image)).result(binding)
         end
 
-        system("convert #{temp_file_name} #{temp_bin_file}")
+        system("rsvg-convert #{temp_file_name} -o #{temp_bin_file}")
         section_image = Image.read(temp_bin_file)[0]
 
       else
@@ -129,8 +141,8 @@ class DoorPreviewCreator
 
     # delete temp file
     begin
-      File.delete temp_file_name
-      File.delete temp_bin_file
+#      File.delete temp_file_name
+#      File.delete temp_bin_file
     rescue
       # don't care
     end
