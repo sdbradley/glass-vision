@@ -16,10 +16,10 @@
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_area  :comments, :cols => '39', :rows => '10' %></td>
   </tr>
-	<tr valign="top">
-		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-		<td><%= f.collection_select(:option_category_ids, @all_option_categories, "id", "name") %></td>
-	</tr>
+	<!--<tr valign="top">-->
+		<!--<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>-->
+		<!--<td><%#= f.collection_select(:option_category_ids, @all_option_categories, 'id', 'name') %></td>-->
+	<!--</tr>-->
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.select :pricing_method_id, PricingMethod.all(:order => 'description').map { |p| [p.description, p.id] } %></td>

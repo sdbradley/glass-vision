@@ -61,7 +61,7 @@ module ApplicationHelper
     html << "<select name=#{name} id=#{name} #{on_change_function}>"
     html << "<option value='' colorname='' #{'selected' if sel.nil?}>#{trn_get('MSG_SELECT_ONE')}</option>"
     html << colors.collect { |c|
-      "<option value='#{c.id}' colorname='#{c.tr_name}' #{'selected' if c.id == id_of_selected_color} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.tr_name}</option>" }.join("\n")
+      "<option value='#{c.id}' colorname='#{c.name}' #{'selected' if c.id == id_of_selected_color} style='background-color: #{c.value}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{c.name}</option>" }.join("\n")
     html << "</select>"
     html.html_safe
   end

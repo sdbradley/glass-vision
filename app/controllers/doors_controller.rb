@@ -188,7 +188,7 @@ class DoorsController < ApplicationController
     @frame_profiles = FrameProfile.all(:order => :name)
     @slab_materials = SlabMaterial.all(:order => :name)
     @door_borings = DoorBoring.all(:order => :name)
-    @options = Option.find(:all, :conditions => { :module_type_id => 2 }).sort_by { |o| o.tr_description }
+    @options = Option.find(:all, :conditions => { :module_type_id => 2 }).sort_by { |o| o.description }
   end
 
   def init_options

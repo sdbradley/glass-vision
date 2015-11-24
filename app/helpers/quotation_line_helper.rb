@@ -8,7 +8,7 @@ module QuotationLineHelper
       output << image_tag('openings/none.png', :onclick => "$('#opening_list_#{section}').toggle();", :id => "opening_pic_#{section}")
     else
       output << image_tag('openings/' + selected_opening.preview_image_name, :onclick => "$('#opening_list_#{section}').toggle();", :id => "opening_pic_#{section}")
-      output << "<br/><span style='font-size:x-small'>#{selected_opening.tr_label}</span>"
+      output << "<br/><span style='font-size:x-small'>#{selected_opening.label}</span>"
     end
     # non IE version
     output << '<!--[if !IE]> <!-->'
@@ -16,8 +16,8 @@ module QuotationLineHelper
     @quotation_line.serie.openings.each do |o|
       output << "<div class=\"image\" onmouseover=\"$(this).addClass('hover')\" onmouseout=\"$(this).removeClass('hover')\" onclick=\"$('#openings_#{section}').val(#{o.id}); $('#opening_pic_#{section}').attr('src', '/images/openings/#{o.preview_image_name}'); $('#opening_list_#{section}').toggle();\">"
       output << image_tag('openings/' + o.preview_image_name)
-      output << '<br/>' + o.tr_abbreviation
-      output << "<br/><span style='font-size:x-small'>#{o.tr_label}</span>"
+      output << '<br/>' + o.abbreviation
+      output << "<br/><span style='font-size:x-small'>#{o.label}</span>"
       output << '</div>'
     end
     output << '</div>'
@@ -36,21 +36,21 @@ module QuotationLineHelper
     output << "</div>"
     output.html_safe
   end
-  
+
   def size_tag_helper(width_or_height, idx)
       if @quotation_line.serie.is_standard_product?
-        select_tag("section_#{width_or_height}[#{idx}]", options_from_collection_for_select(@serie.width_or_height, "value", "value")) 
+        select_tag("section_#{width_or_height}[#{idx}]", options_from_collection_for_select(@serie.width_or_height, "value", "value"))
       else
-        text_field_tag "section_#{width_or_height}[#{idx}]", @section_width_or_height[idx.to_s], :size => 6 
+        text_field_tag "section_#{width_or_height}[#{idx}]", @section_width_or_height[idx.to_s], :size => 6
       end
   end
 
   def display_interior_color_name(line)
-    line.interior_color.blank? ? line.standard_interior_color.tr_name : line.tr_interior_color + trn_get("LABEL_CUSTOM")
+    line.interior_color.blank? ? line.standard_interior_color.name : line.interior_color + trn_get("LABEL_CUSTOM")
   end
 
   def display_exterior_color_name(line)
-    line.exterior_color.blank? ? line.standard_exterior_color.tr_name : line.tr_exterior_color + trn_get("LABEL_CUSTOM")
+    line.exterior_color.blank? ? line.standard_exterior_color.name : line.exterior_color + trn_get("LABEL_CUSTOM")
   end
 
 end

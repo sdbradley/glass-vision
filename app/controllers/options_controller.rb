@@ -20,7 +20,7 @@ class OptionsController < ApplicationController
   def create
     @option = Option.new(params[:option])
     if @option.save
-      flash[:notice] = trn_geth('LABEL_OPTION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to :action => 'show', :id => @option
     else
       @module_type = @option.module_type
