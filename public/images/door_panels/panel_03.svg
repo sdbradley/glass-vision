@@ -18,10 +18,10 @@
   </g>
   <g id="layer3" stroke="#808080">
    <g fill="#fff">
-    <rect id="rect3048-1" height="48" width="19" y="121.5" x="14.5"/>
-    <rect id="rect3048-9-0" height="44" width="15" y="123.5" x="16.5"/>
-    <rect id="rect3048-1-0" height="48" width="19" y="121.5" x="46.5"/>
-    <rect id="rect3048-9-0-2" height="44" width="15" y="123.5" x="48.5"/>
+    <rect id="rect3048-1" height="48" width="19" y="121.5" x="12.5"/>
+    <rect id="rect3048-9-0" height="44" width="15" y="123.5" x="14.5"/>
+    <rect id="rect3048-1-0" height="48" width="19" y="121.5" x="48.5"/>
+    <rect id="rect3048-9-0-2" height="44" width="15" y="123.5" x="50.5"/>
    </g>
 
     <!-- top panel outer border -->
