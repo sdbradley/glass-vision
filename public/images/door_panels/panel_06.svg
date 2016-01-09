@@ -13,29 +13,11 @@
   <defs id="defs4">
     <%= glass_or_gradient %>
   </defs>
-  <g id="layer1" transform="translate(0,-862.36218)">
-    <rect
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2987"
-       width="79"
-       height="189.00005"
-       x="0.50000006"
-       y="862.86218" />
+  <g transform="translate(0 -862.36)">
+   <rect fill-rule="evenodd" height="189" width="79" stroke="#000" y="862.86" x="0.5" fill="#fff"/>
   </g>
-  <g id="layer3" style="display:inline">
-    <rect
-       style="fill:none;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3800"
-       width="51"
-       height="155"
-       x="14.5"
-       y="14.5" />
-    <rect
-       style="fill:url(#glassbkg);fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3800-3"
-       width="47"
-       height="151"
-       x="16.5"
-       y="16.5" />
+  <g stroke="#808080" stroke-linecap="square">
+   <rect height="155" width="55" y="14.5" x="12.5" fill="none"/>
+   <rect height="151" width="51" y="16.5" x="14.5" fill="url(#glassbkg)"/>
   </g>
 </svg>
