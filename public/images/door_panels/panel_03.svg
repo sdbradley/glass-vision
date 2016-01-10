@@ -13,8 +13,8 @@
   <defs id="defs4">
     <%= glass_or_gradient %>
   </defs>
-  <g id="layer1" transform="translate(0 -862.36)">
-    <rect id="rect2987" fill-rule="evenodd" height="189" width="79" stroke="#000" y=".5" x=".5" fill="#fff"/>
+  <g transform="translate(0 -862.36)">
+    <rect fill-rule="evenodd" height="189" width="79" stroke="#000" y=".5" x=".5" fill="#fff"/>
   </g>
   <g id="layer3" stroke="#808080">
    <g fill="#fff">
