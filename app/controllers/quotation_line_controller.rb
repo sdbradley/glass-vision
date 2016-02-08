@@ -77,7 +77,7 @@ class QuotationLineController < ApplicationController
   def create
     @quotation_line = QuotationLine.new(params[:quotation_line])
     @serie = Serie.find(@quotation_line.serie_id)
-    @options = @serie.options.sort_by { |o| o.tr_description }
+    @options = @serie.options.sort_by { |o| o.description }
 
     @line_info = QuotationLineParameters.new(@quotation_line).from_params(params, @quotation_line.shape)
 
@@ -205,7 +205,7 @@ class QuotationLineController < ApplicationController
 
     @quotation_line.serie_id = params[:serie_id]
     @serie = Serie.find(@quotation_line.serie_id)
-    @options = @serie.options.sort_by {|o| o.tr_description }
+    @options = @serie.options.sort_by {|o| o.description }
 
     error = calculate_dimensions(params[:quotation_line][:width], params[:quotation_line][:height])
     if error

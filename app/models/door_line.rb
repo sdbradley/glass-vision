@@ -12,6 +12,7 @@ class DoorLine < ActiveRecord::Base
   belongs_to :standard_interior_color, :class_name => 'ProductColor'
   belongs_to :standard_exterior_color, :class_name => 'ProductColor'
 
+  after_find :update_original_price
   before_destroy :delete_preview_image
 
   def update_price
@@ -50,12 +51,20 @@ class DoorLine < ActiveRecord::Base
 
   def total_width
     width = 0
+    gap = nil
+    is_single_panel_door = door_line_sections.count {|dls| !dls.door_panel.nil?} == 1
     door_line_sections.each do |door_line_section|
       width += door_line_section.door_panel_dimension.width
-      width += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") if door_line_section.door_panel
+      # save the gap for later
+      gap = "gap_#{door_line_section.door_panel.gap}"
+      width += frame_profile.send(gap) if door_line_section.door_panel
     end
+    # only do this once if one panel only
+    width += frame_profile.send(gap) if is_single_panel_door
+
     width += 2 * frame_profile.width
     width += (door_line_sections.count - 1) * frame_profile.separator_width
+    width
   end
 
   def total_height
@@ -68,8 +77,8 @@ class DoorLine < ActiveRecord::Base
     return (total_width + 30) * PIXELS_PER_INCH, (total_height + 35) * PIXELS_PER_INCH
   end
 
-  def create_image
-    DoorPreviewCreator.new(self).call
+  def create_image(base_url)
+    DoorPreviewCreator.new(self).call(base_url)
   end
 
   def delete_preview_image
@@ -83,6 +92,10 @@ class DoorLine < ActiveRecord::Base
 
   def has_price_override?
     self.price != self.original_price
+  end
+
+  def update_original_price
+    self.original_price = self.price if self.original_price.nil?
   end
 
   def compute_final_price

@@ -151,10 +151,10 @@
     <% total += door.quantity * door_price %>
     <%= render :partial => 'door_line', :locals => { :door => door, :door_price => door_price, :quotation => @quotation  } %>
   <% end %>
-  <% @quotation.options_quotations.each do |option| %>
-    <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
-    <% total += option.quantity * option_price %>
-    <%= render :partial => 'option', :locals => { :option => option, :option_price => option_price, :quotation => @quotation } %>
+  <% @quotation.options_quotations.each do |line| %>
+    <% line_price = line.unit_price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+    <% total += line.quantity * line_price %>
+    <%= render :partial => 'option', :locals => { :line => line, :line_price => line_price, :quotation => @quotation } %>
   <% end %>
   <% @quotation.manual_lines.order('position asc').each do |line| %>
     <% line_price = line.compute_final_price %>
@@ -164,7 +164,7 @@
   <tr>
     <td align="right"><%=trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
     <td align="right" colspan="1">Total</td>
-    <td align="right"><%= format('%.2f', total) %>$</td>
+    <td align="right"><%= number_to_currency(total) %></td>
     <td></td>
   </tr>
 </table>

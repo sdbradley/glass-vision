@@ -1,4 +1,4 @@
-set :application, 'set your application name here'
+set :application, 'glass-vision'
 
 set :scm, :git
 set :repo_url, 'git@github.com:snowmoonsoftware/glass-vision.net.git'
@@ -13,8 +13,8 @@ set :group_writable, false
 
 # If you are deploying a rails app you probably need these:
 
-# load 'ext/rails-database-migrations.rb'
-# load 'ext/rails-shared-directories.rb'
+#load 'ext/rails-database-migrations.rb'
+#load 'ext/rails-shared-directories.rb'
 
 # There are also new utility libaries shipped with the core these
 # include the following, please see individual files for more
@@ -64,14 +64,34 @@ set :group_writable, false
 
  end
 
+ desc 'deploy to staging environment'
+ task :staging do
+#   set :bundle_cmd, '. $HOME/.bash_profile && bundle'
+   # The mandatory stuff
+   set :application, 'glass-vision'
+
+   set :user, 'deploy'
+   set :deploy_to, "/home/#{user}/apps/#{application}"
+
+   role :app, 'glass-vision.snowmoonsoftware.com', :primary => true
+   role :web, 'glass-vision.snowmoonsoftware.com', :primary => true
+   role :db, 'glass-vision.snowmoonsoftware.com', :primary => true
+
+ end
+
 namespace :deploy do
 
-task :after_deploy do
-  deploy::site5::fix_permissions
-end
+  after :deploy, :restart_passenger
+  after :setup, :generate_database_config
+  after :after_update_code, :link_database_config
+#  after :fix_permissions, :restart_passenger
+
+#task :after_deploy do
+#  deploy::site5::fix_permissions
+#end
 
 desc 'Create database.yml in shared/config'
-task :after_setup do
+task :generate_database_config do
   database_configuration = ERB.new <<-EOF
 login: &login
   adapter: mysql
@@ -84,6 +104,13 @@ development:
   username: snowmoon_inlined
   password: inln16ed
   <<: *login
+
+staging:
+  database: snowmoon_inlinedev
+  username: snowmoon_inlined
+  password:
+  <<: *login
+
 
 test:
   database: inline_test
@@ -102,32 +129,14 @@ EOF
   put database_configuration.result(binding), "#{deploy_to}/#{shared_dir}/config/database.yml"
 end
 
-desc 'Link in the production database.yml'
-task :after_update_code do
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
-end
-
-
-desc <<-DESC
-  Site5 version of restart task.
-DESC
-task :restart do
-  site5::restart_passenger
-end
-
-namespace :site5 do
-  desc <<-DESC
-    Links public_html to current_release/public
-  DESC
-  task :link_public_html do
-#      run "cd /home/#{user}/clients/www; rm -rf #{application}; ln -s #{current_path}/public ./#{application}"
+  desc 'Link in the production database.yml'
+  task :link_database_config do
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   end
 
-  desc <<-DESC
-    Kills Ruby instances on Site5
-  DESC
+  desc "Kills Ruby instances on Site5"
   task :restart_passenger do
-    run "touch #{current_path}/tmp/restart.txt"
+   run "touch #{current_path}/tmp/restart.txt"
   end
 
   desc 'Ensure files and folders have correct permissions on site5'
@@ -136,12 +145,22 @@ namespace :site5 do
     run "find #{current_path}/public/ -type f -exec chmod 0644 {} \\;"
     run "chmod 0755 #{current_path}/public/dispatch.*"
     run "chmod -R 0755 #{current_path}/script/*"
+  end
+
+  namespace :deploy do
+    desc "Restarting passenger with restart.txt"
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "touch #{current_path}/tmp/restart.txt"
     end
-end
+
+    [:start, :stop].each do |t|
+      desc "#{t} task is a no-op with mod_rails"
+      task t, :roles => :app do ; end
+    end
+  end
+
 end
 
-task :after_deploy do
-deploy::site5::fix_permissions
-end
+
 
 
