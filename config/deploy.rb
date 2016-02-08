@@ -81,11 +81,11 @@ set :group_writable, false
 
 namespace :deploy do
 
-  after :deploy, :fix_permissions
+  after :deploy, :restart_passenger
   after :setup, :generate_database_config
   after :after_update_code, :link_database_config
-  after :fix_permissions, :restart_passenger
-  
+#  after :fix_permissions, :restart_passenger
+
 #task :after_deploy do
 #  deploy::site5::fix_permissions
 #end
@@ -108,7 +108,7 @@ development:
 staging:
   database: snowmoon_inlinedev
   username: snowmoon_inlined
-  password: 
+  password:
   <<: *login
 
 
@@ -145,7 +145,22 @@ end
     run "find #{current_path}/public/ -type f -exec chmod 0644 {} \\;"
     run "chmod 0755 #{current_path}/public/dispatch.*"
     run "chmod -R 0755 #{current_path}/script/*"
+  end
+
+  namespace :deploy do
+    desc "Restarting passenger with restart.txt"
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "touch #{current_path}/tmp/restart.txt"
     end
+
+    [:start, :stop].each do |t|
+      desc "#{t} task is a no-op with mod_rails"
+      task t, :roles => :app do ; end
+    end
+  end
+
 end
+
+
 
 
