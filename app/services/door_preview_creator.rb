@@ -62,8 +62,8 @@ class DoorPreviewCreator
 
       # get the file to be painted
       if door_line_section.door_panel
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg')
-#        src_image = File.join(Rails.root, 'public', 'images', 'door_panels',File.basename(src_image, '.png') + '.svg')
+        src_svg_file_name = File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg'
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', src_svg_file_name)
 
         if door_line_section.door_glass
 
@@ -90,6 +90,12 @@ class DoorPreviewCreator
         end
 
         system("rsvg-convert #{temp_file_name} -o #{temp_bin_file}")
+
+#### DEBUG START - Optimize SVG files.
+#        scoured_file = File.join(File.dirname(temp_file_name), File.basename(src_svg_file_name, '.svg') + '.scoured.svg')
+#        system("/usr/local/scour/scour.py --enable-id-stripping --create-groups -i #{temp_file_name} -o #{scoured_file}")
+#### DEBUG END
+
         section_image = Image.read(temp_bin_file)[0]
 
       else
@@ -118,7 +124,6 @@ class DoorPreviewCreator
 
       cx = (total_width ) * PIXELS_PER_INCH - 1
       cy = (total_height - 1 ) * PIXELS_PER_INCH - PIXELS_PER_INCH
-  #    Rails.logger.debug "\nFrame is #{cx}x#{cy}\n"
 
       # global frame
       frame = Draw.new
