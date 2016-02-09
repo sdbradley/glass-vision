@@ -40,14 +40,14 @@ set :group_writable, false
  desc 'deploy to production'
  task :production do
    # The mandatory stuff
-   set :application, 'inline'
+   set :application, 'glass-vision'
 
-   set :user, 'glass'
+   set :user, 'deploy'
    set :deploy_to, "/home/#{user}/apps/#{application}"
 
-   role :app, 'glass-vision.net', :primary => true
-   role :web, 'glass-vision.net', :primary => true
-   role :db, 'glass-vision.net', :primary => true
+   role :app, 'quotations.glass-vision.net', :primary => true
+   role :web, 'quotations.glass-vision.net', :primary => true
+   role :db, 'quotations.glass-vision.net', :primary => true
  end
 
  desc 'deploy to development environment'
