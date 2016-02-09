@@ -24,7 +24,7 @@ class OptionCategoriesController < ApplicationController
       flash[:notice] = trn_get('MSG_CATEGORY_CREATED')
       redirect_to option_categories_path
     else
-      render :action => 'add'
+      render :action => 'new'
     end
   end
 
@@ -64,7 +64,7 @@ class OptionCategoriesController < ApplicationController
     end
   end
 
-  def destroby
+  def destroy
     @option_category = OptionCategory.find(params[:id])
     @option_category.options.delete_all
     @option_category.destroy

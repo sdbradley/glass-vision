@@ -1,6 +1,6 @@
 <h1><%= trn_gett('TITLE_CREATE_CATEGORY') %></h1>
 
-<%= form_for(@option_category) do %>
+<%= form_for(@option_category) do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
   <%= submit_tag trn_get('BUTTON_ADD') %>
 <% end %>
