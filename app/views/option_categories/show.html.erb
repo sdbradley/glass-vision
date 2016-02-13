@@ -20,19 +20,17 @@
 <% else %>
 	<% option_count = @option_category.options.count %>
 	<p><%= trn_get(option_count == 1 ? 'MSG_OPTION_COUNT' : 'MSG_OPTION_COUNTS') % [option_count] -%> </p>
-<% end %>
 
-<% if @option_category.has_options? %>
-<div style="margin-top:10px;" id="showoptions">
-	<!-- What works better, a simple checklist of unassigned options, or dual list boxes? -->
-	<!-- start by just showing options assigned to this category -->
-	<h3><%= trn_geth('HEADER_OPTIONS') %></h3>
-	<ul>
-	<% for option in @option_category.options %>
-  	<li><%= option.description %></li>
-	<% end %>
-	</ul>
-</div>
+  <div style="margin-top:10px;" id="showoptions">
+    <!-- What works better, a simple checklist of unassigned options, or dual list boxes? -->
+    <!-- start by just showing options assigned to this category -->
+    <h3><%= trn_geth('HEADER_OPTIONS') %></h3>
+    <ul>
+    <% @option_category.options.each do |option| %>
+      <li><%= option.description %></li>
+    <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <%= link_to	trn_get('BUTTON_EDIT_OPTIONS'), edit_options_option_category_path(@option_category) %> |
