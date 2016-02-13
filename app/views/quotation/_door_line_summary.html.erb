@@ -49,14 +49,15 @@
           <tr>
             <td valign="top"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
             <td>
-              <%= section.door_section.name %>,
+              <%= trn_geth('HEADER_DOOR_SECTION') %><%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_section.name %>,
               <% if section.door_panel %>
-                  <%= section.door_panel.name %>,
+                  <%= trn_geth('HEADER_DOOR_PANEL') %><%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_panel.name %>,
               <% end %>
               <% if section.door_glass %>
-                  <%= section.door_glass.door_glass_family.name %> / <%= section.door_glass.name %>,
+                  <%= trn_geth('HEADER_DOOR_GLASS') %><%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_glass.door_glass_family.name %> / <%= section.door_glass.name %>,
               <% end %>
-              <%= section.door_panel_dimension.width %>"
+              <%= trn_geth('HEADER_DOOR_PANEL_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_panel_dimension.try(:height) %>" x
+              <%= trn_geth('HEADER_DOOR_PANEL_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_panel_dimension.try(:width) %>"
             </td>
           </tr>
       <% end %>
