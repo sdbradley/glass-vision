@@ -2,12 +2,12 @@
 
 <table>
 <!--[form:option_category]-->
-<%= gv_fields_for(f, :name, 'LABEL_NAME', {:size => 75}) %>
-<%= gv_fields_for(f, :description, 'HEADER_DESCRIPTION', {:size => 75}) %>
+  <%= gv_fields_for(f, :name, 'LABEL_NAME', {:size => 75}) %>
+  <%= gv_fields_for(f, :description, 'HEADER_DESCRIPTION', {:size => 75}) %>
 
   <tr valign='top'>
     <td align='right'></td>
-    <td>  <%= f.check_box 'multiselect'  %>
+    <td> <%= f.check_box 'multiselect'  %>
       <label for="option_category_multiselect"><%= trn_get('LABEL_ALLOW_MULTISELECT_OPTIONS') %></label>
     </td>
   </tr>

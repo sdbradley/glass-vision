@@ -26,8 +26,10 @@ GlassVision::Application.routes.draw do
   resources :customers
   resources :options
   resources :option_categories do
-    get :edit_options
-    post :update_options
+    member do
+      get :edit_options
+      put :update_options
+    end
   end
   resources :pricing_methods
 
