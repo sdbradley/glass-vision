@@ -1,12 +1,16 @@
 .reporttitle {
 	font-family: "Times New Roman", "Courier New", "Georgia";
-	text-align: center; 
+	text-align: center;
 	font-size: 36px;
-	color: #CCCCCC; 
+	color: #CCCCCC;
 	margin-bottom: 0pt;
 //	letter-spacing: -1.5em;
 	}
 
+table.door-line-details td:first-child {
+	white-space: nowrap;
+    font-size: small;
+}
 /*
 table, tr, td, th, tbody, thead, tfoot {
     page-break-inside: avoid !important;
