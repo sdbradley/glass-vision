@@ -35,5 +35,5 @@ production:
   database: glass_inlineproduction
   pool: 5
   username: root
-  password: t9ohqa
+  #password: t9ohqa
   host: 127.0.0.1
