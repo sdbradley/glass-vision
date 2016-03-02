@@ -64,8 +64,7 @@
     </table>
 
   </td>
-  <td width="10%" align="right"><%= number_to_currency(dl_price) %></td>
-  <td width="10%" align="center"><%= dl.quantity %></td>
+  <td width="10%" align="right"><%= number_to_currency(dl_price) %> x <%= dl.quantity %></td>
   <td width="10%" align="right"><%= number_to_currency(dl_price * dl.quantity) %></td>
 </tr>
 <tr valign="top"  >
@@ -82,6 +81,5 @@
     <% end %>
 
   </td>
-  <td  style="border-bottom: 2px solid #cccccc;">&nbsp;</td>
 </tr>
 </table>
