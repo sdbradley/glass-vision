@@ -50,12 +50,12 @@ class Quotation < ActiveRecord::Base
     quotation
   end
 
-  def regenerate_previews
+  def regenerate_previews(base_url)
     quotation_lines.each do |line|
       line.create_image
     end
     door_lines.each do |line|
-      line.create_image
+      line.create_image(base_url)
     end
   end
 

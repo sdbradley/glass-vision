@@ -114,7 +114,8 @@ class QuotationController < ApplicationController
     end
     @quotation = Quotation.copy(@orig_quotation)
     @quotation.save!
-    @quotation.regenerate_previews
+    application_url = "#{request.protocol}#{request.host_with_port}"
+    @quotation.regenerate_previews(application_url)
     flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     redirect_to quotation_path(@quotation.slug)
   end
