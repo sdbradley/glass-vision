@@ -89,18 +89,18 @@ $(window).load(function () {
     //////
     $('table.' + splitClassName).each(function () {
         var $origin_table = $(this);
-        var x_pos = $origin_table.position().left;    // was top jdp 07MAR2016
+        var x_pos = $origin_table.position().top;
 //console.log("splitForPrint running: x_pos " + x_pos);
 
-        var $template = $origin_table.clone();
+        var $template = $origin_table.clone()
         var $orig_table = $origin_table.clone();
 
         $template.find('> tbody > tr').remove();
         $template.find('> tfoot > tr').remove();
 
-        var current_table = 0;
-        var split_tables = [];
-        split_tables.push($origin_table);
+        var current_table = 0
+        var split_tables = Array()
+        split_tables.push($origin_table)
 
 
         // see how many rows we can fit into the original table
