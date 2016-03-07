@@ -70,6 +70,14 @@ class Quotation < ActiveRecord::Base
     return base_slug + last.to_s
   end
 
+  def has_manual_lines?
+    manual_lines.length > 0
+  end
+
+  def has_options?
+    options_quotations.length > 0
+  end
+
   private
   def self.get_base_slug(slug)
     # we have to handle the following cases:
