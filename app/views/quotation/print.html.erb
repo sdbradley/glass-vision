@@ -32,7 +32,7 @@
 
   <!-- portes -->
   <% for dl in @quotation.door_lines.order('position asc') %>
-      <% dl_price = dl.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
+      <% dl_price = dl.compute_final_price %>
       <tr>
         <td colspan="5">
             <%= render :partial => 'door_line_summary', :locals => {:dl => dl, :dl_price => dl_price}  %>
