@@ -46,6 +46,7 @@ class DoorLine < ActiveRecord::Base
       self.price += door_line_option.price
     end
 
+    self.original_price = self.price
     self.save
   end
 
@@ -99,11 +100,11 @@ class DoorLine < ActiveRecord::Base
   end
 
   def compute_final_price
-    if self.price == self.original_price
-      self.price * (1 - self.quotation.discount / 100.0) * (1 + self.quotation.markup / 100.0)
-    else
+    if has_price_override?
       # if the price has been overridden do not apply the discount
       self.price * (1 + self.quotation.markup / 100.0)
+    else
+      self.price * (1 - self.quotation.discount / 100.0) * (1 + self.quotation.markup / 100.0)
     end
   end
 
