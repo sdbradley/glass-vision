@@ -152,7 +152,7 @@
     <%= render :partial => 'door_line', :locals => { :door => door, :door_price => door_price, :quotation => @quotation  } %>
   <% end %>
   <% @quotation.options_quotations.each do |line| %>
-    <% line_price = line.unit_price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+    <% line_price = line.compute_final_price %>
     <% total += line.quantity * line_price %>
     <%= render :partial => 'option', :locals => { :line => line, :line_price => line_price, :quotation => @quotation } %>
   <% end %>

@@ -58,7 +58,7 @@
       <td colspan="2" style="border-bottom: 2px solid #cccccc;">
         <%= show_option option.option %>
       </td>
-      <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+      <% option_price = option.compute_final_price %>
       <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price %></td>
       <td width="10%" align="center" style="border-bottom: 2px solid #cccccc;"><%= option.quantity %></td>
       <td width="10%" align="right" style="border-bottom: 2px solid #cccccc;"><%= number_to_currency option_price * option.quantity %></td>
