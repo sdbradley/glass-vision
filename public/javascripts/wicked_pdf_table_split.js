@@ -92,15 +92,15 @@ $(window).load(function () {
         var x_pos = $origin_table.position().top;
 //console.log("splitForPrint running: x_pos " + x_pos);
 
-        var $template = $origin_table.clone()
+        var $template = $origin_table.clone();
         var $orig_table = $origin_table.clone();
 
         $template.find('> tbody > tr').remove();
         $template.find('> tfoot > tr').remove();
 
-        var current_table = 0
-        var split_tables = Array()
-        split_tables.push($origin_table)
+        var current_table = 0;
+        var split_tables = [];
+        split_tables.push($origin_table);
 
 
         // see how many rows we can fit into the original table
@@ -113,7 +113,6 @@ $(window).load(function () {
 
         $orig_table.find('> tbody > tr').each(function () {
             var $tr = $(this);
-
             // move row to new table
             $tr.detach().appendTo(split_tables[current_table].find('> tbody'));
 
@@ -121,9 +120,9 @@ $(window).load(function () {
             if ($(split_tables[current_table]).height() + x_pos > (pageHeight - splitThreshold)) {
 //console.log("splitting table at "  + ($(split_tables[current_table]).height() + x_pos));
 
-                current_table++
-                split_tables.push($template.clone())
-                insertIntoDom($origin_table, split_tables[current_table])
+                current_table++;
+                split_tables.push($template.clone());
+                insertIntoDom($origin_table, split_tables[current_table]);
                 // move row to new table
                 $tr.detach().appendTo(split_tables[current_table].find('> tbody'));
                 x_pos = 0;
@@ -132,19 +131,19 @@ $(window).load(function () {
         });
 
         //table footer
-        var $tfoot = $orig_table.find('> tfoot')
+        var $tfoot = $orig_table.find('> tfoot');
 
         var last_table_height = $(split_tables[current_table]).height();// + $(split_tables[current_table]).position().top;
         if (last_table_height + $tfoot.height() > (pageHeight - splitThreshold)) {
-            current_table++
-            split_tables.push($template.clone())
-            insertIntoDom($origin_table, split_tables[current_table])
+            current_table++;
+            split_tables.push($template.clone());
+            insertIntoDom($origin_table, split_tables[current_table]);
             alert('made new table for footer')
         }
-        $tfoot.detach().appendTo($(split_tables[current_table]))
+        $tfoot.detach().appendTo($(split_tables[current_table]));
 //        $origin_table.remove()
 
-        $('div.page-breaker').last().remove()
+        $('div.page-breaker').last().remove();
     });
 
     function insertIntoDom(after, what) {
