@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: door_line_options
+#
+#  id           :integer          not null, primary key
+#  door_line_id :integer
+#  option_id    :integer
+#  quantity     :float
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
 class DoorLineOption < ActiveRecord::Base
   belongs_to :door_line
   belongs_to :option

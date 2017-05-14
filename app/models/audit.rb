@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: audits
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  action     :string(255)
+#  result     :string(255)
+#  reason     :string(255)
+#  created_at :datetime
+#
+
 class Audit < ActiveRecord::Base
 
   belongs_to :user
