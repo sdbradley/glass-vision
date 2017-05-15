@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: roles
+#
+#  id       :integer          not null, primary key
+#  rolename :string(255)
+#
+
 class Role < ActiveRecord::Base
   has_many :permissions
   has_many :users, :through => :permissions

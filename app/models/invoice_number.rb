@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: invoice_numbers
+#
+#  id             :integer          not null, primary key
+#  year           :integer
+#  invoice_number :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class InvoiceNumber < ActiveRecord::Base
   DEFAULT_INVOICE_NUMBER = 101
 

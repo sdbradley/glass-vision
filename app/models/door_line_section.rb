@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: door_line_sections
+#
+#  id                      :integer          not null, primary key
+#  door_line_id            :integer
+#  sort_order              :integer
+#  door_section_id         :integer
+#  door_panel_id           :integer
+#  door_glass_id           :integer
+#  created_at              :datetime
+#  updated_at              :datetime
+#  door_panel_dimension_id :integer
+#
+
 class DoorLineSection < ActiveRecord::Base
   belongs_to :door_line
   belongs_to :door_section

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150829170102) do
+ActiveRecord::Schema.define(:version => 20170514224057) do
 
   create_table "audits", :force => true do |t|
     t.integer  "user_id"
@@ -516,8 +517,8 @@ ActiveRecord::Schema.define(:version => 20150829170102) do
     t.string   "locale",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "comments"
     t.string   "description"
+    t.string   "comments"
   end
 
   add_index "pricing_method_translations", ["locale"], :name => "index_pricing_method_translations_on_locale"
@@ -596,6 +597,8 @@ ActiveRecord::Schema.define(:version => 20150829170102) do
     t.float    "deposit"
     t.float    "taxes_pst"
     t.string   "slug"
+    t.string   "contact"
+    t.string   "cell_phone"
   end
 
   add_index "quotations", ["slug"], :name => "quotations_slug_index", :unique => true
@@ -637,9 +640,9 @@ ActiveRecord::Schema.define(:version => 20150829170102) do
     t.string   "locale",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "comments"
-    t.string   "name"
     t.string   "description"
+    t.string   "name"
+    t.string   "comments"
   end
 
   add_index "series_translations", ["locale"], :name => "index_series_translations_on_locale"

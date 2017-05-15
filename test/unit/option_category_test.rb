@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: option_categories
+#
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  description   :string(255)
+#  display_order :integer
+#  multiselect   :boolean
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class OptionCategoryTest < Test::Unit::TestCase
