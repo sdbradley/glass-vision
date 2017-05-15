@@ -33,6 +33,16 @@
               <%= @quotation.customer_fax %>
               <br />
           <% end %>
+          <% if @quotation.contact.present? %>
+              <%= trn_geth('PRINT_LABEL_QUOTATION_CONTACT') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= @quotation.contact %>
+              <br />
+          <% end %>
+          <% if @quotation.cell_phone.present? %>
+              <%= trn_geth('PRINT_LABEL_QUOTATION_CELLPHONE') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= @quotation.cell_phone %>
+              <br />
+          <% end %>
         </td>
       </tr>
     </table>

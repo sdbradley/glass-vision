@@ -7,6 +7,8 @@ class AddContactInfoToQuotation < ActiveRecord::Migration
     #    Translation.create(:translation_key =>'', :en =>'', :fr => '', :es =>'')
     Translation.create(:translation_key =>'LABEL_QUOTATION_CONTACT', :en =>'Contact', :fr => 'Contact', :es =>'Contacto')
     Translation.create(:translation_key =>'LABEL_QUOTATION_CELLPHONE', :en =>'Cell Phone', :fr => 'Téléphone cellulaire', :es =>'Teléfono móvil')
+    Translation.create(:translation_key =>'PRINT_LABEL_QUOTATION_CONTACT', :en =>'Contact', :fr => 'Contact', :es =>'Contacto')
+    Translation.create(:translation_key =>'PRINT_LABEL_QUOTATION_CELLPHONE', :en =>'Cell Phone', :fr => 'Téléphone cellulaire', :es =>'Teléfono móvil')
 
 
   end
@@ -17,6 +19,7 @@ class AddContactInfoToQuotation < ActiveRecord::Migration
 
     Translation.find_by_translation_key('LABEL_QUOTATION_CONTACT').destroy
     Translation.find_by_translation_key('LABEL_QUOTATION_CELLPHONE').destroy
-
+    Translation.find_by_translation_key('PRINT_LABEL_QUOTATION_CONTACT').destroy
+    Translation.find_by_translation_key('PRINT_LABEL_QUOTATION_CELLPHONE').destroy
   end
 end
