@@ -12,8 +12,8 @@ class QuotationLineParameters
   def initialize(quotation_line)
     @total_width = 0
     @total_height = 0
-    @real_height = 0
-    @real_width = 0
+    @real_height = {}
+    @real_width = {}
     @upper_transom_index = nil
     @lower_transom_index = nil
     @left_sidelight_index = nil
@@ -64,6 +64,16 @@ class QuotationLineParameters
 
     @total_height = @quotation_line.height
     @total_width = @quotation_line.width
+
+    @real_height = {}
+    1.upto(shape.sections_height) do |l|
+      @real_height[l] = @section_height[l.to_s].to_f
+    end
+
+    @real_width = {}
+    1.upto(shape.sections_width) do |l|
+      @real_width[l] = @line_infosection_width[l.to_s].to_f
+    end
 
     self
   end
