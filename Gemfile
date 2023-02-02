@@ -25,4 +25,5 @@ group(:development) do
   gem 'capistrano' #, '~> 2.5.8', :require => false
   gem 'rvm-capistrano', :require => false
   gem 'annotate'
+  gem 'pry-rails'
 end

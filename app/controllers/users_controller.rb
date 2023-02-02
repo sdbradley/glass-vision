@@ -83,7 +83,7 @@ protected
   end 
 private
   def permitted_params
-    params.permit(:user, :id, :user_id, :module_type)
+    params.permit(user: [:login, :email, :password, :passwprd_confirmation]) #, :id, :user_id, :module_type)
   end
 end
 
