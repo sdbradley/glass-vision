@@ -1,5 +1,5 @@
 class DatabaseTranslationFieldController < ApplicationController
-  before_filter :check_administrator_role
+  before_action :check_administrator_role
 
   def list
     @dbtfs = DatabaseTranslationField.all(:order => 'translation_table_name, translation_field_name')

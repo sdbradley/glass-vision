@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
 
-  sortable_attributes  :name, :email
+  #sortable_attributes  :name, :email
   SEARCH_FIELDS = %w(search_name search_address search_email)
 
   def index
@@ -13,8 +13,8 @@ class CustomersController < ApplicationController
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :index }
+  # verify :method => :post, :only => [ :destroy, :create, :update ],
+  #        :redirect_to => { :action => :index }
 
 
   def show

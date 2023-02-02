@@ -1,5 +1,5 @@
 class OptionsController < ApplicationController
-    before_filter :check_administrator_role
+    before_action :check_administrator_role
 
   def index
     @module_type = ModuleType.find(params[:mt] || 1)

@@ -28,11 +28,13 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :companies
   has_and_belongs_to_many :module_types
 
-  scope :enabled, where(:enabled => true)
+  scope :enabled, -> {
+    where(:enabled => true)
+  }
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :discount
+  #attr_accessible :login, :email, :password, :password_confirmation, :discount
 
 
   class ActivationCodeNotFound < StandardError; end

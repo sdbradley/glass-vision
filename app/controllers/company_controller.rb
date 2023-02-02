@@ -1,5 +1,5 @@
 class CompanyController < ApplicationController
-  before_filter :check_administrator_role
+  before_action :check_administrator_role
 
   def list
     @companies = Company.all(:order => 'name')

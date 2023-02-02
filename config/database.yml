@@ -12,7 +12,7 @@ development:
   database: inline_development
   pool: 5
   username: root
-  password: t9ohqa
+  #password: t9ohqa
 #  host: snowmoon
 
 # Warning: The database defined as "test" will be erased and
@@ -25,7 +25,7 @@ test:
   database: inline_test
   pool: 5
   username: root
-  password: t9ohqa
+  #password: t9ohqa
   host: 127.0.0.1
 
 production:

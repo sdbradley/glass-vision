@@ -2,8 +2,8 @@ require 'retryable'
 class QuotationController < ApplicationController
   autocomplete :customer, :name, :full => true, :extra_data => [:address, :phone, :fax, :email]
 
-  before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
-  sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
+  before_action :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
+  #sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
 
   SEARCH_FIELDS = %w(search_description search_slug)
 
