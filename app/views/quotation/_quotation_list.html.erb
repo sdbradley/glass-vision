@@ -2,23 +2,27 @@
 
 <table cellspacing="0" style="width:100%;">
   <thead class="header">
-  <%= sortable_table_header :name => trn_geth('HEADER_NUMBER'),  :sort => "slug", :page => params[:page] %>
-  <%= sortable_table_header :name => trn_geth('HEADER_DATE_MODIFIED'),  :sort => "updated_at", :page => params[:page] %>
-  <%= sortable_table_header :name => trn_geth('HEADER_DESCRIPTION'),  :sort => "description", :page => params[:page] %>
-  <%= sortable_table_header :name => trn_geth('HEADER_CREATED_BY'),  :sort => "created_by", :page => params[:page] if @current_user.has_role?('administrator') %>
-  <%= sortable_table_header :name => trn_geth('LABEL_CONSULTANT') ,  :sort => "consultant", :page => params[:page] if @current_user.has_role?('administrator')%>
+  <th><%= trn_geth('HEADER_NUMBER') %></th>
+  <th><%= trn_geth('HEADER_DATE_MODIFIED') %></th>
+  <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+  <th><%= trn_geth('HEADER_CREATED_BY') %></th>
+  <th><%= trn_geth('LABEL_CONSULTANT') %></th>
   <th></th>
   </thead>
   <tbody>
+
+  <!--
   <tr>
-    <td><%= text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
+    <td>< text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
     <td></td>
-    <td><%= text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
+    <td>< text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
     <td></td>
     <td></td>
-    <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
+    <td>< image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
     </td>
   </tr>
+  -->
+  
   <% @quotations.each do |quotation| %>
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= quotation.slug %></td>

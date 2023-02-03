@@ -1,4 +1,4 @@
-require 'retryable'
+#require 'retryable'
 class QuotationController < ApplicationController
   autocomplete :customer, :name, :full => true, :extra_data => [:address, :phone, :fax, :email]
 
@@ -13,7 +13,7 @@ class QuotationController < ApplicationController
     conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
     search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
 
-    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || 'updated_at DESC')
+    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25)#.order(sort_order || 'updated_at DESC')
   end
 
   def show
@@ -26,7 +26,7 @@ class QuotationController < ApplicationController
   def new
     @quotation = Quotation.new
     @quotation.discount = @current_user.discount
-    @users = User.find_all_by_enabled(true)
+    @users = User.enabled
   end
 
   def create
@@ -54,7 +54,7 @@ class QuotationController < ApplicationController
 
   def edit
     @quotation = Quotation.find_by_slug(params[:id])
-    @users = User.find_all_by_enabled(true)
+    @users = User.enabled
   end
 
   def update
