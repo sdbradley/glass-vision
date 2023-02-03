@@ -32,7 +32,7 @@ class QuotationController < ApplicationController
   def create
     set_taxes_if_not_present()
 
-    @quotation = Quotation.new(params[:quotation])
+    @quotation = Quotation.new(quote_params[:quotation])
     @quotation.user_id = @current_user.id
     customer_msg = ''
     if Customer.create_from_quotation_if_new(@quotation)
@@ -163,6 +163,15 @@ class QuotationController < ApplicationController
     else
       super(parameters).where(:user_id => @current_user.id)
     end
+  end
+
+  private
+
+  def quote_params
+    params.permit(
+      customer: [:name, :address, :phone, :fax, :email],
+      quotation: [:description, :comments, :project_name, :customer_name, :customer_address, :delivery_address, :customer_phone, :customer_fax, :customer_email, :contact, :cell_phone, :notes, :transport, :discount, :markup, :taxes, :taxes_pst, :deposit, :ready_to_sign, :company_id, :consultant]
+    ).to_h.symbolize_keys
   end
 
 end
