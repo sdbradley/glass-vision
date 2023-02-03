@@ -19,6 +19,7 @@ gem 'rails3-jquery-autocomplete' #, '1.0.10'
 gem 'jquery-migrate-rails'
 gem 'rails-i18n'
 gem 'globalize' #, '3.0.4'
+gem 'stimulus-rails'
 
 group(:development) do
   gem 'yard'
