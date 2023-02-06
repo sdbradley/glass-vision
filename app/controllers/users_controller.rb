@@ -20,7 +20,7 @@ class UsersController < ApplicationController
  
   def create
     cookies.delete :auth_token
-    @user = User.new(permitted_params[:user])
+    @user = User.new(user_params[:user])
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
@@ -37,12 +37,12 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user = User.find(permitted_params[:id])
-    if @user.update_attributes(permitted_params[:user])
+    @user = User.find(user_params[:id])
+    if @user.update_attributes(user_params[:user])
 
       # saving access to modules
       @user.module_types.clear
-      permitted_params[:module_type].each do |mt_id, active|
+      user_params[:module_type].each do |mt_id, active|
         @user.module_types << ModuleType.find(mt_id) if active.to_i == 1
       end
 
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   end
   
   def disable
-    @user = User.find(permitted_params[:user_id])
+    @user = User.find(user_params[:user_id])
     if @user.update_attribute(:enabled, false)
       flash[:notice] = trn_get('USER_DISABLED_FLASH')
     else
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   end
  
   def enable
-    @user = User.find(permitted_params[:user_id])
+    @user = User.find(user_params[:user_id])
     if @user.update_attribute(:enabled, true)
       flash[:notice] = trn_get('USER_ENABLED_FLASH')
     else
@@ -76,14 +76,14 @@ class UsersController < ApplicationController
 protected
   def get_user_for_edit
     if current_user.has_role?('administrator')
-      @user = User.find(permitted_params[:id])
+      @user = User.find(user_params[:id])
     else
       @user = current_user # unless current_user.has_role?('administrator')
     end
   end 
 private
-  def permitted_params
-    params.permit(user: [:login, :email, :password, :password_confirmation]) #, :id, :user_id, :module_type)
+  def user_params
+    params.permit(:id, :user_id, :module_type, user: [:login, :email, :password, :password_confirmation]).to_h.symbolize_keys
   end
 end
 
