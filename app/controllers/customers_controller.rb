@@ -40,6 +40,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params[:customer])
+    @customer.user = @current_user unless @customer.nil?
     if @customer.save
       flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to customers_path
