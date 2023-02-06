@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   end
   
   def disable
-    @user = User.find(user_params[:user_id])
+    @user = User.find(user_params[:id])
     if @user.update_attribute(:enabled, false)
       flash[:notice] = trn_get('USER_DISABLED_FLASH')
     else
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   end
  
   def enable
-    @user = User.find(user_params[:user_id])
+    @user = User.find(user_params[:id])
     if @user.update_attribute(:enabled, true)
       flash[:notice] = trn_get('USER_ENABLED_FLASH')
     else
