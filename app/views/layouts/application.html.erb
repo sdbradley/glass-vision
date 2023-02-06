@@ -22,24 +22,14 @@
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 
   <%= stylesheet_link_tag 'application', 'jquery-ui', 'ui-lightness/jquery-ui-1.10.3.custom.css', 'formtastic', 'formtastic_changes', 'colorpicker', 'door_lines', 'pagination' %>
-
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag 'colorpicker', 'hover-popup', 'door_lines', 'jquery-migrate-min', 'autocomplete-rails' %>
+  
+  <!-- javascript_include_tag 'colorpicker', 'hover-popup', 'door_lines', 'jquery-migrate-min', 'autocomplete-rails' -->
+  
   <%= csrf_meta_tag %>
 
   <script type="text/javascript" charset="utf-8">
 
-      jQuery(document).ready(function($) {
-          // put all your jQuery goodness in here.
-          $("img.popup").thumbPopup({
-              imgSmallFlag: "thumb",
-              imgLargeFlag: "original"
-          });
-
-          <%= yield :extra_javascript %>
-
-      });
-
+      <%= yield :extra_javascript %>
 
   </script>
 
