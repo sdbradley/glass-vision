@@ -3,7 +3,7 @@
 </h2>
 
 <%= form_for(@email) do |f| %>
-  <%= f.error_messages %>
+  <%= flash[:error] %>
 
   <p>
     <%= f.label trn_get('LABEL_SUBJECT') + trn_get('LABEL_SEMICOLON') %><br />

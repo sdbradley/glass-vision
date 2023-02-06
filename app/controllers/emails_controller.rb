@@ -40,7 +40,7 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.xml
   def create
-    @email = Email.new(params[:email])
+    @email = Email.new(email_params[:email])
     UserMailer.email(@current_user, @email).deliver
     flash[:notice] = 'Email was successfully sent.'
     redirect_to :controller => "home", :action => "index"
@@ -82,5 +82,16 @@ class EmailsController < ApplicationController
       format.html { redirect_to(emails_url) }
       format.xml  { head :ok }
     end
+  end
+
+private
+  # def email
+  #   @email ||= Email.new(email_params[:email])
+  # end
+
+  def email_params
+    params.permit(
+      email: [:subject, :body]
+    ).to_h.symbolize_keys
   end
 end
