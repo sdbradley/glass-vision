@@ -1,8 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 include TranslationGet
 module ApplicationHelper
-  include SortableTable::App::Helpers::ApplicationHelper
-  include WickedPdfHelper
+  #include SortableTable
+  #include WickedPdfHelper
 
 
   def display_minimum_dimensions(dimension)

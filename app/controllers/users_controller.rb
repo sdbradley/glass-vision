@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   layout 'application'
-  before_filter :not_logged_in_required, :only => [:new, :create] 
-  before_filter :login_required, :only => [:show, :edit, :update]
-  before_filter :check_administrator_role, :only => [:index, :destroy, :enable]
+  before_action :not_logged_in_required, :only => [:new, :create] 
+  before_action :login_required, :only => [:show, :edit, :update]
+  before_action :check_administrator_role, :only => [:index, :destroy, :enable]
   
   def index
     @users = User.all()
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
  
   def create
     cookies.delete :auth_token
-    @user = User.new(params[:user])
+    @user = User.new(permitted_params[:user])
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
@@ -37,12 +37,12 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    @user = User.find(permitted_params[:id])
+    if @user.update_attributes(permitted_params[:user])
 
       # saving access to modules
       @user.module_types.clear
-      params[:module_type].each do |mt_id, active|
+      permitted_params[:module_type].each do |mt_id, active|
         @user.module_types << ModuleType.find(mt_id) if active.to_i == 1
       end
 
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   end
   
   def disable
-    @user = User.find(params[:user_id])
+    @user = User.find(permitted_params[:user_id])
     if @user.update_attribute(:enabled, false)
       flash[:notice] = trn_get('USER_DISABLED_FLASH')
     else
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   end
  
   def enable
-    @user = User.find(params[:user_id])
+    @user = User.find(permitted_params[:user_id])
     if @user.update_attribute(:enabled, true)
       flash[:notice] = trn_get('USER_ENABLED_FLASH')
     else
@@ -76,10 +76,14 @@ class UsersController < ApplicationController
 protected
   def get_user_for_edit
     if current_user.has_role?('administrator')
-      @user = User.find(params[:id])
+      @user = User.find(permitted_params[:id])
     else
       @user = current_user # unless current_user.has_role?('administrator')
     end
   end 
+private
+  def permitted_params
+    params.permit(user: [:login, :email, :password, :password_confirmation]) #, :id, :user_id, :module_type)
+  end
 end
 

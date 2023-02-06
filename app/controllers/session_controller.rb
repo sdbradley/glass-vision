@@ -1,7 +1,7 @@
  class SessionController < ApplicationController
    layout 'application'
-   before_filter :login_required, :only => :destroy
-   before_filter :not_logged_in_required, :only => [:new, :create]
+   before_action :login_required, :only => :destroy
+   before_action :not_logged_in_required, :only => [:new, :create]
    
    # for some reason, setting language after login failure routes to show
    def show

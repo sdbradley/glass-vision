@@ -1,9 +1,9 @@
-require 'retryable'
+#require 'retryable'
 class QuotationController < ApplicationController
   autocomplete :customer, :name, :full => true, :extra_data => [:address, :phone, :fax, :email]
 
-  before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
-  sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
+  before_action :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
+  #sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
 
   SEARCH_FIELDS = %w(search_description search_slug)
 
@@ -13,7 +13,7 @@ class QuotationController < ApplicationController
     conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
     search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
 
-    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || 'updated_at DESC')
+    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25)#.order(sort_order || 'updated_at DESC')
   end
 
   def show
@@ -26,13 +26,13 @@ class QuotationController < ApplicationController
   def new
     @quotation = Quotation.new
     @quotation.discount = @current_user.discount
-    @users = User.find_all_by_enabled(true)
+    @users = User.enabled
   end
 
   def create
     set_taxes_if_not_present()
 
-    @quotation = Quotation.new(params[:quotation])
+    @quotation = Quotation.new(quote_params[:quotation])
     @quotation.user_id = @current_user.id
     customer_msg = ''
     if Customer.create_from_quotation_if_new(@quotation)
@@ -54,7 +54,7 @@ class QuotationController < ApplicationController
 
   def edit
     @quotation = Quotation.find_by_slug(params[:id])
-    @users = User.find_all_by_enabled(true)
+    @users = User.enabled
   end
 
   def update
@@ -163,6 +163,15 @@ class QuotationController < ApplicationController
     else
       super(parameters).where(:user_id => @current_user.id)
     end
+  end
+
+  private
+
+  def quote_params
+    params.permit(
+      customer: [:name, :address, :phone, :fax, :email],
+      quotation: [:description, :comments, :project_name, :customer_name, :customer_address, :delivery_address, :customer_phone, :customer_fax, :customer_email, :contact, :cell_phone, :notes, :transport, :discount, :markup, :taxes, :taxes_pst, :deposit, :ready_to_sign, :company_id, :consultant]
+    ).to_h.symbolize_keys
   end
 
 end

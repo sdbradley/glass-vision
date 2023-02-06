@@ -1,7 +1,7 @@
 class PasswordsController < ApplicationController
   layout 'application'
-  skip_before_filter :login_required, :only => [:new, :create, :edit, :update]
-  before_filter :not_logged_in_required, :only => [:new, :create]
+  skip_before_action :login_required, :only => [:new, :create, :edit, :update]
+  before_action :not_logged_in_required, :only => [:new, :create]
   
   # Enter email address to recover password 
   def new

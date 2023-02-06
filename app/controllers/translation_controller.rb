@@ -1,5 +1,5 @@
 class TranslationController < ApplicationController
-  before_filter :check_administrator_role
+  before_action :check_administrator_role
   
   def list
     @translations = Translation.all(:order => "translation_key")

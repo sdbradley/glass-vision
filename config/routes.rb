@@ -3,14 +3,14 @@ GlassVision::Application.routes.draw do
   get "audit/index"
 
   resources :emails
-  match '/signup', :to => 'users#new', :as => :signup
-  match '/login', :to => 'session#new', :as => :login
-  match '/logout', :to => 'session#destroy', :as => :logout
-  match '/activate/:id', :to => 'accounts#show', :as => :activate
-  match '/forgot_password', :to => 'passwords#new', :as => :forgot_password
-  match '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
-  match '/change_password', :to => 'accounts#edit', :as => :change_password
-  match '/customers/search', :to => 'customers#search', :as => :search_customer, :method => :post
+  get '/signup', :to => 'users#new', :as => :signup
+  get '/login', :to => 'session#new', :as => :login
+  post '/logout', :to => 'session#destroy', :as => :logout
+  get '/activate/:id', :to => 'accounts#show', :as => :activate
+  get '/forgot_password', :to => 'passwords#new', :as => :forgot_password
+  get '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
+  get '/change_password', :to => 'accounts#edit', :as => :change_password
+  get '/customers/search', :to => 'customers#search', :as => :search_customer
 
   resources :users do
     post :enable
@@ -78,6 +78,6 @@ GlassVision::Application.routes.draw do
   end
   root :to => 'home#index'
 
-  match '/:controller(/:action(/:id))'
+  match '/:controller(/:action(/:id))', via: [:get, :post]
 end
 

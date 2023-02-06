@@ -1,5 +1,5 @@
 class OpeningsController < ApplicationController
-  before_filter :check_administrator_role
+  before_action :check_administrator_role
 
   def index
     @openings = Opening.all(:order => 'name')

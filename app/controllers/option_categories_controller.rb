@@ -1,5 +1,5 @@
 class OptionCategoriesController < ApplicationController
-  before_filter :check_administrator_role
+  before_action :check_administrator_role
 
   def index
     @option_categories = OptionCategory.order('option_categories.display_order, option_categories.name').paginate(:page => params[:page], :per_page => 25)

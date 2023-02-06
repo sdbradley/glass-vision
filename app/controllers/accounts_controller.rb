@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
   layout 'application'
-  before_filter :login_required, :except => :show
-  before_filter :not_logged_in_required, :only => :show
+  before_action :login_required, :except => :show
+  before_action :not_logged_in_required, :only => :show
  
   # Activate action
   def show

@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
 
-  sortable_attributes  :name, :email
+  #sortable_attributes  :name, :email
   SEARCH_FIELDS = %w(search_name search_address search_email)
 
   def index
@@ -9,12 +9,12 @@ class CustomersController < ApplicationController
     conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
     search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
 
-    @customers = Customer.where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order(:default => 'ascending'))
+    @customers = Customer.where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25)#.order(sort_order: :asc)
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :index }
+  # verify :method => :post, :only => [ :destroy, :create, :update ],
+  #        :redirect_to => { :action => :index }
 
 
   def show
@@ -39,7 +39,7 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(params[:customer])
+    @customer = Customer.new(customer_params[:customer])
     if @customer.save
       flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to customers_path
@@ -49,12 +49,12 @@ class CustomersController < ApplicationController
   end
 
   def edit
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find(update_params[:id])
   end
 
   def update
-    @customer = Customer.find(params[:id])
-    if @customer.update_attributes(params[:customer])
+    @customer = Customer.find(update_params[:id])
+    if @customer.update!(customer_params[:customer])
       flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to customer_path(@customer)
     else
@@ -63,7 +63,7 @@ class CustomersController < ApplicationController
   end
 
   def destroy
-    Customer.find(params[:id]).destroy
+    Customer.find(update_params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_CUSTOMER') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to customers_path
   end
@@ -91,5 +91,14 @@ class CustomersController < ApplicationController
     end
   end
 
+  private
+
+  def customer_params
+    params.permit(customer: [:name, :address, :phone, :fax, :email]).to_h.symbolize_keys
+  end
+
+  def update_params
+    params.permit(%i(id)).to_h.symbolize_keys
+  end
 
 end
