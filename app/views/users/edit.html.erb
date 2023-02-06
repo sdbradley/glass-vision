@@ -3,7 +3,8 @@
 	<% if @current_user == @user %>
 	| <%= link_to trn_geth('CHANGE_PASSWORD_LABEL'), change_password_path  %></p>
 	<% end%>
-<%= error_messages_for :user %>
+  
+<%= flash[:error] %>
 
 <%= form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
   <p><%= trn_geth('EMAIL_LABEL')%>:<br /><%= f.text_field :email, :size => 60 %></p>
@@ -19,7 +20,7 @@
   <ul>
     <% ModuleType.all.each do |mt| %>
       <li>
-        <%= check_box_tag "module_type[#{mt.id}]", '1', @user.module_types.find(:first, :conditions => { :id => mt.id }) ? true : false %>
+        <%= check_box_tag "module_type[#{mt.id}]", '1', @user.module_types.where({id: mt.id}).any? ? true : false %>
         <%= mt.name %>
       </li>
     <% end %>

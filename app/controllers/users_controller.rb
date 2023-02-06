@@ -78,7 +78,7 @@ protected
     if current_user.has_role?('administrator')
       @user = User.find(user_params[:id])
     else
-      @user = current_user # unless current_user.has_role?('administrator')
+      @user = current_user unless current_user.has_role?('administrator')
     end
   end 
 private
