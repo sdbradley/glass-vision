@@ -78,6 +78,6 @@ GlassVision::Application.routes.draw do
   end
   root :to => 'home#index'
 
-  match '/:controller(/:action(/:id))', via: [:get, :post]
+  match '/:controller(/:id(/:action))', via: [:get, :post]
 end
 
