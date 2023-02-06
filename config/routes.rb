@@ -5,7 +5,7 @@ GlassVision::Application.routes.draw do
   resources :emails
   get '/signup', :to => 'users#new', :as => :signup
   get '/login', :to => 'session#new', :as => :login
-  post '/logout', :to => 'session#destroy', :as => :logout
+  get '/logout', :to => 'session#destroy', :as => :logout
   get '/activate/:id', :to => 'accounts#show', :as => :activate
   get '/forgot_password', :to => 'passwords#new', :as => :forgot_password
   get '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
