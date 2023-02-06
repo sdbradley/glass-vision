@@ -38,11 +38,11 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(user_params[:id])
-    if @user.update_attributes(user_params[:user])
+    if @user.update(user_params[:user])
 
       # saving access to modules
       @user.module_types.clear
-      user_params[:module_type].each do |mt_id, active|
+      params[:module_type].each do |mt_id, active|
         @user.module_types << ModuleType.find(mt_id) if active.to_i == 1
       end
 
@@ -83,7 +83,7 @@ protected
   end 
 private
   def user_params
-    params.permit(:id, :user_id, :module_type, user: [:login, :email, :password, :password_confirmation]).to_h.symbolize_keys
+    params.permit(:id, :user_id, module_type: [], user: [:login, :email, :password, :password_confirmation]).to_h.symbolize_keys
   end
 end
 
