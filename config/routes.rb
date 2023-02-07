@@ -11,6 +11,9 @@ GlassVision::Application.routes.draw do
   get '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
   get '/change_password', :to => 'accounts#edit', :as => :change_password
   get '/customers/search', :to => 'customers#search', :as => :search_customer
+  get '/set_lang', :to => 'home#set_lang'
+  get '/company/list', :to => 'company#list'
+  get '/translation/list', :to => 'translation#list'
 
   resources :users do
     post :enable
@@ -32,7 +35,7 @@ GlassVision::Application.routes.draw do
     end
   end
   resources :pricing_methods
-
+  resources :roles
   resources :doors do
     collection do
       get 'configure_panels'
@@ -78,6 +81,6 @@ GlassVision::Application.routes.draw do
   end
   root :to => 'home#index'
 
-  match '/:controller(/:id(/:action))', via: [:get, :post]
+  #match '/:controller(/:action(/:id))', via: [:get, :post]
 end
 
