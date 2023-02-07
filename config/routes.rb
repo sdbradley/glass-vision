@@ -70,12 +70,16 @@ GlassVision::Application.routes.draw do
         post :search
     end
     post :copy
-    get :print
+    # get :print
     get :print_invoice
     get :print_calculations
     get :print_manifest
   end
 
+  get '/quotation/print/:id', :to => 'quotation#print'
+  post '/quotation_line/add', :to => 'quotation_line#add'
+  post '/option_quotation/add', :to => 'option_quotation#add'
+  
   resources :series do
     get :edit_prices
   end
