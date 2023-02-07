@@ -25,4 +25,8 @@ class RolesController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  # def show
+  #   @role = Role.find(params[:id])
+  # end 
+
  end

@@ -1,8 +1,8 @@
-<% for column in Role.content_columns %>
+<% for r in Role.all %>
 <p>
-  <b><%= column.human_name %>:</b> <%= @role.send(column.name) %>
+  <b>Role name:</b> <%= r.rolename %>
 </p>
 <% end %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @role %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'Edit', :action => 'edit', :id => @role.id %> |
+<% # link_to 'Back', :action => 'list' %>
