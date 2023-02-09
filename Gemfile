@@ -20,6 +20,7 @@ gem 'jquery-migrate-rails'
 gem 'rails-i18n'
 gem 'globalize' #, '3.0.4'
 gem 'stimulus-rails'
+gem 'importmap-rails'
 
 group(:development) do
   gem 'yard'
