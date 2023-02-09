@@ -1,3 +1,5 @@
+<%= javascript_include_tag "customers" %>
+
 <h1><%= trn_geth('TITLE_CUSTOMER_LIST') %></h1>
 
 <%= form_tag '/customers/search', :remote =>true , :id => 'customer-search-form' do %>
@@ -14,13 +16,4 @@
 
 <% content_for :extra_javascript do %>
   // :update => "results"
-
-  $('#customer-search-form').bind('ajax:beforeSend', function(evt, xhr, settings){
-  jQuery("#loading").toggle();
-  })
-  .bind('ajax:success', function(evt, data, status, xhr){
-  eval(xhr.responseText);
-  })
-  .bind('ajax:failure', function(evt, data, status, xhr){
-  });
 <% end %>

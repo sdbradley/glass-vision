@@ -22,15 +22,14 @@
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 
   <%= stylesheet_link_tag 'application', 'jquery-ui', 'ui-lightness/jquery-ui-1.10.3.custom.css', 'formtastic', 'formtastic_changes', 'colorpicker', 'door_lines', 'pagination' %>
-  
+
   <!-- javascript_include_tag 'colorpicker', 'hover-popup', 'door_lines', 'jquery-migrate-min', 'autocomplete-rails' -->
   
   <%= csrf_meta_tag %>
+  <%= javascript_importmap_tags %>
 
   <script type="text/javascript" charset="utf-8">
-
       <%= yield :extra_javascript %>
-
   </script>
 
 </head>

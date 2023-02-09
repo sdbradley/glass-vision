@@ -1,3 +1,4 @@
+<%= javascript_include_tag "quotations" %>
 <h2><%= trn_geth('TITLE_QUOTATION_LIST') %></h2>
 
 <%= link_to trn_geth('BUTTON_ADD'), new_quotation_path %>
@@ -9,16 +10,6 @@
   <%= submit_tag "Search", :style => "position:absolute;bottom:-20px;left:-20px;z-index:-1;"%>
 <% end %>
 
-
 <% content_for :extra_javascript do %>
     // :update => "results"
-
-    // $('#quotation-search-form').bind('ajax:beforeSend', function(evt, xhr, settings){
-    //     jQuery("#loading").toggle();
-    // })
-    // .bind('ajax:success', function(evt, data, status, xhr){
-    //     eval(xhr.responseText);
-    //  })
-    // .bind('ajax:failure', function(evt, data, status, xhr){
-    //     });
 <% end %>
