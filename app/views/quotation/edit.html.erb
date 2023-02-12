@@ -5,7 +5,7 @@
   <br />
   <div class="form_button_bar submit" >
     <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'index' %> 
-    <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'destroy', :id => @quotation.slug}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", @quotation), :method => :delete, :class => 'command-icon', :data => { :confirm => "Are you sure?" } %>
     <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation.slug %>
     <%= submit_tag trn_geth('BUTTON_EDIT') %>
   </div>
