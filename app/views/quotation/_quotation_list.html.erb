@@ -8,6 +8,7 @@
   <th><%= trn_geth('HEADER_CREATED_BY') %></th>
   <th><%= trn_geth('LABEL_CONSULTANT') %></th>
   <th></th>
+  <th></th>
   </thead>
   <tbody>
 
@@ -15,6 +16,7 @@
     <td><%= text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
     <td></td>
     <td><%= text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
+    <td></td>
     <td></td>
     <td></td>
     <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
@@ -33,8 +35,9 @@
         <td style="width: 115px;">
           <%= link_to image_tag('copy.png', :title => trn_geth('BUTTON_COPY'), :class => 'command-icon'), quotation_copy_path(quotation.slug), :method => :post %>
           <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_quotation_path(quotation.slug) %>
-          <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), {:action => 'destroy', :id => quotation.slug, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION')} %>
-          <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", quotation), :method => :delete, :data => { :confirm => "Are you sure?" } %>
+        </td>
+        <td style="width: 25px;">
+          <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", quotation), :method => :delete, :class => 'command-icon', :data => { :confirm => "Are you sure?" } %>
         </td>
       </tr>
   <% end %>
