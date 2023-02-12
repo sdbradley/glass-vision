@@ -1,4 +1,4 @@
-console.log('customers.js')
+// console.log('customers.js')
 $('#customer-search-form').bind('ajax:beforeSend', function(evt, xhr, settings){
   jQuery("#loading").toggle();
   })

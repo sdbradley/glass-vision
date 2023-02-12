@@ -1,4 +1,4 @@
-console.log('quotations.js')
+// console.log('quotations.js')
 $('#quotation-search-form').bind('ajax:beforeSend', function(evt, xhr, settings){
     jQuery("#loading").toggle();
 })
