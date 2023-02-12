@@ -130,7 +130,7 @@
 
     $('#customer_name').change(function () {
         $.ajax({
-        url: "<%= url_for(:controller => 'customer', :action => 'show_by_name') %>",
+        url: "< url_for(:controller => 'customer', :action => 'show_by_name') >",
         dataType: 'script',
         data: { customer_name : $('#customer_name').val()}
         }).done(function (data) {
