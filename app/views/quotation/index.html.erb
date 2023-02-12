@@ -3,11 +3,12 @@
 <%= link_to trn_geth('BUTTON_ADD'), new_quotation_path %>
 
 <%= form_tag search_quotations_path, :remote =>true , :id => 'quotation-search-form' do %>
-  <div id="results">
-    <%= render :partial => 'quotation_list'%>
-  </div>
   <%= submit_tag "Search", :style => "position:absolute;bottom:-20px;left:-20px;z-index:-1;"%>
 <% end %>
+
+<div id="results">
+  <%= render :partial => 'quotation_list'%>
+</div>
 
 <% content_for :extra_javascript do %>
     // :update => "results"
