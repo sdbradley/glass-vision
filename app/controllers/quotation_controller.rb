@@ -71,7 +71,7 @@ class QuotationController < ApplicationController
   end
 
   def destroy
-    Quotation.find_by_slug(params[:id]).destroy
+    Quotation.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'index'
   end
