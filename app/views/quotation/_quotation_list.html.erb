@@ -9,6 +9,7 @@
   <th><%= trn_geth('LABEL_CONSULTANT') %></th>
   <th></th>
   <th></th>
+  <th></th>
   </thead>
   <tbody>
 
@@ -16,6 +17,7 @@
     <td><%= text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
     <td></td>
     <td><%= text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -32,9 +34,11 @@
         </td>
         <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
         <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
-        <td style="width: 115px;">
-          <%= link_to image_tag('copy.png', :title => trn_geth('BUTTON_COPY'), :class => 'command-icon'), quotation_copy_path(quotation.slug), :method => :post %>
-          <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_quotation_path(quotation.slug) %>
+        <td style="width: 25px;">
+          <%= button_to trn_geth('BUTTON_COPY'), quotation_copy_path(quotation.slug), :method => :post, :class => 'command-icon' %>
+        </td>
+        <td style="width: 25px;">
+          <%= link_to trn_geth('BUTTON_EDIT'), edit_quotation_path(quotation.slug), class: 'command-icon' %>
         </td>
         <td style="width: 25px;">
           <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", quotation), :method => :delete, :class => 'command-icon', :data => { :confirm => "Are you sure?" } %>
