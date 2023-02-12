@@ -4,3 +4,4 @@
 //= link jquery.js
 //= link quotations.js
 //= link customers.js
+//= link autocomplete-rails.js

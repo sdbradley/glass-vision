@@ -11,6 +11,7 @@ GlassVision::Application.routes.draw do
   get '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
   get '/change_password', :to => 'accounts#edit', :as => :change_password
   get '/customers/search', :to => 'customers#search', :as => :search_customer
+  post '/customers/show_by_name', :to => 'customers#show_by_name', :as => :show_by_name
   get '/set_lang', :to => 'home#set_lang'
   get '/company/list', :to => 'company#list'
   get '/translation/list', :to => 'translation#list'
