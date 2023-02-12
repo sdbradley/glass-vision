@@ -9,17 +9,15 @@
   </thead>
   <tbody>
 
-  <!--
   <tr>
-    <td> text_field_tag :search_name, params[:search_name], :style=> 'width:100%' %></td>
-    <td> text_field_tag :search_address, params[:search_address], :style=> 'width:100%' %></td>
+    <td><%= text_field_tag :search_name, params[:search_name], :style=> 'width:100%' %></td>
+    <td><%= text_field_tag :search_address, params[:search_address], :style=> 'width:100%' %></td>
     <td></td>
     <td></td>
-    <td> text_field_tag :search_email, params[:search_email], :style=> 'width:100%' %></td>
-    <td> image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
+    <td><%= text_field_tag :search_email, params[:search_email], :style=> 'width:100%' %></td>
+    <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
     </td>
   </tr>
-  -->
 
   <% @customers.each do |customer| %>
     <tr class="<%= cycle('odd', 'even') %>">
@@ -28,7 +26,9 @@
       <td><a href="tel:<%= customer.phone %>"><%= customer.phone %></a></td>
       <td><%= customer.fax %></td>
       <td><a href="mailto:<%= customer.email %>"><%= customer.email %></a></td>
-      <td colspan="5"><%= link_to trn_geth('BUTTON_DELETE'), customer, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %></td>
+      <td colspan="5">
+        <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", customer), :method => :delete, :data => { :confirm => "Are you sure?" } %>
+      </td>
     </tr>
   <% end %>
   </tbody>

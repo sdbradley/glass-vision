@@ -11,17 +11,15 @@
   </thead>
   <tbody>
 
-  <!--
   <tr>
-    <td>< text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
+    <td><%= text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
     <td></td>
-    <td>< text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
+    <td><%= text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
     <td></td>
     <td></td>
-    <td>< image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
+    <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
     </td>
   </tr>
-  -->
   
   <% @quotations.each do |quotation| %>
       <tr class="<%= cycle('odd', 'even') %>">
@@ -35,7 +33,7 @@
         <td style="width: 115px;">
           <%= link_to image_tag('copy.png', :title => trn_geth('BUTTON_COPY'), :class => 'command-icon'), quotation_copy_path(quotation.slug), :method => :post %>
           <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_quotation_path(quotation.slug) %>
-          <%= button_tag image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), {:action => 'destroy', :id => quotation.slug, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION')} %>
+          <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), {:action => 'destroy', :id => quotation.slug, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION')} %>
         </td>
       </tr>
   <% end %>
