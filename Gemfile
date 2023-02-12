@@ -19,8 +19,17 @@ gem 'rails3-jquery-autocomplete' #, '1.0.10'
 gem 'jquery-migrate-rails'
 gem 'rails-i18n'
 gem 'globalize' #, '3.0.4'
-gem 'stimulus-rails'
-gem 'importmap-rails'
+
+gem "stimulus-rails" # Stimulus JavaScript framework
+gem "turbo-rails" # Turbo/Hotwire support for Rails
+gem "sprockets-rails"
+
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+# gem "propshaft"
+# # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+# gem "jsbundling-rails"
+# # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+# gem "cssbundling-rails"
 
 group(:development) do
   gem 'yard'
