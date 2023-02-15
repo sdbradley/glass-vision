@@ -60,9 +60,9 @@ class QuotationController < ApplicationController
   def update
     set_taxes_if_not_present()
 
-    @quotation = Quotation.find(params[:id])
+    quotation = Quotation.find(params[:id])
 
-    if @quotation.update(quote_params[:quotation])
+    if quotation.update(quote_params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'show', :id => @quotation.slug
     else
