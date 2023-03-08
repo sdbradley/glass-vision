@@ -8,12 +8,21 @@
 
 glass_vision_co = Company.find_or_create_by!(name: "Glass-Vision")
 
-customer = User.find_or_initialize_by(login: "root")
-unless customer.persisted?
-  customer.update!(
+user = User.find_or_initialize_by(login: "root")
+unless user.persisted?
+  user.update!(
     email: "root@example.com",
     password: "PASSWORD",
     password_confirmation: "PASSWORD",
     activated_at: Time.current
   )
 end
+
+customer = Customer.find_or_create_by!(name: "Win Dow")
+customer.update!(
+  user: user,
+  address: "123 Drafty Way",
+  phone: "555-555-5555",
+  fax: "555-555-5555",
+  email: "win.dow@example.com",
+)
