@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
       # saving access to modules
       @user.module_types.clear
-      params[:module_type].each do |mt_id, active|
+      Array(params[:module_type]).each do |mt_id, active|
         @user.module_types << ModuleType.find(mt_id) if active.to_i == 1
       end
 

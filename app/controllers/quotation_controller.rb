@@ -1,5 +1,6 @@
-#require 'retryable'
 class QuotationController < ApplicationController
+  include Retryable
+
   autocomplete :customer, :name, :full => true, :extra_data => [:address, :phone, :fax, :email]
 
   before_action :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
@@ -123,11 +124,12 @@ class QuotationController < ApplicationController
   def search
     searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
-    params[:action] = 'index'
     conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
     search_conditions = searcher.conditions{|x, v, searcher| search_condition_for(x, v, searcher)}
 
     @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order('updated_at DESC')
+
+    render :index
   end
 
   protected

@@ -39,3 +39,6 @@ bower.json
 
 
 vendor/bundle-old
+
+# ignore custom environment variable overrides
+.env.*local

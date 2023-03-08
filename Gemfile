@@ -16,11 +16,13 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'jquery-rails' #, '~> 2.1'
 gem 'rails-jquery-autocomplete' #, '1.0.10'
+gem 'rails-observers'
 gem 'jquery-migrate-rails'
+gem 'jquery-ui-rails'
 gem 'rails-i18n'
 gem 'globalize' #, '3.0.4'
 
-gem "stimulus-rails" # Stimulus JavaScript framework
+gem "stimulus-rails" # Stimulus JavaScript framework # may not need this...
 gem "turbo-rails" # Turbo/Hotwire support for Rails
 gem "sprockets-rails"
 
@@ -32,9 +34,13 @@ gem "sprockets-rails"
 # gem "cssbundling-rails"
 
 group(:development) do
-  gem 'yard'
-  gem 'capistrano' #, '~> 2.5.8', :require => false
-  gem 'rvm-capistrano', :require => false
   gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'capistrano' #, '~> 2.5.8', :require => false
+  gem 'dotenv-rails'
   gem 'pry-rails'
+  gem 'rvm-capistrano', :require => false
+  gem 'web-console'
+  gem 'yard'
 end
