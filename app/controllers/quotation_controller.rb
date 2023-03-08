@@ -1,5 +1,6 @@
-#require 'retryable'
 class QuotationController < ApplicationController
+  include Retryable
+
   autocomplete :customer, :name, :full => true, :extra_data => [:address, :phone, :fax, :email]
 
   before_action :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
