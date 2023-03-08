@@ -34,12 +34,12 @@ gem "sprockets-rails"
 # gem "cssbundling-rails"
 
 group(:development) do
-  gem 'yard'
-  gem 'capistrano' #, '~> 2.5.8', :require => false
-  gem 'rvm-capistrano', :require => false
   gem 'annotate'
-  gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'capistrano' #, '~> 2.5.8', :require => false
+  gem 'pry-rails'
+  gem 'rvm-capistrano', :require => false
   gem 'web-console'
+  gem 'yard'
 end
