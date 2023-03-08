@@ -38,6 +38,7 @@ group(:development) do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano' #, '~> 2.5.8', :require => false
+  gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'rvm-capistrano', :require => false
   gem 'web-console'
