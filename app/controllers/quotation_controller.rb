@@ -65,7 +65,7 @@ class QuotationController < ApplicationController
 
     if quotation.update(quote_params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'show', :id => @quotation.slug
+      redirect_to :action => 'show', :id => quotation.slug
     else
       render :action => 'edit'
     end
