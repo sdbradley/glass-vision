@@ -1,6 +1,6 @@
 class OptionQuotationController < ApplicationController
   def add
-    @options = Option.all(:order => :description)
+    @options = Option.order(:description)
     @quotation = Quotation.find_by_slug(params[:id])
     @quantity = 1
   end
@@ -15,7 +15,7 @@ class OptionQuotationController < ApplicationController
   end
 
   def edit
-    @options = Option.all(:order => :description)
+    @options = Option.order(:description)
     @option = OptionsQuotation.find(params[:id])
   end
 
