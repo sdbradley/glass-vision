@@ -78,8 +78,8 @@ GlassVision::Application.routes.draw do
   end
 
   get '/quotation/print/:id', :to => 'quotation#print'
-  post '/quotation_line/add', :to => 'quotation_line#add'
-  post '/option_quotation/add', :to => 'option_quotation#add'
+  get '/quotation_line/add', :to => 'quotation_line#add'
+  get '/option_quotation/add', :to => 'option_quotation#add'
   
   resources :series do
     get :edit_prices
