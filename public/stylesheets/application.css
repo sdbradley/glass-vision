@@ -297,21 +297,9 @@ div.css_button {
 	}
 
 .form_button_bar {
-	/*
-		position: absolute;
-		width: 100%;
-	margin: 0;
-		margin-left: -5px;
-		padding: 0;
-		bottom: 5px;
-		right: 5px;
-		*/
-		float:left;
-	}
-
-.form_button_bar form.button-to {
-		float: right;
-		padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 	}
 
 	input[type="submit"], input[type="button"] {
