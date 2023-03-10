@@ -136,7 +136,7 @@
     quotation_path(@quotation),
     method: :delete,
     class: 'command-icon',
-    form: { data: { confirm: trn_geth('LABEL_DELETE_QUESTION') } }
+    form: { data: { turbo_confirm: trn_geth('LABEL_DELETE_QUESTION') } }
   ) %>
   <%= css_button_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation.slug %>
   <%= css_button_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation.slug %>

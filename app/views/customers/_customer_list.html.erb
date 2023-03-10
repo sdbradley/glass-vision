@@ -31,8 +31,8 @@
           trn_geth('BUTTON_DELETE'),
           customer_path(customer),
           data: {
-            "turbo-method": :delete,
-            confirm: "Are you sure?"
+            turbo_method: :delete,
+            turbo_confirm: trn_geth('LABEL_DELETE_QUESTION')
           }
         ) %>
       </td>

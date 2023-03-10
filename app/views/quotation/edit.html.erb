@@ -18,7 +18,7 @@
       send("#{controller_name.singularize}_url", @quotation),
       method: :delete,
       class: 'command-icon',
-      form: { data: { confirm: trn_geth('LABEL_DELETE_QUESTION') } }
+      form: { data: { turbo_confirm: trn_geth('LABEL_DELETE_QUESTION') } }
     ) %>
   <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation.slug %>
 </div>
