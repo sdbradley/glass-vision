@@ -16,7 +16,7 @@ GlassVision::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  #config.action_view.debug_rjs             = true
+  # config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
@@ -31,15 +31,14 @@ GlassVision::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    :address  => "mail.snowmoonsoftware.com",
-    :port  => 25,
-    :domain  => "snowmoonsoftware.com",
-    :authentication => :login,
-    :user_name => "jeff@snowmoonsoftware.com",
-    :password => "t9ohqa"
+    address: 'mail.snowmoonsoftware.com',
+    port: 25,
+    domain: 'snowmoonsoftware.com',
+    authentication: :login,
+    user_name: 'jeff@snowmoonsoftware.com',
+    password: 't9ohqa'
   }
   # TODO: not sure this is valid for deploy on snowmoonsoftware.com
-#  config.action_mailer.default_url_options[:host] = "clients.snowmoonsoftware.com/glass-vision"
-#   config.action_mailer.default_url_options[:host] = "localhost:3000"
+  #  config.action_mailer.default_url_options[:host] = "clients.snowmoonsoftware.com/glass-vision"
+  #   config.action_mailer.default_url_options[:host] = "localhost:3000"
 end
-

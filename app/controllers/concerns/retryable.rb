@@ -1,6 +1,6 @@
 module Retryable
   extend ActiveSupport::Concern
- 
+
   # Options:
   # * :tries - Number of retries to perform. Defaults to 1.
   # * :on - The Exception on which a retry will be performed. Defaults to Exception, which retries on any Exception.
@@ -11,8 +11,9 @@ module Retryable
   #     # your code here
   #   end
   #
-  def retryable(tries: 1, on: Exception, &block)
-    retry_exception, retries = on, tries
+  def retryable(tries: 1, on: Exception)
+    retry_exception = on
+    retries = tries
 
     begin
       return yield

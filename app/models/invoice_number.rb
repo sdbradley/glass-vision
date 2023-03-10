@@ -16,9 +16,9 @@ class InvoiceNumber < ActiveRecord::Base
     year = Date.today.year
     last_invoice = nil
     ActiveRecord::Base.transaction do
-      last_invoice = InvoiceNumber.where(:year => year).lock(true).first
+      last_invoice = InvoiceNumber.where(year: year).lock(true).first
       if last_invoice.nil?
-        last_invoice = InvoiceNumber.new(:year => year, :invoice_number => DEFAULT_INVOICE_NUMBER)
+        last_invoice = InvoiceNumber.new(year: year, invoice_number: DEFAULT_INVOICE_NUMBER)
       else
         last_invoice.invoice_number += 1
       end

@@ -1,71 +1,69 @@
- class SessionController < ApplicationController
-   layout 'application'
-   before_action :login_required, :only => :destroy
-   before_action :not_logged_in_required, :only => [:new, :create]
-   
-   # for some reason, setting language after login failure routes to show
-   def show
-     redirect_to login_path    
-   end
-   # render new.rhtml
-   def new
-   end
-  
-   def create
-     password_authentication(params[:login], params[:password])
-   end
-  
-   def destroy
-     user = self.current_user
-     self.current_user.forget_me if logged_in?
-     cookies.delete :auth_token
-     reset_session
-     flash[:notice] = trn_get('LOGGED_OUT_FLASH')
-     Audit.write_audit(user, "logout", "Success")
-     redirect_to login_path
-   end
-   
-   protected
-   
-   # Updated 2/20/08
-   def password_authentication(login, password)
-     user = User.authenticate(login, password)
-     if user == nil
-       failed_login('LOGIN_FAILED_FLASH')
-     elsif user.activated_at.blank?  
-       Audit.write_audit(user, "login", "Failure", "User is not activated")
-       failed_login('LOGIN_ACCT_NOT_ACTIVE_FLASH')
-     elsif user.enabled == false
-       Audit.write_audit(user, "login", "Failure", "User is disabled")
-       failed_login('LOGIN_ACCT_DISABLED_FLASH')
-     else
-       self.current_user = user
-       Audit.write_audit(user, "login", "Success", "from username/password")
-       successful_login
-     end
-   end
-   
-   
-   private
-   
-   def failed_login(message)
-     flash.now[:error] = trn_get(message)
-     render :action => 'new'
-   end
-   
-   def successful_login
-     if params[:remember_me] == "1"
-       self.current_user.remember_me
-       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
-     end
-     flash[:notice] = trn_get('LOGIN_SUCCESSFUL_FLASH')
-     return_to = session[:return_to]
-     if return_to.nil?
-       redirect_to user_path(self.current_user)
-     else
-       redirect_to return_to
-     end
-   end
-  
- end
+class SessionController < ApplicationController
+  layout 'application'
+  before_action :login_required, only: :destroy
+  before_action :not_logged_in_required, only: %i[new create]
 
+  # for some reason, setting language after login failure routes to show
+  def show
+    redirect_to login_path
+  end
+
+  # render new.rhtml
+  def new; end
+
+  def create
+    password_authentication(params[:login], params[:password])
+  end
+
+  def destroy
+    user = current_user
+    current_user.forget_me if logged_in?
+    cookies.delete :auth_token
+    reset_session
+    flash[:notice] = trn_get('LOGGED_OUT_FLASH')
+    Audit.write_audit(user, 'logout', 'Success')
+    redirect_to login_path
+  end
+
+  protected
+
+  # Updated 2/20/08
+  def password_authentication(login, password)
+    user = User.authenticate(login, password)
+    if user.nil?
+      failed_login('LOGIN_FAILED_FLASH')
+    elsif user.activated_at.blank?
+      Audit.write_audit(user, 'login', 'Failure', 'User is not activated')
+      failed_login('LOGIN_ACCT_NOT_ACTIVE_FLASH')
+    elsif user.enabled == false
+      Audit.write_audit(user, 'login', 'Failure', 'User is disabled')
+      failed_login('LOGIN_ACCT_DISABLED_FLASH')
+    else
+      self.current_user = user
+      Audit.write_audit(user, 'login', 'Success', 'from username/password')
+      successful_login
+    end
+  end
+
+  private
+
+  def failed_login(message)
+    flash.now[:error] = trn_get(message)
+    render action: 'new'
+  end
+
+  def successful_login
+    if params[:remember_me] == '1'
+      current_user.remember_me
+      cookies[:auth_token] =
+        { value: current_user.remember_token, expires: current_user.remember_token_expires_at }
+    end
+    flash[:notice] = trn_get('LOGIN_SUCCESSFUL_FLASH')
+    return_to = session[:return_to]
+    if return_to.nil?
+      redirect_to user_path(current_user)
+    else
+      redirect_to return_to
+    end
+  end
+end

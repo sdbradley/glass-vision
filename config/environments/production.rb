@@ -11,7 +11,7 @@ GlassVision::Application.configure do
   config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
-  config.action_dispatch.x_sendfile_header = "X-Sendfile"
+  config.action_dispatch.x_sendfile_header = 'X-Sendfile'
 
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
@@ -52,13 +52,12 @@ GlassVision::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    :address  => "localhost",
-    :port  => 2525,
-    :domain  => "glass-vision.net",
-    :authentication => :login,
-    :user_name => "info@glass-vision.net",
-    :password => "guylou12",
-    :openssl_verify_mode  => 'none'
+    address: 'localhost',
+    port: 2525,
+    domain: 'glass-vision.net',
+    authentication: :login,
+    user_name: 'info@glass-vision.net',
+    password: 'guylou12',
+    openssl_verify_mode: 'none'
   }
-
 end

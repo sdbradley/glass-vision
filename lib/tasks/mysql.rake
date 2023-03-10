@@ -1,9 +1,9 @@
-desc "Loads mysql command prompt"
+desc 'Loads mysql command prompt'
 require 'erb'
 task :mysql do
   puts "\n\nLoading mysql in #{Rails.env} mode...\n"
 
-  database_yml_path = "#{Rails.root.to_s}/config/database.yml"
+  database_yml_path = "#{Rails.root}/config/database.yml"
   database_yml = YAML.load(ERB.new(File.read(database_yml_path)).result)
 
   raise "Could not find environment #{Rails.env} in database.yml" unless database_yml[Rails.env]
@@ -16,7 +16,9 @@ task :mysql do
   port = config['port'] || 3306
   socket = config['socket'] || '/tmp/mysql.sock'
 
-  raise "Failed. Setup requires a user and database for environment #{environment} in '#{database_yml_path}'.\n\n#{database_yml.to_yaml}" unless username and database_name
+  unless username and database_name
+    raise "Failed. Setup requires a user and database for environment #{environment} in '#{database_yml_path}'.\n\n#{database_yml.to_yaml}"
+  end
 
   args = "-u #{username}"
   args << " -p#{password}" unless password.to_s.strip.empty?

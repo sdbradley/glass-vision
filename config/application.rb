@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'rails/all'
 
@@ -13,7 +13,7 @@ module GlassVision
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -31,9 +31,9 @@ module GlassVision
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.enforce_available_locales = false
-#    config.i18n.load_path += Dir[Rails.root.join('lib', 'locale', '*.rb,yml').to_s]
-    config.i18n.available_locales = [:en, :'fr-CA', :es]
-    config.i18n.fallbacks = { :'fr-CA' => :en, :es => :en }
+    #    config.i18n.load_path += Dir[Rails.root.join('lib', 'locale', '*.rb,yml').to_s]
+    config.i18n.available_locales = %i[en fr-CA es]
+    config.i18n.fallbacks = { 'fr-CA': :en, es: :en }
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
@@ -44,6 +44,5 @@ module GlassVision
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     config.middleware.use(WickedPdf::Middleware, {})
-
   end
 end

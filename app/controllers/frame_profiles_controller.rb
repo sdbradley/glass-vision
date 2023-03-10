@@ -1,7 +1,6 @@
 class FrameProfilesController < ApplicationController
-
   def index
-    @frame_profiles = FrameProfile.all(:order => :name)
+    @frame_profiles = FrameProfile.all(order: :name)
   end
 
   def new
@@ -11,10 +10,10 @@ class FrameProfilesController < ApplicationController
   def create
     @frame_profile = FrameProfile.new(params[:frame_profile])
     if @frame_profile.save
-      flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_M')
+      flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_M')
       redirect_to frame_profiles_path
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -25,17 +24,16 @@ class FrameProfilesController < ApplicationController
   def update
     @frame_profile = FrameProfile.find(params[:id])
     if @frame_profile.update_attributes(params[:frame_profile])
-      flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
+      flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
       redirect_to frame_profiles_path
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
   def destroy
     FrameProfile.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_M')
+    flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_M')
     redirect_to frame_profiles_path
   end
-
 end

@@ -6,7 +6,7 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @shapes }
+      format.xml  { render xml: @shapes }
     end
   end
 
@@ -17,7 +17,7 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @shape }
+      format.xml  { render xml: @shape }
     end
   end
 
@@ -28,7 +28,7 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @shape }
+      format.xml  { render xml: @shape }
     end
   end
 
@@ -44,12 +44,12 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       if @shape.save
-        flash[:notice] = trn_geth('LABEL_SHAPE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+        flash[:notice] = trn_geth('LABEL_SHAPE') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
         format.html { redirect_to(@shape) }
-        format.xml  { render :xml => @shape, :status => :created, :location => @shape }
+        format.xml  { render xml: @shape, status: :created, location: @shape }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @shape.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @shape.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,12 +61,12 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       if @shape.update_attributes(params[:shape])
-        flash[:notice] = trn_geth('LABEL_SHAPE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+        flash[:notice] = trn_geth('LABEL_SHAPE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
         format.html { redirect_to(@shape) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @shape.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @shape.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,7 +76,7 @@ class ShapesController < ApplicationController
   def destroy
     @shape = Shape.find(params[:id])
     @shape.destroy
-    flash[:notice] = trn_geth('LABEL_SHAPE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = trn_geth('LABEL_SHAPE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     respond_to do |format|
       format.html { redirect_to(shapes_url) }
       format.xml  { head :ok }

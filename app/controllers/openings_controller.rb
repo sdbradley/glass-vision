@@ -2,7 +2,7 @@ class OpeningsController < ApplicationController
   before_action :check_administrator_role
 
   def index
-    @openings = Opening.all(:order => 'name')
+    @openings = Opening.all(order: 'name')
   end
 
   def show
@@ -23,7 +23,7 @@ class OpeningsController < ApplicationController
       flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
       redirect_to openings_path
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -33,7 +33,7 @@ class OpeningsController < ApplicationController
       flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to openings_path
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 

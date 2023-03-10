@@ -37,11 +37,8 @@ class DoorLineOption < ActiveRecord::Base
              end
     p += option.price * factor
 
-    if option.pricing_method.quantifiable
-      p *= quantity
-    end
+    p *= quantity if option.pricing_method.quantifiable
 
     p
   end
-
 end

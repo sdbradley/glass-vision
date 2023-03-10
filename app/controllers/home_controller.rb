@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
-  skip_before_action :login_required, :only => :set_lang
-  def index
-  end
+  skip_before_action :login_required, only: :set_lang
+  def index; end
 
   def set_lang
     session[:lang] = params[:lang]

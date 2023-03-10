@@ -1,20 +1,19 @@
 GlassVision::Application.routes.draw do
-
-  get "audit/index"
+  get 'audit/index'
 
   resources :emails
-  get '/signup', :to => 'users#new', :as => :signup
-  get '/login', :to => 'session#new', :as => :login
-  get '/logout', :to => 'session#destroy', :as => :logout
-  get '/activate/:id', :to => 'accounts#show', :as => :activate
-  get '/forgot_password', :to => 'passwords#new', :as => :forgot_password
-  get '/reset_password/:id', :to => 'passwords#edit', :as => :reset_password
-  get '/change_password', :to => 'accounts#edit', :as => :change_password
-  get '/customers/search', :to => 'customers#search', :as => :search_customer
-  post '/customers/show_by_name', :to => 'customers#show_by_name', :as => :show_by_name
-  get '/set_lang', :to => 'home#set_lang'
-  get '/company/list', :to => 'company#list'
-  get '/translation/list', :to => 'translation#list'
+  get '/signup', to: 'users#new', as: :signup
+  get '/login', to: 'session#new', as: :login
+  get '/logout', to: 'session#destroy', as: :logout
+  get '/activate/:id', to: 'accounts#show', as: :activate
+  get '/forgot_password', to: 'passwords#new', as: :forgot_password
+  get '/reset_password/:id', to: 'passwords#edit', as: :reset_password
+  get '/change_password', to: 'accounts#edit', as: :change_password
+  get '/customers/search', to: 'customers#search', as: :search_customer
+  post '/customers/show_by_name', to: 'customers#show_by_name', as: :show_by_name
+  get '/set_lang', to: 'home#set_lang'
+  get '/company/list', to: 'company#list'
+  get '/translation/list', to: 'translation#list'
 
   resources :users do
     post :enable
@@ -23,7 +22,7 @@ GlassVision::Application.routes.draw do
     resources :roles
   end
 
-  resources :audits, :only => :index
+  resources :audits, only: :index
   resources :product_colors
   resources :shapes
   resources :openings
@@ -63,12 +62,12 @@ GlassVision::Application.routes.draw do
   resources :door_sections
   resources :manual_lines
 
-  resource :session, :controller => :session
+  resource :session, controller: :session
   resource :passwords
-  resources :quotations, :controller => :quotation do
-    get :autocomplete_customer_name, :on => :collection
+  resources :quotations, controller: :quotation do
+    get :autocomplete_customer_name, on: :collection
     collection do
-        post :search
+      post :search
     end
     post :copy
     # get :print
@@ -77,15 +76,14 @@ GlassVision::Application.routes.draw do
     get :print_manifest
   end
 
-  get '/quotation/print/:id', :to => 'quotation#print'
-  get '/quotation_line/add', :to => 'quotation_line#add'
-  get '/option_quotation/add', :to => 'option_quotation#add'
-  
+  get '/quotation/print/:id', to: 'quotation#print'
+  get '/quotation_line/add', to: 'quotation_line#add'
+  get '/option_quotation/add', to: 'option_quotation#add'
+
   resources :series do
     get :edit_prices
   end
-  root :to => 'home#index'
+  root to: 'home#index'
 
-  #match '/:controller(/:action(/:id))', via: [:get, :post]
+  # match '/:controller(/:action(/:id))', via: [:get, :post]
 end
-

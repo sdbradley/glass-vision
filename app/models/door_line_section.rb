@@ -37,5 +37,4 @@ class DoorLineSection < ActiveRecord::Base
 
     p
   end
-
 end

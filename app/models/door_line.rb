@@ -22,19 +22,18 @@
 #  original_price             :float
 #
 
-
 class DoorLine < ActiveRecord::Base
-  belongs_to :quotation, :touch => true
+  belongs_to :quotation, touch: true
   belongs_to :door_frame
   belongs_to :door_combination
   belongs_to :frame_profile
   belongs_to :slab_material
-  has_many :door_line_sections, :dependent => :destroy
+  has_many :door_line_sections, dependent: :destroy
   belongs_to :door_opening
   belongs_to :door_boring
-  has_many :door_line_options, :dependent => :destroy
-  belongs_to :standard_interior_color, :class_name => 'ProductColor'
-  belongs_to :standard_exterior_color, :class_name => 'ProductColor'
+  has_many :door_line_options, dependent: :destroy
+  belongs_to :standard_interior_color, class_name: 'ProductColor'
+  belongs_to :standard_exterior_color, class_name: 'ProductColor'
 
   after_find :update_original_price
   before_destroy :delete_preview_image
@@ -71,13 +70,13 @@ class DoorLine < ActiveRecord::Base
     end
 
     self.original_price = self.price
-    self.save
+    save
   end
 
   def total_width
     width = 0
     gap = nil
-    is_single_panel_door = door_line_sections.count {|dls| !dls.door_panel.nil?} == 1
+    is_single_panel_door = door_line_sections.count { |dls| !dls.door_panel.nil? } == 1
     door_line_sections.each do |door_line_section|
       width += door_line_section.door_panel_dimension.width
       # save the gap for later
@@ -94,12 +93,11 @@ class DoorLine < ActiveRecord::Base
 
   def total_height
     height = 0
-    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap_slab + frame_profile.sill
+    height = door_line_sections.first.door_panel_dimension.height + (2 * frame_profile.width) + frame_profile.gap_slab + frame_profile.sill
   end
 
-
   def get_image_size
-    return (total_width + 30) * PIXELS_PER_INCH, (total_height + 35) * PIXELS_PER_INCH
+    [(total_width + 30) * PIXELS_PER_INCH, (total_height + 35) * PIXELS_PER_INCH]
   end
 
   def create_image(base_url)
@@ -108,29 +106,26 @@ class DoorLine < ActiveRecord::Base
 
   def delete_preview_image
     # delete the line image
-    begin
-      File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
-    rescue
-      # no problem if file does not exist
-    end
+
+    File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+  rescue StandardError
+    # no problem if file does not exist
   end
 
   def has_price_override?
-    self.price != self.original_price
+    self.price != original_price
   end
 
   def update_original_price
-    self.original_price = self.price if self.original_price.nil?
+    self.original_price = self.price if original_price.nil?
   end
 
   def compute_final_price
     if has_price_override?
       # if the price has been overridden do not apply the discount
-      self.price * (1 + self.quotation.markup / 100.0)
+      self.price * (1 + (quotation.markup / 100.0))
     else
-      self.price * (1 - self.quotation.discount / 100.0) * (1 + self.quotation.markup / 100.0)
+      self.price * (1 - (quotation.discount / 100.0)) * (1 + (quotation.markup / 100.0))
     end
   end
-
 end
-
