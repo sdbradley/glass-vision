@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     u = User.where('login = ?', login).first # need to get the salt
-    is_authenticated = u && u.authenticated?(password)
+    is_authenticated = u&.authenticated?(password)
     Audit.write_audit(u, 'login', 'Failure', 'invalid credentials') if u && !is_authenticated
     is_authenticated ? u : nil
   end
@@ -193,11 +193,11 @@ class User < ActiveRecord::Base
   end
 
   def make_activation_code
-    self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
+    self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.chars.sort_by { rand }.join)
   end
 
   def make_password_reset_code
-    self.password_reset_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
+    self.password_reset_code = Digest::SHA1.hexdigest(Time.now.to_s.chars.sort_by { rand }.join)
   end
 
   private

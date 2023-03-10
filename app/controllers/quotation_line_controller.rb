@@ -77,7 +77,7 @@ class QuotationLineController < ApplicationController
   def create
     @quotation_line = QuotationLine.new(params[:quotation_line])
     @serie = Serie.find(@quotation_line.serie_id)
-    @options = @serie.options.sort_by { |o| o.description }
+    @options = @serie.options.sort_by(&:description)
 
     @line_info = QuotationLineParameters.new(@quotation_line).from_params(params, @quotation_line.shape)
 
@@ -167,7 +167,7 @@ class QuotationLineController < ApplicationController
           # create and save image
           @quotation_line.create_image
 
-          flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+          flash[:notice] = "#{trn_geth('LABEL_QUOTATION_LINE')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
           redirect_to controller: 'quotation', action: 'show', id: @quotation_line.quotation.slug
         else
           render action: 'add'
@@ -214,7 +214,7 @@ class QuotationLineController < ApplicationController
 
     @quotation_line.serie_id = params[:serie_id]
     @serie = Serie.find(@quotation_line.serie_id)
-    @options = @serie.options.sort_by { |o| o.description }
+    @options = @serie.options.sort_by(&:description)
 
     error = calculate_dimensions(params[:quotation_line][:width], params[:quotation_line][:height])
     if error
@@ -250,9 +250,7 @@ class QuotationLineController < ApplicationController
           end
 
           # destroy any excess openings. This happens when user goes from 3 openings to 2 or 1, for example
-          @quotation_line.quotation_lines_openings[@line_info.openings.length..@quotation_line.quotation_lines_openings.length].each do |opening|
-            opening.destroy
-          end
+          @quotation_line.quotation_lines_openings[@line_info.openings.length..@quotation_line.quotation_lines_openings.length].each(&:destroy)
 
           # clear and save section dimensions
           @quotation_line.section_heights.clear
@@ -314,7 +312,7 @@ class QuotationLineController < ApplicationController
           # create and save image
           @quotation_line.create_image
 
-          flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+          flash[:notice] = "#{trn_geth('LABEL_QUOTATION_LINE')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
           redirect_to controller: 'quotation', action: 'show', id: @quotation_line.quotation.slug
         else
           render action: 'edit'
@@ -326,7 +324,7 @@ class QuotationLineController < ApplicationController
   def delete
     quotation_line = QuotationLine.find(params[:id])
     quotation_line.destroy
-    flash[:notice] = trn_geth('LABEL_QUOTATION_LINE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_QUOTATION_LINE')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to controller: 'quotation', action: 'show', id: quotation_line.quotation.slug
   end
 
@@ -339,7 +337,7 @@ class QuotationLineController < ApplicationController
     updated_price = original_price if updated_price.blank?
     @quotation_line.update_attributes(original_price: original_price, price: updated_price)
 
-    render js: 'window.location = "' + quotation_path(@quotation_line.quotation.slug) + '"'
+    render js: "window.location = \"#{quotation_path(@quotation_line.quotation.slug)}\""
   end
 
   private
@@ -432,8 +430,8 @@ class QuotationLineController < ApplicationController
     # total width & height INCLUDES transoms &sidelights
     @line_info.total_height = height.to_f
     @line_info.total_width = width.to_f
-    adjust_total_height_for_transoms = @line_info.total_height == 0
-    adjust_total_width_for_sidelights = @line_info.total_width == 0
+    adjust_total_height_for_transoms = @line_info.total_height.zero?
+    adjust_total_width_for_sidelights = @line_info.total_width.zero?
     shape = Shape.find(@quotation_line.shape_id)
 
     total_transom_height = @line_info.total_transom_height
@@ -449,28 +447,28 @@ class QuotationLineController < ApplicationController
     cpt_missing = 0
     acc_dimension = 0
     @line_info.real_height.each_value do |v|
-      cpt_missing += 1 if v == 0
+      cpt_missing += 1 if v.zero?
       acc_dimension += v
     end
 
     # if we have missing heights and total_height is not specified we can't continue
-    return trn_get('MSG_NOT_ENOUGH_DATA') if cpt_missing > 0 && @line_info.total_height == 0
+    return trn_get('MSG_NOT_ENOUGH_DATA') if cpt_missing.positive? && @line_info.total_height.zero?
 
     # complete missing heights if possible
-    if cpt_missing == 0
+    if cpt_missing.zero?
       # no missing heights so just compute the total height if not supplied
-      @line_info.total_height = acc_dimension + total_transom_height if @line_info.total_height == 0
+      @line_info.total_height = acc_dimension + total_transom_height if @line_info.total_height.zero?
       return trn_get('MSG_HEIGHTS_DONT_MATCH') if @line_info.total_height != acc_dimension + total_transom_height
     else
       # any height not accounted for to be spread across any openings with 0 height
       deducted = (@line_info.total_height - acc_dimension - total_transom_height) / cpt_missing
       @line_info.real_height.each do |k, v|
-        @line_info.real_height[k] = deducted if v == 0
+        @line_info.real_height[k] = deducted if v.zero?
       end
     end
     # check that we have no negative dimensions
     @line_info.real_height.each_value do |v|
-      return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
+      return trn_get('MSG_NEGATIVE_DIMENSION') if v.negative?
     end
 
     ## calculate all widths
@@ -483,28 +481,28 @@ class QuotationLineController < ApplicationController
     cpt_missing = 0
     acc_dimension = 0
     @line_info.real_width.each_value do |v|
-      cpt_missing += 1 if v == 0
+      cpt_missing += 1 if v.zero?
       acc_dimension += v
     end
 
     # if we have missing heights and total_height is not specified we can't continue
-    return trn_get('MSG_NOT_ENOUGH_DATA') if cpt_missing > 0 && @line_info.total_width == 0
+    return trn_get('MSG_NOT_ENOUGH_DATA') if cpt_missing.positive? && @line_info.total_width.zero?
 
     # complete missing widths if possible
-    if cpt_missing == 0
-      @line_info.total_width = acc_dimension + total_sidelight_width if @line_info.total_width == 0
+    if cpt_missing.zero?
+      @line_info.total_width = acc_dimension + total_sidelight_width if @line_info.total_width.zero?
       if (@line_info.total_width - (acc_dimension + total_sidelight_width)).abs.round(3) > 0.001
         return trn_get('MSG_WIDTHS_DONT_MATCH')
       end
     else
       deducted = (@line_info.total_width - acc_dimension - total_sidelight_width) / cpt_missing
       @line_info.real_width.each do |k, v|
-        @line_info.real_width[k] = deducted.round(3) if v == 0
+        @line_info.real_width[k] = deducted.round(3) if v.zero?
       end
     end
     # check that we have no negative dimensions
     @line_info.real_width.each_value do |v|
-      return trn_get('MSG_NEGATIVE_DIMENSION') if v < 0
+      return trn_get('MSG_NEGATIVE_DIMENSION') if v.negative?
     end
 
     @line_info.section_height[@line_info.left_sidelight_index] ||= @line_info.total_height - total_transom_height
@@ -531,7 +529,7 @@ class QuotationLineController < ApplicationController
   end
 
   def get_options_from_params(params)
-    new_selected_options = params[:options] ? params[:options].map { |o| o.to_i } : []
+    new_selected_options = params[:options] ? params[:options].map(&:to_i) : []
     # we have params[:option_category_<id>] that hold a single option id for single-select categories
     # we can take those id's and merge them into new_selected_options
 
@@ -564,7 +562,7 @@ class QuotationLineController < ApplicationController
   end
 
   def initialize_options_for_series
-    @options = @serie.options.sort_by { |o| o.description }
+    @options = @serie.options.sort_by(&:description)
     @options.each do |option|
       next unless option.pricing_method.quantifiable
 

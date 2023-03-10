@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   # sortable_attributes  :name, :email
-  SEARCH_FIELDS = %w[search_name search_address search_email]
+  SEARCH_FIELDS = %w[search_name search_address search_email].freeze
 
   def index
     searcher = SearchConditions.new(session, SEARCH_FIELDS)
@@ -25,7 +25,7 @@ class CustomersController < ApplicationController
 
   def show_by_name
     if request.xml_http_request?
-      @customer = Customer.where('name = ?', "#{params[:customer_name]}").first
+      @customer = Customer.where('name = ?', params[:customer_name].to_s).first
       render partial: 'show_by_name', layout: false unless @customer.nil?
     else
       render nothing: true
@@ -40,7 +40,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params[:customer])
     @customer.user = @current_user unless @customer.nil?
     if @customer.save
-      flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_CUSTOMER')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to customers_path
     else
       render action: 'new'
@@ -54,7 +54,7 @@ class CustomersController < ApplicationController
   def update
     @customer = Customer.find(update_params[:id])
     if @customer.update!(customer_params[:customer])
-      flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_CUSTOMER')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to customer_path(@customer)
     else
       render action: 'edit'
@@ -63,7 +63,7 @@ class CustomersController < ApplicationController
 
   def destroy
     Customer.find(update_params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_CUSTOMER')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to customers_path
   end
 
@@ -85,11 +85,11 @@ class CustomersController < ApplicationController
 
     case field.gsub(/search_/, '')
     when 'name'
-      'name ' + searcher.send(:match_anywhere, value)
+      "name #{searcher.send(:match_anywhere, value)}"
     when 'address'
-      'address' + searcher.send(:match_anywhere, value)
+      "address#{searcher.send(:match_anywhere, value)}"
     when 'email'
-      'email' + searcher.send(:match_anywhere, value)
+      "email#{searcher.send(:match_anywhere, value)}"
     end
   end
 

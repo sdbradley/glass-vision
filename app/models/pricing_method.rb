@@ -8,7 +8,7 @@ class PricingMethod < ActiveRecord::Base
     UNIT_PRICE = 6, # maybe PER_EACH is better?
     PER_CORNER = 7,
     PER_TOTAL_WIDTH = 8
-  ]
+  ].freeze
 
   translates :comments, :description
   accepts_nested_attributes_for :translations

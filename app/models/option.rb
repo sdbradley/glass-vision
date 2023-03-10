@@ -3,8 +3,8 @@ class Option < ActiveRecord::Base
   accepts_nested_attributes_for :translations
 
   # the type of opening this option applies to
-  OPTION_APPLIES_TO = [APPLIES_TO_FIXED = 0, APPLIES_TO_OPENABLE = 1, APPLIES_TO_ALL = 2]
-  PRICED_PER = [PRICED_PER_WINDOW = 1, PRICED_PER_SECTION = 2, PRICED_PER_GLASS = 3]
+  OPTION_APPLIES_TO = [APPLIES_TO_FIXED = 0, APPLIES_TO_OPENABLE = 1, APPLIES_TO_ALL = 2].freeze
+  PRICED_PER = [PRICED_PER_WINDOW = 1, PRICED_PER_SECTION = 2, PRICED_PER_GLASS = 3].freeze
 
   belongs_to :pricing_method
   belongs_to :options_minimum_unit

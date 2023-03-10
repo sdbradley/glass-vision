@@ -44,7 +44,7 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       if @shape.save
-        flash[:notice] = trn_geth('LABEL_SHAPE') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+        flash[:notice] = "#{trn_geth('LABEL_SHAPE')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
         format.html { redirect_to(@shape) }
         format.xml  { render xml: @shape, status: :created, location: @shape }
       else
@@ -61,7 +61,7 @@ class ShapesController < ApplicationController
 
     respond_to do |format|
       if @shape.update_attributes(params[:shape])
-        flash[:notice] = trn_geth('LABEL_SHAPE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+        flash[:notice] = "#{trn_geth('LABEL_SHAPE')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
         format.html { redirect_to(@shape) }
         format.xml  { head :ok }
       else
@@ -76,7 +76,7 @@ class ShapesController < ApplicationController
   def destroy
     @shape = Shape.find(params[:id])
     @shape.destroy
-    flash[:notice] = trn_geth('LABEL_SHAPE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_SHAPE')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     respond_to do |format|
       format.html { redirect_to(shapes_url) }
       format.xml  { head :ok }

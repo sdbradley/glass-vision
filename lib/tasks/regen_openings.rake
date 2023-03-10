@@ -6,7 +6,7 @@ include Magick
 FRAME_THICKNESS = 3.0
 ARROW_SIZE = 5.0
 PIXELS_PER_INCH = 1
-WINDOW_FILL_COLOR = '#C9DAE7'
+WINDOW_FILL_COLOR = '#C9DAE7'.freeze
 
 task :regen_openings do
   # binding for erb file
@@ -22,7 +22,7 @@ task :regen_openings do
     # do work on files ending in .rb in the desired directory
 
     puts "Processing #{svg_file}"
-    image_base_name = File.basename(svg_file, '.svg') + '.png'
+    image_base_name = "#{File.basename(svg_file, '.svg')}.png"
     image_file_name = File.join(Rails.root, 'public', 'images', 'openings', image_base_name)
     output_file_name = File.join(Rails.root, image_base_name)
 
@@ -37,7 +37,7 @@ task :regen_openings do
     #   load file, run through erb
     File.write(temp_file_name, ERB.new(File.read(svg_file)).result(binding))
     #   convert to png
-    File.unlink(output_file_name) if File.exist?(output_file_name)
+    FileUtils.rm_f(output_file_name)
     system("rsvg-convert -a #{temp_file_name} -o #{output_file_name}")
   end
 end
@@ -58,7 +58,7 @@ task :regen_triangles do
     next unless svg_file =~ /triangle/
 
     puts "Processing #{svg_file}"
-    image_base_name = File.basename(svg_file, '.svg') + '.png'
+    image_base_name = "#{File.basename(svg_file, '.svg')}.png"
     image_file_name = File.join(Rails.root, 'public', 'images', 'openings', image_base_name)
     output_file_name = File.join(Rails.root, image_base_name)
 
@@ -73,7 +73,7 @@ task :regen_triangles do
     #   load file, run through erb
     File.write(temp_file_name, ERB.new(File.read(svg_file)).result(binding))
     #   convert to png
-    File.unlink(output_file_name) if File.exist?(output_file_name)
+    FileUtils.rm_f(output_file_name)
     system("rsvg-convert -a #{temp_file_name} -o #{output_file_name}")
   end
 end

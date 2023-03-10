@@ -41,7 +41,7 @@ class DoorsController < ApplicationController
         # same panel
         unless possible_choices[0][:door_panel_id].blank?
           dp = DoorPanel.first(conditions: { id: possible_choices[0][:door_panel_id] })
-          if dp and dp.door_panel_family.slab_material_id == slab_material.id
+          if dp && (dp.door_panel_family.slab_material_id == slab_material.id)
             door_line_section[:door_line_section].door_panel_id = possible_choices[0][:door_panel_id].to_i
           end
         end
@@ -50,7 +50,7 @@ class DoorsController < ApplicationController
         unless possible_choices[0][:door_panel_dimension_id].blank?
           dpd = DoorPanelDimension.first(conditions: { id: possible_choices[0][:door_panel_dimension_id] })
           door_line_section[:door_line_section].door_panel.door_panel_dimensions.each do |dim|
-            if dpd.width == dim.width and dpd.height == dim.height
+            if (dpd.width == dim.width) && (dpd.height == dim.height)
               door_line_section[:door_line_section].door_panel_dimension = dim
               break
             end
@@ -101,7 +101,7 @@ class DoorsController < ApplicationController
 
     door_panel_dimension = DoorPanelDimension.find(params[:door_panel_dimension_id])
     @door_panel_dimensions.each do |dpd|
-      if dpd.width == door_panel_dimension.width and dpd.height == door_panel_dimension.height
+      if (dpd.width == door_panel_dimension.width) && (dpd.height == door_panel_dimension.height)
         @door_panel_dimension_id = dpd.id
         break
       end
@@ -110,9 +110,8 @@ class DoorsController < ApplicationController
 
   def configure_glass_families
     door_panel = DoorPanel.find(params[:door_panel_id])
-    @door_glass_families = DoorGlassFamily.find(:all, conditions: { id: door_panel.door_glasses.map do |dg|
-                                                                          dg.door_glass_family_id
-                                                                        end.uniq }, order: 'name')
+    @door_glass_families = DoorGlassFamily.find(:all,
+                                                conditions: { id: door_panel.door_glasses.map(&:door_glass_family_id).uniq }, order: 'name')
     return if params[:door_glass_id].blank?
 
     door_glass = DoorGlass.find(params[:door_glass_id])
@@ -126,7 +125,7 @@ class DoorsController < ApplicationController
     @door_glasses = door_glass_family.door_glasses
     @door_glasses.delete_if { |dg| !door_panel.door_glasses.include? dg }
     @door_glass_id = @door_glasses.first.id unless @door_glasses.empty?
-    return unless params[:door_glass_id] and @door_glasses.map(&:id).include?(params[:door_glass_id].to_i)
+    return unless params[:door_glass_id] && @door_glasses.map(&:id).include?(params[:door_glass_id].to_i)
 
     @door_glass_id = params[:door_glass_id].to_i
   end
@@ -175,7 +174,7 @@ class DoorsController < ApplicationController
   def destroy
     door_line = DoorLine.find(params[:id])
     door_line.destroy
-    flash[:notice] = trn_geth('LABEL_DOOR_LINE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_DOOR_LINE')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to quotation_path(door_line.quotation.slug)
   end
 
@@ -188,7 +187,7 @@ class DoorsController < ApplicationController
     updated_price = original_price if updated_price.blank?
     door_line.update_attributes(original_price: original_price, price: updated_price)
 
-    render js: 'window.location = "' + quotation_path(door_line.quotation.slug) + '"'
+    render js: "window.location = \"#{quotation_path(door_line.quotation.slug)}\""
   end
 
   private ####################################################################
@@ -198,7 +197,7 @@ class DoorsController < ApplicationController
     @frame_profiles = FrameProfile.all(order: :name)
     @slab_materials = SlabMaterial.all(order: :name)
     @door_borings = DoorBoring.all(order: :name)
-    @options = Option.find(:all, conditions: { module_type_id: 2 }).sort_by { |o| o.description }
+    @options = Option.find(:all, conditions: { module_type_id: 2 }).sort_by(&:description)
   end
 
   def init_options
@@ -221,7 +220,7 @@ class DoorsController < ApplicationController
   end
 
   def get_options_from_params(params)
-    new_selected_options = params[:options] ? params[:options].map { |o| o.to_i } : []
+    new_selected_options = params[:options] ? params[:options].map(&:to_i) : []
 
     # we have params[:option_category_<id>] that hold a single option id for single-select categories
     # we can take those id's and merge them into new_selected_options

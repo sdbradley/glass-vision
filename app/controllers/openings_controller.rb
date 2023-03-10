@@ -20,7 +20,7 @@ class OpeningsController < ApplicationController
   def create
     @opening = Opening.new(params[:opening])
     if @opening.save
-      flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to openings_path
     else
       render action: 'new'
@@ -30,7 +30,7 @@ class OpeningsController < ApplicationController
   def update
     @opening = Opening.find(params[:id])
     if @opening.update_attributes(params[:opening])
-      flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to openings_path
     else
       render action: 'edit'
@@ -39,7 +39,7 @@ class OpeningsController < ApplicationController
 
   def destroy
     Opening.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to openings_path
   end
 end

@@ -12,7 +12,7 @@ class TranslationController < ApplicationController
   def create
     @translation = Translation.new(params[:translation])
     if @translation.save
-      flash[:notice] = trn_geth('LABEL_TRANSLATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_TRANSLATION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to action: 'list'
     else
       render action: 'add'
@@ -26,7 +26,7 @@ class TranslationController < ApplicationController
   def update
     @translation = Translation.find(params[:id])
     if @translation.update_attributes(params[:translation])
-      flash[:notice] = trn_geth('LABEL_TRANSLATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_TRANSLATION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to action: 'list'
     else
       render action: 'edit'
@@ -35,7 +35,7 @@ class TranslationController < ApplicationController
 
   def delete
     Translation.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_TRANSLATION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_TRANSLATION')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to action: 'list'
   end
 end

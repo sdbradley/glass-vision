@@ -49,9 +49,7 @@ class Quotation < ActiveRecord::Base
   end
 
   def regenerate_previews(base_url)
-    quotation_lines.each do |line|
-      line.create_image
-    end
+    quotation_lines.each(&:create_image)
     door_lines.each do |line|
       line.create_image(base_url)
     end
@@ -63,17 +61,17 @@ class Quotation < ActiveRecord::Base
     base_slug = Quotation.get_base_slug(slug)
     existing_slugs = Quotation.connection.select_all("select slug from quotations where slug like '#{base_slug}%'")
     existing_slugs = existing_slugs.collect { |s| s['slug'] }
-    last = existing_slugs.collect { |s| s[((s.rindex('-') || -1) + 1)..-1].to_i }.max + 1 unless existing_slugs.empty?
+    last = existing_slugs.collect { |s| s[((s.rindex('-') || -1) + 1)..].to_i }.max + 1 unless existing_slugs.empty?
 
     base_slug + last.to_s
   end
 
   def has_manual_lines?
-    manual_lines.length > 0
+    manual_lines.length.positive?
   end
 
   def has_options?
-    options_quotations.length > 0
+    options_quotations.length.positive?
   end
 
   def self.get_base_slug(slug)
@@ -86,6 +84,6 @@ class Quotation < ActiveRecord::Base
     # cases 2 and 4 can be handled the same way, as we just want the root slug.
     base_slug = slug.slice(/\d+-\d{4}-/) # case #4
     base_slug ||= slug.slice(/\d+-/) unless slug.match(/^\d+(-\d{4})*$/) # case 3
-    base_slug ||= slug + '-'
+    base_slug ||= "#{slug}-"
   end
 end

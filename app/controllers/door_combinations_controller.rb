@@ -11,7 +11,7 @@ class DoorCombinationsController < ApplicationController
   def create
     @door_combination = DoorCombination.new(params[:door_combination])
     if @door_combination.save
-      flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_COMBINATION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to door_combinations_path
     else
       render action: 'new'
@@ -26,7 +26,7 @@ class DoorCombinationsController < ApplicationController
   def update
     @door_combination = DoorCombination.find(params[:id])
     if @door_combination.update_attributes(params[:door_combination])
-      flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_COMBINATION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_combinations_path
     else
       render action: 'edit'
@@ -35,7 +35,7 @@ class DoorCombinationsController < ApplicationController
 
   def destroy
     DoorCombination.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_DOOR_COMBINATION')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to door_combinations_path
   end
 end

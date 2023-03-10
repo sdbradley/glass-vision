@@ -19,7 +19,7 @@ class Customer < ActiveRecord::Base
   def self.create_from_quotation_if_new(quotation)
     # look for an existing customer record by name.
     # if no record found, create one.
-    return false if quotation.customer_name.nil? or quotation.customer_name.blank?
+    return false if quotation.customer_name.nil? || quotation.customer_name.blank?
 
     customer = find_by_name(quotation.customer_name)
     if customer.nil?

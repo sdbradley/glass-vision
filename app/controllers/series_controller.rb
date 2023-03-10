@@ -22,9 +22,9 @@ class SeriesController < ApplicationController
       orig_series = Serie.find(params[:source_series])
       @serie.series_type = orig_series.series_type
       # clone widths
-      @serie.widths << orig_series.widths.map { |w| w.clone }
+      @serie.widths << orig_series.widths.map(&:clone)
       # clone heights
-      @serie.heights << orig_series.heights.map { |h| h.clone }
+      @serie.heights << orig_series.heights.map(&:clone)
       # copy openings
       @serie.openings = orig_series.openings
       # copy options
@@ -32,7 +32,7 @@ class SeriesController < ApplicationController
     end
 
     if @serie.save
-      flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_SERIE')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       if must_import_prices && orig_series
         @serie.openings.each do |opening|
           # copy prices
@@ -52,7 +52,7 @@ class SeriesController < ApplicationController
   def update
     @serie = Serie.find(params[:id])
     if @serie.update_attributes(params[:serie])
-      flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_SERIE')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to series_index_path
     else
       render action: 'edit'
@@ -115,7 +115,7 @@ class SeriesController < ApplicationController
 
   def destroy
     Serie.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_SERIE') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_SERIE')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to series_index_path
   end
 
@@ -130,7 +130,7 @@ class SeriesController < ApplicationController
 
       ids = key.split('_')
       if ids.length == 2 # existing price
-        if value.to_f == 0 # must delete existing price
+        if value.to_f.zero? # must delete existing price
           SeriePrice.find(ids[1].to_i).destroy
         else # must update existing price
           SeriePrice.find(ids[1].to_i).update_attribute :price, value.to_f
@@ -173,7 +173,7 @@ class SeriesController < ApplicationController
   def import_prices
     @serie = Serie.find(params[:id])
     @opening = Opening.find(params[:opening_id])
-    unless params[:selected_serie_id] and params[:selected_opening_id]
+    unless params[:selected_serie_id] && params[:selected_opening_id]
       flash[:notice] = trn_get('MSG_STRANGE_ERROR')
       redirect_to action: 'edit_prices', id: @serie, opening_id: @opening.id
       return
@@ -194,8 +194,8 @@ class SeriesController < ApplicationController
 
   def update_openings
     @serie = Serie.find(params[:id])
-    new_selected_openings = params[:openings] ? params[:openings].map { |o| o.to_i } : []
-    old_selected_openings = @serie.openings.map { |o| o.id }
+    new_selected_openings = params[:openings] ? params[:openings].map(&:to_i) : []
+    old_selected_openings = @serie.openings.map(&:id)
     @serie.openings.concat(Opening.find(new_selected_openings - old_selected_openings))
     (old_selected_openings - new_selected_openings).each do |o|
       @serie.openings.delete Opening.find(o)
@@ -219,7 +219,7 @@ class SeriesController < ApplicationController
         dw = @serie.widths.where('value = ?', ow.value).first
         dh = @serie.heights.where('value = ?', oh.value).first
         # if the destination serie has same dimensions
-        next unless dw and dh
+        next unless dw && dh
 
         # get destination price
         dp = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?', dw.id, dh.id, opening.id).first

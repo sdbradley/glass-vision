@@ -44,11 +44,11 @@ class Serie < ActiveRecord::Base
 
   # return max width available
   def maximum_width
-    max_height = widths.max_by { |x| x.value }
+    max_height = widths.max_by(&:value)
   end
 
   # return max height available
   def maximum_height
-    max_height = heights.max_by { |x| x.value }
+    max_height = heights.max_by(&:value)
   end
 end

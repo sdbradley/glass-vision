@@ -7,7 +7,7 @@ class ManualLinesController < ApplicationController
   def create
     @manual_line = ManualLine.new(params[:manual_line])
     if @manual_line.save
-      flash[:notice] = trn_geth('LABEL_MANUAL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_MANUAL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to controller: 'quotation', action: 'show', id: @manual_line.quotation.slug
     else
       render action: 'new'
@@ -21,7 +21,7 @@ class ManualLinesController < ApplicationController
   def update
     @manual_line = ManualLine.find(params[:id])
     if @manual_line.update_attributes(params[:manual_line])
-      flash[:notice] = trn_geth('LABEL_MANUAL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_MANUAL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to controller: 'quotation', action: 'show', id: @manual_line.quotation.slug
     else
       render action: 'edit'
@@ -31,7 +31,7 @@ class ManualLinesController < ApplicationController
   def delete
     @manual_line = ManualLine.find(params[:id])
     @manual_line.destroy
-    flash[:notice] = trn_geth('LABEL_MANUAL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_MANUAL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to controller: 'quotation', action: 'show', id: @manual_line.quotation.slug
   end
 
@@ -44,6 +44,6 @@ class ManualLinesController < ApplicationController
     updated_price = original_price if updated_price.blank?
     @manual_line.update_attributes(original_price: original_price, unit_price: updated_price)
 
-    render js: 'window.location = "' + quotation_path(@manual_line.quotation.slug) + '"'
+    render js: "window.location = \"#{quotation_path(@manual_line.quotation.slug)}\""
   end
 end

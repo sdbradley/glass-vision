@@ -269,7 +269,7 @@ class WindowPreviewCreator
 
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
     # load erb file for section and generate scaled svg file
-    image_file_name = File.basename(get_opening(cpt_opening).preview_image_name, '.png') + '.svg'
+    image_file_name = "#{File.basename(get_opening(cpt_opening).preview_image_name, '.png')}.svg"
     File.write(temp_file_name,
                ERB.new(File.read(File.join(Rails.root, 'components', 'openings', image_file_name))).result(binding))
 

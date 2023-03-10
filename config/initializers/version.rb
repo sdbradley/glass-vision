@@ -1,1 +1,1 @@
-APP_VERSION = `git rev-parse --short HEAD`
+APP_VERSION = `git rev-parse --short HEAD`.freeze

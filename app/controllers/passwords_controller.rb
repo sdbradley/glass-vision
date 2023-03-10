@@ -10,7 +10,7 @@ class PasswordsController < ApplicationController
   def create
     return unless request.post?
 
-    if @user = User.find_for_forget(params[:email])
+    if (@user = User.find_for_forget(params[:email]))
       @user.forgot_password
       @user.save
       flash[:notice] = trn_get('PASSWORD_RESET_EMAIL_SENT_FLASH')
@@ -78,7 +78,7 @@ class PasswordsController < ApplicationController
 
     redirect_to login_path
   rescue Exception => e
-    logger.error 'Invalid Reset Code entered: ' + e.to_s
+    logger.error "Invalid Reset Code entered: #{e}"
     flash[:notice] = trn_get('BAD_PASSWORD_RESET_CODE')
     redirect_to new_user_path
   end

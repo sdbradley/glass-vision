@@ -37,7 +37,7 @@ class OptionQuotationController < ApplicationController
     updated_price = original_price if updated_price.blank?
     option.update_attributes(original_price: original_price, unit_price: updated_price)
 
-    render js: 'window.location = "' + quotation_path(option.quotation.slug) + '"'
+    render js: "window.location = \"#{quotation_path(option.quotation.slug)}\""
   end
 
   def delete

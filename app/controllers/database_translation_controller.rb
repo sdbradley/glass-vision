@@ -15,9 +15,7 @@ class DatabaseTranslationController < ApplicationController
       new_items = 0
       old_items = 0
       new_ids = dbtf.translation_table_name.singularize.camelize.constantize.all.collect(&:id)
-      old_ids = DatabaseTranslation.where(translation_table_name: dbtf.translation_table_name).where(translation_field_name: dbtf.translation_field_name).collect do |r|
-        r.record_id
-      end
+      old_ids = DatabaseTranslation.where(translation_table_name: dbtf.translation_table_name).where(translation_field_name: dbtf.translation_field_name).collect(&:record_id)
       (new_ids - old_ids).each do |id|
         DatabaseTranslation.create record_id: id,
                                    translation_table_name: dbtf.translation_table_name,
@@ -28,11 +26,11 @@ class DatabaseTranslationController < ApplicationController
       old_items = ids_to_destroy.length
       DatabaseTranslation.where(record_id: ids_to_destroy).where(translation_table_name: dbtf.translation_table_name).where(translation_field_name: dbtf.translation_field_name).destroy_all
 
-      if new_items > 0
-        @log << (new_items.to_s + ' ' + dbtf.translation_table_name + ' / ' + dbtf.translation_field_name + ' ' + trn_get('LABEL_CREATED') + '.')
+      if new_items.positive?
+        @log << ("#{new_items} #{dbtf.translation_table_name} / #{dbtf.translation_field_name} #{trn_get('LABEL_CREATED')}.")
       end
-      if old_items > 0
-        @log << (old_items.to_s + ' ' + dbtf.translation_table_name + ' / ' + dbtf.translation_field_name + ' ' + trn_get('LABEL_DELETED') + '.')
+      if old_items.positive?
+        @log << ("#{old_items} #{dbtf.translation_table_name} / #{dbtf.translation_field_name} #{trn_get('LABEL_DELETED')}.")
       end
     end
     list
@@ -46,7 +44,7 @@ class DatabaseTranslationController < ApplicationController
   def update
     @dbt = DatabaseTranslation.find(params[:id])
     if @dbt.update_attributes(params[:dbt])
-      flash[:notice] = trn_geth('LABEL_TRANSLATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_TRANSLATION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to action: 'list'
 
     else

@@ -18,7 +18,7 @@ module Retryable
     begin
       return yield
     rescue retry_exception
-      retry if (retries -= 1) > 0
+      retry if (retries -= 1).positive?
     end
 
     yield

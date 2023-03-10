@@ -34,7 +34,7 @@ class DoorPreviewCreator
     base_url.chomp('/') if base_url.last == '/'
 
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{@door_line.id}.svg")
-    temp_bin_file = File.join(Rails.root, 'tmp', File.basename(temp_file_name, '.svg') + '.png')
+    temp_bin_file = File.join(Rails.root, 'tmp', "#{File.basename(temp_file_name, '.svg')}.png")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{@door_line.id}.png")
 
     # define canvas for final image
@@ -60,7 +60,7 @@ class DoorPreviewCreator
 
       # get the file to be painted
       if door_line_section.door_panel
-        src_svg_file_name = File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg'
+        src_svg_file_name = "#{File.basename(door_line_section.door_panel.preview_image_name, '.png')}.svg"
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels', src_svg_file_name)
 
         if door_line_section.door_glass
@@ -96,7 +96,7 @@ class DoorPreviewCreator
 
       else
         src_image = File.join(Rails.root, 'public', 'images', 'door_panels',
-                              door_line_section.door_section.code + '.png')
+                              "#{door_line_section.door_section.code}.png")
         section_image = Image.read(src_image)[0]
         # # resize the section image to fit the dimensions
         section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH,

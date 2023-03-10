@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def gv_humanize_time(t)
-    t.strftime('%a %b %d, %Y') unless t.nil?
+    t&.strftime('%a %b %d, %Y')
   end
 
   def option_value_selected?(value, selected)
@@ -30,7 +30,7 @@ module ApplicationHelper
 
   def option_text_and_value(option)
     # Options are [text, value] pairs or strings used for both.
-    if !option.is_a?(String) and option.respond_to?(:first) and option.respond_to?(:last)
+    if !option.is_a?(String) && option.respond_to?(:first) && option.respond_to?(:last)
       [option.first, option.last]
     else
       [option, option]
@@ -76,9 +76,9 @@ module ApplicationHelper
 
   def menu_item(image, link_label, link, options = {})
     display_label = trn_get(link_label)
-    display_label += ' - ' + options[:label] if options[:label]
+    display_label += " - #{options[:label]}" if options[:label]
 
-    link_to(image_tag(image + '.png', size: '32x32', border: 0, style: { padding: '5px' }) + display_label,
+    link_to(image_tag("#{image}.png", size: '32x32', border: 0, style: { padding: '5px' }) + display_label,
             link).html_safe
   end
 

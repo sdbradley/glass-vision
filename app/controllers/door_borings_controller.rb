@@ -10,7 +10,7 @@ class DoorBoringsController < ApplicationController
   def create
     @door_boring = DoorBoring.new(params[:door_boring])
     if @door_boring.save
-      flash[:notice] = trn_geth('LABEL_DOOR_BORING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_M')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_BORING')} #{trn_get('MSG_SUCCESSFULLY_CREATED_M')}"
       redirect_to door_borings_path
     else
       render action: 'new'
@@ -24,7 +24,7 @@ class DoorBoringsController < ApplicationController
   def update
     @door_boring = DoorBoring.find(params[:id])
     if @door_boring.update_attributes(params[:door_boring])
-      flash[:notice] = trn_geth('LABEL_DOOR_BORING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_BORING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_M')}"
       redirect_to door_borings_path
     else
       render action: 'edit'
@@ -33,7 +33,7 @@ class DoorBoringsController < ApplicationController
 
   def destroy
     DoorBoring.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_DOOR_BORING') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_M')
+    flash[:notice] = "#{trn_geth('LABEL_DOOR_BORING')} #{trn_get('MSG_SUCCESSFULLY_DELETED_M')}"
     redirect_to door_borings_path
   end
 end

@@ -10,7 +10,7 @@ class DoorOpeningsController < ApplicationController
   def create
     @door_opening = DoorOpening.new(params[:door_opening])
     if @door_opening.save
-      flash[:notice] = trn_geth('LABEL_DOOR_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_OPENING')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to door_openings_path
     else
       render action: 'new'
@@ -24,7 +24,7 @@ class DoorOpeningsController < ApplicationController
   def update
     @door_opening = DoorOpening.find(params[:id])
     if @door_opening.update_attributes(params[:door_opening])
-      flash[:notice] = trn_geth('LABEL_DOOR_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_OPENING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_openings_path
     else
       render action: 'edit'
@@ -33,7 +33,7 @@ class DoorOpeningsController < ApplicationController
 
   def destroy
     DoorOpening.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_DOOR_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_DOOR_OPENING')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to door_openings_path
   end
 end

@@ -6,7 +6,7 @@ class QuotationController < ApplicationController
   before_action :find_quotation, only: %i[show print print_invoice print_manifest print_calculations]
   # sortable_attributes  :updated_at, :slug, :description, :user_id, :consultant
 
-  SEARCH_FIELDS = %w[search_description search_slug]
+  SEARCH_FIELDS = %w[search_description search_slug].freeze
 
   def index
     searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
@@ -37,7 +37,7 @@ class QuotationController < ApplicationController
     @quotation.user_id = @current_user.id
     customer_msg = ''
     if Customer.create_from_quotation_if_new(@quotation)
-      customer_msg = trn_geth('LABEL_CUSTOMER') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      customer_msg = "#{trn_geth('LABEL_CUSTOMER')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
     end
     if @quotation.save
       if @quotation.slug.blank?
@@ -45,7 +45,7 @@ class QuotationController < ApplicationController
         @quotation.save
       end
       customer_msg += '<br />' unless customer_msg.blank?
-      customer_msg += trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      customer_msg += "#{trn_geth('LABEL_QUOTATION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       flash[notice] = customer_msg.html_safe
       redirect_to action: 'show', id: @quotation.slug
     else
@@ -64,7 +64,7 @@ class QuotationController < ApplicationController
     quotation = Quotation.find(params[:id])
 
     if quotation.update(quote_params[:quotation])
-      flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_QUOTATION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to action: 'show', id: quotation.slug
     else
       render action: 'edit'
@@ -73,7 +73,7 @@ class QuotationController < ApplicationController
 
   def destroy
     Quotation.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_QUOTATION')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to action: 'index'
   end
 
@@ -121,7 +121,7 @@ class QuotationController < ApplicationController
     @quotation.save!
     application_url = "#{request.protocol}#{request.host_with_port}"
     @quotation.regenerate_previews(application_url)
-    flash[:notice] = trn_geth('LABEL_QUOTATION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+    flash[:notice] = "#{trn_geth('LABEL_QUOTATION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
     redirect_to quotation_path(@quotation.slug)
   end
 
@@ -144,9 +144,9 @@ class QuotationController < ApplicationController
 
     case field.gsub(/search_/, '')
     when 'slug'
-      'slug ' + searcher.send(:match_anywhere, value)
+      "slug #{searcher.send(:match_anywhere, value)}"
     when 'description'
-      'customer_name' + searcher.send(:match_anywhere, value)
+      "customer_name#{searcher.send(:match_anywhere, value)}"
     end
   end
 

@@ -27,7 +27,7 @@ class DoorLineOption < ActiveRecord::Base
              when 4 # prix par section ouvrante
                door_line.door_line_sections.select { |s| s.door_section.openable? }.length
              when 5 # prix par section fixe
-               door_line.door_line_sections.select { |s| !s.door_section.openable? }.length
+               door_line.door_line_sections.reject { |s| s.door_section.openable? }.length
              when 6 # prix unitaire
                1
              when 7 # prix par coin

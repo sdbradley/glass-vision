@@ -21,7 +21,7 @@ class OptionsController < ApplicationController
   def create
     @option = Option.new(params[:option])
     if @option.save
-      flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to action: 'show', id: @option
     else
       @module_type = @option.module_type
@@ -41,7 +41,7 @@ class OptionsController < ApplicationController
     params[:option][:apply_to] = Option::APPLIES_TO_ALL.to_s if params[:option][:pricing_method_id] != '1'
 
     if @option.update_attributes(params[:option])
-      flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to option_path(@option)
     else
       @module_type = @option.module_type
@@ -54,7 +54,7 @@ class OptionsController < ApplicationController
     @option = Option.find(params[:id])
     @module_type = @option.module_type
     @option.destroy
-    flash[:notice] = trn_geth('LABEL_OPTION') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to options_path(mt: @module_type.id)
   end
 end

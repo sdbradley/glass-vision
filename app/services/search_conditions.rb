@@ -7,10 +7,11 @@ class SearchConditions
     save_search_params_to_session(params)
   end
 
-  def conditions # (&condition_for)
+  # (&condition_for)
+  def conditions
     params = search_params_from_session
     conditions = search_fields.collect { |x| yield x, params[x.to_sym], self }
-    conditions = conditions.delete_if { |x| x.nil? }
+    conditions.delete_if(&:nil?)
     conditions.join(' and ')
   end
 

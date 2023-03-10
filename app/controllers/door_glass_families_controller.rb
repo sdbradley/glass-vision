@@ -10,7 +10,7 @@ class DoorGlassFamiliesController < ApplicationController
   def create
     @door_glass_family = DoorGlassFamily.new(params[:door_glass_family])
     if @door_glass_family.save
-      flash[:notice] = trn_geth('LABEL_DOOR_GLASS_FAMILY') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_GLASS_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to door_glass_families_path
     else
       render action: 'new'
@@ -24,7 +24,7 @@ class DoorGlassFamiliesController < ApplicationController
   def update
     @door_glass_family = DoorGlassFamily.find(params[:id])
     if @door_glass_family.update_attributes(params[:door_glass_family])
-      flash[:notice] = trn_geth('LABEL_DOOR_GLASS_FAMILY') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_GLASS_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_glass_families_path
     else
       render action: 'edit'
@@ -33,7 +33,7 @@ class DoorGlassFamiliesController < ApplicationController
 
   def destroy
     DoorGlassFamily.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_DOOR_GLASS_FAMILY') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_DOOR_GLASS_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to door_glass_families_path
   end
 end

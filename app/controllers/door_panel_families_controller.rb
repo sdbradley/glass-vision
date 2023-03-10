@@ -11,7 +11,7 @@ class DoorPanelFamiliesController < ApplicationController
   def create
     @door_panel_family = DoorPanelFamily.new(params[:door_panel_family])
     if @door_panel_family.save
-      flash[:notice] = trn_geth('LABEL_DOOR_PANEL_FAMILY') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_PANEL_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to door_panel_families_path
     else
       @slab_materials = SlabMaterial.all
@@ -27,7 +27,7 @@ class DoorPanelFamiliesController < ApplicationController
   def update
     @door_panel_family = DoorPanelFamily.find(params[:id])
     if @door_panel_family.update_attributes(params[:door_panel_family])
-      flash[:notice] = trn_geth('LABEL_DOOR_PANEL_FAMILY') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      flash[:notice] = "#{trn_geth('LABEL_DOOR_PANEL_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_panel_families_path
     else
       @slab_materials = SlabMaterial.all
@@ -37,7 +37,7 @@ class DoorPanelFamiliesController < ApplicationController
 
   def destroy
     DoorPanelFamily.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_DOOR_PANEL_FAMILY') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_DOOR_PANEL_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to door_panel_families_path
   end
 end
