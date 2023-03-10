@@ -26,6 +26,7 @@ gem "stimulus-rails" # Stimulus JavaScript framework # may not need this...
 gem "turbo-rails" # Turbo/Hotwire support for Rails
 gem "sprockets-rails"
 
+# NOTE: use these gems if you need to add Node modules/Yarn packages
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 # gem "propshaft"
 # # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]

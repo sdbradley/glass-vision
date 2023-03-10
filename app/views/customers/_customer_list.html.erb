@@ -27,7 +27,14 @@
       <td><%= customer.fax %></td>
       <td><a href="mailto:<%= customer.email %>"><%= customer.email %></a></td>
       <td colspan="5">
-        <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", customer), :method => :delete, :data => { :confirm => "Are you sure?" } %>
+        <%= link_to(
+          trn_geth('BUTTON_DELETE'),
+          customer_path(customer),
+          data: {
+            "turbo-method": :delete,
+            confirm: "Are you sure?"
+          }
+        ) %>
       </td>
     </tr>
   <% end %>
