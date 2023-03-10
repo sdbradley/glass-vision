@@ -1,4 +1,9 @@
-<%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
+<%= will_paginate(
+  @quotations,
+  class: "apple_pagination",
+  next_label: trn_get('NEXT_PAGE'),
+  previous_label: trn_get('PREVIOUS_PAGE')
+) %>
 
 <table cellspacing="0" style="width:100%;">
   <thead class="header">
@@ -14,14 +19,14 @@
   <tbody>
 
   <tr>
-    <td><%= text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
+    <td><%= text_field_tag :search_slug, params[:search_slug], style: "width:100%" %></td>
     <td></td>
-    <td><%= text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
-    <td></td>
-    <td></td>
+    <td><%= text_field_tag :search_description, params[:search_description], style: "width:100%" %></td>
     <td></td>
     <td></td>
-    <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
+    <td></td>
+    <td></td>
+    <td><%= image_tag('spinner.gif', align: 'absmiddle', border: 0, id: 'loading', style: 'display: none;') %>
     </td>
   </tr>
   
@@ -35,18 +40,28 @@
         <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
         <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
         <td style="width: 25px;">
-          <%= button_to trn_geth('BUTTON_COPY'), quotation_copy_path(quotation.slug), :method => :post, :class => 'command-icon' %>
+          <%= link_to(
+            trn_geth('BUTTON_COPY'),
+            quotation_copy_path(quotation.slug),
+            class: 'command-icon',
+            data: { turbo_method: :post }
+          ) %>
         </td>
         <td style="width: 25px;">
           <%= link_to trn_geth('BUTTON_EDIT'), edit_quotation_path(quotation.slug), class: 'command-icon' %>
         </td>
         <td style="width: 25px;">
-          <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", quotation), :method => :delete, :class => 'command-icon', :data => { :confirm => "Are you sure?" } %>
+          <%= link_to(
+            trn_geth('BUTTON_DELETE'),
+            quotation_path(quotation),
+            class: 'command-icon',
+            data: { turbo_method: :delete, turbo_confirm: trn_geth('LABEL_DELETE_QUESTION') }
+          ) %>
         </td>
       </tr>
   <% end %>
   </tbody>
 </table>
-<%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
+<%= will_paginate @quotations, class: "apple_pagination", next_label: trn_get('NEXT_PAGE'), previous_label: trn_get('PREVIOUS_PAGE') %>
 
 <%= page_entries_info @quotations %>
