@@ -22,17 +22,16 @@ gem 'rmagick' # , '>= 2.13.2'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-gem 'sprockets-rails'
 gem 'stimulus-rails' # Stimulus JavaScript framework # may not need this...
 gem 'turbo-rails' # Turbo/Hotwire support for Rails
 
 # NOTE: use these gems if you need to add Node modules/Yarn packages
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-# gem "propshaft"
+gem "propshaft"
 # # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-# gem "jsbundling-rails"
+gem "jsbundling-rails"
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-# gem "cssbundling-rails"
+gem "cssbundling-rails"
 
 group(:development) do
   gem 'annotate'

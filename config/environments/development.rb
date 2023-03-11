@@ -2,9 +2,17 @@ GlassVision::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   config.eager_load = false
 
-  # hot reload assets
-  config.assets.compile = true
-  config.assets.digest = false
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  config.assets.debug = true
+
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
+
+  # separate local assets from production assets, so Propshaft can
+  # track changes and hot-reload assets when you make changes.
+  config.assets.prefix = "/dev-assets"
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
