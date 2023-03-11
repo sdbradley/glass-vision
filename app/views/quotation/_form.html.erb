@@ -112,7 +112,7 @@
     <td align="right"><%= trn_geth('LABEL_CONSULTANT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field 'quotation', 'consultant',  :size => 50  %></td>
   </tr>
-<% if @current_user.has_role?('administrator') %>
+<% if @current_user.admin? %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_ASSIGNED_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= select 'quotation', 'user_id',  User.all.map {|u| [u.login, u.id]}  %></td>

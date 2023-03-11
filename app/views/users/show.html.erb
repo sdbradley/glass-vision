@@ -1,7 +1,7 @@
 <% if logged_in? %>
     <h2><%= trn_geth('USER_LABEL') %>: <%= @user.login %></h2>
     <%= trn_geth('EMAIL_LABEL') %>: <%= @user.email %><br />
-    <% if @current_user.has_role?('administrator') %>
+    <% if @current_user.admin? %>
         <p><%= trn_geth('LABEL_DISCOUNT') %>: <%= @user.discount %> </p>
     <% end %>
 

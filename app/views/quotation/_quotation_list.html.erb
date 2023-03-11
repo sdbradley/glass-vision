@@ -37,8 +37,8 @@
         <td><%= link_to quotation.project_name, quotation_path(quotation.slug) %><%= ' (' + quotation.description + ')' unless quotation.description.blank? %><br/>
             <%= quotation.customer_name %>
         </td>
-        <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
-        <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
+        <td><%= quotation.user.login  if @current_user.admin? and !quotation.user.nil? %> </td>
+        <td><%= quotation.consultant  if @current_user.admin? and !quotation.consultant.nil? %> </td>
         <td style="width: 25px;">
           <%= link_to(
             trn_geth('BUTTON_COPY'),

@@ -35,16 +35,7 @@ class User < ApplicationRecord
   # anything else you want your user to change should be added here.
   # attr_accessible :login, :email, :password, :password_confirmation, :discount
 
-  class ActivationCodeNotFound < StandardError; end
-
-  class AlreadyActivated < StandardError
-    attr_reader :user, :message
-
-    def initialize(user, message = nil)
-      @message = message
-      @user = user
-    end
-  end
+  
 
   before_create :set_company
 
@@ -62,24 +53,11 @@ class User < ApplicationRecord
     raise ArgumentError if activation_code.nil?
 
     user = find_by(activation_code: activation_code)
-    raise ActivationCodeNotFound unless user
+    raise ActivationCodeNotFound if user.nil?
     raise AlreadyActivated, user if user.active?
 
     user.send(:activate!)
     user
-  end
-
-  # Activates the user in the database.
-  # def activate
-  #   @activated = true
-  #   self.activated_at = Time.now.utc
-  #   self.activation_code = nil
-  #   save(validate: false)
-  # end
-
-  def active?
-    # the existence of an activation code means they have not activated yet
-    activation_code.nil?
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -93,6 +71,20 @@ class User < ApplicationRecord
   # Encrypts some data with the salt.
   def self.encrypt(password, salt)
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+  end
+
+  def self.find_for_forget(email)
+    User.where('email = ? and activated_at IS NOT NULL', email).first
+  end
+
+  def self.get_administrator
+    @administrators = User.joins('INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id').select('users.*').order('id ASC')
+  end
+  private_class_method(:get_administrator)
+
+  def active?
+    # the existence of an activation code means they have not activated yet
+    activation_code.nil?
   end
 
   # Encrypts the password with the user salt
@@ -155,16 +147,16 @@ class User < ApplicationRecord
     @reset_password
   end
 
-  def self.find_for_forget(email)
-    User.where('email = ? and activated_at IS NOT NULL', email).first
-  end
-
   def has_role?(rolename)
     roles.find_by(rolename: rolename) ? true : false
   end
 
+  def admin?
+    has_role?('administrator')
+  end
+
   def active_companies
-    if has_role?('administrator')
+    if admin?
       Company.order('name asc')
     else
       companies
@@ -199,14 +191,20 @@ class User < ApplicationRecord
     self.password_reset_code = Digest::SHA1.hexdigest(Time.zone.now.to_s.chars.sort_by { rand }.join)
   end
 
-  private
+private
 
   def activate!
-    @activated = true
-    update_attribute(:activated_at, Time.now.utc)
+    update(activated_at: Time.now.utc)
   end
 
-  def self.get_administrator
-    @administrators = User.joins('INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id').select('users.*').order('id ASC')
+  class ActivationCodeNotFound < StandardError; end
+
+  class AlreadyActivated < StandardError
+    attr_reader :user, :message
+
+    def initialize(user, message = nil)
+      @message = message
+      @user = user
+    end
   end
 end

@@ -5,7 +5,7 @@ class CustomersController < ApplicationController
   def index
     searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
-    conditions = { user_id: @current_user.id } unless @current_user.has_role?('administrator')
+    conditions = { user_id: @current_user.id } unless @current_user.admin?
     search_conditions = searcher.conditions { |x, v, searcher| search_condition_for(x, v, searcher) }
 
     @customers =
@@ -18,7 +18,7 @@ class CustomersController < ApplicationController
 
   def show
     @customer = Customer.find(params[:id])
-    return unless @customer.user_id != @current_user.id && !@current_user.has_role?('administrator')
+    return unless @customer.user_id != @current_user.id && !@current_user.admin?
 
     flash[:notice] = 'Permission denied'
     redirect_to action: 'index'

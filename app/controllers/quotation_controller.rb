@@ -11,14 +11,14 @@ class QuotationController < ApplicationController
   def index
     searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
-    conditions = { user_id: @current_user.id } unless @current_user.has_role?('administrator')
+    conditions = { user_id: @current_user.id } unless @current_user.admin?
     search_conditions = searcher.conditions { |x, v, searcher| search_condition_for(x, v, searcher) }
 
     @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(page: params[:page], per_page: 25) # .order(sort_order || 'updated_at DESC')
   end
 
   def show
-    return unless @quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
+    return unless @quotation.user_id != @current_user.id && !@current_user.admin?
 
     flash[:notice] = trn_geth('PERMISSION_DENIED')
     redirect_to action: 'index'
@@ -113,7 +113,7 @@ class QuotationController < ApplicationController
     #    return unless request.xhr?
     @orig_quotation = Quotation.includes(quotation_lines: [:serie, :shape, { quotation_lines_openings: :opening },
                                                            { options_quotation_lines: :option }]).find_by(slug: params[:quotation_id])
-    if @orig_quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
+    if @orig_quotation.user_id != @current_user.id && !@current_user.admin?
       flash[notice] = trn_get('PERMISSION_DENIED')
       redirect_to action: 'index'
     end
@@ -128,7 +128,7 @@ class QuotationController < ApplicationController
   def search
     searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
-    conditions = { user_id: @current_user.id } unless @current_user.has_role?('administrator')
+    conditions = { user_id: @current_user.id } unless @current_user.admin?
     search_conditions = searcher.conditions { |x, v, searcher| search_condition_for(x, v, searcher) }
 
     @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(page: params[:page],
@@ -163,7 +163,7 @@ class QuotationController < ApplicationController
   end
 
   def get_autocomplete_items(parameters)
-    if @current_user.has_role?('administrator')
+    if @current_user.admin?
       super(parameters)
     else
       super(parameters).where(user_id: @current_user.id)
