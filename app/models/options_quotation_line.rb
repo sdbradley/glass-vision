@@ -1,4 +1,4 @@
-class OptionsQuotationLine < ActiveRecord::Base
+class OptionsQuotationLine < ApplicationRecord
   belongs_to :option
   belongs_to :quotation_line
 

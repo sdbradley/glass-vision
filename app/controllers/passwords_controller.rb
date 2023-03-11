@@ -15,7 +15,7 @@ class PasswordsController < ApplicationController
       render action: 'new'
       return
     end
-    @user = User.find_by_password_reset_code(params[:id]) if params[:id]
+    @user = User.find_by(password_reset_code: params[:id]) if params[:id]
     raise if @user.nil?
   rescue StandardError
     logger.error 'Invalid Reset Code entered.'
@@ -47,12 +47,12 @@ class PasswordsController < ApplicationController
       return
     end
     if params[:password].blank?
-      flash[:notice] = trn_get('PASSWORD_WAS_BLANK_FLASH')
+      flash.now[:notice] = trn_get('PASSWORD_WAS_BLANK_FLASH')
       render action: 'edit', id: params[:id]
       return
     end
 
-    @user = User.find_by_password_reset_code(params[:id])
+    @user = User.find_by(password_reset_code: params[:id])
     raise if @user.nil?
 
     if params[:password] == params[:password_confirmation]

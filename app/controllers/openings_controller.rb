@@ -29,7 +29,7 @@ class OpeningsController < ApplicationController
 
   def update
     @opening = Opening.find(params[:id])
-    if @opening.update_attributes(params[:opening])
+    if @opening.update(params[:opening])
       flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to openings_path
     else

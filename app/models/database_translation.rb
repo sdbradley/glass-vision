@@ -1,2 +1,2 @@
-class DatabaseTranslation < ActiveRecord::Base
+class DatabaseTranslation < ApplicationRecord
 end

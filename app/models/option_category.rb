@@ -9,7 +9,7 @@
 #  multiselect   :boolean
 #
 
-class OptionCategory < ActiveRecord::Base
+class OptionCategory < ApplicationRecord
   translates :name, :description
   accepts_nested_attributes_for :translations
 

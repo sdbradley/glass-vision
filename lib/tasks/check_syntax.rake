@@ -4,7 +4,7 @@ require 'yaml'
 
 task check_syntax: %i[check_ruby check_erb check_yaml]
 
-task :check_erb do
+task check_erb: :environment do
   (Dir['**/*.erb'] + Dir['**/*.rhtml']).each do |file|
     next if file.match('vendor/rails')
 
@@ -32,7 +32,7 @@ task :check_erb do
   end
 end
 
-task :check_ruby do
+task check_ruby: :environment do
   Dir['**/*.rb'].each do |file|
     next if file.match('vendor/rails')
     next if file.match('vendor/plugins/.*/generators/.*/templates')
@@ -64,7 +64,7 @@ task :check_ruby do
   end
 end
 
-task :check_yaml do
+task check_yaml: :environment do
   Dir['**/*.yml'].each do |file|
     next if file.match('vendor/rails')
 

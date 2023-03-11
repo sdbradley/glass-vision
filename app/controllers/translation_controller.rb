@@ -25,7 +25,7 @@ class TranslationController < ApplicationController
 
   def update
     @translation = Translation.find(params[:id])
-    if @translation.update_attributes(params[:translation])
+    if @translation.update(params[:translation])
       flash[:notice] = "#{trn_geth('LABEL_TRANSLATION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to action: 'list'
     else

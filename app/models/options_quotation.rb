@@ -1,4 +1,4 @@
-class OptionsQuotation < ActiveRecord::Base
+class OptionsQuotation < ApplicationRecord
   belongs_to :option
   belongs_to :quotation, touch: true
 

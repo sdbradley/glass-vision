@@ -60,7 +60,7 @@ class ShapesController < ApplicationController
     @shape = Shape.find(params[:id])
 
     respond_to do |format|
-      if @shape.update_attributes(params[:shape])
+      if @shape.update(params[:shape])
         flash[:notice] = "#{trn_geth('LABEL_SHAPE')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
         format.html { redirect_to(@shape) }
         format.xml  { head :ok }

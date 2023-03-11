@@ -1,4 +1,4 @@
-class DoorSection < ActiveRecord::Base
+class DoorSection < ApplicationRecord
   include Priceable
   translates :name
   accepts_nested_attributes_for :translations

@@ -9,7 +9,7 @@
 #  updated_at     :datetime
 #
 
-class InvoiceNumber < ActiveRecord::Base
+class InvoiceNumber < ApplicationRecord
   DEFAULT_INVOICE_NUMBER = 101
 
   def self.get_next_invoice_number

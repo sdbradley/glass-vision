@@ -1,4 +1,4 @@
-class Quotation < ActiveRecord::Base
+class Quotation < ApplicationRecord
   has_many :quotation_lines, dependent: :destroy
   has_many :door_lines, dependent: :destroy
   has_many :options_quotations, dependent: :destroy
@@ -60,7 +60,7 @@ class Quotation < ActiveRecord::Base
 
     base_slug = Quotation.get_base_slug(slug)
     existing_slugs = Quotation.connection.select_all("select slug from quotations where slug like '#{base_slug}%'")
-    existing_slugs = existing_slugs.collect { |s| s['slug'] }
+    existing_slugs = existing_slugs.pluck('slug')
     last = existing_slugs.collect { |s| s[((s.rindex('-') || -1) + 1)..].to_i }.max + 1 unless existing_slugs.empty?
 
     base_slug + last.to_s

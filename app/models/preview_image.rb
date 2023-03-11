@@ -1,4 +1,4 @@
-class PreviewImage < ActiveRecord::Base
+class PreviewImage < ApplicationRecord
   belongs_to :opening
 
   LEFT = 'L'.freeze

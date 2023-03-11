@@ -25,7 +25,7 @@ class DatabaseTranslationFieldController < ApplicationController
 
   def update
     @dbtf = DatabaseTranslationField.find(params[:id])
-    if @dbtf.update_attributes(params[:dbtf])
+    if @dbtf.update(params[:dbtf])
       flash[:notice] = "#{trn_geth('LABEL_DBTF')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_M')}"
       redirect_to action: 'list'
     else

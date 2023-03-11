@@ -1,4 +1,4 @@
-class FrameProfile < ActiveRecord::Base
+class FrameProfile < ApplicationRecord
   translates :name
   accepts_nested_attributes_for :translations
   include Priceable

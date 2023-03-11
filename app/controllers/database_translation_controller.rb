@@ -43,7 +43,7 @@ class DatabaseTranslationController < ApplicationController
 
   def update
     @dbt = DatabaseTranslation.find(params[:id])
-    if @dbt.update_attributes(params[:dbt])
+    if @dbt.update(params[:dbt])
       flash[:notice] = "#{trn_geth('LABEL_TRANSLATION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to action: 'list'
 

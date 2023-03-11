@@ -54,7 +54,7 @@ class OptionCategoriesController < ApplicationController
   def update
     @option_category = OptionCategory.find(params[:id])
 
-    if @option_category.update_attributes(params[:option_category])
+    if @option_category.update(params[:option_category])
       flash[:notice] = trn_get('MSG_CATEGORY_UPDATED')
       redirect_to option_category_path(@option_category)
     else

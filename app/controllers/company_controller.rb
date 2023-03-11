@@ -29,7 +29,7 @@ class CompanyController < ApplicationController
 
   def update
     @company = Company.find(params[:id])
-    if @company.update_attributes(params[:company])
+    if @company.update(params[:company])
       flash[:notice] = "#{trn_geth('LABEL_COMPANY')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to action: 'show', id: @company
     else

@@ -22,7 +22,7 @@
 #  original_price             :float
 #
 
-class DoorLine < ActiveRecord::Base
+class DoorLine < ApplicationRecord
   belongs_to :quotation, touch: true
   belongs_to :door_frame
   belongs_to :door_combination
@@ -107,7 +107,7 @@ class DoorLine < ActiveRecord::Base
   def delete_preview_image
     # delete the line image
 
-    File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+    Rails.public_path.join('system', 'images', 'previews', "preview_#{id}.png").delete
   rescue StandardError
     # no problem if file does not exist
   end

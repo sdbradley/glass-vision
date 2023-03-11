@@ -51,7 +51,7 @@ class SeriesController < ApplicationController
 
   def update
     @serie = Serie.find(params[:id])
-    if @serie.update_attributes(params[:serie])
+    if @serie.update(params[:serie])
       flash[:notice] = "#{trn_geth('LABEL_SERIE')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to series_index_path
     else
@@ -216,8 +216,8 @@ class SeriesController < ApplicationController
         next unless op # if no price for this width and height, nothing to do
 
         # get destination width and height with same values than the source width and height
-        dw = @serie.widths.where('value = ?', ow.value).first
-        dh = @serie.heights.where('value = ?', oh.value).first
+        dw = @serie.widths.where(value: ow.value).first
+        dh = @serie.heights.where(value: oh.value).first
         # if the destination serie has same dimensions
         next unless dw && dh
 

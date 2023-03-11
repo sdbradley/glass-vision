@@ -5,7 +5,7 @@ end
 class QuotationLineController < ApplicationController
   def add
     @quotation_line = QuotationLine.new
-    @quotation_line.quotation_id = Quotation.find_by_slug(params[:id]).id
+    @quotation_line.quotation_id = Quotation.find_by(slug: params[:id]).id
   end
 
   def add2
@@ -239,14 +239,14 @@ class QuotationLineController < ApplicationController
         # save calculated dimensions
         params[:quotation_line][:height] = @line_info.total_height
         params[:quotation_line][:width] = @line_info.total_width
-        if @quotation_line.update_attributes(params[:quotation_line])
+        if @quotation_line.update(params[:quotation_line])
 
           # update openings
           @line_info.openings.each do |order, opening_id|
             opening = @quotation_line.quotation_lines_openings.select { |o| o.sort_order == order.to_i }.first
             opening ||= @quotation_line.quotation_lines_openings.build(opening_id: opening_id.to_i,
                                                                        sort_order: order.to_i)
-            opening.update_attributes(opening_id: opening_id.to_i, sort_order: order.to_i)
+            opening.update(opening_id: opening_id.to_i, sort_order: order.to_i)
           end
 
           # destroy any excess openings. This happens when user goes from 3 openings to 2 or 1, for example
@@ -335,7 +335,7 @@ class QuotationLineController < ApplicationController
 
     # if the new price is empty or not supplied (nil), revert to original price
     updated_price = original_price if updated_price.blank?
-    @quotation_line.update_attributes(original_price: original_price, price: updated_price)
+    @quotation_line.update(original_price: original_price, price: updated_price)
 
     render js: "window.location = \"#{quotation_path(@quotation_line.quotation.slug)}\""
   end

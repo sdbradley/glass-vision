@@ -23,7 +23,7 @@ class DoorBoringsController < ApplicationController
 
   def update
     @door_boring = DoorBoring.find(params[:id])
-    if @door_boring.update_attributes(params[:door_boring])
+    if @door_boring.update(params[:door_boring])
       flash[:notice] = "#{trn_geth('LABEL_DOOR_BORING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_M')}"
       redirect_to door_borings_path
     else

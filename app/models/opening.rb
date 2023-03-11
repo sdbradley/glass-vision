@@ -1,4 +1,4 @@
-class Opening < ActiveRecord::Base
+class Opening < ApplicationRecord
   translates :name, :abbreviation
   accepts_nested_attributes_for :translations
 

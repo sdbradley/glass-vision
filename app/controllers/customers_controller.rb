@@ -25,7 +25,7 @@ class CustomersController < ApplicationController
 
   def show_by_name
     if request.xml_http_request?
-      @customer = Customer.where('name = ?', params[:customer_name].to_s).first
+      @customer = Customer.where(name: params[:customer_name].to_s).first
       render partial: 'show_by_name', layout: false unless @customer.nil?
     else
       render nothing: true

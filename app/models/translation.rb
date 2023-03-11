@@ -1,6 +1,6 @@
-class Translation < ActiveRecord::Base
+class Translation < ApplicationRecord
   def self.get(key, lang = 'fr')
-    if (translation = Translation.find_by_translation_key(key))
+    if (translation = Translation.find_by(translation_key: key))
       (translation[lang].presence || key)
     else
       key
@@ -8,7 +8,7 @@ class Translation < ActiveRecord::Base
   end
 
   def self.geth(key, lang = 'fr')
-    ActiveSupport::Inflector.humanize(if (translation = Translation.find_by_translation_key(key))
+    ActiveSupport::Inflector.humanize(if (translation = Translation.find_by(translation_key: key))
                                         (translation[lang].presence || key)
                                       else
                                         key
@@ -16,7 +16,7 @@ class Translation < ActiveRecord::Base
   end
 
   def self.gett(key, lang = 'fr')
-    ActiveSupport::Inflector.titleize(if (translation = Translation.find_by_translation_key(key))
+    ActiveSupport::Inflector.titleize(if (translation = Translation.find_by(translation_key: key))
                                         (translation[lang].presence || key)
                                       else
                                         key

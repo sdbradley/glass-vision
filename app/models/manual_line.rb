@@ -1,4 +1,4 @@
-class ManualLine < ActiveRecord::Base
+class ManualLine < ApplicationRecord
   belongs_to :quotation, touch: true
 
   after_find :update_original_price

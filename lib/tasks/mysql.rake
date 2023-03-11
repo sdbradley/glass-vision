@@ -1,6 +1,6 @@
 desc 'Loads mysql command prompt'
 require 'erb'
-task :mysql do
+task mysql: :environment do
   puts "\n\nLoading mysql in #{Rails.env} mode...\n"
 
   database_yml_path = "#{Rails.root}/config/database.yml"

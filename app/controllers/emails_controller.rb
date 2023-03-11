@@ -61,7 +61,7 @@ class EmailsController < ApplicationController
     @email = Email.find(params[:id])
 
     respond_to do |format|
-      if @email.update_attributes(params[:email])
+      if @email.update(params[:email])
         flash[:notice] = 'Email was successfully updated.'
         format.html { redirect_to(@email) }
         format.xml  { head :ok }

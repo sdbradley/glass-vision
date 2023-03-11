@@ -68,7 +68,7 @@ class ProductColorsController < ApplicationController
     @module_type = @product_color.module_type
 
     respond_to do |format|
-      if @product_color.update_attributes(params[:product_color])
+      if @product_color.update(params[:product_color])
         flash[:notice] = trn_get('MSGF_COLOR_UPDATED')
         format.html { redirect_to(product_colors_url(mt: @module_type.id)) }
         format.xml  { head :ok }

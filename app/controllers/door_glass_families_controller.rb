@@ -23,7 +23,7 @@ class DoorGlassFamiliesController < ApplicationController
 
   def update
     @door_glass_family = DoorGlassFamily.find(params[:id])
-    if @door_glass_family.update_attributes(params[:door_glass_family])
+    if @door_glass_family.update(params[:door_glass_family])
       flash[:notice] = "#{trn_geth('LABEL_DOOR_GLASS_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_glass_families_path
     else

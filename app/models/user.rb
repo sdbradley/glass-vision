@@ -1,5 +1,5 @@
 require 'digest/sha1'
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   def self.find_and_activate!(activation_code)
     raise ArgumentError if activation_code.nil?
 
-    user = find_by_activation_code(activation_code)
+    user = find_by(activation_code: activation_code)
     raise ActivationCodeNotFound unless user
     raise AlreadyActivated, user if user.active?
 
@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
-    u = User.where('login = ?', login).first # need to get the salt
+    u = User.where(login: login).first # need to get the salt
     is_authenticated = u&.authenticated?(password)
     Audit.write_audit(u, 'login', 'Failure', 'invalid credentials') if u && !is_authenticated
     is_authenticated ? u : nil
@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
   end
 
   def has_role?(rolename)
-    roles.find_by_rolename(rolename) ? true : false
+    roles.find_by(rolename: rolename) ? true : false
   end
 
   def active_companies
@@ -183,7 +183,7 @@ class User < ActiveRecord::Base
   def encrypt_password
     return if password.blank?
 
-    self.salt = Digest::SHA1.hexdigest("--#{Time.now}--#{login}--") if new_record?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.zone.now}--#{login}--") if new_record?
     self.crypted_password = encrypt(password)
   end
 
@@ -192,11 +192,11 @@ class User < ActiveRecord::Base
   end
 
   def make_activation_code
-    self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.chars.sort_by { rand }.join)
+    self.activation_code = Digest::SHA1.hexdigest(Time.zone.now.to_s.chars.sort_by { rand }.join)
   end
 
   def make_password_reset_code
-    self.password_reset_code = Digest::SHA1.hexdigest(Time.now.to_s.chars.sort_by { rand }.join)
+    self.password_reset_code = Digest::SHA1.hexdigest(Time.zone.now.to_s.chars.sort_by { rand }.join)
   end
 
   private

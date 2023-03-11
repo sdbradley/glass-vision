@@ -58,9 +58,8 @@ class WindowPreviewCreator
   end
 
   def create_image
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
-    final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews',
-                                "preview_#{@quotation_line.id}.png")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
+    final_file_name = Rails.public_path.join('system', 'images', 'previews', "preview_#{@quotation_line.id}.png")
 
     # binding for erb file
     # constants
@@ -222,10 +221,10 @@ class WindowPreviewCreator
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
     # load erb file and generate svg
     File.write(temp_file_name,
-               ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'horizontal_size.svg'))).result(binding))
+               ERB.new(Rails.root.join('components', 'misc', 'horizontal_size.svg').read).result(binding))
 
     # load svg file
     size_image = Image.read(temp_file_name)[0]
@@ -242,10 +241,10 @@ class WindowPreviewCreator
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
     # load erb file and generate svg
     File.write(temp_file_name,
-               ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'vertical_size.svg'))).result(binding))
+               ERB.new(Rails.root.join('components', 'misc', 'vertical_size.svg').read).result(binding))
 
     # load svg file
     size_image = Image.read(temp_file_name)[0]
@@ -267,11 +266,11 @@ class WindowPreviewCreator
 
     section_height2 = 0
 
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
     # load erb file for section and generate scaled svg file
     image_file_name = "#{File.basename(get_opening(cpt_opening).preview_image_name, '.png')}.svg"
     File.write(temp_file_name,
-               ERB.new(File.read(File.join(Rails.root, 'components', 'openings', image_file_name))).result(binding))
+               ERB.new(Rails.root.join('components', 'openings', image_file_name).read).result(binding))
 
     IO.popen("rsvg-convert -a #{temp_file_name}") do |image_blob|
       section_image = Image.from_blob(image_blob.read).first

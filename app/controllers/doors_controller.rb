@@ -4,7 +4,7 @@ class DoorsController < ApplicationController
 
     # create new door line with default settings
     @door_line = DoorLine.new
-    @door_line.quotation_id = Quotation.find_by_slug(params[:id]).id
+    @door_line.quotation_id = Quotation.find_by(slug: params[:id]).id
     @door_line.door_frame = @door_frames.first
     @door_line.door_combination = DoorCombination.first(conditions: { door_frame_id: @door_line.door_frame_id })
     @door_line.frame_profile = @frame_profiles.first
@@ -22,7 +22,7 @@ class DoorsController < ApplicationController
     # create and populate each section of the door
     previous_sections = init_previous_sections
     @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
-      door_line_section = { door_section: DoorSection.find_by_code(door_section_code) }
+      door_line_section = { door_section: DoorSection.find_by(code: door_section_code) }
       door_line_section[:door_panel_families] = door_line_section[:door_section].door_panels.map do |dp|
         dp.door_panel_family.slab_material_id == slab_material.id ? dp.door_panel_family : nil
       end.compact.uniq
@@ -123,7 +123,7 @@ class DoorsController < ApplicationController
     door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
 
     @door_glasses = door_glass_family.door_glasses
-    @door_glasses.delete_if { |dg| !door_panel.door_glasses.include? dg }
+    @door_glasses.delete_if { |dg| door_panel.door_glasses.exclude? dg }
     @door_glass_id = @door_glasses.first.id unless @door_glasses.empty?
     return unless params[:door_glass_id] && @door_glasses.map(&:id).include?(params[:door_glass_id].to_i)
 
@@ -160,7 +160,7 @@ class DoorsController < ApplicationController
 
   def update
     @door_line = DoorLine.find(params[:id])
-    return unless @door_line.update_attributes(params[:door_line])
+    return unless @door_line.update(params[:door_line])
 
     @door_line.door_line_sections.clear
     @door_line.door_line_options.clear
@@ -185,7 +185,7 @@ class DoorsController < ApplicationController
 
     # if the new price is empty or not supplied (nil), revert to original price
     updated_price = original_price if updated_price.blank?
-    door_line.update_attributes(original_price: original_price, price: updated_price)
+    door_line.update(original_price: original_price, price: updated_price)
 
     render js: "window.location = \"#{quotation_path(door_line.quotation.slug)}\""
   end

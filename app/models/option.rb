@@ -1,4 +1,4 @@
-class Option < ActiveRecord::Base
+class Option < ApplicationRecord
   translates :description
   accepts_nested_attributes_for :translations
 
@@ -29,7 +29,7 @@ class Option < ActiveRecord::Base
 
   validates_attachment_size :photo, less_than: 1.megabyte
 
-  validates :description, :pricing_method_id, :price, presence: true
+  validates :description, :price, presence: true
   validates :price, numericality: true
 
   # find all options that are assigned to a category

@@ -1,4 +1,4 @@
-class Shape < ActiveRecord::Base
+class Shape < ApplicationRecord
   include Translatable
   has_attached_file :photo, default_style: :original,
                             whiny_thumbnails: true,

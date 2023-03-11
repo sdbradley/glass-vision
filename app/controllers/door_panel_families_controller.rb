@@ -26,7 +26,7 @@ class DoorPanelFamiliesController < ApplicationController
 
   def update
     @door_panel_family = DoorPanelFamily.find(params[:id])
-    if @door_panel_family.update_attributes(params[:door_panel_family])
+    if @door_panel_family.update(params[:door_panel_family])
       flash[:notice] = "#{trn_geth('LABEL_DOOR_PANEL_FAMILY')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_panel_families_path
     else

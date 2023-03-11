@@ -23,7 +23,7 @@ class DoorFramesController < ApplicationController
 
   def update
     @door_frame = DoorFrame.find(params[:id])
-    if @door_frame.update_attributes(params[:door_frame])
+    if @door_frame.update(params[:door_frame])
       flash[:notice] = "#{trn_geth('LABEL_DOOR_FRAME')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_M')}"
       redirect_to door_frames_path
     else

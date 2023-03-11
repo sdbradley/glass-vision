@@ -1,4 +1,4 @@
-class PricingMethod < ActiveRecord::Base
+class PricingMethod < ApplicationRecord
   PRICING_METHODS = [
     PER_SQ_FOOT = 1,
     PER_PERIMETER_FOOT = 2,

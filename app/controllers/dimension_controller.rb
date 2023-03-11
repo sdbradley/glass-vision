@@ -20,7 +20,7 @@ class DimensionController < ApplicationController
 
   def update
     @dimension = Dimension.find(params[:id])
-    if @dimension.update_attributes(params[:dimension])
+    if @dimension.update(params[:dimension])
       flash[:notice] = "#{trn_geth('LABEL_DIMENSION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to series_path(id: @dimension.serie_id)
     else

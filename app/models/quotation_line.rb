@@ -1,4 +1,4 @@
-class QuotationLine < ActiveRecord::Base
+class QuotationLine < ApplicationRecord
   belongs_to :quotation, touch: true
   belongs_to :serie
   belongs_to :shape
@@ -10,7 +10,7 @@ class QuotationLine < ActiveRecord::Base
   belongs_to :standard_interior_color, class_name: 'ProductColor'
   belongs_to :standard_exterior_color, class_name: 'ProductColor'
 
-  validates :width, :height, :serie_id, :quantity, presence: true
+  validates :width, :height, :quantity, presence: true
   validates :width, :height, :quantity, numericality: true
 
   after_initialize :set_default_quantity
@@ -101,7 +101,7 @@ class QuotationLine < ActiveRecord::Base
   end
 
   def get_preview_image_path
-    create_image unless File.exist?(File.join(Rails.root, 'public', preview_image_path))
+    create_image unless Rails.public_path.join(preview_image_path).exist?
     preview_image_path
   end
 
@@ -114,7 +114,7 @@ class QuotationLine < ActiveRecord::Base
   def delete_preview_image
     # delete the line image
 
-    File.delete File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+    Rails.public_path.join('system', 'images', 'previews', "preview_#{id}.png").delete
   rescue StandardError
     # no problem if file does not exist
   end

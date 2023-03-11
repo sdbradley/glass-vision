@@ -1,4 +1,4 @@
-class GlassMailer < ActionMailer::Base
+class GlassMailer < ApplicationMailer
   include TranslationGet
   default from: 'info@glass-vision.net'
 

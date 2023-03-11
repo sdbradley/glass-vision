@@ -1,4 +1,4 @@
-class Serie < ActiveRecord::Base
+class Serie < ApplicationRecord
   translates :comments, :name, :description
   accepts_nested_attributes_for :translations
 

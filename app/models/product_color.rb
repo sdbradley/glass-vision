@@ -1,4 +1,4 @@
-class ProductColor < ActiveRecord::Base
+class ProductColor < ApplicationRecord
   translates :name
   accepts_nested_attributes_for :translations
 

@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
           render action: 'edit'
         end
       else
-        flash[:error] = trn_geth('PASSWORD_MISMATCH_FLASH')
+        flash.now[:error] = trn_geth('PASSWORD_MISMATCH_FLASH')
         @old_password = params[:old_password]
         render action: 'edit'
       end

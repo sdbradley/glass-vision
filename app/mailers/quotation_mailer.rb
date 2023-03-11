@@ -1,4 +1,4 @@
-class QuotationMailer < ActionMailer::Base
+class QuotationMailer < ApplicationMailer
   include TranslationGet
   default from: 'info@glass-vision.net'
 

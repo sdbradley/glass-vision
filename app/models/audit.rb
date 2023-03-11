@@ -10,7 +10,7 @@
 #  created_at :datetime
 #
 
-class Audit < ActiveRecord::Base
+class Audit < ApplicationRecord
   belongs_to :user
 
   def readonly?

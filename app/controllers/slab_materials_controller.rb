@@ -9,7 +9,7 @@ class SlabMaterialsController < ApplicationController
 
   def update
     @slab_material = SlabMaterial.find(params[:id])
-    if @slab_material.update_attributes(params[:slab_material])
+    if @slab_material.update(params[:slab_material])
       flash[:notice] = "#{trn_geth('LABEL_SLAB_MATERIAL')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_M')}"
       redirect_to slab_materials_path
     else

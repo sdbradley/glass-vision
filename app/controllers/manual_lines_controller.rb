@@ -1,6 +1,6 @@
 class ManualLinesController < ApplicationController
   def new
-    quotation = Quotation.find_by_slug(params[:id])
+    quotation = Quotation.find_by(slug: params[:id])
     @manual_line = ManualLine.new(quotation_id: quotation.id, quantity: 1, unit_price: 0)
   end
 
@@ -20,7 +20,7 @@ class ManualLinesController < ApplicationController
 
   def update
     @manual_line = ManualLine.find(params[:id])
-    if @manual_line.update_attributes(params[:manual_line])
+    if @manual_line.update(params[:manual_line])
       flash[:notice] = "#{trn_geth('LABEL_MANUAL_OPTION')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to controller: 'quotation', action: 'show', id: @manual_line.quotation.slug
     else
@@ -42,7 +42,7 @@ class ManualLinesController < ApplicationController
 
     # if the new price is empty or not supplied (nil), revert to original price
     updated_price = original_price if updated_price.blank?
-    @manual_line.update_attributes(original_price: original_price, unit_price: updated_price)
+    @manual_line.update(original_price: original_price, unit_price: updated_price)
 
     render js: "window.location = \"#{quotation_path(@manual_line.quotation.slug)}\""
   end

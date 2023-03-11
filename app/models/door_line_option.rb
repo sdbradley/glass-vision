@@ -10,7 +10,7 @@
 #  updated_at   :datetime
 #
 
-class DoorLineOption < ActiveRecord::Base
+class DoorLineOption < ApplicationRecord
   belongs_to :door_line
   belongs_to :option
 

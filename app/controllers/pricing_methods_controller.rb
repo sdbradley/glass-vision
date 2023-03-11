@@ -59,7 +59,7 @@ class PricingMethodsController < ApplicationController
     @pricing_method = PricingMethod.find(params[:id])
 
     respond_to do |format|
-      if @pricing_method.update_attributes(params[:pricing_method])
+      if @pricing_method.update(params[:pricing_method])
         format.html { redirect_to(pricing_methods_path, notice: trn_get('PRICING_METHOD_UPDATED')) }
         format.xml  { head :ok }
       else

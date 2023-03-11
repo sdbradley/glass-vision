@@ -33,9 +33,9 @@ class DoorPreviewCreator
     # make sure url has a trailing /
     base_url.chomp('/') if base_url.last == '/'
 
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@door_line.id}.svg")
-    temp_bin_file = File.join(Rails.root, 'tmp', "#{File.basename(temp_file_name, '.svg')}.png")
-    final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{@door_line.id}.png")
+    temp_file_name = Rails.root.join('tmp', "image_#{@door_line.id}.svg")
+    temp_bin_file = Rails.root.join('tmp', "#{File.basename(temp_file_name, '.svg')}.png")
+    final_file_name = Rails.public_path.join('system', 'images', 'doors', "preview_#{@door_line.id}.png")
 
     # define canvas for final image
     image_width = (total_width + 30) * PIXELS_PER_INCH
@@ -61,7 +61,7 @@ class DoorPreviewCreator
       # get the file to be painted
       if door_line_section.door_panel
         src_svg_file_name = "#{File.basename(door_line_section.door_panel.preview_image_name, '.png')}.svg"
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', src_svg_file_name)
+        src_image = Rails.public_path.join('images', 'door_panels', src_svg_file_name)
 
         if door_line_section.door_glass
 
@@ -95,8 +95,7 @@ class DoorPreviewCreator
         section_image = Image.read(temp_bin_file)[0]
 
       else
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels',
-                              "#{door_line_section.door_section.code}.png")
+        src_image = Rails.public_path.join('images', 'door_panels', "#{door_line_section.door_section.code}.png")
         section_image = Image.read(src_image)[0]
         # # resize the section image to fit the dimensions
         section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH,

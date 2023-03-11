@@ -13,7 +13,7 @@
 #  door_panel_dimension_id :integer
 #
 
-class DoorLineSection < ActiveRecord::Base
+class DoorLineSection < ApplicationRecord
   belongs_to :door_line
   belongs_to :door_section
   belongs_to :door_panel

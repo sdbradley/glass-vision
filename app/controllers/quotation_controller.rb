@@ -31,7 +31,7 @@ class QuotationController < ApplicationController
   end
 
   def edit
-    @quotation = Quotation.find_by_slug(params[:id])
+    @quotation = Quotation.find_by(slug: params[:id])
     @users = User.enabled
   end
 
@@ -112,7 +112,7 @@ class QuotationController < ApplicationController
   def copy
     #    return unless request.xhr?
     @orig_quotation = Quotation.includes(quotation_lines: [:serie, :shape, { quotation_lines_openings: :opening },
-                                                           { options_quotation_lines: :option }]).find_by_slug(params[:quotation_id])
+                                                           { options_quotation_lines: :option }]).find_by(slug: params[:quotation_id])
     if @orig_quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
       flash[notice] = trn_get('PERMISSION_DENIED')
       redirect_to action: 'index'
@@ -152,7 +152,7 @@ class QuotationController < ApplicationController
 
   def find_quotation
     @quotation = Quotation.includes(quotation_lines: [:serie, :shape, { quotation_lines_openings: :opening },
-                                                      { options_quotation_lines: :option }]).find_by_slug(params[:id])
+                                                      { options_quotation_lines: :option }]).find_by(slug: params[:id])
   end
 
   def set_taxes_if_not_present

@@ -23,7 +23,7 @@ class DoorOpeningsController < ApplicationController
 
   def update
     @door_opening = DoorOpening.find(params[:id])
-    if @door_opening.update_attributes(params[:door_opening])
+    if @door_opening.update(params[:door_opening])
       flash[:notice] = "#{trn_geth('LABEL_DOOR_OPENING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to door_openings_path
     else
