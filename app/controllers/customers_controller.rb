@@ -74,8 +74,12 @@ class CustomersController < ApplicationController
     conditions = { user_id: @current_user.id } unless @current_user.has_role?('administrator')
     search_conditions = searcher.conditions { |x, v, searcher| search_condition_for(x, v, searcher) }
 
-    @customers = Customer.where(conditions).where(search_conditions).paginate(page: params[:page],
-                                                                              per_page: 25).order(sort_order(default: 'ascending'))
+    @customers =
+      Customer
+      .where(conditions)
+      .where(search_conditions)
+      .order(:name)
+      .paginate(page: params[:page], per_page: 25)
   end
 
   protected

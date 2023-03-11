@@ -23,7 +23,7 @@
 
   <%= stylesheet_link_tag 'application', 'jquery-ui', 'ui-lightness/jquery-ui-1.10.3.custom.css', 'formtastic', 'formtastic_changes', 'colorpicker', 'door_lines', 'pagination' %>
 
-  <%= javascript_include_tag 'jquery', 'quotations', 'customers', 'colorpicker', 'hover-popup', 'door_lines', 'jquery-migrate-min', 'autocomplete-rails' %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   
   <%= csrf_meta_tag %>
 

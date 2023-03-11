@@ -1,6 +1,4 @@
 GlassVision::Application.routes.draw do
-  get 'audit/index'
-
   resources :emails
   get '/signup', to: 'users#new', as: :signup
   get '/login', to: 'session#new', as: :login
