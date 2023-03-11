@@ -23,8 +23,8 @@
     <td><%= shape.corners %></td>
     <td><%= shape.series.count %></td>
     <td valign='middle'>
-      <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_shape_path(shape) %>
-      <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), shape, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+      <%= link_to image_tag('/images/page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_shape_path(shape) %>
+      <%= link_to image_tag('/images/delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), shape, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
     </td>
   </tr>
 <% end %>

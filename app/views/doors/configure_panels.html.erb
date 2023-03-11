@@ -20,7 +20,7 @@
               <% if door_panel.door_panel_family_id == door_panel_family.id %>
                 <div class="choice door-panel <%= 'selected' if door_panel.id == door_line_section[:door_line_section].door_panel_id %>" id="dp-<%= door_panel.id %>">
                   <div class="preview-image">
-                    <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
+                    <%= image_tag '/images/door_panels/' + door_panel.preview_image_name %>
                   </div>
                   <div class="label">
                     <%= door_panel.name %>

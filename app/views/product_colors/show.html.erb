@@ -2,7 +2,7 @@
   <%= gv_show_translations(@product_color, :name, 'LABEL_NAME') %>
   <tr>
     <td><%= trn_geth('LABEL_COLOR_VALUE') %></td>
-    <td><%= @product_color.value %><br/><%= image_tag('transparent-block.png', :style => "border:1px solid #ccc;background-color:#{@product_color.value};") %></td>
+    <td><%= @product_color.value %><br/><%= image_tag('/images/transparent-block.png', :style => "border:1px solid #ccc;background-color:#{@product_color.value};") %></td>
   </tr>
 </table>
 

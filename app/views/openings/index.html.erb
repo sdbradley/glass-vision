@@ -20,12 +20,12 @@
     <td><%= opening.glasses_quantity %></td>
     <td>
       <% if opening.preview_image_name and !opening.preview_image_name.empty? %>
-        <%= image_tag 'openings/' + opening.preview_image_name %>
+        <%= image_tag '/images/openings/' + opening.preview_image_name %>
       <% end %>
     </td>
     <td valign='middle'>
-      <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_opening_path(opening) %>
-      <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), opening, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+      <%= link_to image_tag('/images/page_white_edit.png', :title => trn_geth('BUTTON_EDIT'), :class => 'command-icon'), edit_opening_path(opening) %>
+      <%= link_to image_tag('/images/delete.png', :title => trn_geth('BUTTON_DELETE'), :class => 'command-icon'), opening, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
     </td>
   </tr>
 <% end %>

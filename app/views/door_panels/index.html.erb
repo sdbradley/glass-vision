@@ -21,7 +21,7 @@
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%= door_panel.name %></td>
     <td>
-      <%= image_tag 'door_panels/' + door_panel.preview_image_name unless door_panel.preview_image_name.blank? %>
+      <%= image_tag '/images/door_panels/' + door_panel.preview_image_name unless door_panel.preview_image_name.blank? %>
     </td>
     <td>
       <%= link_to trn_geth('BUTTON_EDIT'), edit_door_panel_family_door_panel_path(@door_panel_family, door_panel) %> |

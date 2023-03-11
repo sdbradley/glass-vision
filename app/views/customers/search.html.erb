@@ -1,5 +1,5 @@
 <%= turbo_frame_tag :customer_search %>
-  <%= form_with url: search_customers_path do %>
+  <%= form_with url: search_customers_path, method: :get do %>
     <%= submit_tag 'Search', style: 'position:absolute;bottom:-20px;left:-20px;z-index:-1;' %>
 
     <table>
@@ -19,7 +19,7 @@
         <td></td>
         <td></td>
         <td><%= text_field_tag :search_email, params[:search_email], :style=> 'width:100%' %></td>
-        <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
+        <td><%= image_tag('/images/spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
         </td>
       </tr>
 
