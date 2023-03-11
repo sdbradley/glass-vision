@@ -3,17 +3,18 @@ class CustomersController < ApplicationController
   SEARCH_FIELDS = %w[search_name search_address search_email].freeze
 
   def index
-    searcher = SearchConditions.new(session, SEARCH_FIELDS)
+    searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
     conditions = { user_id: @current_user.id } unless @current_user.has_role?('administrator')
     search_conditions = searcher.conditions { |x, v, searcher| search_condition_for(x, v, searcher) }
 
-    @customers = Customer.where(conditions).where(search_conditions).paginate(page: params[:page], per_page: 25) # .order(sort_order: :asc)
+    @customers =
+      Customer
+      .where(conditions)
+      .where(search_conditions)
+      .order(:name)
+      .paginate(page: params[:page], per_page: 25)
   end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  # verify :method => :post, :only => [ :destroy, :create, :update ],
-  #        :redirect_to => { :action => :index }
 
   def show
     @customer = Customer.find(params[:id])
@@ -67,20 +68,7 @@ class CustomersController < ApplicationController
     redirect_to customers_path
   end
 
-  def search
-    searcher = SearchConditions.new(session, SEARCH_FIELDS, params)
 
-    params[:action] = 'index'
-    conditions = { user_id: @current_user.id } unless @current_user.has_role?('administrator')
-    search_conditions = searcher.conditions { |x, v, searcher| search_condition_for(x, v, searcher) }
-
-    @customers =
-      Customer
-      .where(conditions)
-      .where(search_conditions)
-      .order(:name)
-      .paginate(page: params[:page], per_page: 25)
-  end
 
   protected
 

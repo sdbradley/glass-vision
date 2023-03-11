@@ -7,27 +7,23 @@ GlassVision::Application.routes.draw do
   get '/forgot_password', to: 'passwords#new', as: :forgot_password
   get '/reset_password/:id', to: 'passwords#edit', as: :reset_password
   get '/change_password', to: 'accounts#edit', as: :change_password
-  post '/customers/show_by_name', to: 'customers#show_by_name', as: :show_by_name
   get '/set_lang', to: 'home#set_lang'
   get '/company/list', to: 'company#list'
   get '/translation/list', to: 'translation#list'
-
+  
   resources :users do
     post :enable
     post :disable
     resource :account
     resources :roles
   end
-
+  
   resources :audits, only: :index
   resources :product_colors
   resources :shapes
   resources :openings
-  resources :customers do
-    collection do
-      post :search
-    end
-  end
+  post '/customers/show_by_name', to: 'customers#show_by_name'
+  resources :customers
   resources :options
   resources :option_categories do
     member do
