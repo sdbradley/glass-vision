@@ -30,6 +30,11 @@ class QuotationController < ApplicationController
     @users = User.enabled
   end
 
+  def edit
+    @quotation = Quotation.find_by_slug(params[:id])
+    @users = User.enabled
+  end
+
   def create
     set_taxes_if_not_present
 
@@ -44,18 +49,13 @@ class QuotationController < ApplicationController
         @quotation.slug = InvoiceNumber.get_next_invoice_number
         @quotation.save
       end
-      customer_msg += '<br />' unless customer_msg.blank?
+      customer_msg += '<br />' if customer_msg.present?
       customer_msg += "#{trn_geth('LABEL_QUOTATION')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       flash[notice] = customer_msg.html_safe
       redirect_to action: 'show', id: @quotation.slug
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @quotation = Quotation.find_by_slug(params[:id])
-    @users = User.enabled
   end
 
   def update

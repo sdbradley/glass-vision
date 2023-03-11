@@ -29,8 +29,8 @@ class Option < ActiveRecord::Base
 
   validates_attachment_size :photo, less_than: 1.megabyte
 
-  validates_presence_of :description, :pricing_method_id, :price
-  validates_numericality_of :price
+  validates :description, :pricing_method_id, :price, presence: true
+  validates :price, numericality: true
 
   # find all options that are assigned to a category
   #   o = Option.all(:include => :option_categories, :conditions =>['not ISNULL(option_categories_options.option_category_id)'])

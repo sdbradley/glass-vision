@@ -7,6 +7,10 @@ class DoorFramesController < ApplicationController
     @door_frame = DoorFrame.new
   end
 
+  def edit
+    @door_frame = DoorFrame.find(params[:id])
+  end
+
   def create
     @door_frame = DoorFrame.new(params[:door_frame])
     if @door_frame.save
@@ -15,10 +19,6 @@ class DoorFramesController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_frame = DoorFrame.find(params[:id])
   end
 
   def update

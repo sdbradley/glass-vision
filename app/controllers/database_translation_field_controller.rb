@@ -9,6 +9,10 @@ class DatabaseTranslationFieldController < ApplicationController
     @dbtf = DatabaseTranslationField.new
   end
 
+  def edit
+    @dbtf = DatabaseTranslationField.find(params[:id])
+  end
+
   def create
     @dbtf = DatabaseTranslationField.new(params[:dbtf])
     if @dbtf.save
@@ -17,10 +21,6 @@ class DatabaseTranslationFieldController < ApplicationController
     else
       render action: 'add'
     end
-  end
-
-  def edit
-    @dbtf = DatabaseTranslationField.find(params[:id])
   end
 
   def update

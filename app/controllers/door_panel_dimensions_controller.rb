@@ -10,6 +10,12 @@ class DoorPanelDimensionsController < ApplicationController
     @door_panel_dimension = @door_panel.door_panel_dimensions.new
   end
 
+  def edit
+    @door_panel_family = DoorPanelFamily.find(params[:door_panel_family_id])
+    @door_panel = DoorPanel.find(params[:door_panel_id])
+    @door_panel_dimension = DoorPanelDimension.find(params[:id])
+  end
+
   def create
     @door_panel_family = DoorPanelFamily.find(params[:door_panel_family_id])
     @door_panel = DoorPanel.find(params[:door_panel_id])
@@ -20,12 +26,6 @@ class DoorPanelDimensionsController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_panel_family = DoorPanelFamily.find(params[:door_panel_family_id])
-    @door_panel = DoorPanel.find(params[:door_panel_id])
-    @door_panel_dimension = DoorPanelDimension.find(params[:id])
   end
 
   def update

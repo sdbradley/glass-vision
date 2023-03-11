@@ -18,6 +18,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  # This edit action only allows users to edit their own profile
+  def edit
+    get_user_for_edit
+  end
+
   def create
     cookies.delete :auth_token
     @user = User.new(user_params[:user])
@@ -29,11 +34,6 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     flash[:error] = trn_get('SIGNUP_PROBLEM_FLASH')
     render action: 'new'
-  end
-
-  # This edit action only allows users to edit their own profile
-  def edit
-    get_user_for_edit
   end
 
   def update

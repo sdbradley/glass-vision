@@ -7,5 +7,5 @@ class Opening < ActiveRecord::Base
   has_many :preview_images, dependent: :destroy
   has_and_belongs_to_many :series, class_name: 'Serie'
 
-  validates_presence_of :name, :abbreviation, :glasses_quantity
+  validates :name, :abbreviation, :glasses_quantity, presence: true
 end

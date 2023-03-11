@@ -13,6 +13,10 @@ class CompanyController < ApplicationController
     @company = Company.new
   end
 
+  def edit
+    @company = Company.find(params[:id])
+  end
+
   def create
     @company = Company.new(params[:company])
     if @company.save
@@ -21,10 +25,6 @@ class CompanyController < ApplicationController
     else
       render action: 'add'
     end
-  end
-
-  def edit
-    @company = Company.find(params[:id])
   end
 
   def update

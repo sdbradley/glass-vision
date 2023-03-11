@@ -28,7 +28,7 @@ class AccountsController < ApplicationController
     return unless request.post?
 
     if User.authenticate(current_user.login, params[:old_password])
-      if (params[:password] == params[:password_confirmation]) && !params[:password_confirmation].blank?
+      if (params[:password] == params[:password_confirmation]) && params[:password_confirmation].present?
         current_user.password_confirmation = params[:password_confirmation]
         current_user.password = params[:password]
         if current_user.save

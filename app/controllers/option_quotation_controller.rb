@@ -5,6 +5,11 @@ class OptionQuotationController < ApplicationController
     @quantity = 1
   end
 
+  def edit
+    @options = Option.order(:description)
+    @option = OptionsQuotation.find(params[:id])
+  end
+
   def create
     @quotation = Quotation.find_by_slug(params[:id])
     option = Option.find(params[:option_id])
@@ -12,11 +17,6 @@ class OptionQuotationController < ApplicationController
                                        original_price: option.price, unit_price: option.price)
     @quotation.options_quotations << option_line
     redirect_to controller: 'quotation', action: 'show', id: @quotation.slug
-  end
-
-  def edit
-    @options = Option.order(:description)
-    @option = OptionsQuotation.find(params[:id])
   end
 
   def update

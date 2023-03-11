@@ -7,6 +7,10 @@ class DoorBoringsController < ApplicationController
     @door_boring = DoorBoring.new
   end
 
+  def edit
+    @door_boring = DoorBoring.find(params[:id])
+  end
+
   def create
     @door_boring = DoorBoring.new(params[:door_boring])
     if @door_boring.save
@@ -15,10 +19,6 @@ class DoorBoringsController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_boring = DoorBoring.find(params[:id])
   end
 
   def update

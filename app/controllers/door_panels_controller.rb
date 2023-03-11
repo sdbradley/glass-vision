@@ -9,6 +9,12 @@ class DoorPanelsController < ApplicationController
     @door_sections = DoorSection.all(order: :name)
   end
 
+  def edit
+    @door_panel_family = DoorPanelFamily.find(params[:door_panel_family_id])
+    @door_panel = DoorPanel.find(params[:id])
+    @door_sections = DoorSection.all(order: :name)
+  end
+
   def create
     @door_panel_family = DoorPanelFamily.find(params[:door_panel_family_id])
     @door_panel = @door_panel_family.door_panels.new(params[:door_panel])
@@ -18,12 +24,6 @@ class DoorPanelsController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_panel_family = DoorPanelFamily.find(params[:door_panel_family_id])
-    @door_panel = DoorPanel.find(params[:id])
-    @door_sections = DoorSection.all(order: :name)
   end
 
   def update

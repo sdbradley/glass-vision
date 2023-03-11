@@ -7,6 +7,10 @@ class FrameProfilesController < ApplicationController
     @frame_profile = FrameProfile.new
   end
 
+  def edit
+    @frame_profile = FrameProfile.find(params[:id])
+  end
+
   def create
     @frame_profile = FrameProfile.new(params[:frame_profile])
     if @frame_profile.save
@@ -15,10 +19,6 @@ class FrameProfilesController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @frame_profile = FrameProfile.find(params[:id])
   end
 
   def update

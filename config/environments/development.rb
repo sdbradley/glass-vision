@@ -12,7 +12,7 @@ GlassVision::Application.configure do
 
   # separate local assets from production assets, so Propshaft can
   # track changes and hot-reload assets when you make changes.
-  config.assets.prefix = "/dev-assets"
+  config.assets.prefix = '/dev-assets'
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development

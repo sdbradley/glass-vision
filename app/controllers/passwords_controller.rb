@@ -6,21 +6,6 @@ class PasswordsController < ApplicationController
   # Enter email address to recover password
   def new; end
 
-  # Forgot password action
-  def create
-    return unless request.post?
-
-    if (@user = User.find_for_forget(params[:email]))
-      @user.forgot_password
-      @user.save
-      flash[:notice] = trn_get('PASSWORD_RESET_EMAIL_SENT_FLASH')
-      redirect_to login_path
-    else
-      flash[:notice] = trn_get('BAD_EMAIL_FLASH')
-      render action: 'new'
-    end
-  end
-
   # Action triggered by clicking on the /reset_password/:id link recieved via email
   # Makes sure the id code is included
   # Checks that the id code matches a user in the database
@@ -37,6 +22,21 @@ class PasswordsController < ApplicationController
     flash[:notice] = trn_get('BAD_PASSWORD_RESET_CODE')
     # redirect_back_or_default('/')
     redirect_to new_user_path
+  end
+
+  # Forgot password action
+  def create
+    return unless request.post?
+
+    if (@user = User.find_for_forget(params[:email]))
+      @user.forgot_password
+      @user.save
+      flash[:notice] = trn_get('PASSWORD_RESET_EMAIL_SENT_FLASH')
+      redirect_to login_path
+    else
+      flash[:notice] = trn_get('BAD_EMAIL_FLASH')
+      render action: 'new'
+    end
   end
 
   # Reset password action /reset_password/:id

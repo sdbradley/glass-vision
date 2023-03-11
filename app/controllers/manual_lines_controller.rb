@@ -4,6 +4,10 @@ class ManualLinesController < ApplicationController
     @manual_line = ManualLine.new(quotation_id: quotation.id, quantity: 1, unit_price: 0)
   end
 
+  def edit
+    @manual_line = ManualLine.find(params[:id])
+  end
+
   def create
     @manual_line = ManualLine.new(params[:manual_line])
     if @manual_line.save
@@ -12,10 +16,6 @@ class ManualLinesController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @manual_line = ManualLine.find(params[:id])
   end
 
   def update

@@ -36,6 +36,10 @@ class CustomersController < ApplicationController
     @customer = Customer.new
   end
 
+  def edit
+    @customer = Customer.find(update_params[:id])
+  end
+
   def create
     @customer = Customer.new(customer_params[:customer])
     @customer.user = @current_user unless @customer.nil?
@@ -45,10 +49,6 @@ class CustomersController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @customer = Customer.find(update_params[:id])
   end
 
   def update

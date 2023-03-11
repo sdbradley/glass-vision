@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  validates_presence_of :name
+  validates :name, presence: true
   has_and_belongs_to_many :users
   #  has_and_belongs_to_many :quotations
 

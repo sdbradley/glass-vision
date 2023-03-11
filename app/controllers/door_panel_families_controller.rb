@@ -8,6 +8,11 @@ class DoorPanelFamiliesController < ApplicationController
     @slab_materials = SlabMaterial.all
   end
 
+  def edit
+    @door_panel_family = DoorPanelFamily.find(params[:id])
+    @slab_materials = SlabMaterial.all
+  end
+
   def create
     @door_panel_family = DoorPanelFamily.new(params[:door_panel_family])
     if @door_panel_family.save
@@ -17,11 +22,6 @@ class DoorPanelFamiliesController < ApplicationController
       @slab_materials = SlabMaterial.all
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_panel_family = DoorPanelFamily.find(params[:id])
-    @slab_materials = SlabMaterial.all
   end
 
   def update

@@ -74,6 +74,35 @@ class QuotationLineController < ApplicationController
     initialize_options_for_series
   end
 
+  def edit
+    @quotation_line = QuotationLine.includes(serie: [options: %i[pricing_method options_minimum_unit]],
+                                             options_quotation_lines: :option).find(params[:id])
+
+    # we have two use cases..this is is #2
+    @line_info = QuotationLineParameters.new(@quotation_line).from_line
+    calculate_dimensions(@quotation_line.width, @quotation_line.height)
+
+    @serie = @quotation_line.serie
+
+    @options = @serie.options
+    @options.each do |option|
+      next unless option.pricing_method.quantifiable
+
+      oli_index = @quotation_line.options_quotation_lines.index { |o| o.option_id == option.id }
+      qty = if oli_index.nil?
+              option.minimum_quantity
+            else
+              @quotation_line.options_quotation_lines[oli_index].quantity
+            end
+      instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
+    end
+
+    # for the view
+    @openings = @line_info.openings
+    @section_height = @line_info.section_height
+    @section_width = @line_info.section_width
+  end
+
   def create
     @quotation_line = QuotationLine.new(params[:quotation_line])
     @serie = Serie.find(@quotation_line.serie_id)
@@ -174,35 +203,6 @@ class QuotationLineController < ApplicationController
         end
       end
     end
-  end
-
-  def edit
-    @quotation_line = QuotationLine.includes(serie: [options: %i[pricing_method options_minimum_unit]],
-                                             options_quotation_lines: :option).find(params[:id])
-
-    # we have two use cases..this is is #2
-    @line_info = QuotationLineParameters.new(@quotation_line).from_line
-    calculate_dimensions(@quotation_line.width, @quotation_line.height)
-
-    @serie = @quotation_line.serie
-
-    @options = @serie.options
-    @options.each do |option|
-      next unless option.pricing_method.quantifiable
-
-      oli_index = @quotation_line.options_quotation_lines.index { |o| o.option_id == option.id }
-      qty = if oli_index.nil?
-              option.minimum_quantity
-            else
-              @quotation_line.options_quotation_lines[oli_index].quantity
-            end
-      instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
-    end
-
-    # for the view
-    @openings = @line_info.openings
-    @section_height = @line_info.section_height
-    @section_width = @line_info.section_width
   end
 
   def update

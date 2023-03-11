@@ -27,7 +27,7 @@ class DoorsController < ApplicationController
         dp.door_panel_family.slab_material_id == slab_material.id ? dp.door_panel_family : nil
       end.compact.uniq
       door_line_section[:door_line_section] = DoorLineSection.new(door_section: door_line_section[:door_section])
-      unless door_line_section[:door_panel_families].blank?
+      if door_line_section[:door_panel_families].present?
         door_line_section[:door_line_section].door_panel = door_line_section[:door_section].door_panels.first
         door_line_section[:door_line_section].door_panel_dimension = door_line_section[:door_line_section].door_panel.door_panel_dimensions.first
       end
@@ -39,7 +39,7 @@ class DoorsController < ApplicationController
       if possible_choices.length >= 1
 
         # same panel
-        unless possible_choices[0][:door_panel_id].blank?
+        if possible_choices[0][:door_panel_id].present?
           dp = DoorPanel.first(conditions: { id: possible_choices[0][:door_panel_id] })
           if dp && (dp.door_panel_family.slab_material_id == slab_material.id)
             door_line_section[:door_line_section].door_panel_id = possible_choices[0][:door_panel_id].to_i
@@ -47,7 +47,7 @@ class DoorsController < ApplicationController
         end
 
         # same dimension
-        unless possible_choices[0][:door_panel_dimension_id].blank?
+        if possible_choices[0][:door_panel_dimension_id].present?
           dpd = DoorPanelDimension.first(conditions: { id: possible_choices[0][:door_panel_dimension_id] })
           door_line_section[:door_line_section].door_panel.door_panel_dimensions.each do |dim|
             if (dpd.width == dim.width) && (dpd.height == dim.height)
@@ -80,7 +80,7 @@ class DoorsController < ApplicationController
       end
       next unless possible_choices.length >= 1
 
-      unless possible_choices[0][:door_glass_id].blank?
+      if possible_choices[0][:door_glass_id].present?
         door_line_section[:door_line_section].door_glass_id = possible_choices[0][:door_glass_id]
       end
       next unless possible_choices.length > 1
@@ -137,6 +137,12 @@ class DoorsController < ApplicationController
     @door_opening_id = @door_openings.first.id unless @door_openings.map(&:id).include?(@door_opening_id)
   end
 
+  def edit
+    init_variables
+    @door_line = DoorLine.find(params[:id])
+    init_options
+  end
+
   def create
     @door_line = DoorLine.new(params[:door_line])
     if @door_line.save
@@ -150,12 +156,6 @@ class DoorsController < ApplicationController
       init_options
       render action: 'new'
     end
-  end
-
-  def edit
-    init_variables
-    @door_line = DoorLine.find(params[:id])
-    init_options
   end
 
   def update
@@ -235,7 +235,7 @@ class DoorsController < ApplicationController
     # if we get settings for sections, use them as a base, else load them from the edited door line if any
     if params[:door_line_sections]
       params[:door_line_sections].dup
-    elsif !params[:door_line_id].blank?
+    elsif params[:door_line_id].present?
       door_line = DoorLine.find(params[:door_line_id])
       door_line.door_line_sections.map do |door_line_section|
         { door_glass_id: door_line_section.door_glass_id.to_s,

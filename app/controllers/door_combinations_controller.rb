@@ -8,6 +8,11 @@ class DoorCombinationsController < ApplicationController
     @door_openings = DoorOpening.all(order: :id)
   end
 
+  def edit
+    @door_combination = DoorCombination.find(params[:id])
+    @door_openings = DoorOpening.all(order: :id)
+  end
+
   def create
     @door_combination = DoorCombination.new(params[:door_combination])
     if @door_combination.save
@@ -16,11 +21,6 @@ class DoorCombinationsController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_combination = DoorCombination.find(params[:id])
-    @door_openings = DoorOpening.all(order: :id)
   end
 
   def update

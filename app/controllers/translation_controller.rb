@@ -9,6 +9,10 @@ class TranslationController < ApplicationController
     @translation = Translation.new
   end
 
+  def edit
+    @translation = Translation.find(params[:id])
+  end
+
   def create
     @translation = Translation.new(params[:translation])
     if @translation.save
@@ -17,10 +21,6 @@ class TranslationController < ApplicationController
     else
       render action: 'add'
     end
-  end
-
-  def edit
-    @translation = Translation.find(params[:id])
   end
 
   def update

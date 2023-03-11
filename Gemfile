@@ -27,11 +27,11 @@ gem 'turbo-rails' # Turbo/Hotwire support for Rails
 
 # NOTE: use these gems if you need to add Node modules/Yarn packages
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft"
+gem 'propshaft'
 # # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails"
+gem 'jsbundling-rails'
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails"
+gem 'cssbundling-rails'
 
 group(:development) do
   gem 'annotate'
@@ -41,6 +41,7 @@ group(:development) do
   gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'rubocop', require: false # Ruby linter and code formatter; run `rubocop` command in CLI
+  gem 'rubocop-rails'
   gem 'rvm-capistrano', require: false
   gem 'web-console'
   gem 'yard'

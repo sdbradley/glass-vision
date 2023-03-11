@@ -4,11 +4,17 @@ module QuotationLineHelper
     output = '<div class="opening_list_caller">'
     output << hidden_field_tag("openings[#{section}]", selected)
     if selected.zero?
-      output << image_tag('/images/openings/none.png', onclick: "$('#opening_list_#{section}').toggle();",
-                                               id: "opening_pic_#{section}")
+      output << image_tag(
+        '/images/openings/none.png',
+        onclick: "$('#opening_list_#{section}').toggle();",
+        id: "opening_pic_#{section}"
+      )
     else
-      output << image_tag("/images/openings/#{selected_opening.preview_image_name}",
-                          onclick: "$('#opening_list_#{section}').toggle();", id: "opening_pic_#{section}")
+      output << image_tag(
+        "/images/openings/#{selected_opening.preview_image_name}",
+        onclick: "$('#opening_list_#{section}').toggle();",
+        id: "opening_pic_#{section}"
+      )
       output << "<br/><span style='font-size:x-small'>#{selected_opening.label}</span>"
     end
     # non IE version

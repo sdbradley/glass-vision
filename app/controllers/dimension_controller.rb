@@ -4,6 +4,10 @@ class DimensionController < ApplicationController
     @dimension.serie_id = params[:serie_id]
   end
 
+  def edit
+    @dimension = Dimension.find(params[:id])
+  end
+
   def create
     @dimension = params[:type].constantize.new(params[:dimension])
     if @dimension.save
@@ -12,10 +16,6 @@ class DimensionController < ApplicationController
     else
       render action: 'add'
     end
-  end
-
-  def edit
-    @dimension = Dimension.find(params[:id])
   end
 
   def update

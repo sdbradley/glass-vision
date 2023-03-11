@@ -10,11 +10,11 @@ class QuotationLine < ActiveRecord::Base
   belongs_to :standard_interior_color, class_name: 'ProductColor'
   belongs_to :standard_exterior_color, class_name: 'ProductColor'
 
-  validates_presence_of :width, :height, :serie_id, :quantity
-  validates_numericality_of :width, :height, :quantity
+  validates :width, :height, :serie_id, :quantity, presence: true
+  validates :width, :height, :quantity, numericality: true
 
-  before_destroy :delete_preview_image
   after_initialize :set_default_quantity
+  before_destroy :delete_preview_image
 
   def set_default_quantity
     return unless new_record? && quantity.blank?
@@ -93,11 +93,11 @@ class QuotationLine < ActiveRecord::Base
   end
 
   def has_interior_color?
-    !interior_color.blank? || !standard_interior_color.blank?
+    interior_color.present? || standard_interior_color.present?
   end
 
   def has_exterior_color?
-    !exterior_color.blank? || !standard_exterior_color.blank?
+    exterior_color.present? || standard_exterior_color.present?
   end
 
   def get_preview_image_path

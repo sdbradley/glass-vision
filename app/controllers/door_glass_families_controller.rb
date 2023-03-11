@@ -7,6 +7,10 @@ class DoorGlassFamiliesController < ApplicationController
     @door_glass_family = DoorGlassFamily.new
   end
 
+  def edit
+    @door_glass_family = DoorGlassFamily.find(params[:id])
+  end
+
   def create
     @door_glass_family = DoorGlassFamily.new(params[:door_glass_family])
     if @door_glass_family.save
@@ -15,10 +19,6 @@ class DoorGlassFamiliesController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_glass_family = DoorGlassFamily.find(params[:id])
   end
 
   def update

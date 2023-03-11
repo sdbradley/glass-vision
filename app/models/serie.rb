@@ -2,8 +2,8 @@ class Serie < ActiveRecord::Base
   translates :comments, :name, :description
   accepts_nested_attributes_for :translations
 
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  validates :name, presence: true
+  validates :name, uniqueness: true
 
   has_many :widths
   has_many :heights

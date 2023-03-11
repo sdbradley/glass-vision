@@ -18,6 +18,12 @@ class OptionsController < ApplicationController
     @all_option_categories = OptionCategory.all(order: :display_order)
   end
 
+  def edit
+    @option = Option.find(params[:id])
+    @module_type = @option.module_type
+    @all_option_categories = OptionCategory.all(order: :display_order)
+  end
+
   def create
     @option = Option.new(params[:option])
     if @option.save
@@ -28,12 +34,6 @@ class OptionsController < ApplicationController
       @all_option_categories = OptionCategory.all(order: :display_order)
       render action: 'new'
     end
-  end
-
-  def edit
-    @option = Option.find(params[:id])
-    @module_type = @option.module_type
-    @all_option_categories = OptionCategory.all(order: :display_order)
   end
 
   def update

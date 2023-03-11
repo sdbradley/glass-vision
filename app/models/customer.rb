@@ -25,10 +25,10 @@ class Customer < ActiveRecord::Base
     if customer.nil?
       customer = Customer.new
       customer.name = quotation.customer_name
-      customer.address = quotation.customer_address unless quotation.customer_address.blank?
-      customer.phone = quotation.customer_phone unless quotation.customer_phone.blank?
-      customer.fax = quotation.customer_fax unless quotation.customer_fax.blank?
-      customer.email = quotation.customer_email unless quotation.customer_email.blank?
+      customer.address = quotation.customer_address if quotation.customer_address.present?
+      customer.phone = quotation.customer_phone if quotation.customer_phone.present?
+      customer.fax = quotation.customer_fax if quotation.customer_fax.present?
+      customer.email = quotation.customer_email if quotation.customer_email.present?
       customer.save
       true
     else

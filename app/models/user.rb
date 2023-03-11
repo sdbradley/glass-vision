@@ -3,19 +3,18 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  validates_presence_of     :login, :email
-  validates_presence_of     :password,                   if: :password_required?
-  validates_presence_of     :password_confirmation,      if: :password_required?
-  validates_length_of       :password, within: 4..40, if: :password_required?
-  validates_confirmation_of :password, if: :password_required?
-  validates_length_of       :login,    within: 3..40
-  validates_length_of       :email,    within: 3..100
-  validates_uniqueness_of   :login, :email, case_sensitive: false
-  validates_format_of       :email, with: /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
-  validates_presence_of     :discount
-  validates_numericality_of :discount # , :less_than => 0, :message => 'must be less than 100'
-  # validates_numericality_of :discount, :greater_than_or_equal_to => 0, :message => 'must be greater than or equal to 0'
-  validates_inclusion_of    :discount, in: 0..100, message: 'must be between 0 and 100'
+  validates :login, length: { within: 3..40 }
+  validates :login, :email, presence: true
+  validates :login, :email, uniqueness: { case_sensitive: false }
+  validates :password, presence: { if: :password_required? }
+  validates :password, length: { within: 4..40, if: :password_required? }
+  validates :password, confirmation: { if: :password_required? }
+  validates :password_confirmation, presence: { if: :password_required? }
+  validates :email, length: { within: 3..100 }
+  validates :email, format: { with: /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i }
+  validates :discount, presence: true
+  validates :discount, numericality: true
+  validates :discount, inclusion: { in: 0..100, message: 'must be between 0 and 100' }
 
   before_save :encrypt_password
   before_create :make_activation_code
@@ -189,7 +188,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    crypted_password.blank? || !password.blank?
+    crypted_password.blank? || password.present?
   end
 
   def make_activation_code

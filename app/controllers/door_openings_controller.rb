@@ -7,6 +7,10 @@ class DoorOpeningsController < ApplicationController
     @door_opening = DoorOpening.new
   end
 
+  def edit
+    @door_opening = DoorOpening.find(params[:id])
+  end
+
   def create
     @door_opening = DoorOpening.new(params[:door_opening])
     if @door_opening.save
@@ -15,10 +19,6 @@ class DoorOpeningsController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @door_opening = DoorOpening.find(params[:id])
   end
 
   def update

@@ -12,11 +12,15 @@ class SeriesController < ApplicationController
 
   def new; end
 
+  def edit
+    @serie = Serie.find(params[:id])
+  end
+
   def create
     must_import_prices = false
     orig_series = nil
     @serie = Serie.new(params[:serie])
-    unless params[:source_series].blank?
+    if params[:source_series].present?
       must_import_prices = true
       # cloning a series....
       orig_series = Serie.find(params[:source_series])
@@ -43,10 +47,6 @@ class SeriesController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @serie = Serie.find(params[:id])
   end
 
   def update

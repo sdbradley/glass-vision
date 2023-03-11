@@ -35,8 +35,8 @@ class DoorLine < ActiveRecord::Base
   belongs_to :standard_interior_color, class_name: 'ProductColor'
   belongs_to :standard_exterior_color, class_name: 'ProductColor'
 
-  after_find :update_original_price
   before_destroy :delete_preview_image
+  after_find :update_original_price
 
   def update_price
     self.price = 0

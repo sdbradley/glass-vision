@@ -15,6 +15,10 @@ class OptionCategoriesController < ApplicationController
     @option_category = OptionCategory.new
   end
 
+  def edit
+    @option_category = OptionCategory.find(params[:id])
+  end
+
   def create
     @option_category = OptionCategory.new(params[:option_category])
     if @option_category.save
@@ -23,10 +27,6 @@ class OptionCategoriesController < ApplicationController
     else
       render action: 'new'
     end
-  end
-
-  def edit
-    @option_category = OptionCategory.find(params[:id])
   end
 
   def edit_options
