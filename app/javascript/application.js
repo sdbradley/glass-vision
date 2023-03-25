@@ -6,6 +6,7 @@ import './controllers'
 
 // jquery - must be loaded before custom scripts
 import './jquery.min'
+import './jquery-ui.min'
 
 // custom scripts
 import './autocomplete-rails'
@@ -14,8 +15,6 @@ import './door_lines'
 import './hover-popup'
 import './jquery-migrate-min'
 import './quotations'
-
-console.log('loaded application.js')
 
 // => old application.js
 //= require jquery-ui/widgets/autocomplete
