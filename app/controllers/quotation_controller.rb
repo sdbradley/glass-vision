@@ -162,11 +162,13 @@ class QuotationController < ApplicationController
     params[:quotation]['taxes_pst'] = 0.0 if params[:quotation]['taxes_pst'].blank?
   end
 
+  # override default behavior of autocomplete
+  alias_method :get_autocomplete_items_original, :get_autocomplete_items
   def get_autocomplete_items(parameters)
     if @current_user.admin?
-      super(parameters)
+      get_autocomplete_items_original(parameters)
     else
-      super(parameters).where(user_id: @current_user.id)
+      get_autocomplete_items_original(parameters).where(user_id: @current_user.id)
     end
   end
 
