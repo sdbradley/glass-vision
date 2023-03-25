@@ -15,7 +15,7 @@
     <% @door_frames.each do |door_frame| %>
       <div class="choice door-frame <%= 'selected' if door_frame.id == @door_line.door_frame_id %>" id="df-<%= door_frame.id %>">
         <div class="preview-image">
-          <%= image_tag '/images/door_frames/' + door_frame.preview_image_name %>
+          <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
         </div>
         <div class="label">
           <%= door_frame.name %>
@@ -35,7 +35,7 @@
       <% door_frame.door_combinations.each do |door_combination| %>
         <div class="choice door-combination <%= 'selected' if door_combination == @door_line.door_combination %>" id="dc-<%= door_combination.id %>">
           <div class="preview-image">
-            <%= image_tag '/images/door_combinations/' + door_combination.preview_image_name %>
+            <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
           </div>
           <div class="label">
             <%= door_combination.name %>

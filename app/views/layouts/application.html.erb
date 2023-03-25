@@ -36,13 +36,13 @@
 </head>
 <body>
 <div id="header">
-  <%= image_tag '/images/haut_glassvision.gif', :size => '646x53' %>
+  <%= image_tag 'haut_glassvision.gif', :size => '646x53' %>
 </div>
 <div id="nav">
   <ul>
-    <li><%= link_to image_tag('/images/fr.png', :border => 0, :class => 'flag'), :controller => 'home', :action => 'set_lang', :lang => 'fr' %></li>
-    <li><%= link_to image_tag('/images/us.png', :border => 0, :class => 'flag'), :controller => 'home', :action => 'set_lang', :lang => 'en' %></li>
-    <li><%= link_to image_tag('/images/es.png', :border => 0, :class => 'flag'), :controller => 'home', :action => 'set_lang', :lang => 'es' %></li>
+    <li><%= link_to image_tag('fr.png', :border => 0, :class => 'flag'), :controller => 'home', :action => 'set_lang', :lang => 'fr' %></li>
+    <li><%= link_to image_tag('us.png', :border => 0, :class => 'flag'), :controller => 'home', :action => 'set_lang', :lang => 'en' %></li>
+    <li><%= link_to image_tag('es.png', :border => 0, :class => 'flag'), :controller => 'home', :action => 'set_lang', :lang => 'es' %></li>
     <li><%= link_to trn_get('MENU_HOME'), :controller => 'home' %></li>
     <% if logged_in? %>
         <!--        <li>Hi, <%= link_to h(current_user.login.capitalize), user_path(current_user) %></li> -->
