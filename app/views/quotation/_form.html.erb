@@ -39,7 +39,9 @@
     <td align="right"><%= trn_geth('LABEL_DELIVERY_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_area 'quotation', 'delivery_address', :cols => '39', :rows => '5', :id => 'delivery_address'  %>
       <br />
-      <%= check_box_tag 'use_billing_address', @quotation.use_billing_address?-%><%= trn_get('LABEL_SAME_DELIVERY_ADDRESS') -%>
+      <label class="clickable">
+        <%= check_box_tag 'use_billing_address', @quotation.use_billing_address? %><%= trn_get('LABEL_SAME_DELIVERY_ADDRESS') %>
+      </label>
     </td>
   </tr>
   <tr valign="top">
@@ -121,10 +123,11 @@
 </table>
 
 <% content_for :extra_javascript do %>
-
     $("#use_billing_address").change(function() {
-        if( this.checked) {
+        if(this.checked) {
             $('#delivery_address').val($('#customer_address').val());
+        } else {
+          $('#delivery_address').val('');
         }
     });
 
