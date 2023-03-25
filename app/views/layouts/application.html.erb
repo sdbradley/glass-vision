@@ -8,13 +8,10 @@
     
   <%= csrf_meta_tag %>
 
-  <script type="text/javascript" charset="utf-8">
-      <%= yield :extra_javascript %>
-  </script>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 </head>
+
 <body>
 <div id="header">
   <%= image_tag 'haut_glassvision.gif', :size => '646x53' %>
@@ -102,8 +99,12 @@
         </div>
     <% end %>
 
-    <%= yield %>
-  </div>
-</div>
+
+  <script type="text/javascript" charset="utf-8">
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('dom content loaded')
+      <%= yield :extra_javascript %>
+    })
+  </script>
 </body>
 </html>
