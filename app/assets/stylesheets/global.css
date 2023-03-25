@@ -113,7 +113,7 @@ div#header {
   height: 53px;
   margin:0px;
   padding:0px;
-  background: url(../images/bg_glassvision.gif) repeat-x;
+  background: url(bg_glassvision.gif) repeat-x;
   overflow: hidden;
 }
 
@@ -135,7 +135,7 @@ div#content {
 /********* nav bar **********/
 #nav {
   height:27px;
-  background: url(../images/menu.gif) repeat-x;
+  background: url(menu.gif) repeat-x;
   padding-top: 3px;
   width: 100%;
   overflow:hidden;
@@ -316,12 +316,12 @@ div.css_button {
 
 
 th.ascending a {
-background: url(../images/sort-ascending-arrow.gif) 0% 50% no-repeat;
+background: url(sort-ascending-arrow.gif) 0% 50% no-repeat;
 padding-left: 15px;
 }
 
 th.descending a {
-background: url(../images/sort-descending-arrow.gif) 0% 50% no-repeat;
+background: url(sort-descending-arrow.gif) 0% 50% no-repeat;
 padding-left: 15px;
 }
 
@@ -338,7 +338,7 @@ padding-left: 15px;
 
 
 .ui-dialog .ui-dialog-content.ui-dialog-spinner {
-    background: url(/images/ajax-loader.gif) no-repeat scroll 15px 15px transparent;
+    background: url(ajax-loader.gif) no-repeat scroll 15px 15px transparent;
     padding: 20px 0 0px 70px;
     border: 2px solid #DDDDDD;
     font-weight: 900;
