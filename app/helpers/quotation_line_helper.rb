@@ -5,13 +5,13 @@ module QuotationLineHelper
     output << hidden_field_tag("openings[#{section}]", selected)
     if selected.zero?
       output << image_tag(
-        '/images/openings/none.png',
+        'openings/none.png',
         onclick: "$('#opening_list_#{section}').toggle();",
         id: "opening_pic_#{section}"
       )
     else
       output << image_tag(
-        "/images/openings/#{selected_opening.preview_image_name}",
+        "openings/#{selected_opening.preview_image_name}",
         onclick: "$('#opening_list_#{section}').toggle();",
         id: "opening_pic_#{section}"
       )
@@ -21,8 +21,8 @@ module QuotationLineHelper
     output << '<!--[if !IE]> <!-->'
     output << "<div id=\"opening_list_#{section}\" class=\"opening_list\" style=\"display: none;\">"
     @quotation_line.serie.openings.each do |o|
-      output << "<div class=\"image\" onmouseover=\"$(this).addClass('hover')\" onmouseout=\"$(this).removeClass('hover')\" onclick=\"$('#openings_#{section}').val(#{o.id}); $('#opening_pic_#{section}').attr('src', '/images/openings/#{o.preview_image_name}'); $('#opening_list_#{section}').toggle();\">"
-      output << image_tag("/images/openings/#{o.preview_image_name}")
+      output << "<div class=\"image\" onmouseover=\"$(this).addClass('hover')\" onmouseout=\"$(this).removeClass('hover')\" onclick=\"$('#openings_#{section}').val(#{o.id}); $('#opening_pic_#{section}').attr('src', 'openings/#{o.preview_image_name}'); $('#opening_list_#{section}').toggle();\">"
+      output << image_tag("openings/#{o.preview_image_name}")
       output << ("<br/>#{o.abbreviation}")
       output << "<br/><span style='font-size:x-small'>#{o.label}</span>"
       output << '</div>'
@@ -33,9 +33,9 @@ module QuotationLineHelper
     output << '<!--[if IE]>'
     output << '<br/>'
     js = "pics_#{section} = {};"
-    js << "pics_#{section}.img_0 = '/images/openings/none.png';"
+    js << "pics_#{section}.img_0 = 'openings/none.png';"
     @quotation_line.serie.openings.each do |o|
-      js << "pics_#{section}.img_#{o.id} = '/images/openings/#{o.preview_image_name}';"
+      js << "pics_#{section}.img_#{o.id} = 'openings/#{o.preview_image_name}';"
     end
     output << javascript_tag(js)
     output << select_tag("openings_combo_#{section}", options_for_select([['----', 0]] + @quotation_line.serie.openings.map do |o|

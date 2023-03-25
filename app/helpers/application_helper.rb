@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def ajax_spinner_for(id, spinner = 'spinner.gif')
-    "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id}_spinner'> ".html_safe
+    "<img src='#{spinner}' style='display:none; vertical-align:middle;' id='#{id}_spinner'> ".html_safe
   end
 
   def gv_humanize_time(t)
@@ -78,7 +78,7 @@ module ApplicationHelper
     display_label = trn_get(link_label)
     display_label += " - #{options[:label]}" if options[:label]
 
-    link_to(image_tag("/images/#{image}.png", size: '32x32', border: 0, style: { padding: '5px' }) + display_label,
+    link_to(image_tag("#{image}.png", size: '32x32', border: 0, style: { padding: '5px' }) + display_label,
             link).html_safe
   end
 

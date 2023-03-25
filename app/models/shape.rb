@@ -10,7 +10,7 @@ class Shape < ApplicationRecord
                             },
                             url: '/system/:class/:attachment/:id/:style_:basename.:extension',
                             path: ':rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension',
-                            default_url: '/images/shapes/missing_:style.png',
+                            default_url: 'shapes/missing_:style.png',
                             convert_options: { all: '-trim' }
 
   validates :name, :sections_width, :sections_height, :corners, presence: true
