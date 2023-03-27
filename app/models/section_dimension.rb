@@ -1,2 +1,2 @@
-class SectionDimension < ActiveRecord::Base
+class SectionDimension < ApplicationRecord
 end

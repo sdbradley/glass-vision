@@ -6,7 +6,7 @@ class EmailsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @emails }
+      format.xml  { render xml: @emails }
     end
   end
 
@@ -17,7 +17,7 @@ class EmailsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @email }
+      format.xml  { render xml: @email }
     end
   end
 
@@ -28,7 +28,7 @@ class EmailsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @email }
+      format.xml  { render xml: @email }
     end
   end
 
@@ -43,16 +43,16 @@ class EmailsController < ApplicationController
     @email = Email.new(email_params[:email])
     UserMailer.email(@current_user, @email).deliver
     flash[:notice] = 'Email was successfully sent.'
-    redirect_to :controller => "home", :action => "index"
-#    respond_to do |format|
-#      if @email.save
-#        format.html { redirect_to('/') }
-#        format.xml  { render :xml => @email, :status => :created, :location => @email }
-#      else
-#        format.html { render :action => "new" }
-#        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
-#      end
-#    end
+    redirect_to controller: 'home', action: 'index'
+    #    respond_to do |format|
+    #      if @email.save
+    #        format.html { redirect_to('/') }
+    #        format.xml  { render :xml => @email, :status => :created, :location => @email }
+    #      else
+    #        format.html { render :action => "new" }
+    #        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
+    #      end
+    #    end
   end
 
   # PUT /emails/1
@@ -61,13 +61,13 @@ class EmailsController < ApplicationController
     @email = Email.find(params[:id])
 
     respond_to do |format|
-      if @email.update_attributes(params[:email])
+      if @email.update(params[:email])
         flash[:notice] = 'Email was successfully updated.'
         format.html { redirect_to(@email) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @email.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -84,14 +84,15 @@ class EmailsController < ApplicationController
     end
   end
 
-private
+  private
+
   # def email
   #   @email ||= Email.new(email_params[:email])
   # end
 
   def email_params
     params.permit(
-      email: [:subject, :body]
+      email: %i[subject body]
     ).to_h.symbolize_keys
   end
 end

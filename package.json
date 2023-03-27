@@ -1,0 +1,26 @@
+{
+  "name": "glass-vision",
+  "version": "0.1.0",
+  "description": "quote estimation tool",
+  "repository": "git@github.com:sdbradley/glass-vision.git",
+  "author": "Glass Vision",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "build:js": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
+    "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build": "yarn build:js && yarn build:css"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.11",
+    "sass": "^1.59.2"
+  },
+  "engines": {
+    "node": "^16",
+    "yarn": "^1.22"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.1",
+    "@hotwired/turbo-rails": "^7.3.0"
+  }
+}

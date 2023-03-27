@@ -3,12 +3,12 @@
 class ApplicationController < ActionController::Base
   include TranslationGet
   include AuthenticatedSystem
-  #include SortableTable::App::Controllers::ApplicationController
+  # include SortableTable::App::Controllers::ApplicationController
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  layout proc{ |c| c.request.xhr? ? false : 'application' }
+  layout proc { |c| c.request.xhr? ? false : 'application' }
 
   before_action do |c|
     ActiveRecord::Base.lang = c.session[:lang] ||= request.cookies['lang'] ||= 'fr'
@@ -19,9 +19,9 @@ class ApplicationController < ActionController::Base
 
   def debug_log(text, value = nil)
     logger.error  "#################### #{text} ####################"
-    if value
-      logger.error value.inspect
-      logger.error '------------------------------------------------'
-    end
+    return unless value
+
+    logger.error value.inspect
+    logger.error '------------------------------------------------'
   end
 end

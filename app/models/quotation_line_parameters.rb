@@ -3,10 +3,8 @@ require 'shape'
 # @attr [float] real_height
 # @attr [float] real_width
 class QuotationLineParameters
-
-  attr_accessor :real_height, :real_width, :openings, :section_height, :section_width
-  attr_accessor :upper_transom_index, :lower_transom_index, :left_sidelight_index, :right_sidelight_index
-  attr_accessor :total_width, :total_height
+  attr_accessor :real_height, :real_width, :openings, :section_height, :section_width, :upper_transom_index,
+                :lower_transom_index, :left_sidelight_index, :right_sidelight_index, :total_width, :total_height
 
   # @param [QuotationLine] quotation_line
   def initialize(quotation_line)
@@ -25,9 +23,8 @@ class QuotationLineParameters
   # @param [Hash] params
   # @param [Shape] shape
   def from_params(params, shape)
-
     initialize_by_shape(shape)
-    @openings = params[:openings] ||  {}
+    @openings = params[:openings] || {}
 
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
@@ -39,7 +36,6 @@ class QuotationLineParameters
 
     self
   end
-
 
   # @param [QuotationLine] quotation_line
   def from_line
@@ -91,7 +87,9 @@ class QuotationLineParameters
     total_transom_height += @section_height[@lower_transom_index].to_f unless @lower_transom_index.nil?
     total_transom_height
   end
+
   private
+
   # @param [Shape] shape
   def initialize_by_shape(shape)
     @section_height = {}
@@ -118,17 +116,15 @@ class QuotationLineParameters
       @section_height[@left_sidelight_index] = 0
     end
 
-    if shape.has_right_sidelight?
-      @right_sidelight_index = get_right_sidelight_index(shape)
-      @section_height[@right_sidelight_index] = 0
-    end
-  end
+    return unless shape.has_right_sidelight?
 
+    @right_sidelight_index = get_right_sidelight_index(shape)
+    @section_height[@right_sidelight_index] = 0
+  end
 
   def get_upper_transom_index(shape)
     shape.total_sections + 1
   end
-
 
   # @param [Shape] shape
   def get_lower_transom_index(shape)
@@ -144,5 +140,4 @@ class QuotationLineParameters
   def get_right_sidelight_index(shape)
     shape.total_sections + 4
   end
-
 end

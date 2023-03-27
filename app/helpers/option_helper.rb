@@ -1,5 +1,4 @@
 module OptionHelper
-
   def show_option_with_quantity(opt, quantity)
     qty = "x#{quantity}" if quantity != 1
     show_option(opt) + qty

@@ -11,7 +11,7 @@
 #  updated_at    :datetime
 #
 
-class DoorPanelDimension < ActiveRecord::Base
+class DoorPanelDimension < ApplicationRecord
   include Priceable
 
   belongs_to :door_panel

@@ -10,7 +10,7 @@
 #  updated_at   :datetime
 #
 
-class DoorLineOption < ActiveRecord::Base
+class DoorLineOption < ApplicationRecord
   belongs_to :door_line
   belongs_to :option
 
@@ -27,7 +27,7 @@ class DoorLineOption < ActiveRecord::Base
              when 4 # prix par section ouvrante
                door_line.door_line_sections.select { |s| s.door_section.openable? }.length
              when 5 # prix par section fixe
-               door_line.door_line_sections.select { |s| !s.door_section.openable? }.length
+               door_line.door_line_sections.reject { |s| s.door_section.openable? }.length
              when 6 # prix unitaire
                1
              when 7 # prix par coin
@@ -37,11 +37,8 @@ class DoorLineOption < ActiveRecord::Base
              end
     p += option.price * factor
 
-    if option.pricing_method.quantifiable
-      p *= quantity
-    end
+    p *= quantity if option.pricing_method.quantifiable
 
     p
   end
-
 end

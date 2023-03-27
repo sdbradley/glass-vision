@@ -1,10 +1,10 @@
-class PreviewImage < ActiveRecord::Base
+class PreviewImage < ApplicationRecord
   belongs_to :opening
-  
-  LEFT = 'L'
-  RIGHT = 'R'
-  NONE = 'N'
 
-  validates_presence_of :image_name, :hinged_on
-  validates_inclusion_of :hinged_on, :in => %w( L R N )
+  LEFT = 'L'.freeze
+  RIGHT = 'R'.freeze
+  NONE = 'N'.freeze
+
+  validates :image_name, :hinged_on, presence: true
+  validates :hinged_on, inclusion: { in: %w[L R N] }
 end

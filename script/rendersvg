@@ -10,8 +10,8 @@ ARROW_SIZE = 5.0
 PIXELS_PER_INCH = 2
 
 def create_image(imgname, width, height, height2)
-  basename = File.basename(imgname, ".svg")
-  temp_file_name = File.join( 'tmp', "image_#{basename}.svg")
+  basename = File.basename(imgname, '.svg')
+  temp_file_name = File.join('tmp', "image_#{basename}.svg")
   final_file_name = "#{basename}.png"
 
   # binding for erb file
@@ -20,8 +20,8 @@ def create_image(imgname, width, height, height2)
   arrow_size = ARROW_SIZE
 
   # define canvas for final image
-  image_width = (width ) * PIXELS_PER_INCH+FRAME_THICKNESS
-  image_height = (height ) * PIXELS_PER_INCH+FRAME_THICKNESS
+  image_width = (width * PIXELS_PER_INCH) + FRAME_THICKNESS
+  image_height = (height * PIXELS_PER_INCH) + FRAME_THICKNESS
   canvas = Image.new(image_width, image_height)
 
   # coordinates
@@ -34,16 +34,14 @@ def create_image(imgname, width, height, height2)
   section_height = height
 
   # load svg file
-  File.open(temp_file_name, 'w') do |f|
-    f.write ERB.new(File.read(imgname)).result(binding)
-  end
+  File.write(temp_file_name, ERB.new(File.read(imgname)).result(binding))
 
   # load svg file
   section_image = Image.read(temp_file_name)[0]
 
   # define offset to paint section
-  offsetx_px = currentx #* PIXELS_PER_INCH
-  offsety_px = currenty #* PIXELS_PER_INCH
+  offsetx_px = currentx # * PIXELS_PER_INCH
+  offsety_px = currenty # * PIXELS_PER_INCH
 
   # paint the image on canvas
   canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
@@ -54,8 +52,8 @@ def create_image(imgname, width, height, height2)
 
   # delete temp file
   begin
-#    File.delete temp_file_name
-  rescue
+  #    File.delete temp_file_name
+  rescue StandardError
     # don't care
   end
 end

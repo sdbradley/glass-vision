@@ -5,13 +5,12 @@ include Magick
 # this class is a Service Object for creating preview images for Window Lines
 
 class WindowPreviewCreator
-
   def initialize(quotation_line)
     @quotation_line = quotation_line
   end
 
   def call
-    create_image()
+    create_image
   end
 
   private
@@ -55,12 +54,12 @@ class WindowPreviewCreator
     Rails.logger.info "draw special section #{current_x}, #{current_y}, @ #{offset_x_px}, #{offset_y_px} index #{index}"
     # paint the image on canvas
     canvas.composite! section_image, offset_x_px, offset_y_px, OverCompositeOp
-    return section_height, section_width
+    [section_height, section_width]
   end
 
   def create_image
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
-    final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{@quotation_line.id}.png")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
+    final_file_name = Rails.public_path.join('system', 'images', 'previews', "preview_#{@quotation_line.id}.png")
 
     # binding for erb file
     # constants
@@ -85,18 +84,20 @@ class WindowPreviewCreator
       # initialize coordinates
       current_x = 0
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.upper_transom_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y,
+                                                           @quotation_line.upper_transom_index(shape))
       # update coordinates
       current_y += section_height
       upper_transom_height = section_height
     end
 
-    #draw left sidelight
+    # draw left sidelight
     if shape.has_left_sidelight?
       # initialize coordinates
       current_x = 0
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.left_sidelight_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y,
+                                                           @quotation_line.left_sidelight_index(shape))
       # update coordinates
       current_x += section_width
       left_sidelight_width = section_width
@@ -104,19 +105,17 @@ class WindowPreviewCreator
     # loop on rows
 
     0.upto(shape.sections_height - 1) do |h|
-
       # initialize coordinates
       current_x = left_sidelight_width
 
       # loop on columns
       0.upto(shape.sections_width - 1) do |w|
-
         # define section dimensions for binding in erb
-        section_width = get_section_width(w+1)
-        section_height = get_section_height(h+1)
+        section_width = get_section_width(w + 1)
+        section_height = get_section_height(h + 1)
 
         # load svg file
-        section_image = get_section_image(h * shape.sections_width + w + 1, section_height, section_width)
+        section_image = get_section_image((h * shape.sections_width) + w + 1, section_height, section_width)
 
         # define offset to paint section
         offset_x_px = current_x * PIXELS_PER_INCH
@@ -131,15 +130,15 @@ class WindowPreviewCreator
 
       # update coordinates
       current_y += section_height
-
     end
 
-    #draw right sidelight
+    # draw right sidelight
     if shape.has_right_sidelight?
       # initialize coordinates
       current_y = upper_transom_height
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.right_sidelight_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y,
+                                                           @quotation_line.right_sidelight_index(shape))
       # update coordinates
       current_x += section_width
     end
@@ -148,7 +147,8 @@ class WindowPreviewCreator
       # initialize coordinates
       current_x = 0
 
-      section_height, section_width = draw_special_section(canvas, current_x, current_y, @quotation_line.lower_transom_index(shape))
+      section_height, section_width = draw_special_section(canvas, current_x, current_y,
+                                                           @quotation_line.lower_transom_index(shape))
 
       # update coordinates
       current_y += section_height
@@ -212,23 +212,21 @@ class WindowPreviewCreator
     # delete temp file
     begin
       File.delete temp_file_name
-    rescue
+    rescue StandardError
       # don't care
     end
   end
-
 
   def draw_horizontal_measurement(canvas, section_width, current_x)
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
     # load erb file and generate svg
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
-    end
+    File.write(temp_file_name,
+               ERB.new(Rails.root.join('components', 'misc', 'horizontal_size.svg').read).result(binding))
 
-    #load svg file
+    # load svg file
     size_image = Image.read(temp_file_name)[0]
 
     # define offset to paint section
@@ -243,13 +241,12 @@ class WindowPreviewCreator
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
     # load erb file and generate svg
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'vertical_size.svg'))).result(binding)
-    end
+    File.write(temp_file_name,
+               ERB.new(Rails.root.join('components', 'misc', 'vertical_size.svg').read).result(binding))
 
-    #load svg file
+    # load svg file
     size_image = Image.read(temp_file_name)[0]
 
     # define offset to paint section
@@ -269,17 +266,14 @@ class WindowPreviewCreator
 
     section_height2 = 0
 
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{@quotation_line.id}.svg")
+    temp_file_name = Rails.root.join('tmp', "image_#{@quotation_line.id}.svg")
     # load erb file for section and generate scaled svg file
-    image_file_name = File.basename(get_opening(cpt_opening).preview_image_name, '.png') + '.svg'
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'openings', image_file_name))).result(binding)
-    end
+    image_file_name = "#{File.basename(get_opening(cpt_opening).preview_image_name, '.png')}.svg"
+    File.write(temp_file_name,
+               ERB.new(Rails.root.join('components', 'openings', image_file_name).read).result(binding))
 
     IO.popen("rsvg-convert -a #{temp_file_name}") do |image_blob|
       section_image = Image.from_blob(image_blob.read).first
     end
   end
-
-
 end

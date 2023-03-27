@@ -1,5 +1,7 @@
- # new methods for translation
- class ActiveRecord::Base
-#   include Translatable
-   cattr_accessor :lang
- end
+# new methods for translation
+module ActiveRecord
+  class Base
+    #   include Translatable
+    cattr_accessor :lang
+  end
+end

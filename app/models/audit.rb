@@ -10,8 +10,7 @@
 #  created_at :datetime
 #
 
-class Audit < ActiveRecord::Base
-
+class Audit < ApplicationRecord
   belongs_to :user
 
   def readonly?
@@ -28,6 +27,6 @@ class Audit < ActiveRecord::Base
   #      t.string :result
   #      t.string :reason
   def self.write_audit(who, what, result, why = nil)
-    Audit.create(:user_id => who.id, :action => what, :result => result, :reason => why )
+    Audit.create(user_id: who.id, action: what, result: result, reason: why)
   end
 end

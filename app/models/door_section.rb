@@ -1,4 +1,4 @@
-class DoorSection < ActiveRecord::Base
+class DoorSection < ApplicationRecord
   include Priceable
   translates :name
   accepts_nested_attributes_for :translations
@@ -6,7 +6,6 @@ class DoorSection < ActiveRecord::Base
   has_and_belongs_to_many :door_panels
 
   def openable?
-    ['SL', 'SLO'].include? code
+    %w[SL SLO].include? code
   end
-
 end

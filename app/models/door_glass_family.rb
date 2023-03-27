@@ -8,8 +8,8 @@
 #  updated_at :datetime
 #
 
-class DoorGlassFamily < ActiveRecord::Base
+class DoorGlassFamily < ApplicationRecord
   translates :name
   accepts_nested_attributes_for :translations
-  has_many :door_glasses, :dependent => :destroy
+  has_many :door_glasses, dependent: :destroy
 end

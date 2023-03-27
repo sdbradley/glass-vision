@@ -131,7 +131,13 @@
 
 <div class="form_button_bar" >
   <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'index' %>
-  <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'destroy', :id => @quotation.slug}, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+  <%= button_to(
+    trn_geth('BUTTON_DELETE'),
+    quotation_path(@quotation),
+    method: :delete,
+    class: 'command-icon',
+    form: { data: { turbo_confirm: trn_geth('LABEL_DELETE_QUESTION') } }
+  ) %>
   <%= css_button_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation.slug %>
   <%= css_button_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation.slug %>
   <% if current_user.has_role?('administrator') %>
@@ -143,10 +149,16 @@
 <br/>
 
 <h3><%= trn_geth('HEADER_LINES')%></h3>
-<%= link_to_if @current_user.can_create?('Door'), "#{trn_geth('BUTTON_ADD_WINDOW')}", :controller => 'quotation_line', :action => 'add', :id => @quotation.slug %>
-<%= link_to_if @current_user.can_create?('Window'), "#{trn_geth('BUTTON_ADD_DOOR')}", :controller => 'doors', :action => 'new', :id => @quotation.slug %>
+
+<% if @current_user.can_create?('Door') %>
+  <%= link_to "#{trn_geth('BUTTON_ADD_WINDOW')}", quotation_line_add_path(id: @quotation.slug) %>
+<% end %>
+<% if @current_user.can_create?('Window') %>
+  <%= link_to "#{trn_geth('BUTTON_ADD_DOOR')}", new_door_path(id: @quotation.slug) %>
+<% end %>
 <%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation.slug %>
 <%= link_to trn_geth('BUTTON_ADD_MANUAL_LINE'), :controller => 'manual_lines', :action => 'new', :id => @quotation.slug %>
+
 <table class="quotation">
   <tr>
     <th><%= trn_geth('HEADER_PREVIEW') %></th>

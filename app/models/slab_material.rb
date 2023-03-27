@@ -1,3 +1,3 @@
-class SlabMaterial < ActiveRecord::Base
+class SlabMaterial < ApplicationRecord
   include Priceable
 end

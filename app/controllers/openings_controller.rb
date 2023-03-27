@@ -2,7 +2,7 @@ class OpeningsController < ApplicationController
   before_action :check_administrator_role
 
   def index
-    @openings = Opening.all(:order => 'name')
+    @openings = Opening.all(order: 'name')
   end
 
   def show
@@ -20,26 +20,26 @@ class OpeningsController < ApplicationController
   def create
     @opening = Opening.new(params[:opening])
     if @opening.save
-      flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_CREATED_F')}"
       redirect_to openings_path
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
   def update
     @opening = Opening.find(params[:id])
-    if @opening.update_attributes(params[:opening])
-      flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+    if @opening.update(params[:opening])
+      flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_MODIFIED_F')}"
       redirect_to openings_path
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
   def destroy
     Opening.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_OPENING') + ' ' + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    flash[:notice] = "#{trn_geth('LABEL_OPENING')} #{trn_get('MSG_SUCCESSFULLY_DELETED_F')}"
     redirect_to openings_path
   end
 end

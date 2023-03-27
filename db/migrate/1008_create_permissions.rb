@@ -18,14 +18,14 @@ class CreatePermissions < ActiveRecord::Migration
     user.email = "jeff@snowmoonsoftware.com"
     user.password = "admin"
     user.password_confirmation = "admin"
-    user.save(false)
+    user.save(validate: false)
     user.send(:activate!)
     role = Role.find_by_rolename('administrator')
     user = User.find_by_login('admin')
     permission = Permission.new
     permission.role = role
     permission.user = user
-    permission.save(false)
+    permission.save(validate: false)
   end
 
   def self.down

@@ -2,12 +2,24 @@
 
 <%= form_for  @quotation do %>
   <%= render :partial => 'form' %>
+
   <br />
-  <div class="form_button_bar submit" >
-    <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'index' %> 
-    <%= button_to trn_geth('BUTTON_DELETE'), send("#{controller_name.singularize}_url", @quotation), :method => :delete, :class => 'command-icon', form: { data: {turbo_confirm: 'Are you sure?'} } %>
-    <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation.slug %>
+
+  <div class="submit" >
     <%= button_to trn_geth('BUTTON_EDIT'), send("#{controller_name.singularize}_url", @quotation), :method => :put, :class => 'command-icon' %>
   </div>
-  <% end %>
+<% end %>
+
+<div class="form_button_bar">
+  <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'index' %> 
+  <%=
+    button_to(
+      trn_geth('BUTTON_DELETE'),
+      send("#{controller_name.singularize}_url", @quotation),
+      method: :delete,
+      class: 'command-icon',
+      form: { data: { turbo_confirm: trn_geth('LABEL_DELETE_QUESTION') } }
+    ) %>
+  <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation.slug %>
+</div>
 

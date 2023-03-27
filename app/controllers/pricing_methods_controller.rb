@@ -6,7 +6,7 @@ class PricingMethodsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @pricing_methods }
+      format.xml  { render xml: @pricing_methods }
     end
   end
 
@@ -17,7 +17,7 @@ class PricingMethodsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @pricing_method }
+      format.xml  { render xml: @pricing_method }
     end
   end
 
@@ -28,7 +28,7 @@ class PricingMethodsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @pricing_method }
+      format.xml  { render xml: @pricing_method }
     end
   end
 
@@ -44,11 +44,11 @@ class PricingMethodsController < ApplicationController
 
     respond_to do |format|
       if @pricing_method.save
-        format.html { redirect_to(@pricing_method, :notice => 'Pricing method was successfully created.') }
-        format.xml  { render :xml => @pricing_method, :status => :created, :location => @pricing_method }
+        format.html { redirect_to(@pricing_method, notice: 'Pricing method was successfully created.') }
+        format.xml  { render xml: @pricing_method, status: :created, location: @pricing_method }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @pricing_method.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @pricing_method.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,12 +59,12 @@ class PricingMethodsController < ApplicationController
     @pricing_method = PricingMethod.find(params[:id])
 
     respond_to do |format|
-      if @pricing_method.update_attributes(params[:pricing_method])
-        format.html { redirect_to(pricing_methods_path, :notice => trn_get('PRICING_METHOD_UPDATED')) }
+      if @pricing_method.update(params[:pricing_method])
+        format.html { redirect_to(pricing_methods_path, notice: trn_get('PRICING_METHOD_UPDATED')) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @pricing_method.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @pricing_method.errors, status: :unprocessable_entity }
       end
     end
   end

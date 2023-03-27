@@ -10,5 +10,5 @@
 #  updated_at :datetime
 #
 
-class Email < ActiveRecord::Base
+class Email < ApplicationRecord
 end

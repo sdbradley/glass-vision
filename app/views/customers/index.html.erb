@@ -1,17 +1,54 @@
 <h1><%= trn_geth('TITLE_CUSTOMER_LIST') %></h1>
 
-<%= form_tag '/customers/search', :remote =>true , :id => 'customer-search-form' do %>
-  <%= submit_tag 'Search', :style => 'position:absolute;bottom:-20px;left:-20px;z-index:-1;'%>
-<% end %>
+<%= turbo_frame_tag :customer_search do %>
+  <%= form_with url: customers_path, method: :get do %>
+    <%= submit_tag 'Search', style: 'position:absolute;bottom:-20px;left:-20px;z-index:-1;' %>
 
-<div id="results">
-  <%= render :partial => 'customer_list'%>
-</div>
+    <table>
+      <thead class="header" style="text-align:left;">
+      <th><%= trn_geth('HEADER_NAME')%></th>
+      <th><%= trn_geth('LABEL_ADDRESS')%></th>
+      <th><%= trn_geth('LABEL_PHONE')%></th>
+      <th><%= trn_geth('LABEL_FAX')%></th>
+      <th><%= trn_geth('EMAIL_LABEL')%></th>
+      <th colspan="3"><%= trn_geth('HEADER_ACTION')%></th>
+      </thead>
+      <tbody>
+
+      <tr>
+        <td><%= text_field_tag :search_name, params[:search_name], :style=> 'width:100%' %></td>
+        <td><%= text_field_tag :search_address, params[:search_address], :style=> 'width:100%' %></td>
+        <td></td>
+        <td></td>
+        <td><%= text_field_tag :search_email, params[:search_email], :style=> 'width:100%' %></td>
+        <td><%= image_tag('spinner.gif', :align => 'absmiddle', :border => 0, :id => 'loading', :style => 'display: none;') %>
+        </td>
+      </tr>
+
+      <% @customers.each do |customer| %>
+        <tr class="<%= cycle('odd', 'even') %>">
+          <td><%= link_to customer.name, edit_customer_path(customer) %></td>
+          <td><%= customer.address %></td>
+          <td><a href="tel:<%= customer.phone %>"><%= customer.phone %></a></td>
+          <td><%= customer.fax %></td>
+          <td><a href="mailto:<%= customer.email %>"><%= customer.email %></a></td>
+          <td colspan="5">
+            <%= link_to(
+              trn_geth('BUTTON_DELETE'),
+              customer_path(customer),
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: trn_geth('LABEL_DELETE_QUESTION')
+              }
+            ) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
 
 <br />
 
 <%= link_to trn_get('LABEL_CUSTOMER_CREATE'), :action => 'new' %>
-
-<% content_for :extra_javascript do %>
-  // :update => "results"
-<% end %>

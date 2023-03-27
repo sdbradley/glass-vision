@@ -5,11 +5,11 @@ class ProductColorsController < ApplicationController
   # GET /product_colors.xml
   def index
     @module_type = ModuleType.find(params[:mt] || 1)
-    @product_colors = ProductColor.all(:conditions => { :module_type_id => @module_type.id })
+    @product_colors = ProductColor.all(conditions: { module_type_id: @module_type.id })
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @product_colors }
+      format.xml  { render xml: @product_colors }
     end
   end
 
@@ -21,7 +21,7 @@ class ProductColorsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @product_color }
+      format.xml  { render xml: @product_color }
     end
   end
 
@@ -29,11 +29,11 @@ class ProductColorsController < ApplicationController
   # GET /product_colors/new.xml
   def new
     @module_type = ModuleType.find(params[:mt] || 1)
-    @product_color = ProductColor.new(:module_type_id => @module_type.id)
+    @product_color = ProductColor.new(module_type_id: @module_type.id)
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @product_color }
+      format.xml  { render xml: @product_color }
     end
   end
 
@@ -52,11 +52,11 @@ class ProductColorsController < ApplicationController
     respond_to do |format|
       if @product_color.save
         flash[:notice] = trn_get('MSGF_COLOR_CREATED')
-        format.html { redirect_to(product_colors_url(:mt => @module_type.id)) }
-        format.xml  { render :xml => @product_color, :status => :created, :location => @product_color }
+        format.html { redirect_to(product_colors_url(mt: @module_type.id)) }
+        format.xml  { render xml: @product_color, status: :created, location: @product_color }
       else
-        format.html { render :action => 'new' }
-        format.xml  { render :xml => @product_color.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @product_color.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,13 +68,13 @@ class ProductColorsController < ApplicationController
     @module_type = @product_color.module_type
 
     respond_to do |format|
-      if @product_color.update_attributes(params[:product_color])
+      if @product_color.update(params[:product_color])
         flash[:notice] = trn_get('MSGF_COLOR_UPDATED')
-        format.html { redirect_to(product_colors_url(:mt => @module_type.id)) }
+        format.html { redirect_to(product_colors_url(mt: @module_type.id)) }
         format.xml  { head :ok }
       else
-        format.html { render :action => 'edit' }
-        format.xml  { render :xml => @product_color.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @product_color.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -87,7 +87,7 @@ class ProductColorsController < ApplicationController
     @module_type = @product_color.module_type
 
     respond_to do |format|
-      format.html { redirect_to(product_colors_url(:mt => @module_type.id)) }
+      format.html { redirect_to(product_colors_url(mt: @module_type.id)) }
       format.xml  { head :ok }
     end
   end

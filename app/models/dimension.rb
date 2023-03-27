@@ -1,6 +1,6 @@
-class Dimension < ActiveRecord::Base
+class Dimension < ApplicationRecord
   belongs_to :series
 
-  validates_presence_of :serie_id
-  validates_presence_of :value
+  validates :serie_id, presence: true
+  validates :value, presence: true
 end

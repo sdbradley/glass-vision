@@ -1,10 +1,9 @@
-class GlassMailer < ActionMailer::Base
+class GlassMailer < ApplicationMailer
   include TranslationGet
-  default :from => 'info@glass-vision.net'
+  default from: 'info@glass-vision.net'
 
   def glass_edition(glass)
     @glass = glass
-    mail(:to => 'josyan.pierson@gmail.com', :subject => "[Glass Vision] Glass to check: ##{@glass.id}")
+    mail(to: 'josyan.pierson@gmail.com', subject: "[Glass Vision] Glass to check: ##{@glass.id}")
   end
-
 end

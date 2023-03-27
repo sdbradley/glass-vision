@@ -1,3 +1,3 @@
-class DatabaseTranslationField < ActiveRecord::Base
-  validates_presence_of :translation_table_name, :translation_field_name
+class DatabaseTranslationField < ApplicationRecord
+  validates :translation_table_name, :translation_field_name, presence: true
 end
