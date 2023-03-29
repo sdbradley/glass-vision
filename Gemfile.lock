@@ -159,6 +159,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.14.1-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.14.1-x86_64-linux)
+      racc (~> 1.4)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -275,6 +277,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   activerecord-sortable
