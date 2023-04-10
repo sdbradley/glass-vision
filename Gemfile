@@ -21,6 +21,7 @@ gem 'rails-observers'
 gem 'rmagick' # , '>= 2.13.2'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'puma', '~> 5.2'
 
 gem 'stimulus-rails' # Stimulus JavaScript framework # may not need this...
 gem 'turbo-rails' # Turbo/Hotwire support for Rails
