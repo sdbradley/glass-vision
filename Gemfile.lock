@@ -224,7 +224,7 @@ GEM
     request_store (1.5.1)
       rack (>= 1.4)
     rexml (3.2.5)
-    rmagick (5.1.0)
+    rmagick (5.2.0)
       pkg-config (~> 1.4)
     rubocop (1.48.0)
       json (~> 2.3)

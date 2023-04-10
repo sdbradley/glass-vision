@@ -1,6 +1,6 @@
 desc 'Regenerates Opening images'
 require 'erb'
-require 'RMagick'
+require 'rmagick'
 include Magick
 
 FRAME_THICKNESS = 3.0
