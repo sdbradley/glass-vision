@@ -1,5 +1,5 @@
 require 'erb'
-require 'RMagick'
+require 'rmagick'
 include Magick
 
 # this class is a Service Object for creating preview images for Window Lines

@@ -1,5 +1,5 @@
 require 'erb'
-require 'RMagick'
+require 'rmagick'
 include Magick
 
 class DoorPreviewCreator
