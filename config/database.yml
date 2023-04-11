@@ -32,8 +32,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: glass_inlineproduction
+  database: l9ehee5pgwdkkimj
   pool: 5
-  username: root
-  #password: t9ohqa
-  host: 127.0.0.1
+  username: go167bpcfadf8b7k
+  password: slkxt7d7vpf7rrox
+  host: lyn7gfxo996yjjco.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
