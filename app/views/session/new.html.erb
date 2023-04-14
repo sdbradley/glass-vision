@@ -7,7 +7,7 @@
   <p style="clear:both;line-height:5px;" >&nbsp;</p> 
   <fieldset>
     <legend> <%= trn_geth('PLEASE_LOGIN_LABEL') %> </legend>
-    <%= form_tag session_path do %>
+    <%= form_tag session_path, data: { turbo: false } do %>
     <p><label for="login"><%= trn_geth('LOGIN_LABEL') %></label><br/>
     <%= text_field_tag 'login' %></p>
      
