@@ -36,6 +36,9 @@ GlassVision::Application.configure do
   config.assets.compile = false
   config.assets.prefix = '/assets/two'
 
+  # raise an error if asset not found
+  config.assets.unknown_asset_fallback = false
+
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
