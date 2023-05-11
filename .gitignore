@@ -36,3 +36,7 @@ config/secrets.yml
 # yarn
 /node_modules
 yarn-error.log
+
+# used when bundling production assets locally
+/config/master.key
+credentials.yml.enc

@@ -38,3 +38,21 @@ WKHTMLTOPDF_BINARY_PATH=/path/to/your/wkhtmltopdf/binary
 ```bash
 bin/dev # start app
 ```
+
+## Deployments (WIP)
+
+### Build Assets Locally
+
+Create `master.key`. Replace `EDITOR` value with editor of choice. You only need to run this the first time you build assets locally.
+
+```bash
+RAILS_ENV=production EDITOR="code --wait" bin/rails credentials:edit
+```
+
+Build JS and CSS.
+
+```bash
+RAILS_ENV=production rake assets:precompile
+```
+
+**TODO~**
