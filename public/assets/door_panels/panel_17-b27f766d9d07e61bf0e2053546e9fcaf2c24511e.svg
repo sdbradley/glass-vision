@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   width="<%= section_width %>"
+   height="<%= section_height %>"
+   viewBox="0 0 80 190"
+   id="svg2"
+   version="1.1"
+   style="display:inline">
+  <g
+     id="layer1"
+     transform="translate(0,-862.36218)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2987"
+       width="79"
+       height="189.00005"
+       x="0.50000006"
+       y="862.86218" />
+  </g>
+  <g
+     id="layer3"
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 14.5,23.5 c 10,0 16,-8 26,-8 10,0 15,8 25,8"
+       id="path3806"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 14.5,161.5 c 10,0 16,8 26,8 10,0 15,-8 25,-8"
+       id="path3806-8"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 14.5,161.5 0,-138 0,0"
+       id="path3828"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 65.5,161.5 0,-138 0,0"
+       id="path3828-6"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 16.5,25.5 c 8,0 16,-8 24,-8 8,0 15,8 23,8"
+       id="path3806-6"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 16.5,159.5 c 8,0 16,8 24,8 8,0 15,-8 23,-8"
+       id="path3806-6-7"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:0.99999994px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 16.5,159.5 0,-134 0,0"
+       id="path3828-7"/>
+    <path
+       style="fill:none;stroke:#808080;stroke-width:0.99999994px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 63.5,159.5 0,-134 0,0"
+       id="path3828-7-4"/>
+  </g>
+</svg>

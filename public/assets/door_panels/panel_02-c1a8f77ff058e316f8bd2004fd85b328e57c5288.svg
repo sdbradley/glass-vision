@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="<%= section_width %>"
+     height="<%= section_height %>"
+     viewBox="0 0 80 190"
+     id="svg2" version="1.1" style="display:inline">
+  <defs id="defs4">
+    <%= glass_or_gradient %>
+  </defs>
+  <!-- outer rectangle -->
+  <g id="layer1" transform="translate(0,-862.36)">
+    <rect id="rect2987" fill-rule="evenodd" height="189" width="79" stroke="#000" y="862.86" x=".5" fill="#fff"/>
+  </g>
+
+  <g id="layer3" stroke="#808080">
+    <!--bottom panel outer border -->
+    <rect height="48" width="55" y="121.5" x="12.5" fill="#fff"/>
+
+   <!-- bottom panel inner -->
+    <rect stroke-opacity=".5" height="44" width="51" y="123.5" x="14.5" fill="#fff"/>
+
+    <!-- top panel outer border -->
+    <rect id="rect3763" height="85" width="55" stroke-linecap="square" y="16.5" x="12.5" fill="none"/>
+
+    <!-- top panel innner rect : glass panel url(#glassbkg)-->
+    <rect id="rect3763-0" height="81" width="51" stroke-linecap="square" y="18.5" x="14.5" fill="url(#glassbkg)"/>
+  </g>
+</svg>

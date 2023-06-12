@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="<%= section_width %>"
+   height="<%= section_height %>"
+   viewBox="0 0 80 190"
+   id="svg2"
+   version="1.1"
+   style="display:inline">
+  <defs id="defs4">
+    <%= glass_or_gradient %>
+  </defs>
+  <g transform="translate(0 -862.36)">
+   <rect fill-rule="evenodd" height="189" width="79" stroke="#000" y="862.86" x=".5" fill="#fff"/>
+  </g>
+  <g stroke="#808080" stroke-linecap="square">
+   <rect height="155" width="55" y="14.5" x="12.5" fill="none"/>
+   <rect height="151" width="51" y="16.5" x="14.5" fill="url(#glassbkg)"/>
+  </g>
+</svg>

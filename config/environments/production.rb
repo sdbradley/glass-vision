@@ -34,8 +34,8 @@ GlassVision::Application.configure do
   config.serve_static_assets = true
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
-  config.assets.prefix = '/assets'
+  config.assets.compile = false
+  # config.assets.prefix = '/assets'
 
   # raise an error if asset not found
   config.assets.unknown_asset_fallback = false

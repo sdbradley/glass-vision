@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   width="<%= section_width %>"
+   height="<%= section_height %>"
+   viewBox="0 0 80 190"
+   id="svg2"
+   version="1.1"
+   style="display:inline">
+  <defs id="defs4">
+     <%= glass_or_gradient %>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(0,-862.36218)"
+     >
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2987"
+       width="79"
+       height="189.00005"
+       x="0.50000006"
+       y="862.86218" />
+  </g>
+  <g
+     id="g2988"
+     style="display:inline">
+    <path
+       transform="matrix(1.0185185,0,0,1,-0.23148148,-1.2052901e-6)"
+       d="m 66.5,92 a 27,72.5 0 1 1 -54,0 27,72.5 0 1 1 54,0 z"
+       id="path2992"
+       style="fill:none;stroke:#808080;stroke-width:0.99086738;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
+    <path
+       transform="matrix(0.94444444,0,0,0.97241379,2.6944445,2.5379311)"
+       d="m 66.5,92 a 27,72.5 0 1 1 -54,0 27,72.5 0 1 1 54,0 z"
+       id="path2994"
+       style="fill:url(#glassbkg);fill-opacity:1;stroke:#808080;stroke-width:1.04348505;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
+  </g>
+</svg>

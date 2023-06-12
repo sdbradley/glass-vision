@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   width="<%= section_width %>"
+   height="<%= section_height %>"
+   viewBox="0 0 80 190"
+   id="svg2" version="1.1" style="display:inline">
+  <defs id="defs4">
+    <%= glass_or_gradient %>
+  </defs>
+  <g id="layer1" transform="translate(0,-862.36218)" style="display:inline">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2987"
+       width="79"
+       height="189.00005"
+       x="0.50000006"
+       y="862.86218" />
+  </g>
+  <g id="layer3" style="display:inline">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3048-1" width="19" height="48" x="14.5" y="121.5" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3048-9-0" width="15" height="44" x="16.5" y="123.5" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect3048-1-0" width="19" height="48" x="46.5" y="121.5" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect3048-9-0-2" width="15" height="44" x="48.5" y="123.5" />
+    <path
+       style="fill:none;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 40,14.5 c -14.08326,0 -25.5,11.192881 -25.5,25 l 0,65 51,0 0,-65 c 0,-13.807119 -11.41674,-25 -25.5,-25 z"
+       id="rect3815"/>
+    <path
+       style="fill:url(#glassbkg);fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 40,16.5 c -12.978691,0 -23.5,10.297451 -23.5,23 l 0,63 47,0 0,-63 c 0,-12.702549 -10.521309,-23 -23.5,-23 z"
+       id="path3817-5"/>
+  </g>
+</svg>
