@@ -1,4 +1,4 @@
-class CreateDoorLinesOptions < ActiveRecord::Migration
+class CreateDoorLinesOptions < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_line_options do |t|
       t.integer :door_line_id

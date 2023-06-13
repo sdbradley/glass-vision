@@ -1,4 +1,4 @@
-class AddDatesToQuotation < ActiveRecord::Migration
+class AddDatesToQuotation < ActiveRecord::Migration[7.0]
   def self.up  
     add_column :quotations, :created_at, :datetime
     add_column :quotations, :updated_at, :datetime

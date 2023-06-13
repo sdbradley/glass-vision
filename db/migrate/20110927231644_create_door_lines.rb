@@ -1,4 +1,4 @@
-class CreateDoorLines < ActiveRecord::Migration
+class CreateDoorLines < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_lines do |t|
       t.integer :quotation_id

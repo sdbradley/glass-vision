@@ -1,4 +1,4 @@
-class CreateDoorGlassesDoorPanels < ActiveRecord::Migration
+class CreateDoorGlassesDoorPanels < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_glasses_door_panels, :id => false do |t|
       t.integer :door_glass_id

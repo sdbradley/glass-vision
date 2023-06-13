@@ -1,4 +1,4 @@
-class CreateTranslationsTables < ActiveRecord::Migration
+class CreateTranslationsTables < ActiveRecord::Migration[7.0]
 
   def self.up
     DoorBoring.create_translation_table!({:name => :string}, {:migrate_data => false})
@@ -21,24 +21,24 @@ class CreateTranslationsTables < ActiveRecord::Migration
     ModuleType.create_translation_table!({:name => :string})
 
 
-    migrate_data(DoorBoring,         {:name => :string})
-    migrate_data(DoorCombination,    {:name => :string})
-    migrate_data(DoorFrame,          {:name => :string})
-    migrate_data(DoorGlass,          {:name => :string})
-    migrate_data(DoorGlassFamily,    {:name => :string})
-    migrate_data(DoorOpening,        {:name => :string})
-    migrate_data(DoorPanel,          {:name => :string})
-    migrate_data(DoorPanelFamily,    {:name => :string})
-    migrate_data(DoorSection,        {:name => :string})
-    migrate_data(FrameProfile,       {:name => :string})
-    migrate_data(Opening,            {:abbreviation => :string, :name => :string}) # needs to be converted to restful
-    migrate_data(Option,             {:description => :string})
-    migrate_data(OptionsMinimumUnit, {:description => :string, :comments => :string})
-    migrate_data(OptionCategory,     {:description => :string,:name => :string})
-    migrate_data(PricingMethod,      {:description => :string, :comments => :string})
-    migrate_data(ProductColor,       {:name => :string})
-    migrate_data(Serie,              {:description => :string,:name => :string, :comments => :string})
-    migrate_data(ModuleType,         {:name => :string})
+    # migrate_data(DoorBoring,         {:name => :string})
+    # migrate_data(DoorCombination,    {:name => :string})
+    # migrate_data(DoorFrame,          {:name => :string})
+    # migrate_data(DoorGlass,          {:name => :string})
+    # migrate_data(DoorGlassFamily,    {:name => :string})
+    # migrate_data(DoorOpening,        {:name => :string})
+    # migrate_data(DoorPanel,          {:name => :string})
+    # migrate_data(DoorPanelFamily,    {:name => :string})
+    # migrate_data(DoorSection,        {:name => :string})
+    # migrate_data(FrameProfile,       {:name => :string})
+    # migrate_data(Opening,            {:abbreviation => :string, :name => :string}) # needs to be converted to restful
+    # migrate_data(Option,             {:description => :string})
+    # migrate_data(OptionsMinimumUnit, {:description => :string, :comments => :string})
+    # migrate_data(OptionCategory,     {:description => :string,:name => :string})
+    # migrate_data(PricingMethod,      {:description => :string, :comments => :string})
+    # migrate_data(ProductColor,       {:name => :string})
+    # migrate_data(Serie,              {:description => :string,:name => :string, :comments => :string})
+    # migrate_data(ModuleType,         {:name => :string})
 
   end
 

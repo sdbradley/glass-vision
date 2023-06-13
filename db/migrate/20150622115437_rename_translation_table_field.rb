@@ -1,4 +1,4 @@
-class RenameTranslationTableField < ActiveRecord::Migration
+class RenameTranslationTableField < ActiveRecord::Migration[7.0]
   def self.up
     rename_column :database_translations, :table, :translation_table_name
     rename_column :database_translation_fields, :table, :translation_table_name

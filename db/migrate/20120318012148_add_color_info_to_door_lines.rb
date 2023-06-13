@@ -1,4 +1,4 @@
-class AddColorInfoToDoorLines < ActiveRecord::Migration
+class AddColorInfoToDoorLines < ActiveRecord::Migration[7.0]
   def self.up
     add_column :door_lines, :exterior_color, :string, :null => true
     add_column :door_lines, :interior_color, :string, :null => true

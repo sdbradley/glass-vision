@@ -1,4 +1,4 @@
-class AddNotes < ActiveRecord::Migration
+class AddNotes < ActiveRecord::Migration[7.0]
   def self.up
 	add_column :quotations, :notes, :text
   end

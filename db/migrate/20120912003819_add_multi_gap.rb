@@ -1,4 +1,4 @@
-class AddMultiGap < ActiveRecord::Migration
+class AddMultiGap < ActiveRecord::Migration[7.0]
   def self.up
     rename_column :frame_profiles, :gap, :gap_slab
     add_column :frame_profiles, :gap_l, :float, :default => 0.0

@@ -1,4 +1,4 @@
-class CreateOptionCategoriesAssociationTable < ActiveRecord::Migration
+class CreateOptionCategoriesAssociationTable < ActiveRecord::Migration[7.0]
   def self.up
     create_table :option_categories_options do |t|
         t.column :option_category_id, :integer

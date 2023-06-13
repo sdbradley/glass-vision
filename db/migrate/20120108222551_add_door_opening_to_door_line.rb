@@ -1,4 +1,4 @@
-class AddDoorOpeningToDoorLine < ActiveRecord::Migration
+class AddDoorOpeningToDoorLine < ActiveRecord::Migration[7.0]
   def self.up
     add_column :door_lines, :door_opening_id, :integer
   end

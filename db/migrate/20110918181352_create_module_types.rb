@@ -1,4 +1,4 @@
-class CreateModuleTypes < ActiveRecord::Migration
+class CreateModuleTypes < ActiveRecord::Migration[7.0]
   def self.up
     create_table :module_types do |t|
       t.string :name

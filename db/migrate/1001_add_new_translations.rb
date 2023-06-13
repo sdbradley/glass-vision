@@ -1,4 +1,4 @@
-class AddNewTranslations < ActiveRecord::Migration
+class AddNewTranslations < ActiveRecord::Migration[7.0]
   def self.up
     File.open("db/migrate/more-translations.sql").each_line { |line|
       execute line

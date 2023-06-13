@@ -1,4 +1,4 @@
-class AddPstToQuotation < ActiveRecord::Migration
+class AddPstToQuotation < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
   def self.up
     add_column :quotations, :taxes_pst, :float

@@ -1,4 +1,4 @@
-class AddLogoUploadFields < ActiveRecord::Migration
+class AddLogoUploadFields < ActiveRecord::Migration[7.0]
   def self.up
     rename_column :companies, :logo, :logo_file_name
     add_column :companies, :logo_content_type, :string # Mime type

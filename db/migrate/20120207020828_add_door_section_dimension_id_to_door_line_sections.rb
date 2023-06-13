@@ -1,4 +1,4 @@
-class AddDoorSectionDimensionIdToDoorLineSections < ActiveRecord::Migration
+class AddDoorSectionDimensionIdToDoorLineSections < ActiveRecord::Migration[7.0]
   def self.up
     add_column :door_line_sections, :door_section_dimension_id, :integer
   end

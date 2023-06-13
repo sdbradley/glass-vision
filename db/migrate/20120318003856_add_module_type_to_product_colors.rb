@@ -1,4 +1,4 @@
-class AddModuleTypeToProductColors < ActiveRecord::Migration
+class AddModuleTypeToProductColors < ActiveRecord::Migration[7.0]
   def self.up
     add_column :product_colors, :module_type_id, :integer, :default => 1
   end

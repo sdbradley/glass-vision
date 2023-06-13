@@ -1,4 +1,4 @@
-class AddCompanyTranslations < ActiveRecord::Migration
+class AddCompanyTranslations < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 
   def self.up

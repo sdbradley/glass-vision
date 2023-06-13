@@ -1,4 +1,4 @@
-class CreateExistingCustomersFromQuotations < ActiveRecord::Migration
+class CreateExistingCustomersFromQuotations < ActiveRecord::Migration[7.0]
   def self.up
     quotations = Quotation.all()
     quotations.each do |quotation| 

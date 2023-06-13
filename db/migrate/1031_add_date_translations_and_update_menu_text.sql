@@ -9,7 +9,7 @@ UPDATE translations set fr='Formes', en='Shapes', es='Formas' where translation_
 UPDATE translations set fr='Ouvertures', en='Openings', es='Aperturas' where translation_key='TITLE_OPENING_LIST';
 UPDATE translations set fr='Options', en='Options', es='Opciones' where translation_key='TITLE_OPTION_LIST';
 UPDATE translations set fr='Catégories', en='Categories', es='Categorías' where translation_key='TITLE_OPTION_CATEGORY_LIST';
-UPDATE translations set fr='Traduction', en='Translations', es='Traducciones' where translation_key='TITLE_TRANSLATION_LIST';
+UPDATE translations set fr='Traduction', en=translations, es='Traducciones' where translation_key='TITLE_TRANSLATION_LIST';
 UPDATE translations set fr='Traduction des champs', en='Field Translations', es='Traducciones campos' where translation_key='TITLE_DBTF_LIST';
 UPDATE translations set fr='Traduction de BD', en='DB Translations', es='Traducciones DB' where translation_key='TITLE_DBT_LIST';
 UPDATE translations set fr='Companies', en='Companies', es='Empresas' where translation_key='TITLE_COMPANY_LIST';

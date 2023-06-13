@@ -1,4 +1,4 @@
-class CreateModuleTypesUsers < ActiveRecord::Migration
+class CreateModuleTypesUsers < ActiveRecord::Migration[7.0]
   def self.up
     create_table :module_types_users, :id => false do |t|
       t.integer :module_type_id

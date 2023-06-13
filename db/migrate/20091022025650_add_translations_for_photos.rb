@@ -1,4 +1,4 @@
-class AddTranslationsForPhotos < ActiveRecord::Migration
+class AddTranslationsForPhotos < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 
   def self.up

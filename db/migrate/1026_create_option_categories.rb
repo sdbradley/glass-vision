@@ -1,4 +1,4 @@
-class CreateOptionCategories < ActiveRecord::Migration
+class CreateOptionCategories < ActiveRecord::Migration[7.0]
   def self.up
     create_table :option_categories do |t|
       t.column :name, :string

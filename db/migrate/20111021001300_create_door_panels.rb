@@ -1,4 +1,4 @@
-class CreateDoorPanels < ActiveRecord::Migration
+class CreateDoorPanels < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_panels do |t|
       t.string :name

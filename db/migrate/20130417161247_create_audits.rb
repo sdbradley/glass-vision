@@ -1,4 +1,4 @@
-class CreateAudits < ActiveRecord::Migration
+class CreateAudits < ActiveRecord::Migration[7.0]
   def self.up
     create_table :audits do |t|
       t.integer :user_id

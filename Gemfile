@@ -14,7 +14,8 @@ gem 'globalize' # , '3.0.4'
 gem 'jquery-migrate-rails'
 gem 'jquery-rails' # , '~> 2.1'
 gem 'jquery-ui-rails'
-gem 'mysql2' # ,'0.2.7'
+# gem 'mysql2' # ,'0.2.7'
+gem 'pg'
 gem 'rails-i18n'
 gem 'rails-jquery-autocomplete' # , '1.0.10'
 gem 'rails-observers'
@@ -25,6 +26,8 @@ gem 'puma', '~> 5.2'
 
 gem 'stimulus-rails' # Stimulus JavaScript framework # may not need this...
 gem 'turbo-rails' # Turbo/Hotwire support for Rails
+
+gem "dotenv-rails"
 
 # NOTE: use these gems if you need to add Node modules/Yarn packages
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -39,7 +42,6 @@ group(:development) do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano' # , '~> 2.5.8', :require => false
-  gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'rubocop', require: false # Ruby linter and code formatter; run `rubocop` command in CLI
   gem 'rubocop-rails'

@@ -1,4 +1,4 @@
-class AddStandardProductTranslations < ActiveRecord::Migration
+class AddStandardProductTranslations < ActiveRecord::Migration[7.0]
   def self.up
     File.open("db/migrate/standard_product_translations.sql").each_line { |line|
       execute line unless line.empty?

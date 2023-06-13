@@ -1,4 +1,4 @@
-class RemoveDoorSectionDimensions < ActiveRecord::Migration
+class RemoveDoorSectionDimensions < ActiveRecord::Migration[7.0]
   def self.up
     drop_table :door_section_dimensions
   end

@@ -1,4 +1,4 @@
-class AddEmailTranslations < ActiveRecord::Migration
+class AddEmailTranslations < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 
   LAST_TRANSLATION_ID = 463
