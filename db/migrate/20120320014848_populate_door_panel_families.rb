@@ -1,4 +1,4 @@
-class PopulateDoorPanelFamilies < ActiveRecord::Migration
+class PopulateDoorPanelFamilies < ActiveRecord::Migration[7.0]
   def self.up
     SlabMaterial.all.each do |slab_material|
       DoorPanelFamily.create :name => "Famille #{slab_material.name}", :slab_material_id => slab_material.id

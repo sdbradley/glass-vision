@@ -1,4 +1,4 @@
-class PopulateModuleTypes < ActiveRecord::Migration
+class PopulateModuleTypes < ActiveRecord::Migration[7.0]
   def self.up
     ModuleType.create :name => 'Fenêtre', :gender => 'F'
     ModuleType.create :name => 'Porte', :gender => 'F'

@@ -1,4 +1,4 @@
-class PopulateDoorPanelDimensions < ActiveRecord::Migration
+class PopulateDoorPanelDimensions < ActiveRecord::Migration[7.0]
   def self.up
     price = 1
     DoorPanel.all.each do |door_panel|

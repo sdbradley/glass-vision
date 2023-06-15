@@ -1,4 +1,4 @@
-class PopulateOptionsMinimumUnits < ActiveRecord::Migration
+class PopulateOptionsMinimumUnits < ActiveRecord::Migration[7.0]
   def self.up
     execute "INSERT INTO options_minimum_units VALUES (1, 'par fenêtre', '');"
     execute "INSERT INTO options_minimum_units VALUES (2, 'par section', '');"

@@ -1,4 +1,4 @@
-class AddDoorPanelFamilyIdToDoorPanels < ActiveRecord::Migration
+class AddDoorPanelFamilyIdToDoorPanels < ActiveRecord::Migration[7.0]
   def self.up
     add_column :door_panels, :door_panel_family_id, :integer
   end

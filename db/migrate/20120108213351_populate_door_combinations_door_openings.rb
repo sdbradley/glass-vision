@@ -1,4 +1,4 @@
-class PopulateDoorCombinationsDoorOpenings < ActiveRecord::Migration
+class PopulateDoorCombinationsDoorOpenings < ActiveRecord::Migration[7.0]
   def self.up
     DoorCombination.find(1).door_opening_ids = [69, 70, 71, 72]
     DoorCombination.find(2).door_opening_ids = [61, 62, 63, 64]

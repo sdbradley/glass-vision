@@ -1,4 +1,4 @@
-class AddTransportTaxesDiscountInQuotations < ActiveRecord::Migration
+class AddTransportTaxesDiscountInQuotations < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotations, :transport, :float, :null => false, :default => 0
     add_column :quotations, :discount, :float, :null => false, :default => 0

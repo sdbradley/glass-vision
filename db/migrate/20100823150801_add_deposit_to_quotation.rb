@@ -1,4 +1,4 @@
-class AddDepositToQuotation < ActiveRecord::Migration
+class AddDepositToQuotation < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 
   LAST_TRANSLATION_ID = 486

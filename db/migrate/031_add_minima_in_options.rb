@@ -1,4 +1,4 @@
-class AddMinimaInOptions < ActiveRecord::Migration
+class AddMinimaInOptions < ActiveRecord::Migration[7.0]
   def self.up
     add_column :options, :minimum_quantity, :float, :null => false, :default => 0
     add_column :options, :options_minimum_unit_id, :integer, :null => false, :default => 1

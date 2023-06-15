@@ -1,4 +1,4 @@
-class AddOpeningsOpenable < ActiveRecord::Migration
+class AddOpeningsOpenable < ActiveRecord::Migration[7.0]
   def self.up
     add_column :openings, :openable, :boolean, :null => false, :default => false
   end

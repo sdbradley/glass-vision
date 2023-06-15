@@ -1,4 +1,4 @@
-class AddDateTranslationsAndUpdateMenuText < ActiveRecord::Migration
+class AddDateTranslationsAndUpdateMenuText < ActiveRecord::Migration[7.0]
   
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 

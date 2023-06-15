@@ -1,4 +1,4 @@
-class AddQuantifiableInPricingMethods < ActiveRecord::Migration
+class AddQuantifiableInPricingMethods < ActiveRecord::Migration[7.0]
   def self.up
     add_column :pricing_methods, :quantifiable, :boolean,  :default => false
   end

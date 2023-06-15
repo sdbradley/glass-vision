@@ -1,4 +1,4 @@
-class AddModuleTypeTranslations < ActiveRecord::Migration
+class AddModuleTypeTranslations < ActiveRecord::Migration[7.0]
   def self.up
     m = ModuleType.find(1)
     m.translations.destroy_all

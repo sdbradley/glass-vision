@@ -1,4 +1,4 @@
-class AddViewFromOutsideTranslations < ActiveRecord::Migration
+class AddViewFromOutsideTranslations < ActiveRecord::Migration[7.0]
   def self.up
     File.open("db/migrate/view_from_outside_translations.sql").each_line { |line|
       execute line unless line.empty?

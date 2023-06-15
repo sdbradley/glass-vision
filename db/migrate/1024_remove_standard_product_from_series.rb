@@ -1,4 +1,4 @@
-class RemoveStandardProductFromSeries < ActiveRecord::Migration
+class RemoveStandardProductFromSeries < ActiveRecord::Migration[7.0]
   def self.up
     remove_column :series, :is_standard_product
   end

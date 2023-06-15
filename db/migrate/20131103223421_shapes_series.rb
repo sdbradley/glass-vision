@@ -1,4 +1,4 @@
-class ShapesSeries < ActiveRecord::Migration
+class ShapesSeries < ActiveRecord::Migration[7.0]
   def self.up
     create_table :series_shapes, :id => false do |t|
       t.references :shape, :null => false

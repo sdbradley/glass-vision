@@ -1,4 +1,4 @@
-class AddColorTranslations < ActiveRecord::Migration
+class AddColorTranslations < ActiveRecord::Migration[7.0]
 
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 

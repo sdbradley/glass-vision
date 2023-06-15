@@ -1,4 +1,4 @@
-class CreateDoorCombinationsDoorOpenings < ActiveRecord::Migration
+class CreateDoorCombinationsDoorOpenings < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_combinations_door_openings, :id => false do |t|
       t.integer :door_combination_id

@@ -1,4 +1,4 @@
-class CreatePreviewImages < ActiveRecord::Migration
+class CreatePreviewImages < ActiveRecord::Migration[7.0]
   def self.up
     create_table :preview_images do |t|
       t.column :opening_id, :integer, :null => false

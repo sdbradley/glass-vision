@@ -1,4 +1,4 @@
-class AddDimensionsToFrameProfiles < ActiveRecord::Migration
+class AddDimensionsToFrameProfiles < ActiveRecord::Migration[7.0]
   def self.up
     add_column :frame_profiles, :width, :float, :default => 0.0
     add_column :frame_profiles, :separator_width, :float, :default => 0.0

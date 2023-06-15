@@ -1,4 +1,4 @@
-class CreateOpenings < ActiveRecord::Migration
+class CreateOpenings < ActiveRecord::Migration[7.0]
   def self.up
     create_table :openings, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :name,                 :string,        :limit => 50,     :null => false

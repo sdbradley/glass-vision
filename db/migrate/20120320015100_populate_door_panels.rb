@@ -1,4 +1,4 @@
-class PopulateDoorPanels < ActiveRecord::Migration
+class PopulateDoorPanels < ActiveRecord::Migration[7.0]
   def self.up
     DoorPanelFamily.all.each do |door_panel_family|
       1.upto(24) do |i|

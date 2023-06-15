@@ -1,4 +1,4 @@
-class PopulateDoorPanelsDoorSections < ActiveRecord::Migration
+class PopulateDoorPanelsDoorSections < ActiveRecord::Migration[7.0]
   def self.up
     DoorPanel.all.each do |dp|
       execute "INSERT INTO door_panels_door_sections (door_panel_id, door_section_id) VALUES (#{dp.id}, 3)"

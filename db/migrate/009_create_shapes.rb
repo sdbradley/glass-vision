@@ -1,4 +1,4 @@
-class CreateShapes < ActiveRecord::Migration
+class CreateShapes < ActiveRecord::Migration[7.0]
   def self.up
     create_table :shapes, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :name,                 :string,        :limit => 50,     :null => false

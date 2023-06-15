@@ -1,4 +1,4 @@
-class AddColorQuantityDisclaimer < ActiveRecord::Migration
+class AddColorQuantityDisclaimer < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 
   LAST_TRANSLATION_ID = 484

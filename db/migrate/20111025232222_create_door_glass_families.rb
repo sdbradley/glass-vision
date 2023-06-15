@@ -1,4 +1,4 @@
-class CreateDoorGlassFamilies < ActiveRecord::Migration
+class CreateDoorGlassFamilies < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_glass_families do |t|
       t.string :name

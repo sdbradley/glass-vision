@@ -1,4 +1,4 @@
-class AddColorsToQuotationLine < ActiveRecord::Migration
+class AddColorsToQuotationLine < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotation_lines, :exterior_color, :string, :null => true
     add_column :quotation_lines, :interior_color, :string, :null => true

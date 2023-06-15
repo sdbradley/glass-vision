@@ -1,4 +1,4 @@
-class PopulatePricingMethods < ActiveRecord::Migration
+class PopulatePricingMethods < ActiveRecord::Migration[7.0]
   def self.up
     execute "INSERT INTO pricing_methods VALUES (1, 'prix au pied carré', '');"
     execute "INSERT INTO pricing_methods VALUES (2, 'prix au pied de périmètre', '');"

@@ -1,4 +1,4 @@
-class SetUnitPriceQuantifiable < ActiveRecord::Migration
+class SetUnitPriceQuantifiable < ActiveRecord::Migration[7.0]
   def self.up
     execute "UPDATE pricing_methods
              SET quantifiable = 1

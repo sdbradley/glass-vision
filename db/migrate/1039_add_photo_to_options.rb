@@ -1,4 +1,4 @@
-class AddPhotoToOptions < ActiveRecord::Migration
+class AddPhotoToOptions < ActiveRecord::Migration[7.0]
   def self.up
     add_column :options, :photo_file_name, :string # Original filename
     add_column :options, :photo_content_type, :string # Mime type

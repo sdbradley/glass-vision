@@ -1,4 +1,4 @@
-class AddSidelightsToShape < ActiveRecord::Migration
+class AddSidelightsToShape < ActiveRecord::Migration[7.0]
   def self.up
     add_column :shapes, :has_left_sidelight, :boolean, :default => false
     add_column :shapes, :has_right_sidelight, :boolean, :default => false

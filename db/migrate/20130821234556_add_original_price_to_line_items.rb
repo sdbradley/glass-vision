@@ -1,4 +1,4 @@
-class AddOriginalPriceToLineItems < ActiveRecord::Migration
+class AddOriginalPriceToLineItems < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotation_lines, :original_price, :float, :null => true, :default => nil
     add_column :door_lines, :original_price, :float, :null => true, :default => nil

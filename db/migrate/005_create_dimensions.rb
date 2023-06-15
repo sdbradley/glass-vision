@@ -1,4 +1,4 @@
-class CreateDimensions < ActiveRecord::Migration
+class CreateDimensions < ActiveRecord::Migration[7.0]
   def self.up
     create_table :dimensions, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :serie_id,             :integer,                     :null => false

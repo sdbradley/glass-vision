@@ -1,4 +1,4 @@
-class AddAttachmentPhotoToShape < ActiveRecord::Migration
+class AddAttachmentPhotoToShape < ActiveRecord::Migration[7.0]
   def self.up
     add_column :shapes, :photo_file_name, :string
     add_column :shapes, :photo_content_type, :string
