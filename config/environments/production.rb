@@ -41,7 +41,7 @@ GlassVision::Application.configure do
   config.assets.unknown_asset_fallback = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = "https://cig-cdn.s3.amazonaws.com"
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
