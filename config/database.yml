@@ -32,8 +32,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: l9ehee5pgwdkkimj
+  database: h2wsv3le3joechts
   pool: 5
-  username: go167bpcfadf8b7k
-  password: slkxt7d7vpf7rrox
-  host: lyn7gfxo996yjjco.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+  username: w7ndajh0mk3hxgln
+  password: rka6wpoi63jkpk6z
+  host: co28d739i4m2sb7j.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
