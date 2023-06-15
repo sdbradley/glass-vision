@@ -1,4 +1,4 @@
-class RemoveIdFromCompaniesUsers < ActiveRecord::Migration
+class RemoveIdFromCompaniesUsers < ActiveRecord::Migration[7.0]
   def self.up
     remove_column :companies_users, :id
   end

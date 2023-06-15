@@ -1,4 +1,4 @@
-class AddCustomerTranslations < ActiveRecord::Migration
+class AddCustomerTranslations < ActiveRecord::Migration[7.0]
   
   DATAFILE = __FILE__.gsub('.rb', '.sql')
 

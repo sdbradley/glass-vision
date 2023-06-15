@@ -1,4 +1,4 @@
-class AddEnInTranslations < ActiveRecord::Migration
+class AddEnInTranslations < ActiveRecord::Migration[7.0]
   def self.up
     add_column :translations, :en, :text
   end

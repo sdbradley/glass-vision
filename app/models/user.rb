@@ -42,7 +42,7 @@ class User < ApplicationRecord
   def set_company
     return unless companies.empty?
 
-    companies << Company.where(name: 'Glass-Vision').first
+    companies << Company.find_or_create_by!(name: 'Glass Vision')
   end
 
   #

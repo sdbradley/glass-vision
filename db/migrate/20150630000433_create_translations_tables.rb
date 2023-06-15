@@ -1,4 +1,4 @@
-class CreateTranslationsTables < ActiveRecord::Migration
+class CreateTranslationsTables < ActiveRecord::Migration[7.0]
 
   def self.up
     DoorBoring.create_translation_table!({:name => :string}, {:migrate_data => false})

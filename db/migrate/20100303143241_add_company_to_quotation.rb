@@ -1,4 +1,4 @@
-class AddCompanyToQuotation < ActiveRecord::Migration
+class AddCompanyToQuotation < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotations, :company_id, :integer
 

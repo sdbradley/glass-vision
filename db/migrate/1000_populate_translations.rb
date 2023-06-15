@@ -1,4 +1,4 @@
-class PopulateTranslations < ActiveRecord::Migration
+class PopulateTranslations < ActiveRecord::Migration[7.0]
   def self.up
     execute "TRUNCATE TABLE translations;" # prevents having to migrate back to add a new table
     File.open("db/migrate/translations.sql").each_line { |line|

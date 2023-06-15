@@ -1,4 +1,4 @@
-class CreateManualLines < ActiveRecord::Migration
+class CreateManualLines < ActiveRecord::Migration[7.0]
   def self.up
     create_table :manual_lines do |t|
       t.text :description

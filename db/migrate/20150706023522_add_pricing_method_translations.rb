@@ -1,4 +1,4 @@
-class AddPricingMethodTranslations < ActiveRecord::Migration
+class AddPricingMethodTranslations < ActiveRecord::Migration[7.0]
   def self.up
     Translation.create(:translation_key =>'MSG_ERROR', :en =>'error', :fr => 'erreur', :es =>'error')
     Translation.create(:translation_key =>'MSG_ERROR_TEXT', :en =>'prohibited this pricing method from being saved:', :fr => 'interdit cette méthode d\'être enregistré :', :es =>'prohíbe este método se guardara los precios:')

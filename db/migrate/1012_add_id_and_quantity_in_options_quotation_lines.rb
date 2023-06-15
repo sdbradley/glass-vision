@@ -1,4 +1,4 @@
-class AddIdAndQuantityInOptionsQuotationLines < ActiveRecord::Migration
+class AddIdAndQuantityInOptionsQuotationLines < ActiveRecord::Migration[7.0]
   def self.up
     execute "ALTER TABLE options_quotation_lines
              ADD COLUMN id INTEGER  NOT NULL AUTO_INCREMENT AFTER quotation_line_id,

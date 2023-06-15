@@ -1,4 +1,4 @@
-class PopulateDoorCombinations < ActiveRecord::Migration
+class PopulateDoorCombinations < ActiveRecord::Migration[7.0]
   def self.up
     DoorCombination.create :name => 'Porte simple', :sections => 'SL', :preview_image_name => 'SL.png', :door_frame_id => 1
     DoorCombination.create :name => 'Porte simple avec L gauche', :sections => 'L;SL', :preview_image_name => 'L_SL.png', :door_frame_id => 1

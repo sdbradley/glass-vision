@@ -1,4 +1,4 @@
-class AddCustomerDataInQuotations < ActiveRecord::Migration
+class AddCustomerDataInQuotations < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotations, :project_name, :string, :limit => 150
     add_column :quotations, :customer_name, :string, :limit => 150

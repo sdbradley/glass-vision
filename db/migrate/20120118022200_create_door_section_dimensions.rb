@@ -1,4 +1,4 @@
-class CreateDoorSectionDimensions < ActiveRecord::Migration
+class CreateDoorSectionDimensions < ActiveRecord::Migration[7.0]
   def self.up
     create_table :door_section_dimensions do |t|
       t.integer :door_section_id

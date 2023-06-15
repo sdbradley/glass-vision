@@ -1,4 +1,4 @@
-class PopulateModuleTypesUsers < ActiveRecord::Migration
+class PopulateModuleTypesUsers < ActiveRecord::Migration[7.0]
   def self.up
     module_type = ModuleType.first(:conditions => { :name => 'Fenêtre' })
     User.all.each do |user|

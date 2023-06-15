@@ -1,4 +1,4 @@
-class CreateFrameProfiles < ActiveRecord::Migration
+class CreateFrameProfiles < ActiveRecord::Migration[7.0]
   def self.up
     create_table :frame_profiles do |t|
       t.string :name

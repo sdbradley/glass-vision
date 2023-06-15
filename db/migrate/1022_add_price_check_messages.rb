@@ -1,4 +1,4 @@
-class AddPriceCheckMessages < ActiveRecord::Migration
+class AddPriceCheckMessages < ActiveRecord::Migration[7.0]
   def self.up
     File.open("db/migrate/add_price_check_messages.sql").each_line { |line|
       execute line unless line.empty?

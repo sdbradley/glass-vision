@@ -1,4 +1,4 @@
-class PopulateDoorOpenings < ActiveRecord::Migration
+class PopulateDoorOpenings < ActiveRecord::Migration[7.0]
   def self.up
     DoorOpening.create :name => 'Gauche GI', :preview_image_name => 'SL_SL_SL_G_GI.png'
     DoorOpening.create :name => 'Gauche GE', :preview_image_name => 'SL_SL_SL_G_GE.png'

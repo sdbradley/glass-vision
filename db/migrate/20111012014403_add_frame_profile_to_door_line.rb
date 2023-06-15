@@ -1,4 +1,4 @@
-class AddFrameProfileToDoorLine < ActiveRecord::Migration
+class AddFrameProfileToDoorLine < ActiveRecord::Migration[7.0]
   def self.up
     add_column :door_lines, :frame_profile_id, :integer
   end

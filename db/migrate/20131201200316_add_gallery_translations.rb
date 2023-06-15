@@ -1,4 +1,4 @@
-class AddGalleryTranslations < ActiveRecord::Migration
+class AddGalleryTranslations < ActiveRecord::Migration[7.0]
   DATAFILE = __FILE__.gsub('.rb', '.sql')
   def self.up
     IO.readlines(DATAFILE).join.gsub("\r\n", "\n").split(";\n").each do |s|

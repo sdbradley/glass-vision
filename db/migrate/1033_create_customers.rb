@@ -1,4 +1,4 @@
-class CreateCustomers < ActiveRecord::Migration
+class CreateCustomers < ActiveRecord::Migration[7.0]
   def self.up
     create_table :customers, :force => true do |t|
       t.column :name,     :string, :limit => 150, :null => false

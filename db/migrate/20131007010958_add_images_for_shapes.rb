@@ -1,4 +1,4 @@
-class AddImagesForShapes < ActiveRecord::Migration
+class AddImagesForShapes < ActiveRecord::Migration[7.0]
   def self.up
     base_path = File.expand_path('../../shape_images',  __FILE__)
     Shape.find_by_name('1 Section').update_attribute(:photo, File.new(File.join(base_path, 'one-by-one.png'), 'rb'))

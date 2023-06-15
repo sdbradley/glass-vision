@@ -1,4 +1,4 @@
-class RemoveOriginalPriceFromOptionsQuotationLines < ActiveRecord::Migration
+class RemoveOriginalPriceFromOptionsQuotationLines < ActiveRecord::Migration[7.0]
   def self.up
     remove_column :options_quotation_lines, :original_price
   end

@@ -1,4 +1,4 @@
-class AddDiscountToUser < ActiveRecord::Migration
+class AddDiscountToUser < ActiveRecord::Migration[7.0]
   def self.up
     add_column :users, :discount, :float, :default => 0.0, :null => true
     # update existing rows here

@@ -1,4 +1,4 @@
-class PopulateDoorSections < ActiveRecord::Migration
+class PopulateDoorSections < ActiveRecord::Migration[7.0]
   def self.up
     DoorSection.create :name => "L", :code => "L"
     DoorSection.create :name => "LP", :code => "LP"

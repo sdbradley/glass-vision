@@ -1,4 +1,4 @@
-class AddOmuInDtf < ActiveRecord::Migration
+class AddOmuInDtf < ActiveRecord::Migration[7.0]
   def self.up
     execute "INSERT INTO `database_translation_fields` VALUES   (11,'options_minimum_units','description');"
     execute "INSERT INTO `database_translation_fields` VALUES   (12,'options_minimum_units','comments');"

@@ -1,4 +1,4 @@
-class AddSlugToQuotation < ActiveRecord::Migration
+class AddSlugToQuotation < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotations, :slug, :string
     execute("UPDATE quotations set slug=id;")

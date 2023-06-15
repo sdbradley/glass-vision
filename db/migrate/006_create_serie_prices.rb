@@ -1,4 +1,4 @@
-class CreateSeriePrices < ActiveRecord::Migration
+class CreateSeriePrices < ActiveRecord::Migration[7.0]
   def self.up
     create_table :serie_prices, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :width_id,             :integer,                     :null => false

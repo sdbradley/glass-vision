@@ -1,4 +1,4 @@
-class CreateInvoiceNumbers < ActiveRecord::Migration
+class CreateInvoiceNumbers < ActiveRecord::Migration[7.0]
   def self.up
     create_table :invoice_numbers do |t|
       t.integer :year

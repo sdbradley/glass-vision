@@ -1,5 +1,5 @@
 #encoding: utf-8
-class AddContactInfoToQuotation < ActiveRecord::Migration[7.0]
+class AddContactInfoToQuotation < ActiveRecord::Migration[7.0][7.0]
   def self.up
     add_column :quotations, :contact, :string, null:true
     add_column :quotations, :cell_phone, :string, null:true

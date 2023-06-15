@@ -1,4 +1,4 @@
-class CreateSectionDimensions < ActiveRecord::Migration
+class CreateSectionDimensions < ActiveRecord::Migration[7.0]
   def self.up
     create_table :section_dimensions, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :quotation_line_id,    :integer,                     :null => false

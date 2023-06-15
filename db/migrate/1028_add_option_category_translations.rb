@@ -1,4 +1,4 @@
-class AddOptionCategoryTranslations < ActiveRecord::Migration
+class AddOptionCategoryTranslations < ActiveRecord::Migration[7.0]
    def self.up
      File.open("db/migrate/option_category_translations.sql").each_line { |line|
        execute line unless line.empty?

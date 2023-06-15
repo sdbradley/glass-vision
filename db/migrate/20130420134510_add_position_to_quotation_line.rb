@@ -1,4 +1,4 @@
-class AddPositionToQuotationLine < ActiveRecord::Migration
+class AddPositionToQuotationLine < ActiveRecord::Migration[7.0]
   def self.up
     add_column :quotation_lines, :position, :integer
     add_column :door_lines, :position, :integer

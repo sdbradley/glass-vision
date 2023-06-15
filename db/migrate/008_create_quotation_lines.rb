@@ -1,4 +1,4 @@
-class CreateQuotationLines < ActiveRecord::Migration
+class CreateQuotationLines < ActiveRecord::Migration[7.0]
   def self.up
     create_table :quotation_lines, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :quotation_id,         :integer,       :null => false

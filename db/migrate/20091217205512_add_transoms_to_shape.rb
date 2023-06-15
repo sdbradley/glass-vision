@@ -1,4 +1,4 @@
-class AddTransomsToShape < ActiveRecord::Migration
+class AddTransomsToShape < ActiveRecord::Migration[7.0]
   def self.up
     add_column :shapes, :has_upper_transom, :boolean, :default => false
     add_column :shapes, :has_lower_transom, :boolean, :default => false

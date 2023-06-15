@@ -1,4 +1,4 @@
-class CreateDatabaseTranslations < ActiveRecord::Migration
+class CreateDatabaseTranslations < ActiveRecord::Migration[7.0]
   def self.up
     create_table :database_translations, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
       t.column :record_id,            :integer,                   :null => false
