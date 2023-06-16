@@ -1,6 +1,6 @@
 class CreateOptionsQuotationLines < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :options_quotation_lines, :id => false do |t|
+    create_table :options_quotation_lines do |t|
       t.column :option_id,                   :integer,       :null => false
       t.column :quotation_line_id,           :integer,       :null => false
     end
