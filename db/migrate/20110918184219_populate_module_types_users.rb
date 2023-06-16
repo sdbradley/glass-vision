@@ -1,8 +1,8 @@
 class PopulateModuleTypesUsers < ActiveRecord::Migration[7.0]
   def self.up
-    module_type = ModuleType.first(:conditions => { :name => 'Fenêtre' })
+    module_type = ModuleType.where(name: 'Fenêtre' }&.first
     User.all.each do |user|
-      user.module_types << module_type
+      user.module_types << module_type unless module_type.nil?
     end
   end
 
