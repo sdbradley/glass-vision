@@ -6,8 +6,8 @@ class AddLogoUploadFields < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    rename_column :companies, :logo_file_name, :logo, if_exists: true
-    remove_column :companies, :logo_content_type, if_exists: true
-    remove_column :companies, :logo_file_size, if_exists: true
+    rename_column :companies, :logo_file_name, :logo
+    remove_column :companies, :logo_content_type
+    remove_column :companies, :logo_file_size
   end
 end
