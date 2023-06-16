@@ -1,6 +1,6 @@
 class CreateOptionsMinimumUnits < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :options_minimum_units, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
+    create_table :options_minimum_units do |t|
       t.column :description,          :string,      :limit => 50,       :null => false
       t.column :comments,             :text
     end

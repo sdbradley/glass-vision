@@ -1,6 +1,6 @@
 class CreateCompanies < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :companies, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
+    create_table :companies do |t|
       t.column :name,         :string,        :limit => 100,          :null => false
       t.column :address,      :string,        :limit => 200
       t.column :phone,        :string,        :limit => 50

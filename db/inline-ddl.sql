@@ -38,7 +38,7 @@ CREATE TABLE `companies` (
   `fax` varchar(50) default NULL,
   `logo` varchar(100) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `database_translation_fields` (
   `table` varchar(50) NOT NULL default '',
   `field` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `database_translations` (
   `fr` text,
   `en` text,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=251 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=251 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -87,7 +87,7 @@ CREATE TABLE `dimensions` (
   `value` float NOT NULL default '0',
   `type` varchar(6) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=581 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=581 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `openings` (
   `preview_image_name` varchar(100) default NULL,
   `glasses_quantity` int(11) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -118,7 +118,7 @@ SET character_set_client = utf8;
 CREATE TABLE `openings_series` (
   `opening_id` int(11) NOT NULL default '0',
   `serie_id` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -137,7 +137,7 @@ CREATE TABLE `options` (
   `minimum_quantity` float NOT NULL default '0',
   `options_minimum_unit_id` int(11) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `options_minimum_units` (
   `description` varchar(50) NOT NULL default '',
   `comments` text,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -165,7 +165,7 @@ SET character_set_client = utf8;
 CREATE TABLE `options_quotation_lines` (
   `option_id` int(11) NOT NULL default '0',
   `quotation_line_id` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -178,7 +178,7 @@ SET character_set_client = utf8;
 CREATE TABLE `options_series` (
   `option_id` int(11) NOT NULL default '0',
   `serie_id` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -210,7 +210,7 @@ CREATE TABLE `pricing_methods` (
   `description` varchar(50) NOT NULL default '',
   `comments` text,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -231,7 +231,7 @@ CREATE TABLE `quotation_lines` (
   `price` float NOT NULL default '0',
   `label` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=369 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=369 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -247,7 +247,7 @@ CREATE TABLE `quotation_lines_openings` (
   `opening_id` int(11) NOT NULL default '0',
   `sort_order` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=648 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=648 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -274,7 +274,7 @@ CREATE TABLE `quotations` (
   `ready_to_sign` tinyint(1) default '0',
   `user_id` int(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -300,7 +300,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `schema_info` (
   `version` int(11) default NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -334,7 +334,7 @@ CREATE TABLE `serie_prices` (
   `opening_id` int(11) NOT NULL default '0',
   `price` float NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17566 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=17566 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -350,7 +350,7 @@ CREATE TABLE `series` (
   `description` varchar(255) NOT NULL default '',
   `comments` text,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE `shapes` (
   `sections_height` int(11) NOT NULL default '0',
   `corners` int(11) NOT NULL default '4',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -384,7 +384,7 @@ CREATE TABLE `translations` (
   `comments` text,
   `en` text,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=378 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=378 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --

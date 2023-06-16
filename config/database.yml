@@ -1,39 +1,30 @@
-# MySQL.  Versions 4.1 and 5.0 are recommended.
-#
-# Install the MySQL driver:
-#   gem install mysql2
-#
-# And be sure to use new-style password hashing:
-#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
-development:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: inline_development
-  pool: 5
-  username: root
-  #password: t9ohqa
-#  host: snowmoon
+default: &default
+  adapter: <%= ENV['DB_ADAPTER'] %>
+  database: <%= ENV['DB_DATABASE'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  pool: <%= ENV['DB_POOL'] || 5 %>
+  timeout: <%= ENV['DB_TIMEOUT'] || 1500 %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
+development:
+  <<: *default
+
 test:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: inline_test
-  pool: 5
-  username: root
-  #password: t9ohqa
-  host: 127.0.0.1
+  <<: *default
+  database: <%= ENV['DB_DATABASE_TEST'] || ENV['DB_DATABASE'] %>
+
+test_one:
+  <<: *default
+
+qa:
+  <<: *default
+
+staging:
+  <<: *default
 
 production:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: aefxlza68pd7yrcc
-  pool: 5
-  username: plp8tlfih346kch9
-  password: lih3ivp8pzq7u20n
-  host: eyw6324oty5fsovx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+  <<: *default
+
+build:
+  <<: *default
