@@ -1,6 +1,6 @@
 class CreateDoorCombinations < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :door_combinations do |t|
+    create_table :door_combinations, if_not_exists: true do |t|
       t.string :name
       t.string :sections
       t.string :preview_image_name
