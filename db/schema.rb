@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.datetime "created_at", precision: nil
   end
 
-  create_table "companies", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "companies", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "name", limit: 100, default: "", null: false
     t.string "address", limit: 200
     t.string "phone", limit: 50
@@ -47,12 +47,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.integer "user_id"
   end
 
-  create_table "database_translation_fields", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "database_translation_fields", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "translation_table_name", limit: 50, default: "", null: false
     t.string "translation_field_name", limit: 50, default: "", null: false
   end
 
-  create_table "database_translations", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "database_translations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "record_id", default: 0, null: false
     t.string "translation_table_name", limit: 50, null: false
     t.string "translation_field_name", limit: 50, default: "", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.text "es"
   end
 
-  create_table "dimensions", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "dimensions", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "serie_id", default: 0, null: false
     t.float "value", default: 0.0, null: false
     t.string "type", limit: 6, default: "", null: false
@@ -385,7 +385,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["opening_id"], name: "index_opening_translations_on_opening_id"
   end
 
-  create_table "openings", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "openings", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.string "abbreviation", limit: 5, default: "", null: false
     t.boolean "openable", default: false, null: false
@@ -394,7 +394,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.string "label"
   end
 
-  create_table "openings_series", id: false, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "openings_series", id: false, charset: "utf8", force: :cascade do |t|
     t.integer "opening_id", default: 0, null: false
     t.integer "serie_id", default: 0, null: false
   end
@@ -432,7 +432,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["option_id"], name: "index_option_translations_on_option_id"
   end
 
-  create_table "options", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "options", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
     t.integer "pricing_method_id", default: 0, null: false
@@ -458,18 +458,18 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["options_minimum_unit_id"], name: "index_c8948b17624f39c7c9943bdcff961768ae0f770f"
   end
 
-  create_table "options_minimum_units", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "options_minimum_units", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
   end
 
-  create_table "options_quotation_lines", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "options_quotation_lines", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "option_id", default: 0, null: false
     t.integer "quotation_line_id", default: 0, null: false
     t.integer "quantity", default: 1, null: false
   end
 
-  create_table "options_quotations", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "options_quotations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "option_id", default: 0, null: false
     t.integer "quotation_id", default: 0, null: false
     t.float "quantity", default: 1.0, null: false
@@ -477,7 +477,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "original_price"
   end
 
-  create_table "options_series", id: false, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "options_series", id: false, charset: "utf8", force: :cascade do |t|
     t.integer "option_id", default: 0, null: false
     t.integer "serie_id", default: 0, null: false
   end
@@ -506,7 +506,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["pricing_method_id"], name: "index_pricing_method_translations_on_pricing_method_id"
   end
 
-  create_table "pricing_methods", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "pricing_methods", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
     t.boolean "quantifiable", default: false
@@ -530,7 +530,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.integer "module_type_id", default: 1
   end
 
-  create_table "quotation_lines", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "quotation_lines", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "quotation_id", default: 0, null: false
     t.integer "serie_id", default: 0, null: false
     t.integer "shape_id", default: 0, null: false
@@ -548,13 +548,13 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "secondary_height", default: 0.0, null: false
   end
 
-  create_table "quotation_lines_openings", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "quotation_lines_openings", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "quotation_line_id", default: 0, null: false
     t.integer "opening_id", default: 0, null: false
     t.integer "sort_order", default: 0, null: false
   end
 
-  create_table "quotations", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "quotations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
     t.string "project_name", limit: 150
@@ -594,14 +594,14 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.string "type", limit: 13, default: "", null: false
   end
 
-  create_table "serie_prices", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "serie_prices", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "width_id", default: 0, null: false
     t.integer "height_id", default: 0, null: false
     t.integer "opening_id", default: 0, null: false
     t.float "price", default: 0.0, null: false
   end
 
-  create_table "series", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "series", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.string "description", default: "", null: false
     t.text "comments"
@@ -634,7 +634,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "shapes", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "shapes", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.integer "sections_width", default: 0, null: false
     t.integer "sections_height", default: 0, null: false
@@ -657,7 +657,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "translations", id: :integer, charset: "utf8", options: "ENGINE=MyISAM", force: :cascade do |t|
+  create_table "translations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "translation_key", limit: 100, default: "", null: false
     t.text "fr"
     t.text "comments"

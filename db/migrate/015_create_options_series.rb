@@ -1,6 +1,6 @@
 class CreateOptionsSeries < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :options_series, :id => false, :options => 'ENGINE=MyISAM DEFAULT CHARSET=utf8' do |t|
+    create_table :options_series, :id => false do |t|
       t.column :option_id,          :integer,       :null => false
       t.column :serie_id,           :integer,       :null => false
     end
