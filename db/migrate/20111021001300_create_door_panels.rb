@@ -1,6 +1,6 @@
 class CreateDoorPanels < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :door_panels do |t|
+    create_table :door_panels, if_not_exists: true do |t|
       t.string :name
       t.string :preview_image_name
 
@@ -9,6 +9,6 @@ class CreateDoorPanels < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :door_panels
+    drop_table :door_panels, if_exists: true
   end
 end
