@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
-  create_table "audits", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "audits", force: :cascade do |t|
     t.integer "user_id"
     t.string "action"
     t.string "result"
@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.datetime "created_at", precision: nil
   end
 
-  create_table "companies", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "companies", force: :cascade do |t|
     t.string "name", limit: 100, default: "", null: false
     t.string "address", limit: 200
     t.string "phone", limit: 50
@@ -31,12 +31,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.string "pst_number"
   end
 
-  create_table "companies_users", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "companies_users", force: :cascade do |t|
     t.integer "company_id"
     t.integer "user_id"
   end
 
-  create_table "customers", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "customers", force: :cascade do |t|
     t.string "name", limit: 150, null: false
     t.string "address", limit: 200
     t.string "phone", limit: 50
@@ -47,12 +47,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.integer "user_id"
   end
 
-  create_table "database_translation_fields", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "database_translation_fields", force: :cascade do |t|
     t.string "translation_table_name", limit: 50, default: "", null: false
     t.string "translation_field_name", limit: 50, default: "", null: false
   end
 
-  create_table "database_translations", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "database_translations", force: :cascade do |t|
     t.integer "record_id", default: 0, null: false
     t.string "translation_table_name", limit: 50, null: false
     t.string "translation_field_name", limit: 50, default: "", null: false
@@ -61,13 +61,13 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.text "es"
   end
 
-  create_table "dimensions", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "dimensions", force: :cascade do |t|
     t.integer "serie_id", default: 0, null: false
     t.float "value", default: 0.0, null: false
     t.string "type", limit: 6, default: "", null: false
   end
 
-  create_table "door_boring_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_boring_translations", force: :cascade do |t|
     t.integer "door_boring_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_boring_translations_on_locale"
   end
 
-  create_table "door_borings", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_borings", force: :cascade do |t|
     t.string "name"
     t.string "photo_file_name"
     t.string "photo_content_type"
@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "door_combination_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_combination_translations", force: :cascade do |t|
     t.integer "door_combination_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_combination_translations_on_locale"
   end
 
-  create_table "door_combinations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_combinations", force: :cascade do |t|
     t.string "name"
     t.string "sections"
     t.string "preview_image_name"
@@ -107,12 +107,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "door_combinations_door_openings", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "door_combinations_door_openings", force: :cascade do |t|
     t.integer "door_combination_id"
     t.integer "door_opening_id"
   end
 
-  create_table "door_frame_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_frame_translations", force: :cascade do |t|
     t.integer "door_frame_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -122,7 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_frame_translations_on_locale"
   end
 
-  create_table "door_frames", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_frames", force: :cascade do |t|
     t.string "name"
     t.integer "sections"
     t.string "preview_image_name"
@@ -131,13 +131,13 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "door_glass_families", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_glass_families", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "door_glass_family_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_glass_family_translations", force: :cascade do |t|
     t.integer "door_glass_family_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -147,7 +147,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_glass_family_translations_on_locale"
   end
 
-  create_table "door_glass_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_glass_translations", force: :cascade do |t|
     t.integer "door_glass_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -157,7 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_glass_translations_on_locale"
   end
 
-  create_table "door_glasses", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_glasses", force: :cascade do |t|
     t.string "name"
     t.integer "door_glass_family_id"
     t.string "photo_file_name"
@@ -168,12 +168,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "door_glasses_door_panels", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "door_glasses_door_panels", force: :cascade do |t|
     t.integer "door_glass_id"
     t.integer "door_panel_id"
   end
 
-  create_table "door_line_options", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_line_options", force: :cascade do |t|
     t.integer "door_line_id"
     t.integer "option_id"
     t.float "quantity"
@@ -181,7 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "door_line_sections", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_line_sections", force: :cascade do |t|
     t.integer "door_line_id"
     t.integer "sort_order"
     t.integer "door_section_id"
@@ -192,7 +192,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.integer "door_panel_dimension_id"
   end
 
-  create_table "door_lines", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_lines", force: :cascade do |t|
     t.integer "quotation_id"
     t.integer "door_frame_id"
     t.integer "quantity"
@@ -212,7 +212,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "original_price"
   end
 
-  create_table "door_opening_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_opening_translations", force: :cascade do |t|
     t.integer "door_opening_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -222,7 +222,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_opening_translations_on_locale"
   end
 
-  create_table "door_openings", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_openings", force: :cascade do |t|
     t.string "name"
     t.string "preview_image_name"
     t.datetime "created_at", precision: nil
@@ -230,7 +230,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "door_panel_dimensions", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_panel_dimensions", force: :cascade do |t|
     t.integer "door_panel_id"
     t.float "width"
     t.float "height"
@@ -239,14 +239,14 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "door_panel_families", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_panel_families", force: :cascade do |t|
     t.string "name"
     t.integer "slab_material_id"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "door_panel_family_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_panel_family_translations", force: :cascade do |t|
     t.integer "door_panel_family_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -256,7 +256,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_panel_family_translations_on_locale"
   end
 
-  create_table "door_panel_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_panel_translations", force: :cascade do |t|
     t.integer "door_panel_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -266,7 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_panel_translations_on_locale"
   end
 
-  create_table "door_panels", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_panels", force: :cascade do |t|
     t.string "name"
     t.string "preview_image_name"
     t.datetime "created_at", precision: nil
@@ -276,12 +276,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.string "gap"
   end
 
-  create_table "door_panels_door_sections", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "door_panels_door_sections", force: :cascade do |t|
     t.integer "door_panel_id"
     t.integer "door_section_id"
   end
 
-  create_table "door_section_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_section_translations", force: :cascade do |t|
     t.integer "door_section_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -291,7 +291,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_door_section_translations_on_locale"
   end
 
-  create_table "door_sections", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "door_sections", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.datetime "created_at", precision: nil
@@ -299,7 +299,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "price", default: 0.0
   end
 
-  create_table "emails", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "emails", force: :cascade do |t|
     t.string "subject"
     t.text "body"
     t.boolean "sent"
@@ -307,7 +307,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "frame_profile_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "frame_profile_translations", force: :cascade do |t|
     t.integer "frame_profile_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -317,7 +317,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["locale"], name: "index_frame_profile_translations_on_locale"
   end
 
-  create_table "frame_profiles", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "frame_profiles", force: :cascade do |t|
     t.string "name"
     t.string "photo_file_name"
     t.string "photo_content_type"
@@ -334,14 +334,14 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "gap_slf", default: 0.0
   end
 
-  create_table "invoice_numbers", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "invoice_numbers", force: :cascade do |t|
     t.integer "year"
     t.integer "invoice_number"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "manual_lines", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "manual_lines", force: :cascade do |t|
     t.text "description"
     t.integer "quantity"
     t.float "unit_price", default: 0.0
@@ -352,7 +352,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "original_price"
   end
 
-  create_table "module_type_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "module_type_translations", force: :cascade do |t|
     t.integer "module_type_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -362,19 +362,19 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["module_type_id"], name: "index_module_type_translations_on_module_type_id"
   end
 
-  create_table "module_types", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "module_types", force: :cascade do |t|
     t.string "name"
     t.string "gender"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "module_types_users", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "module_types_users", force: :cascade do |t|
     t.integer "module_type_id"
     t.integer "user_id"
   end
 
-  create_table "opening_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "opening_translations", force: :cascade do |t|
     t.integer "opening_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -385,7 +385,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["opening_id"], name: "index_opening_translations_on_opening_id"
   end
 
-  create_table "openings", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "openings", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.string "abbreviation", limit: 5, default: "", null: false
     t.boolean "openable", default: false, null: false
@@ -394,24 +394,24 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.string "label"
   end
 
-  create_table "openings_series", id: false, charset: "utf8", force: :cascade do |t|
+  create_table "openings_series", force: :cascade do |t|
     t.integer "opening_id", default: 0, null: false
     t.integer "serie_id", default: 0, null: false
   end
 
-  create_table "option_categories", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "option_categories", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.integer "display_order"
     t.boolean "multiselect"
   end
 
-  create_table "option_categories_options", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "option_categories_options", force: :cascade do |t|
     t.integer "option_category_id"
     t.integer "option_id"
   end
 
-  create_table "option_category_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "option_category_translations", force: :cascade do |t|
     t.integer "option_category_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -422,7 +422,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["option_category_id"], name: "index_option_category_translations_on_option_category_id"
   end
 
-  create_table "option_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "option_translations", force: :cascade do |t|
     t.integer "option_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -432,7 +432,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["option_id"], name: "index_option_translations_on_option_id"
   end
 
-  create_table "options", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "options", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
     t.integer "pricing_method_id", default: 0, null: false
@@ -447,7 +447,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.boolean "emphasize", default: false
   end
 
-  create_table "options_minimum_unit_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "options_minimum_unit_translations", force: :cascade do |t|
     t.integer "options_minimum_unit_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -458,18 +458,18 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["options_minimum_unit_id"], name: "index_c8948b17624f39c7c9943bdcff961768ae0f770f"
   end
 
-  create_table "options_minimum_units", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "options_minimum_units", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
   end
 
-  create_table "options_quotation_lines", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "options_quotation_lines", force: :cascade do |t|
     t.integer "option_id", default: 0, null: false
     t.integer "quotation_line_id", default: 0, null: false
     t.integer "quantity", default: 1, null: false
   end
 
-  create_table "options_quotations", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "options_quotations", force: :cascade do |t|
     t.integer "option_id", default: 0, null: false
     t.integer "quotation_id", default: 0, null: false
     t.float "quantity", default: 1.0, null: false
@@ -477,25 +477,25 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "original_price"
   end
 
-  create_table "options_series", id: false, charset: "utf8", force: :cascade do |t|
+  create_table "options_series", force: :cascade do |t|
     t.integer "option_id", default: 0, null: false
     t.integer "serie_id", default: 0, null: false
   end
 
-  create_table "permissions", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "permissions", force: :cascade do |t|
     t.integer "role_id", default: 0, null: false
     t.integer "user_id", default: 0, null: false
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "preview_images", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "preview_images", force: :cascade do |t|
     t.integer "opening_id", null: false
     t.string "hinged_on", limit: 1, default: "", null: false
     t.string "image_name"
   end
 
-  create_table "pricing_method_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "pricing_method_translations", force: :cascade do |t|
     t.integer "pricing_method_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -506,13 +506,13 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["pricing_method_id"], name: "index_pricing_method_translations_on_pricing_method_id"
   end
 
-  create_table "pricing_methods", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "pricing_methods", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
     t.boolean "quantifiable", default: false
   end
 
-  create_table "product_color_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "product_color_translations", force: :cascade do |t|
     t.integer "product_color_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -522,7 +522,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["product_color_id"], name: "index_product_color_translations_on_product_color_id"
   end
 
-  create_table "product_colors", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "product_colors", force: :cascade do |t|
     t.string "name"
     t.string "value"
     t.datetime "created_at", precision: nil
@@ -530,7 +530,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.integer "module_type_id", default: 1
   end
 
-  create_table "quotation_lines", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "quotation_lines", force: :cascade do |t|
     t.integer "quotation_id", default: 0, null: false
     t.integer "serie_id", default: 0, null: false
     t.integer "shape_id", default: 0, null: false
@@ -548,13 +548,13 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.float "secondary_height", default: 0.0, null: false
   end
 
-  create_table "quotation_lines_openings", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "quotation_lines_openings", force: :cascade do |t|
     t.integer "quotation_line_id", default: 0, null: false
     t.integer "opening_id", default: 0, null: false
     t.integer "sort_order", default: 0, null: false
   end
 
-  create_table "quotations", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "quotations", force: :cascade do |t|
     t.string "description", limit: 50, default: "", null: false
     t.text "comments"
     t.string "project_name", limit: 150
@@ -583,38 +583,38 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["slug"], name: "quotations_slug_index", unique: true
   end
 
-  create_table "roles", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "rolename"
   end
 
-  create_table "section_dimensions", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "section_dimensions", force: :cascade do |t|
     t.integer "quotation_line_id", default: 0, null: false
     t.integer "sort_order", default: 0, null: false
     t.float "value", default: 0.0, null: false
     t.string "type", limit: 13, default: "", null: false
   end
 
-  create_table "serie_prices", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "serie_prices", force: :cascade do |t|
     t.integer "width_id", default: 0, null: false
     t.integer "height_id", default: 0, null: false
     t.integer "opening_id", default: 0, null: false
     t.float "price", default: 0.0, null: false
   end
 
-  create_table "series", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "series", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.string "description", default: "", null: false
     t.text "comments"
     t.text "series_type", size: :tiny
   end
 
-  create_table "series_shapes", id: false, charset: "latin1", force: :cascade do |t|
+  create_table "series_shapes", force: :cascade do |t|
     t.integer "shape_id", null: false
     t.integer "serie_id", null: false
     t.index ["shape_id", "serie_id"], name: "index_series_shapes_on_shape_id_and_serie_id"
   end
 
-  create_table "series_translations", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "series_translations", force: :cascade do |t|
     t.integer "series_id"
     t.string "locale", null: false
     t.datetime "created_at", precision: nil
@@ -626,7 +626,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["series_id"], name: "index_series_translations_on_series_id"
   end
 
-  create_table "sessions", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string "session_id"
     t.text "data"
     t.datetime "updated_at", precision: nil
@@ -634,7 +634,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "shapes", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "shapes", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
     t.integer "sections_width", default: 0, null: false
     t.integer "sections_height", default: 0, null: false
@@ -650,14 +650,14 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.boolean "has_secondary_dimension"
   end
 
-  create_table "slab_materials", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "slab_materials", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.float "price", default: 0.0
   end
 
-  create_table "translations", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "translations", force: :cascade do |t|
     t.string "translation_key", limit: 100, default: "", null: false
     t.text "fr"
     t.text "comments"
@@ -665,7 +665,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_05_14_224057) do
     t.text "es"
   end
 
-  create_table "users", id: :integer, charset: "latin1", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "login"
     t.string "email"
     t.string "crypted_password", limit: 40
