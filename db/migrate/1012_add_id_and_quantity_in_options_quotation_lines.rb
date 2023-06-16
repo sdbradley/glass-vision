@@ -1,12 +1,9 @@
 class AddIdAndQuantityInOptionsQuotationLines < ActiveRecord::Migration[7.0]
   def self.up
-    execute "ALTER TABLE options_quotation_lines
-             ADD COLUMN quantity INTEGER  NOT NULL DEFAULT 1,
-             ADD PRIMARY KEY (id)"
+    add_column :options_quotation_lines, :quantity, :integer, :null => false, :default => 1, if_not_exists: true
   end
 
   def self.down
-    execute "ALTER TABLE options_quotation_lines DROP COLUMN id,
-             DROP COLUMN quantity"
+    remove_column :options_quotation_lines, :quantity, if_exists: true
   end
 end
