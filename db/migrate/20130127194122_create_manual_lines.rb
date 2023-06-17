@@ -1,6 +1,6 @@
 class CreateManualLines < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :manual_lines do |t|
+    create_table :manual_lines, if_not_exists: true do |t|
       t.text :description
       t.integer :quantity
       t.float :unit_price
@@ -11,6 +11,6 @@ class CreateManualLines < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :manual_lines
+    drop_table :manual_lines, if_exists: true
   end
 end

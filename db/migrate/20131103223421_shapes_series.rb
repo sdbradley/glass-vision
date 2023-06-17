@@ -1,6 +1,6 @@
 class ShapesSeries < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :series_shapes, :id => false do |t|
+    create_table :series_shapes, if_not_exists: true do |t|
       t.references :shape, :null => false
       t.references :series, :null => false
     end
@@ -15,6 +15,6 @@ class ShapesSeries < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :series_shapes
+    drop_table :series_shapes, if_exists: true
   end
 end

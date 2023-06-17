@@ -7,6 +7,6 @@ class CreateDoorCombinationsDoorOpenings < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :door_combinations_door_openings
+    drop_table :door_combinations_door_openings, if_exists: true
   end
 end

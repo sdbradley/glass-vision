@@ -1,6 +1,6 @@
 class CreateDoorPanelDimensions < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :door_panel_dimensions do |t|
+    create_table :door_panel_dimensions, if_not_exists: true do |t|
       t.integer :door_panel_id
       t.float :width
       t.float :height
@@ -11,6 +11,6 @@ class CreateDoorPanelDimensions < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :door_panel_dimensions
+    drop_table :door_panel_dimensions, if_exists: true
   end
 end

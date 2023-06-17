@@ -1,6 +1,6 @@
 class CreateDoorBorings < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :door_borings do |t|
+    create_table :door_borings, if_not_exists: true do |t|
       t.string :name
       t.string :photo_file_name
       t.string :photo_content_type
@@ -11,6 +11,6 @@ class CreateDoorBorings < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :door_borings
+    drop_table :door_borings, if_exists: true
   end
 end
