@@ -1,6 +1,6 @@
 class CreateDoorGlasses < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :door_glasses do |t|
+    create_table :door_glasses, if_not_exists: true do |t|
       t.string :name
       t.integer :door_glass_family_id
       t.string :photo_file_name
@@ -12,6 +12,6 @@ class CreateDoorGlasses < ActiveRecord::Migration[7.0]
   end
 
   def self.down
-    drop_table :door_glasses
+    drop_table :door_glasses, if_exists: true
   end
 end
